@@ -7,20 +7,23 @@ class ItemTest < Test::Unit::TestCase
   def test_item_name
     name = "Item1"
     price = "10"
-    item = Item.named(name, price)
+    user = Models::User.named("Test")
+    item = Models::Item.named(name, price, user)
     assert(item.name == name)
   end
 
   def test_item_price
     name = "Item1"
     price = "10"
-    item = Item.named(name, price)
+    user = Models::User.named("Test")
+    item = Models::Item.named(name, price, user)
     assert(item.price == price)
   end
 
   def test_item_active
-    item1 = Store::Item.named("Item1", 10)
-    item2 = Store::Item.named("Item2", 5)
+    user = Models::User.named("Test")
+    item1 = Models::Item.named("Item1", 10, user)
+    item2 = Models::Item.named("Item2", 5, user)
 
     item1.active = false
     item2.active=true
@@ -30,11 +33,9 @@ class ItemTest < Test::Unit::TestCase
   end
 
   def test_item_owner
-    item1 = Store::Item.named("Item1", 10)
-    item2 = Store::Item.named("Item2", 5)
-
-    user = Store::User.named("John")
-    item1.owner= user
+    user = Models::User.named("Test")
+    item1 = Models::Item.named("Item1", 10, user)
+    item2 = Models::Item.named("Item2", 5, nil)
 
     assert(item1.owner==user)
     assert(item2.owner==nil)
