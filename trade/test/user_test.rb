@@ -42,7 +42,7 @@ class UserTest < Test::Unit::TestCase
     item1.active = false
     item2.active = true
 
-    assert(user.item_list==[item2])
+    assert(user.active_items==[item2])
   end
 
   def test_user_buy_successful

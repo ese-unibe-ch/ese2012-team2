@@ -34,14 +34,14 @@ module Models
     end
 
     def del_item(item)
-      if (self.items.include? item)
+      if self.items.include? item
         self.items.delete(item)
         Models::Item.delete_item(item)
       end
     end
 
     def buy(owner, item)
-      if owner.item_list.include? item
+      if owner.active_items.include? item
         if item.price<=self.credits
           self.credits -= item.price
           owner.credits += item.price
@@ -56,7 +56,7 @@ module Models
 
     end
 
-    def item_list
+    def active_items
       active_items = Array.new
       self.items.each do |item|
         if item.active
