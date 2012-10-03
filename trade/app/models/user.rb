@@ -59,7 +59,7 @@ module Models
     def item_list
       active_items = Array.new
       self.items.each do |item|
-        if item.active == true
+        if item.active
           active_items.push(item)
         end
       end
