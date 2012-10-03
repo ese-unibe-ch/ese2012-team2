@@ -54,7 +54,7 @@ class Main  < Sinatra::Application
 
   get "/additem" do
     redirect '/login' unless session[:name]
-     haml :add_item, :locals=>{:message => nil}
+     haml :add_new_item, :locals=>{:message => nil}
   end
 
   post "/additem" do
@@ -70,12 +70,12 @@ class Main  < Sinatra::Application
       redirect "/additem/invalid_item"
     end
 
-    @active_user.add_item(name, price)
+    @active_user.add_new_item(name, price)
     redirect "/additem/success"
   end
 
   get "/additem/:message" do
-    haml :add_item, :locals=>{:message => params[:message]}
+    haml :add_new_item, :locals=>{:message => params[:message]}
   end
 
   get "/register" do

@@ -25,6 +25,9 @@ module Models
     def initialize(price, owner)
       self.price = price
       self.owner = owner
+      if self.owner
+        self.owner.add_item(self)
+      end
       self.active = false
     end
   end

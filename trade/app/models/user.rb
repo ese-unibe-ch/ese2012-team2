@@ -27,8 +27,13 @@ module Models
       self.name
     end
 
-    def add_item (name, price)
+    def add_new_item (name, price)
       item = Item.named(name, price, self)
+      self.items.push(item)
+      item
+    end
+
+    def add_item (item)
       self.items.push(item)
       item
     end
@@ -45,7 +50,7 @@ module Models
         if item.price<=self.credits
           self.credits -= item.price
           owner.credits += item.price
-          self.add_item(item.name, item.price)
+          self.add_item(item)
           owner.del_item(item)
         else
           return "credit error"
