@@ -1,0 +1,113 @@
+body {
+    background: url(bg_body.png) repeat;
+    font-family: Calibri, Verdana, sans-serif;
+}
+
+#content {
+    padding: 15px;
+    position: relative;
+    float: left;
+    left: 170px;
+}
+
+#inactive {
+    color: #aaa;
+}
+
+th {
+    text-align: left;
+}
+
+.list {
+    border-top: dashed 1px #ccc;
+}
+
+#error {
+    margin-top: 5px;
+    background: #f66;
+    border: solid 1px #000;
+}
+
+#success {
+    margin-top: 55px;
+    background: #8e8;
+    border: solid 1px #000;
+}
+
+.right {
+    text-align: right;
+}
+
+#body {
+    margin-left: auto;
+    margin-right: auto;
+    width: 800px;
+    position: relative;
+}
+
+#logo {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#page {
+    background-color: #FFF;
+    min-height: 500px;
+    overflow: auto;
+}
+
+#head_entry {
+    position: relative;
+    padding: 1px;
+    margin-top: 20px;
+    vertical-align: bottom;
+}
+
+#menu {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    position: absolute;
+    left: 0;
+    float: left;
+    width: 150px;
+    border-right: 1px solid #23496B;;
+    min-height: 470px;
+}
+
+#menu_entry {
+    position: relative;
+    border-top: 1px dashed #aaa;
+    padding: 1px;
+    background-color: #fcfefe;
+}
+
+a, a.visited {
+    color: #23496B;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #aaa;
+}
+
+h2 {
+    color: #23496B;
+    margin: 0px;
+}
+
+#button {
+    background: none;
+    border: none;
+    color: #23496B;
+}
+
+#button:hover {
+    color: #aaa;
+    cursor: pointer;
+}
+
+.center {
+    text-align: center;
+}

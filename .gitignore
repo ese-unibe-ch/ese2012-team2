@@ -11,6 +11,8 @@ spec/reports
 test/tmp
 test/version_tmp
 tmp
+trade/.idea/misc.xml
+trade/.idea/workspace.xml
 
 # YARD artifacts
 .yardoc

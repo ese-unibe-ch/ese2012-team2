@@ -1,0 +1,10 @@
+%h1 All users
+%table
+  %tr
+    %th Name
+    %th Credits
+  - for user in users
+    %tr.list
+      %td.list
+        %a{:href => url("/user/#{user.name}")} #{user.name}
+      %td.list #{user.credits}

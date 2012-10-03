@@ -1,0 +1,32 @@
+!!! 5
+%head
+  %title
+    Trade
+  %link{:rel =>"stylesheet", :type =>"text/css", :href => url("style.css")}
+  %link{:rel => "shortcut icon", :type=>"image/png", :href => url("favicon.png")}
+%body
+  #body
+    #logo
+      %img{:src => url("logo.png")}
+    #page
+      #menu
+        #head_entry
+          %h2 Navigation
+        - if session[:name]
+          #menu_entry
+            %a{:href => url("/")} Home
+          #menu_entry
+            %a{:href => url("/user/#{session[:name]}")} Your profile
+          #menu_entry
+            %a{:href => url("/user")} All users
+          #menu_entry
+            %a{:href => url("/additem")} Add Item
+          #menu_entry
+            %a{:href => url("/logout")} Logout
+        - else
+          #menu_entry
+            %a{:href => url("/login")} Login
+          #menu_entry
+            %a{:href => url("/register")} Register
+      #content
+        = yield

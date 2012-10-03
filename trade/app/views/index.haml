@@ -1,0 +1,21 @@
+-if error == "credit"
+  #error
+    Not enough credits
+%h1 Hello #{current_name}
+%table
+  %tr
+    %th Name
+    %th Price
+    %th Owner
+    %th.center Buy
+  - for item in items
+    - if item.active
+      %tr
+        %td.list #{item.name}
+        %td.right.list #{item.price}
+        %td.list
+          %a(href='/user/#{item.owner}')#{item.owner}
+        %td.list
+          - if item.owner.name != current_name
+            %form{:action => "/buy/#{item.name}", :method => "POST"}
+              %input{:type => "submit",:name => "action", :value => "Buy", :id => "button"}

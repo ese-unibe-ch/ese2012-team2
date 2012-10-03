@@ -1,0 +1,28 @@
+-if message == "negative_price"
+  #error
+    Price must be positive
+-if message == "invalid_item"
+  #error
+    Invalid item name
+-if message == "success"
+  #success
+    Item added
+%h1 Add Item
+%form( action="/additem" method="POST" )
+  %table
+    %tr
+      %td
+        %label
+          Name:
+      %td
+        %label
+          Price:
+    %tr
+      %td
+        %input(type="text" name="name")
+      %td
+        %input(type="text" name="price")
+    %tr
+      %td
+      %td
+        %input(type="submit" text="submit")
