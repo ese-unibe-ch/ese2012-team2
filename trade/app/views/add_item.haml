@@ -1,3 +1,4 @@
+-#SH Shows either nothing, an error or an success message
 -if message == "negative_price"
   #error
     Price must be positive
@@ -7,6 +8,7 @@
 -if message == "success"
   #success
     Item added
+-#SH Shows the add item form
 %h1 Add Item
 %form( action="/additem" method="POST" )
   %table
