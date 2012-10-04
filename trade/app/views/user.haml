@@ -18,11 +18,11 @@
           %td.list yes
           -if user.name==session[:name] #SH If the user shown is the user who is logged in, show de-/activate button
             %td.list
-              %form{:action => "/#{item.name}", :method => "POST"}
+              %form{:action => "/#{item.id}", :method => "POST"}
                 %input{:type => "submit",:name => "action", :text => "deactivate", :value => "Deactivate", :id => "button"}
         - else
           %td.list no
           -if user.name==session[:name]
             %td.list
-              %form{:action => "/#{item.name}", :method => "POST"}
+              %form{:action => "/#{item.id}", :method => "POST"}
                 %input{:type => "submit",:name => "action", :text => "activate", :value => "Activate", :id => "button"}

@@ -47,7 +47,7 @@ class Main  < Sinatra::Application
   #SH Triggers status of an item
   post "/:item" do
     redirect '/login' unless session[:name]
-    item = Models::Item.by_id(params[:item])
+    item = Models::Item.by_id(params[:item].to_i)
 
     #TODO PS check if user is owner of the item!
     if params[:action] == "Activate"
@@ -64,20 +64,21 @@ class Main  < Sinatra::Application
   #SH Shows a form to add items
   get "/additem" do
     redirect '/login' unless session[:name]
-     haml :add_new_item, :locals=>{:message => nil}
+    haml :add_new_item, :locals=>{:message => nil}
   end
 
   #SH Tries to add an item. Redirect to the additem message page.
-  post "/additem" do
-    redirect '/login' unless session[:name]
+  put "/additem" do
+    puts "nananana"
     name = params[:name]
     price = params[:price]
+    redirect '/login' unless session[:name]
 
-    if Integer(price) < 0
+    if price.to_i > 0
       redirect "/additem/negative_price"
     end
 
-    @active_user.add_new_item(name, price)
+    @active_user.add_new_item(name, price.to_i)
     redirect "/additem/success"
   end
 

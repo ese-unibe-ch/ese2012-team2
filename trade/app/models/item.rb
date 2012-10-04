@@ -17,8 +17,6 @@ module Models
 
     #PS get an item by id
     def self.by_id id
-      puts "id to search: #{id}"
-      puts id.class
      @@items.detect {|item| item.id == id}
     end
 
@@ -47,10 +45,11 @@ module Models
       @@items << self unless @@items.include? self
       @id = @@item_count
       @@item_count += 1
+      puts "created #{self}"
     end
 
     def to_s
-      "#{self.name}, #{self.id}"
+      "#{self.name}, #{self.id}, #{self.owner.name}"
     end
   end
 end
