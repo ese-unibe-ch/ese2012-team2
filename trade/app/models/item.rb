@@ -27,16 +27,16 @@ module Models
 
     #SH Creates a new item with a name, a price and an owner
     def self.named(name, price, owner)
-      item = self.new(price, owner)
-      item.name = name
+      item = self.new(name, price, owner)
       item
     end
 
     #SH Sets the name, the price, and the owner of the item
     #SH If the user is not nil, adds the item to the item list of the owner
-    def initialize(price, owner)
+    def initialize(name, price, owner)
       self.price = price
       self.owner = owner
+      self.name = name
       if self.owner
         self.owner.add_item(self)
       end
@@ -45,7 +45,6 @@ module Models
       @@items << self unless @@items.include? self
       @id = @@item_count
       @@item_count += 1
-      puts "created #{self}"
     end
 
     def to_s

@@ -45,8 +45,6 @@ class App < Sinatra::Base
     user4.add_new_item("Log", 2).active = true
     user4.add_new_item("Sand", 1).active = true
     user4.add_new_item("Workbench", 3).active = true
-
-    puts Models::Item.by_id  3
   end
 
 

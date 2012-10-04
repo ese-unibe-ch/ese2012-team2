@@ -45,7 +45,7 @@ class Main  < Sinatra::Application
   end
 
   #SH Triggers status of an item
-  post "/:item" do
+  post "/change/:item" do
     redirect '/login' unless session[:name]
     item = Models::Item.by_id(params[:item].to_i)
 
@@ -61,26 +61,29 @@ class Main  < Sinatra::Application
     redirect back
   end
 
-  #SH Shows a form to add items
-  get "/additem" do
-    redirect '/login' unless session[:name]
-    haml :add_new_item, :locals=>{:message => nil}
-  end
-
   #SH Tries to add an item. Redirect to the additem message page.
-  put "/additem" do
-    puts "nananana"
+  post "/additem" do
+    redirect '/login' unless session[:name]
+
     name = params[:name]
     price = params[:price]
-    redirect '/login' unless session[:name]
 
-    if price.to_i > 0
+    if price.to_i < 0
       redirect "/additem/negative_price"
     end
 
     @active_user.add_new_item(name, price.to_i)
     redirect "/additem/success"
   end
+
+  #SH Shows a form to add items
+  get "/additem" do
+    redirect '/login' unless session[:name]
+    haml :add_new_item, :locals=>{:message => nil}
+  end
+
+
+
 
   #SH Shows either an error or an success message above the add item form
   get "/additem/:message" do
