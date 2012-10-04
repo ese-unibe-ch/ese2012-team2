@@ -37,7 +37,16 @@ class ItemTest < Test::Unit::TestCase
     item1 = Models::Item.named("Item1", 10, user)
     item2 = Models::Item.named("Item2", 5, nil)
 
+
     assert(item1.owner==user)
     assert(item2.owner==nil)
+  end
+
+  def  test_id_generation
+    #TODO PS are id's generated correctly?
+  end
+
+  def get_item_by_id
+    #TODO PS does item.by_id fetch the expected item?
   end
 end

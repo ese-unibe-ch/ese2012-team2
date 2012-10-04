@@ -49,7 +49,6 @@ module Models
     def del_item(item)
       if self.items.include? item
         self.items.delete(item)
-        Models::Item.delete_item(item)
       end
     end
 
@@ -62,6 +61,7 @@ module Models
           owner.credits += item.price
           self.add_item(item)
           owner.del_item(item)
+          item.owner = self
         else
           return "credit error"
         end

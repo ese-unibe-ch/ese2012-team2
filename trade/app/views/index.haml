@@ -19,5 +19,5 @@
           %a(href='/user/#{item.owner}')#{item.owner}
         %td.list
           - if item.owner.name != current_name #SH Don't show the buy button for your own items
-            %form{:action => "/buy/#{item.name}", :method => "POST"}
+            %form{:action => "/buy/#{item.id}", :method => "POST"}
               %input{:type => "submit",:name => "action", :value => "Buy", :id => "button"}

@@ -29,7 +29,7 @@ class Main  < Sinatra::Application
   #SH Buys an item. If an error occurs, redirect to the buy error page
   post "/buy/:item" do
     redirect '/login' unless session[:name]
-    item = Models::Item.by_name(params[:item])
+    item = Models::Item.by_id params[:item].to_i
     owner = item.owner
 
     if @active_user.buy(owner, item) == "credit error"
@@ -47,7 +47,9 @@ class Main  < Sinatra::Application
   #SH Triggers status of an item
   post "/:item" do
     redirect '/login' unless session[:name]
-    item = Models::Item.by_name(params[:item])
+    item = Models::Item.by_id(params[:item])
+
+    #TODO PS check if user is owner of the item!
     if params[:action] == "Activate"
       item.active = true
     end
@@ -73,10 +75,6 @@ class Main  < Sinatra::Application
 
     if Integer(price) < 0
       redirect "/additem/negative_price"
-    end
-
-    if Models::Item.by_name(name) != nil
-      redirect "/additem/invalid_item"
     end
 
     @active_user.add_new_item(name, price)

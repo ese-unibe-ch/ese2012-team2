@@ -1,7 +1,9 @@
 module Models
   class Item
     @@items = Array.new #SH A list of all items
+    @@item_count = 0
     attr_accessor :name, :price, :owner, :active
+    attr_reader :id
 
     #SH Returns all items
     def self.all
@@ -10,7 +12,14 @@ module Models
 
     #SH Gets an item by its name
     def self.by_name(name)
-      @@items.detect {|item| item.name == name }
+      @@items.select {|item| item.name == name }
+    end
+
+    #PS get an item by id
+    def self.by_id id
+      puts "id to search: #{id}"
+      puts id.class
+     @@items.detect {|item| item.id == id}
     end
 
     #SH Deletes an item from the item list
@@ -22,7 +31,6 @@ module Models
     def self.named(name, price, owner)
       item = self.new(price, owner)
       item.name = name
-      @@items.push(item)
       item
     end
 
@@ -35,6 +43,14 @@ module Models
         self.owner.add_item(self)
       end
       self.active = false
+      #PS generate a unique id and add to list of all items
+      @@items << self unless @@items.include? self
+      @id = @@item_count
+      @@item_count += 1
+    end
+
+    def to_s
+      "#{self.name}, #{self.id}"
     end
   end
 end
