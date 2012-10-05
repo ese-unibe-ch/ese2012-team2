@@ -13,7 +13,8 @@
   - for item in items
     - if item.active
       %tr
-        %td.list #{item.name}
+        %td.list{:title => "#{item.description}"}
+          #{item.name}
         %td.right.list #{item.price}
         %td.list
           %a(href='/user/#{item.owner}')#{item.owner}
