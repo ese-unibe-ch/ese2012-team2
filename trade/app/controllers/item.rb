@@ -33,6 +33,10 @@ class Item < Sinatra::Application
       redirect "/additem/negative_price"
     end
 
+    if name == ""
+      redirect "/additem/invalid_item"
+    end
+
     @active_user.add_new_item(name, price.to_i)
     redirect "/additem/success"
   end
