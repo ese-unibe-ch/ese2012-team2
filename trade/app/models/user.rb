@@ -1,7 +1,7 @@
 module Models
   class User
     @@users = Array.new #SH A list of all users
-    attr_accessor :name, :credits, :items
+    attr_accessor :name, :credits
 
     #SH Gets a user by its name
     def self.by_name(name)
@@ -23,7 +23,6 @@ module Models
     #SH Setup standard values
     def initialize (name)
       self.credits=100
-      self.items = Array.new
       self.name = name
     end
 
@@ -34,33 +33,21 @@ module Models
 
     #SH Adds a new item
     def add_new_item (name, price)
-      item = Item.named(name, price, self)
-      self.items.push(item)
-      item
+      Item.named(name, price, self)
     end
 
-    #SH Adds a existing item
-    def add_item (item)
-      self.items.push(item)
-      item
-    end
 
-    #SH Deletes the item
+    #PS Deletes the item completely!
     def del_item(item)
-      if self.items.include? item
-        self.items.delete(item)
-      end
+      Item.delete_item(item)
     end
 
     #SH Checks whether the user can buy an item and then buys it
-    #SH TODO refactor this method because the owner don't need to be passed
-    def buy(owner, item)
-      if owner.active_items.include? item
+    def buy(item)
+      if item.active
         if item.price<=self.credits
           self.credits -= item.price
-          owner.credits += item.price
-          self.add_item(item)
-          owner.del_item(item)
+          item.owner.credits += item.price
           item.owner = self
         else
           return "credit error"
@@ -71,15 +58,13 @@ module Models
 
     end
 
+    def items
+      Models::Item.all.select {|item| item.owner == self}
+    end
+
     #SH Returns a list of all active items of a user
     def active_items
-      active_items = Array.new
-      self.items.each do |item|
-        if item.active
-          active_items.push(item)
-        end
-      end
-      active_items
+      self.items.select {|item| item.active}
     end
   end
 end

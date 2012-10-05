@@ -37,9 +37,7 @@ module Models
       self.price = price
       self.owner = owner
       self.name = name
-      if self.owner
-        self.owner.add_item(self)
-      end
+
       self.active = false
       #PS generate a unique id and add to list of all items
       @@items << self unless @@items.include? self

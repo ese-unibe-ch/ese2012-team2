@@ -51,7 +51,7 @@ class UserTest < Test::Unit::TestCase
     item1 = Models::Item.named("Item", 10, user2)
 
     item1.active = true
-    user1.buy(user2, item1)
+    user1.buy(item1)
 
     assert(user1.items==[item1])
     assert(user1.credits== 90)
@@ -65,7 +65,7 @@ class UserTest < Test::Unit::TestCase
     item1 = Models::Item.named("Item", 101, user2)
 
     item1.active = true
-    user1.buy(user2, item1)
+    user1.buy(item1)
 
     assert(user1.items==[])
     assert(user1.credits== 100)
@@ -79,11 +79,12 @@ class UserTest < Test::Unit::TestCase
     item1 = Models::Item.named("Item", 10, user2)
 
     item1.active = false
-    user1.buy(user2, item1)
+    user1.buy(item1)
 
     assert(user1.items==[])
     assert(user1.credits== 100)
     assert(user2.items==[item1])
     assert(user2.credits==100)
   end
+
 end

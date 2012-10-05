@@ -30,9 +30,8 @@ class Main  < Sinatra::Application
   post "/buy/:item" do
     redirect '/login' unless session[:name]
     item = Models::Item.by_id params[:item].to_i
-    owner = item.owner
 
-    if @active_user.buy(owner, item) == "credit error"
+    if @active_user.buy(item) == "credit error"
       redirect "/index/credit"
     end
     redirect '/index'
