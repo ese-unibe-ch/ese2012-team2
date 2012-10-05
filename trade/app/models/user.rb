@@ -49,6 +49,7 @@ module Models
           self.credits -= item.price
           item.owner.credits += item.price
           item.owner = self
+          item.active = false
         else
           return "credit error"
         end
