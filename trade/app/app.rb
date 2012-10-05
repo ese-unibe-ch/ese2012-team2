@@ -3,6 +3,7 @@ require 'sinatra'
 require 'haml'
 require 'controllers/main'
 require 'controllers/authentication'
+require 'controllers/item'
 require 'models/user'
 require 'models/item'
 
@@ -10,6 +11,7 @@ class App < Sinatra::Base
 
   use Authentication
   use Main
+  use Item
 
   enable :sessions
   set :show_exceptions, false
