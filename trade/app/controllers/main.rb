@@ -48,12 +48,11 @@ class Main  < Sinatra::Application
     redirect '/login' unless session[:name]
     item = Models::Item.by_id(params[:item].to_i)
 
-    #TODO PS check if user is owner of the item!
-    if params[:action] == "Activate"
+    if params[:action] == "Activate" && item.owner == @active_user
       item.active = true
     end
 
-    if params[:action] == "Deactivate"
+    if params[:action] == "Deactivate" && item.owner == @active_user
       item.active = false
     end
 
