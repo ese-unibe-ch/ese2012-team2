@@ -52,4 +52,11 @@ class Item < Sinatra::Application
     haml :add_new_item, :locals=>{:message => params[:message]}
   end
 
+  post "/delete/:item" do
+    item = Models::Item.by_id params[:item].to_i
+    if item != nil && item.owner == @active_user
+      Models::Item.delete_item item
+    end
+    redirect back
+  end
 end

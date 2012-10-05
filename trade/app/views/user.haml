@@ -26,3 +26,7 @@
             %td.list
               %form{:action => "/change/#{item.id}", :method => "POST"}
                 %input{:type => "submit",:name => "action", :text => "activate", :value => "Activate", :id => "button"}
+        -if user.name==session[:name]
+          %td.list
+            %form{:action => "/delete/#{item.id}", :method => "POST"}
+              %input{:type => "submit",:name => "action", :value => "Delete", :id => "button"}
