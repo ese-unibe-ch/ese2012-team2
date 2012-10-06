@@ -59,4 +59,10 @@ class Item < Sinatra::Application
     end
     redirect back
   end
+
+  get "/item/:item" do
+    redirect '/login' unless session[:name]
+    item = Models::Item.by_id params[:item].to_i
+    haml :item, :locals => {:item => item}
+  end
 end

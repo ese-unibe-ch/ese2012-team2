@@ -13,11 +13,13 @@
   - for item in items
     - if item.active
       %tr
-        %td.list{:title => "#{item.description}"}
-          #{item.name}
+        %td.list
+          %a{:href => "/item/#{item.id}", :class => "tooltip"}
+            #{item.name}
+            %span #{item.description}
         %td.right.list #{item.price}
         %td.list
-          %a(href='/user/#{item.owner}')#{item.owner}
+          %a{:href=> "/user/#{item.owner}"} #{item.owner}
         %td.list
           - if item.owner.name != current_name #SH Don't show the buy button for your own items
             %form{:action => "/buy/#{item.id}", :method => "POST"}
