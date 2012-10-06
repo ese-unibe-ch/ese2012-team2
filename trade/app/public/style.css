@@ -66,7 +66,6 @@ th {
 
 #menu {
     margin-top: 20px;
-    margin-bottom: 10px;
     padding-left: 10px;
     padding-right: 10px;
     position: absolute;
@@ -74,7 +73,8 @@ th {
     float: left;
     width: 150px;
     border-right: 1px solid #23496B;;
-    min-height: 470px;
+    top: 235px;
+    bottom:15px;
 }
 
 #menu_entry {
@@ -136,7 +136,7 @@ a.tooltip:hover span
     position:absolute;
     top:20px;
     left:20px;
-    width:300px;
+    max-width:300px;
     border:1px solid #000;
     background-color:#12127D;
     color:#FFF;
