@@ -8,7 +8,8 @@ class ItemTest < Test::Unit::TestCase
     name = "Item1"
     price = "10"
     user = Models::User.named("Test")
-    item = Models::Item.named(name, price, user)
+    description = "Lorem ipsum"
+    item = Models::Item.named(name, price, user, description)
     assert(item.name == name)
   end
 
@@ -16,14 +17,16 @@ class ItemTest < Test::Unit::TestCase
     name = "Item1"
     price = "10"
     user = Models::User.named("Test")
-    item = Models::Item.named(name, price, user)
+    description = "Lorem ipsum"
+    item = Models::Item.named(name, price, user, description)
     assert(item.price == price)
   end
 
   def test_item_active
     user = Models::User.named("Test")
-    item1 = Models::Item.named("Item1", 10, user)
-    item2 = Models::Item.named("Item2", 5, user)
+    description = "Lorem ipsum"
+    item1 = Models::Item.named("Item1", 10, user, description)
+    item2 = Models::Item.named("Item2", 5, user, description)
 
     item1.active = false
     item2.active=true
@@ -34,8 +37,9 @@ class ItemTest < Test::Unit::TestCase
 
   def test_item_owner
     user = Models::User.named("Test")
+    description = "Lorem ipsum"
     item1 = Models::Item.named("Item1", 10, user)
-    item2 = Models::Item.named("Item2", 5, nil)
+    item2 = Models::Item.named("Item2", 5, nil, description)
 
 
     assert(item1.owner==user)
