@@ -1,3 +1,7 @@
+/********************************/
+/********General layout**********/
+/********************************/
+
 body {
     background: url(bg_body.png) repeat;
     font-family: Calibri, Verdana, sans-serif;
@@ -10,34 +14,6 @@ body {
     left: 170px;
     width: 600px;
     overflow: visible;
-}
-
-#inactive {
-    color: #aaa;
-}
-
-th {
-    text-align: left;
-}
-
-.list {
-    border-top: dashed 1px #ccc;
-}
-
-#error {
-    margin-top: 25px;
-    background: #f66;
-    border: solid 1px #000;
-}
-
-#success {
-    margin-top: 25px;
-    background: #8e8;
-    border: solid 1px #000;
-}
-
-.right {
-    text-align: right;
 }
 
 #body {
@@ -58,10 +34,13 @@ th {
     overflow: auto;
 }
 
+/********************************/
+/**************Menu**************/
+/********************************/
+
 #head_entry {
     position: relative;
     padding: 1px;
-
     vertical-align: bottom;
 }
 
@@ -79,8 +58,7 @@ th {
 }
 
 li.menu_entry {
-    list-style-type: none;
-    list-style-position: outside;
+    list-style: none outside;
     position: relative;
     border-top: 1px dashed #aaa;
     padding: 1px;
@@ -91,34 +69,9 @@ ul.no_indented{
   padding: 0;
 }
 
-a, a.visited {
-    color: #23496B;
-    text-decoration: none;
-}
-
-a:hover {
-    color: #aaa;
-}
-
-h2 {
-    color: #23496B;
-    margin: 0px;
-}
-
-#button {
-    background: none;
-    border: none;
-    color: #23496B;
-}
-
-#button:hover {
-    color: #aaa;
-    cursor: pointer;
-}
-
-.center {
-    text-align: center;
-}
+/********************************/
+/************Tooltip*************/
+/********************************/
 
 
 a.tooltip
@@ -151,3 +104,81 @@ a.tooltip:hover span
     padding: 5px;
     font-size: 0.8em;
 }
+
+
+/********************************/
+/**********General styling*******/
+/********************************/
+
+
+a, a.visited {
+    color: #23496B;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #aaa;
+}
+
+h2 {
+    color: #23496B;
+    margin: 0px;
+}
+
+th {
+    text-align: left;
+}
+
+/********************************/
+/*********Button styles**********/
+/********************************/
+
+
+#button {
+    background: none;
+    border: none;
+    color: #23496B;
+}
+
+#button:hover {
+    color: #aaa;
+    cursor: pointer;
+}
+
+/********************************/
+/************Messages************/
+/********************************/
+
+#error {
+    margin-top: 25px;
+    background: #f66;
+    border: solid 1px #000;
+}
+
+#success {
+    margin-top: 25px;
+    background: #8e8;
+    border: solid 1px #000;
+}
+
+/********************************/
+/*********Basic styling**********/
+/********************************/
+
+.center {
+    text-align: center;
+}
+
+#inactive {
+    color: #aaa;
+}
+
+.right {
+    text-align: right;
+}
+
+.list {
+    border-top: dashed 1px #ccc;
+}
+
+
