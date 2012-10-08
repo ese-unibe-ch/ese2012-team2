@@ -41,7 +41,6 @@ class ItemTest < Test::Unit::TestCase
     item1 = Models::Item.named("Item1", 10, user, description)
     item2 = Models::Item.named("Item2", 5, nil, description)
 
-
     assert(item1.owner==user)
     assert(item2.owner==nil)
   end
