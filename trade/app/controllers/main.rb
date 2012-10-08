@@ -1,6 +1,6 @@
 require 'haml'
-require './models/item'
-require './models/user'
+require 'app/models/item'
+require 'app/models/user'
 require 'digest/md5'
 
 class Main  < Sinatra::Application
@@ -51,7 +51,7 @@ class Main  < Sinatra::Application
 
   #SH Adds an user an redirect to the login page
   post "/register" do
-    Models::User.named(params[:username])
+    Models::User.named(params[:username], params[:passwd])
     redirect "/login"
   end
 

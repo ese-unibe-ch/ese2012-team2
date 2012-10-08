@@ -27,12 +27,15 @@
             %li.menu_entry
               %a{:href => url("/additem")} Add Item
             %li.menu_entry
+              %a{:href => url("/change_password")} Change Password
+            %li.menu_entry
               %a{:href => url("/logout")} Logout
           - else
             %li.menu_entry
               %a{:href => url("/login")} Login
             %li.menu_entry
               %a{:href => url("/register")} Register
+
       -#SH Here are the other haml files added
       #content
         = yield

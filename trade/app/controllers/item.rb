@@ -1,5 +1,5 @@
 require 'haml'
-require './models/user'
+require 'app/models/user'
 class Item < Sinatra::Application
   #SH Get the user by session
   before do
