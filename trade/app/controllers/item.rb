@@ -30,12 +30,22 @@ class Item < Sinatra::Application
     price = params[:price]
     description = params[:description]
 
-    if price.to_i < 0
-      redirect "/additem/negative_price"
-    end
-
     if name == ""
       redirect "/additem/invalid_item"
+    end
+
+    #SH Removing heading zeros because these would make the int oct
+    while price.start_with?("0") and price.length > 1
+      price.slice!(0)
+    end
+
+    #SH Check if price is an int
+    unless price.to_s.match(/\A[+-]?\d+?(\.\d+)?\Z/) == nil ? false : true
+      redirect "/additem/invalid_price"
+    end
+
+    if price.to_i < 0
+      redirect "/additem/negative_price"
     end
 
     filename = nil
