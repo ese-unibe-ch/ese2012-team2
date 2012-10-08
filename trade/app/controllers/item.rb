@@ -30,12 +30,20 @@ class Item < Sinatra::Application
     price = params[:price]
     description = params[:description]
 
-    if price.to_i < 0
-      redirect "/additem/negative_price"
-    end
-
     if name == ""
       redirect "/additem/invalid_item"
+    end
+
+    while price.start_with?("0") and price.length > 1
+       price.slice!(0)
+    end
+
+    unless price.to_s.match(/\A[+-]?\d+?(\.\d+)?\Z/) == nil ? false : true
+        redirect "/additem/invalid_price"
+    end
+
+    if price.to_i < 0
+      redirect "/additem/negative_price"
     end
 
     @active_user.add_new_item(name, price.to_i, description)
