@@ -16,22 +16,23 @@
       #menu
         #head_entry
           %h2 Navigation
-        - if session[:name]
-          #menu_entry
-            %a{:href => url("/")} Home
-          #menu_entry
-            %a{:href => url("/user/#{session[:name]}")} Your profile
-          #menu_entry
-            %a{:href => url("/user")} All users
-          #menu_entry
-            %a{:href => url("/additem")} Add Item
-          #menu_entry
-            %a{:href => url("/logout")} Logout
-        - else
-          #menu_entry
-            %a{:href => url("/login")} Login
-          #menu_entry
-            %a{:href => url("/register")} Register
+        %ul.no_indented
+          - if session[:name]
+            %li.menu_entry
+              %a{:href => url("/")} Home
+            %li.menu_entry
+              %a{:href => url("/user/#{session[:name]}")} Your profile
+            %li.menu_entry
+              %a{:href => url("/user")} All users
+            %li.menu_entry
+              %a{:href => url("/additem")} Add Item
+            %li.menu_entry
+              %a{:href => url("/logout")} Logout
+          - else
+            %li.menu_entry
+              %a{:href => url("/login")} Login
+            %li.menu_entry
+              %a{:href => url("/register")} Register
       -#SH Here are the other haml files added
       #content
         = yield

@@ -10,7 +10,7 @@
     Item added
 -#SH Shows the add item form
 %h1 Add Item
-%form(action="/additem" method="POST" )
+%form{:action => "/additem", :method => "POST"}
   %table
     %tr
       %td
@@ -19,12 +19,17 @@
       %td
         %label
           Price:
+      %td
+        %label
+          Description:
     %tr
       %td
-        %input(type="text" name="name")
+        %input{:type => "text", :name => "name"}
       %td
-        %input(type="text" name="price")
+        %input{:type => "text", :name => "price"}
+      %td
+        %textarea{:name => "description", :style => "width:300px; height:150px"}
     %tr
       %td
       %td
-        %input(type="submit" text="submit")
+        %input{:type => "submit", :text => "submit"}

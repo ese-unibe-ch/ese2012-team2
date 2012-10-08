@@ -16,7 +16,7 @@
         %td.list
           %a{:href => "/item/#{item.id}", :class => "tooltip"}
             #{item.name}
-            %span #{item.description}
+            %span #{item.description.gsub("\n", "<br>")}
         %td.right.list #{item.price}
         %td.list
           %a{:href=> "/user/#{item.owner}"} #{item.owner}

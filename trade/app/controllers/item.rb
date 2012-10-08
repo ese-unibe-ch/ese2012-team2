@@ -28,6 +28,7 @@ class Item < Sinatra::Application
 
     name = params[:name]
     price = params[:price]
+    description = params[:description]
 
     if price.to_i < 0
       redirect "/additem/negative_price"
@@ -37,7 +38,7 @@ class Item < Sinatra::Application
       redirect "/additem/invalid_item"
     end
 
-    @active_user.add_new_item(name, price.to_i)
+    @active_user.add_new_item(name, price.to_i, description)
     redirect "/additem/success"
   end
 

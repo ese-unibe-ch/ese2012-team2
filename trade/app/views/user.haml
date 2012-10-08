@@ -12,7 +12,10 @@
       - else
         - type = 'inactive'
       %tr{:id => "#{type}"}
-        %td.list #{item.name}
+        %td.list
+          %a{:href => "/item/#{item.id}", :class => "tooltip"}
+            #{item.name}
+            %span #{item.description.gsub("\n", "<br>")}
         %td.list #{item.price}
         - if item.active
           %td.list yes

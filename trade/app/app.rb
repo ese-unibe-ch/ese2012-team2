@@ -20,7 +20,7 @@ class App < Sinatra::Base
   configure :development do
     user = Models::User.named("Hat man")
     user.add_new_item("Ghastly gibus", 10, "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.").active = true
-    user.add_new_item("Ye olde baker boy", 15, "A cool hat").active = true
+    user.add_new_item("Ye olde baker boy", 15, "aslkghdkjfghöadkfhgsödkjghsödkjfhgsödkhgösdhsödlkjghösfklgjhsdkljgfsödlkgjhösflkghjsfklöghjsödklgfjsödkljghösdklfgjhklösfghjklösfjghklösfgjhöfljghlöfgjhlösfjghslöfkjhöernbizrötklghjaöitjsdbkögsdklzhjskjödghaköghp").active = true
     user.add_new_item("Noh Mercy", 14, "A cool hat")
     user.add_new_item("Prussian Pickelhaube", 11, "A cool hat").active  =true
     user.add_new_item("Troublemaker's tossle cap", 8, "A cool hat").active  =true

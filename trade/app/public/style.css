@@ -9,6 +9,7 @@ body {
     float: left;
     left: 170px;
     width: 600px;
+    overflow: visible;
 }
 
 #inactive {
@@ -24,13 +25,13 @@ th {
 }
 
 #error {
-    margin-top: 5px;
+    margin-top: 25px;
     background: #f66;
     border: solid 1px #000;
 }
 
 #success {
-    margin-top: 55px;
+    margin-top: 25px;
     background: #8e8;
     border: solid 1px #000;
 }
@@ -77,11 +78,17 @@ th {
     bottom:15px;
 }
 
-#menu_entry {
+li.menu_entry {
+    list-style-type: none;
+    list-style-position: outside;
     position: relative;
     border-top: 1px dashed #aaa;
     padding: 1px;
     background-color: #fcfefe;
+}
+
+ul.no_indented{
+  padding: 0;
 }
 
 a, a.visited {
@@ -136,9 +143,9 @@ a.tooltip:hover span
     position:absolute;
     top:20px;
     left:20px;
-    max-width:300px;
-    border:1px solid #000;
-    background-color:#12127D;
+    width:250px;
+    border:1px dashed #ccc;
+    background-color:#246E82;
     color:#FFF;
     text-align: center;
     padding: 5px;
