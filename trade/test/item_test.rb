@@ -38,7 +38,7 @@ class ItemTest < Test::Unit::TestCase
   def test_item_owner
     user = Models::User.named("Test")
     description = "Lorem ipsum"
-    item1 = Models::Item.named("Item1", 10, user)
+    item1 = Models::Item.named("Item1", 10, user, description)
     item2 = Models::Item.named("Item2", 5, nil, description)
 
 
