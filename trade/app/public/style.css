@@ -4,7 +4,7 @@
 
 body {
     background: url(bg_body.png) repeat;
-    font-family: Calibri, Verdana, sans-serif;
+    font-family: Calibri, Verdana, Arial, sans-serif;
 }
 
 #content {
@@ -17,15 +17,13 @@ body {
 }
 
 #body {
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto 0 auto;
     width: 800px;
     position: relative;
 }
 
 #logo {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin: 10px 0 10px 0;
 }
 
 #page {
@@ -46,8 +44,7 @@ body {
 
 #menu {
     margin-top: 20px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding:0 10px 0 10px;
     position: absolute;
     left: 0;
     float: left;
@@ -149,16 +146,19 @@ th {
 /************Messages************/
 /********************************/
 
-#error {
+#error, #success {
     margin-top: 25px;
-    background: #f66;
     border: solid 1px #000;
+    width: 200px;
+    padding: 0 0 0 1px;
+}
+
+#error{
+    background: #f66;
 }
 
 #success {
-    margin-top: 25px;
     background: #8e8;
-    border: solid 1px #000;
 }
 
 /********************************/
