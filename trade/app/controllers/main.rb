@@ -1,6 +1,7 @@
 require 'haml'
 require './models/item'
 require './models/user'
+require 'digest/md5'
 
 class Main  < Sinatra::Application
   #SH Get the user by session

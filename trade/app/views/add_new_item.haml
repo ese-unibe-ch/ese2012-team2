@@ -10,7 +10,7 @@
     Item added
 -#SH Shows the add item form
 %h1 Add Item
-%form{:action => "/additem", :method => "POST"}
+%form{:action => "/additem", :method => "POST", :enctype=>"multipart/form-data"}
   %table
     %tr
       %td
@@ -29,6 +29,12 @@
         %input{:type => "text", :name => "price"}
       %td
         %textarea{:name => "description", :style => "width:300px; height:150px"}
+    %tr
+      %td
+        %label
+          Image:
+      %td
+        %input(type="file" name="image")
     %tr
       %td
       %td
