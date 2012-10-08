@@ -1,23 +1,23 @@
 -#SH Shows an error if the last login attempt failed
 -if error == "wrong"
-  #error
+  .error
     Wrong login
 %h1 Login
-%form( action="/login" method="POST" )
+%form{:action => "/login", :method=> "POST"}
   %table
     %tr
       %td
         %label
         Username:
       %td
-        %input(type="text" name="username")
+        %input{:type=>"text", :name=>"username"}
     %tr
       %td
         %label
         Password:
       %td
-        %input(type="password" name="password")
+        %input{:type=>"password", :name=>"password"}
     %tr
       %td
       %td
-        %input(type="submit" text="submit")
+        %input{:type=>"submit"}

@@ -1,6 +1,6 @@
 -#SH Shows an error when buy failed
 -if error == "credit"
-  #error
+  .error
     Not enough credits
 %h1 Hello #{current_name}
 -#SH Shows a table of all active items
@@ -23,4 +23,4 @@
         %td.list
           - if item.owner.name != current_name #SH Don't show the buy button for your own items
             %form{:action => "/buy/#{item.id}", :method => "POST"}
-              %input{:type => "submit",:name => "action", :value => "Buy", :id => "button"}
+              %input{:type => "submit",:name => "action", :value => "Buy", :class => "button_as_link"}
