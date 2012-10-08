@@ -32,8 +32,8 @@ module Models
     end
 
     #SH Adds a new item
-    def add_new_item (name, price, description)
-      Item.named(name, price, self, description)
+    def add_new_item(name, price, description, image=nil)
+      Item.named(name, price, self, description, image)
     end
 
 

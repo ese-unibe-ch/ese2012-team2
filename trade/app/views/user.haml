@@ -4,8 +4,9 @@
   %table
     %tr
       %th Name
-      %th.padding_left Price
-      %th.padding_left Active
+      %th Price.padding_left
+      %th Image
+      %th Active.padding_left
     - for item in user.items
       - if item.active
         - type = 'active'
@@ -17,6 +18,8 @@
             #{item.name}
             %span #{item.description.gsub("\n", "<br>")}
         %td.list.padding_left #{item.price}
+        %td.list
+          %img{:src =>"#{item.image_path}", :width => "200", :height => "200"}
         - if item.active
           %td.list.padding_left yes
           -if user.name==session[:name] #SH If the user shown is the user who is logged in, show de-/activate button

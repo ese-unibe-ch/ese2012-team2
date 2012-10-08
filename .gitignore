@@ -21,3 +21,7 @@ doc/
 
 .idea
 *.iml
+
+/trade/app/public/images/items/*
+.DS_STORE
+
