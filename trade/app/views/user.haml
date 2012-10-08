@@ -4,9 +4,9 @@
   %table
     %tr
       %th Name
-      %th Price
+      %th.padding_left Price
       %th Image
-      %th Active
+      %th.padding_left Active
     - for item in user.items
       - if item.active
         - type = 'active'
@@ -17,17 +17,17 @@
           %a{:href => "/item/#{item.id}", :class => "tooltip"}
             #{item.name}
             %span #{item.description.gsub("\n", "<br>")}
-        %td.list #{item.price}
+        %td.list.padding_left #{item.price}
         %td.list
           %img{:src =>"#{item.image_path}", :width => "200", :height => "200"}
         - if item.active
-          %td.list yes
+          %td.list.padding_left yes
           -if user.name==session[:name] #SH If the user shown is the user who is logged in, show de-/activate button
             %td.list
               %form{:action => "/change/#{item.id}", :method => "POST"}
                 %input{:type => "submit",:name => "action", :value => "Deactivate", :class => "button_as_link"}
         - else
-          %td.list no
+          %td.list.padding_left no
           -if user.name==session[:name]
             %td.list
               %form{:action => "/change/#{item.id}", :method => "POST"}

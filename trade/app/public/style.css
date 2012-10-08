@@ -3,7 +3,7 @@
 /********************************/
 
 body {
-    background: url(bg_body.png) repeat;
+    background: url(images/bg_body.png) repeat;
     font-family: Calibri, Verdana, Arial, sans-serif;
 }
 
@@ -185,4 +185,6 @@ th {
     border-top: dashed 1px #ccc;
 }
 
-
+.padding_left{
+    padding-left: 4px;
+}
