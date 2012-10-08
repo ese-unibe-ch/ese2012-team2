@@ -1,6 +1,7 @@
 require 'haml'
 require './models/item'
 require './models/user'
+require 'digest/md5'
 
 class Main  < Sinatra::Application
   #SH Get the user by session
@@ -71,7 +72,19 @@ class Main  < Sinatra::Application
       redirect "/additem/negative_price"
     end
 
-    @active_user.add_new_item(name, price.to_i)
+    filename = nil
+
+    #PS process and save image
+      filename = Digest::MD5.hexdigest(params[:image][:filename] + Time.now.to_s)  + "." + params[:image][:filename].split(".").last()
+
+      #PS TODO check if filename already exists and generate new filename
+      #PS TODO check if file is an image
+      File.open(options.public_folder + '/images/items/' + filename, "w") do |file|
+        file.write(params[:image][:tempfile].read)
+        #PS TODO resize image
+      end
+
+    @active_user.add_new_item(name, price.to_i, filename)
     redirect "/additem/success"
   end
 

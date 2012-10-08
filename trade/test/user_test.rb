@@ -27,7 +27,7 @@ class UserTest < Test::Unit::TestCase
 
   def test_add_item
     user = Models::User.named("John")
-    item =  Models::Item.named("test", 10, user)
+    item =  Models::Item.named("test", 10, nil, user)
 
     assert(user.items ==[item],"Add item test failed")
     assert(!user.items[0].active)
@@ -36,8 +36,8 @@ class UserTest < Test::Unit::TestCase
   def test_active_item_list
     user = Models::User.named("John")
 
-    item1 = Models::Item.named("Item1", 10, user)
-    item2 = Models::Item.named("Item2", 5, user)
+    item1 = Models::Item.named("Item1", 10, nil, user)
+    item2 = Models::Item.named("Item2", 5, nil, user)
 
     item1.active = false
     item2.active = true
@@ -48,7 +48,7 @@ class UserTest < Test::Unit::TestCase
   def test_user_buy_successful
     user1 = Models::User.named("Buyer")
     user2 = Models::User.named("Seller")
-    item1 = Models::Item.named("Item", 10, user2)
+    item1 = Models::Item.named("Item", 10, nil, user2)
 
     item1.active = true
     user1.buy(item1)
@@ -62,7 +62,7 @@ class UserTest < Test::Unit::TestCase
   def test_user_buy_not_enough_credits
     user1 = Models::User.named("Buyer")
     user2 = Models::User.named("Seller")
-    item1 = Models::Item.named("Item", 101, user2)
+    item1 = Models::Item.named("Item", 101, nil, user2)
 
     item1.active = true
     user1.buy(item1)
@@ -76,7 +76,7 @@ class UserTest < Test::Unit::TestCase
   def test_user_buy_inactive_item
     user1 = Models::User.named("Buyer")
     user2 = Models::User.named("Seller")
-    item1 = Models::Item.named("Item", 10, user2)
+    item1 = Models::Item.named("Item", 10, nil, user2)
 
     item1.active = false
     user1.buy(item1)

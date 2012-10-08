@@ -5,6 +5,7 @@
     %tr
       %th Name
       %th Price
+      %th Image
       %th Active
     - for item in user.items
       - if item.active
@@ -14,6 +15,8 @@
       %tr{:id => "#{type}"}
         %td.list #{item.name}
         %td.list #{item.price}
+        %td.list
+          %img{:src =>"#{item.image_path}", :width => "200", :height => "200"}
         - if item.active
           %td.list yes
           -if user.name==session[:name] #SH If the user shown is the user who is logged in, show de-/activate button
