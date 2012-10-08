@@ -1,12 +1,12 @@
 -#SH Shows either nothing, an error or an success message
 -if message == "negative_price"
-  #error
+  .error
     Price must be positive
 -if message == "invalid_item"
-  #error
+  .error
     Invalid item name
 -if message == "success"
-  #success
+  .success
     Item added
 -#SH Shows the add item form
 %h1 Add Item
@@ -32,4 +32,4 @@
     %tr
       %td
       %td
-        %input{:type => "submit", :text => "submit"}
+        %input{:type => "submit"}

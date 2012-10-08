@@ -1,16 +1,16 @@
 -#SH This is the layout template, doctype is html5
-!!! 5
+!!!5
 %head
   %title
     Trade
-  -#SH Load css and favicon (favicon doesn't work, idk why :( )
+  -#SH Load css and favicon
   %link{:rel =>"stylesheet", :type =>"text/css", :href => url("style.css")}
   %link{:rel => "shortcut icon", :type=>"image/png", :href => url("favicon.png")}
 %body
   #body
     -#SH Shows the logo on top of the page
     #logo
-      %img{:src => url("logo.png")}
+      %img{:src => url("logo.png"), :alt => "The site logo"}
     #page
       -#SH The navigation
       #menu

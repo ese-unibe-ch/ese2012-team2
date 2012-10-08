@@ -131,13 +131,13 @@ th {
 /********************************/
 
 
-#button {
+.button_as_link {
     background: none;
     border: none;
     color: #23496B;
 }
 
-#button:hover {
+.button_as_link:hover {
     color: #aaa;
     cursor: pointer;
 }
@@ -146,18 +146,18 @@ th {
 /************Messages************/
 /********************************/
 
-#error, #success {
+.error, .success {
     margin-top: 25px;
     border: solid 1px #000;
     width: 200px;
     padding: 0 0 0 1px;
 }
 
-#error{
+.error{
     background: #f66;
 }
 
-#success {
+.success {
     background: #8e8;
 }
 
@@ -169,7 +169,7 @@ th {
     text-align: center;
 }
 
-#inactive {
+.inactive {
     color: #aaa;
 }
 
