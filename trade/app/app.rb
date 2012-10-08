@@ -4,6 +4,7 @@ require 'haml'
 require 'app/controllers/main'
 require 'app/controllers/authentication'
 require 'app/controllers/item'
+require 'app/controllers/change_password'
 require 'app/models/user'
 require 'app/models/item'
 
@@ -12,6 +13,7 @@ class App < Sinatra::Base
   use Authentication
   use Main
   use Item
+  use ChangePassword
 
   enable :sessions
   set :show_exceptions, false
