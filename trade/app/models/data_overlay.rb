@@ -78,6 +78,12 @@ module Models
     #returns nil if there is no such user
     def user_by_name(name)
       @users[name]
+
+    end
+
+    #AS checks if a user exists
+    def user_exists?(name)
+      @users.member?(name)
     end
 
     #KR adds a new user to the environment
