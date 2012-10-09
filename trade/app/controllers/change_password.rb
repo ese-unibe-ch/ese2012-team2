@@ -9,10 +9,24 @@ class ChangePassword < Sinatra::Application
 
   #AS attempts to change password
   post "/change_password" do
-    new_passwd=params[:new_passwd]
     user= Models::DataOverlay.instance.user_by_name(session[:name])
-    user.set_passwd(new_passwd)
-    redirect "change_password/password_changed"
+    passwd= params[:passwd]
+    if user.authenticated?(passwd)
+      new_passwd=params[:new_passwd]
+      passwd_repetition=params[:passwd_repetition]
+      if new_passwd == passwd_repetition
+        if Models::User.passwd_valid?(new_passwd)
+          user.set_passwd(new_passwd)
+          redirect "change_password/password_changed"
+        else
+          redirect "change_password/password_invalid"
+        end
+      else
+        redirect "change_password/wrong_repetition"
+      end
+    else
+      redirect "change_password/wrong_password"
+    end
   end
 
   #AS sending a message about success to the view

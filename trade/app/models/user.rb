@@ -22,6 +22,11 @@ module Models
      user
     end
 
+    #AS Checks if a password is valid (criteria need to be defined - at the moment it's just a "not-empty-test")
+    def self.passwd_valid?(passwd)
+      passwd != ""
+    end
+
     #SH Setup standard values
     def initialize (name, passwd)
       self.credits=100
