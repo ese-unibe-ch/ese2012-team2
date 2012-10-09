@@ -3,10 +3,10 @@ require 'bundler'
 # This actually requires the bundled gems
 Bundler.require
 
-require 'app/controllers/main'
-require 'app/controllers/authentication'
-require 'app/controllers/item_controller'
-require 'app/controllers/change_password'
+require_relative 'controllers/main'
+require_relative 'controllers/authentication'
+require_relative 'controllers/item_controller'
+require_relative 'controllers/change_password'
 require_relative 'models/user'
 require_relative 'models/item'
 require_relative 'models/data_overlay'
