@@ -5,6 +5,7 @@ class ImageHelper
     filename = nil
 
     unless image.nil?
+      puts "adding image"
       #PS process and save image
       filename = Digest::MD5.hexdigest(image[:filename] + Time.now.to_s)  + "." + image[:filename].split(".").last()
 

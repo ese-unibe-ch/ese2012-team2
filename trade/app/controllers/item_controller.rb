@@ -2,15 +2,16 @@ require_relative '../models/user'
 require_relative '../helpers/image_helper'
 
 class ItemController < Sinatra::Application
+
   #SH Get the user by session
   before do
-    @active_user = Models::User.by_name(session[:name])
+    @active_user = Models::DataOverlay.instance.user_by_name(session[:name])
   end
 
   #SH Triggers status of an item
   post "/change/:item" do
     redirect '/login' unless session[:name]
-    item = Models::ItemController.by_id(params[:item].to_i)
+    item = Models::DataOverlay.instance.item_by_id(params[:item].to_i)
 
     if params[:action] == "Activate" && item.owner == @active_user
       item.active = true
@@ -49,7 +50,9 @@ class ItemController < Sinatra::Application
       redirect "/additem/negative_price"
     end
 
-    @active_user.add_new_item(name, price.to_i, description, ImageHelper.save(params[:image], options.public_folder))
+    filename = ImageHelper.save params[:image], settings.public_folder
+
+    Models::DataOverlay.instance.new_item(name, price.to_i, description, @active_user, false, filename)
     redirect "/additem/success"
   end
 
