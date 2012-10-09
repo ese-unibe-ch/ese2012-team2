@@ -36,3 +36,7 @@
           %td.list
             %form{:action => "/delete/#{item.id}", :method => "POST"}
               %input{:type => "submit",:name => "action", :value => "Delete", :class => "button_as_link"}
+        -if !item.active
+          -if user.name==session[:name]
+            %td.list
+              %a{:href => "/item/#{item.id}/edit"}Edit

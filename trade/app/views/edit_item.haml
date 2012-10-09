@@ -1,0 +1,39 @@
+-if message == "negative_price"
+  .error
+    Price must be positive
+-if message == "invalid_item"
+  .error
+    Invalid item name
+-if message == "invalid_price"
+  .error
+    Your price is not a number
+-if message == "success"
+  .success
+    Item edited
+-#FW&MW Shows the edit item form
+%h1 Edit Item
+%form{:action => "/item/#{item.id}/edit", :method => "POST", :enctype=>"multipart/form-data"}
+  %label
+    Name*:
+  %br
+  %input{:type => "text", :name => "name", :value => "#{item.name}"}
+  %br
+  %label
+    Price*:
+  %br
+  %input{:type => "text", :name => "price", :value => "#{item.price}"}
+  %br
+  %label
+    Description:
+  %br
+  %textarea{:name => "description", :style => "width:500px; height:100px", :value => "#{item.description}"}
+  %br
+  %label
+    Image:
+  %br
+  %img{:src => url("#{item.image_path}")}
+  %br
+  %input{:type=>"file", :name=>"image"}
+  %br
+  %input{:type => "submit",:class=>"button_margin", :value => "Save"}
+
