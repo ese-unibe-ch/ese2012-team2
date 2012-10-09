@@ -50,8 +50,13 @@ class Main  < Sinatra::Application
 
   #SH Adds an user an redirect to the login page
   post "/register" do
-    Models::DataOverlay.instance.new_user(params[:username], params[:passwd])
-    redirect "/login"
+    if Models::User.passwd_valid?(params[:passwd])
+      Models::DataOverlay.instance.new_user(params[:username], params[:passwd])
+      redirect "/login"
+    else
+      #will change this later, so that it throws an errer..
+      redirect "/register"
+    end
   end
 
   #SH Shows a list of all user and their credits
