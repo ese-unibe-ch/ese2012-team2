@@ -1,9 +1,9 @@
-require 'haml'
-require 'app/models/user'
+require_relative '../models/user'
 class Authentication < Sinatra::Application
 
   #SH The normal login page
   get "/login" do
+    puts settings.public_folder
     haml :login, :locals =>{:error => nil}
   end
 

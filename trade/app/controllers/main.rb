@@ -1,6 +1,5 @@
-require 'haml'
-require 'app/models/item'
-require 'app/models/user'
+require_relative '../models/item'
+require_relative '../models/user'
 require 'digest/md5'
 
 class Main  < Sinatra::Application

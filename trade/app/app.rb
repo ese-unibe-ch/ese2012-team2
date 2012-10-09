@@ -1,12 +1,14 @@
 require 'rubygems'
-require 'sinatra'
-require 'haml'
+require 'bundler'
+# This actually requires the bundled gems
+Bundler.require
+
 require 'app/controllers/main'
 require 'app/controllers/authentication'
-require 'app/controllers/item'
+require 'app/controllers/item_controller'
 require 'app/controllers/change_password'
-require 'app/models/user'
-require 'app/models/item'
+require_relative 'models/user'
+require_relative 'models/item'
 
 class App < Sinatra::Base
 
@@ -17,7 +19,7 @@ class App < Sinatra::Base
 
   enable :sessions
   set :show_exceptions, false
-  set :public_folder, 'app/public'
+  set :public_folder, "app/public"
 
   configure :development do
     user = Models::User.named("Hat man", "pw Hat man")
@@ -50,8 +52,6 @@ class App < Sinatra::Base
     user4.add_new_item("Sand", 1, "Minecraft :D").active = true
     user4.add_new_item("Workbench", 3, "Minecraft :D").active = true
   end
-
-
 end
 
 App.run!

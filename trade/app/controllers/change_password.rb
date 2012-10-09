@@ -1,5 +1,4 @@
-require "haml"
-require "app/models/user"
+require_relative "../models/user"
 
 class ChangePassword < Sinatra::Application
 

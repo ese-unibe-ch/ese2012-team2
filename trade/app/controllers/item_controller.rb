@@ -1,5 +1,6 @@
-require 'haml'
-require 'app/models/user'
+require_relative '../models/user'
+require_relative '../helpers/image_helper'
+
 class ItemController < Sinatra::Application
   #SH Get the user by session
   before do
@@ -48,21 +49,7 @@ class ItemController < Sinatra::Application
       redirect "/additem/negative_price"
     end
 
-    filename = nil
-
-    unless params[:image].nil?
-      #PS process and save image
-      filename = Digest::MD5.hexdigest(params[:image][:filename] + Time.now.to_s)  + "." + params[:image][:filename].split(".").last()
-
-      #PS TODO check if filename already exists and generate new filename
-      #PS TODO check if file is an image
-      File.open(options.public_folder + '/images/items/' + filename, "w") do |file|
-        file.write(params[:image][:tempfile].read)
-        #PS TODO resize image
-      end
-    end
-
-    @active_user.add_new_item(name, price.to_i, description, filename)
+    @active_user.add_new_item(name, price.to_i, description, ImageHelper.save(params[:image], options.public_folder))
     redirect "/additem/success"
   end
 
