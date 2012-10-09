@@ -1,9 +1,9 @@
-require 'haml'
-require './models/user'
+require_relative '../models/user'
 class Authentication < Sinatra::Application
 
   #SH The normal login page
   get "/login" do
+    puts settings.public_folder
     haml :login, :locals =>{:error => nil}
   end
 
@@ -17,8 +17,8 @@ class Authentication < Sinatra::Application
   post "/login" do
     name = params[:username]
     password = params[:password]
-    user = Models::User.by_name(name)
-    if user.nil? || password != name
+    user = Models::DataOverlay.instance.user_by_name name
+    if user.nil? || !user.authenticated?(password)
       redirect '/login/wrong'
     else
       session[:name] = name

@@ -1,0 +1,98 @@
+module Models
+  #KR This class is responsible for Item & User management. It contains maps holding all items and users
+  # and offers useful operations on these maps.
+  class DataOverlay
+
+    def initialize
+      @users = Hash.new()
+      @items = Hash.new()
+    end
+
+    @@instance = nil
+
+    #KR returns the DataOverlay instance for this Application
+    # The instance is singleton so it stays the same at every point in runtime
+    # on the first call the instance is constructed
+    def self.instance
+      if(@@instance == nil)
+        @@instance = DataOverlay.new
+      end
+      return @@instance
+    end
+
+    @users = nil
+    @items = nil
+
+    #KR adds a new item to the environment.
+    # if the id is already in use, raises an error
+    def add_item(item)
+      if(@items.has_key?(item.id))
+        #raise error here
+      end
+      @items[item.id] = item
+    end
+
+    def new_item(name, price, description, owner, active, image=nil)
+      item = Item.named name, price, owner, description, image
+      item.active = active
+      add_item item
+      return item
+    end
+
+    #KR returns the item corresponding to the id
+    # returns nil if there is no such item
+    def item_by_id(id)
+      @items[id]
+    end
+
+    #KR returns all items currently owned by the given user
+    #if the user is not in the user list, an error will be raised
+    def items_by_user(user)
+      result = Array.new
+      @items.each_value {
+          |value|
+        if(value.owner==user)
+         result.push value
+        end
+      }
+      return result
+    end
+
+    #KR returns all active items
+    def active_items
+      result = Array.new
+      @items.each_value {
+        |value|
+        if(value.active)
+          result.push value
+        end
+      }
+      return result
+    end
+
+    def all_items
+      @items.values
+    end
+
+    #KR returns the user with the given name
+    #returns nil if there is no such user
+    def user_by_name(name)
+      @users[name]
+    end
+
+    #KR adds a new user to the environment
+    # if name or id are already in use, this function raises an error
+    def add_user(user)
+      if(@users.has_key?(user.name))
+        #raise error here
+      end
+      @users[user.name] = user
+    end
+
+    def new_user(name, pw)
+      user =  User.named(name, pw)
+      add_user user
+      return user
+    end
+  end
+end

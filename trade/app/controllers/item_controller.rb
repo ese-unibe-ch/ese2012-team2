@@ -1,15 +1,17 @@
-require 'haml'
-require './models/user'
-class Item < Sinatra::Application
+require_relative '../models/user'
+require_relative '../helpers/image_helper'
+
+class ItemController < Sinatra::Application
+
   #SH Get the user by session
   before do
-    @active_user = Models::User.by_name(session[:name])
+    @active_user = Models::DataOverlay.instance.user_by_name(session[:name])
   end
 
   #SH Triggers status of an item
   post "/change/:item" do
     redirect '/login' unless session[:name]
-    item = Models::Item.by_id(params[:item].to_i)
+    item = Models::DataOverlay.instance.item_by_id(params[:item].to_i)
 
     if params[:action] == "Activate" && item.owner == @active_user
       item.active = true
@@ -48,21 +50,9 @@ class Item < Sinatra::Application
       redirect "/additem/negative_price"
     end
 
-    filename = nil
+    filename = ImageHelper.save params[:image], settings.public_folder
 
-    unless params[:image].nil?
-      #PS process and save image
-      filename = Digest::MD5.hexdigest(params[:image][:filename] + Time.now.to_s)  + "." + params[:image][:filename].split(".").last()
-
-      #PS TODO check if filename already exists and generate new filename
-      #PS TODO check if file is an image
-      File.open(options.public_folder + '/images/items/' + filename, "w") do |file|
-        file.write(params[:image][:tempfile].read)
-        #PS TODO resize image
-      end
-    end
-
-    @active_user.add_new_item(name, price.to_i, description, filename)
+    Models::DataOverlay.instance.new_item(name, price.to_i, description, @active_user, false, filename)
     redirect "/additem/success"
   end
 
@@ -78,16 +68,16 @@ class Item < Sinatra::Application
   end
 
   post "/delete/:item" do
-    item = Models::Item.by_id params[:item].to_i
+    item = Models::ItemController.by_id params[:item].to_i
     if item != nil && item.owner == @active_user
-      Models::Item.delete_item item
+      Models::ItemController.delete_item item
     end
     redirect back
   end
 
   get "/item/:item" do
     redirect '/login' unless session[:name]
-    item = Models::Item.by_id params[:item].to_i
+    item = Models::ItemController.by_id params[:item].to_i
     haml :item, :locals => {:item => item}
   end
 end

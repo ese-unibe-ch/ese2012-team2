@@ -1,7 +1,9 @@
+require "digest/md5"
+
 module Models
   class User
     @@users = Array.new #SH A list of all users
-    attr_accessor :name, :credits
+    attr_accessor :name, :credits, :passwd_hash
 
     #SH Gets a user by its name
     def self.by_name(name)
@@ -14,16 +16,17 @@ module Models
     end
 
     #SH Creates a new user with his name
-    def self.named(name)
-     user = self.new(name)
+    def self.named(name, passwd)
+     user = self.new(name, passwd)
      @@users.push(user)
      user
     end
 
     #SH Setup standard values
-    def initialize (name)
+    def initialize (name, passwd)
       self.credits=100
       self.name = name
+      set_passwd(passwd)
     end
 
     #SH Returns the name of the user
@@ -66,6 +69,22 @@ module Models
     #SH Returns a list of all active items of a user
     def active_items
       self.items.select {|item| item.active}
+    end
+
+    #AS Encrypts a given string and returns it.
+    def encrypt(passwd)
+      digest= Digest::MD5.digest(passwd)
+      digest
+    end
+
+    #AS Sets the password.
+    def set_passwd(passwd)
+      self.passwd_hash= encrypt(passwd)
+    end
+
+    #AS Checks if the given password is correct.
+    def authenticated?(passwd)
+    self.passwd_hash==encrypt(passwd)
     end
   end
 end
