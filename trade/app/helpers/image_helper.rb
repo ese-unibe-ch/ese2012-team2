@@ -1,3 +1,5 @@
+require 'mime/types'
+
 class ImageHelper
 
   #PS saves the image and return the filename
@@ -5,25 +7,40 @@ class ImageHelper
     filename = nil
 
     unless image.nil?
-      puts "adding image"
-      #PS process and save image
-      filename = Digest::MD5.hexdigest(image[:filename] + Time.now.to_s)  + "." + image[:filename].split(".").last()
 
-      #PS TODO check if filename already exists and generate new filename
-      #PS TODO check if file is an image
-      File.open(public_folder + '/images/items/' + filename, "w") do |file|
-        file.write(image[:tempfile].read)
-        #PS TODO resize image
+      if self.image? image
+        until self.is_unique(filename, public_folder) do
+          #PS potential eternal loop...
+          filename = self.generate_filename image
+        end
+
+        File.open("#{public_folder}/images/items/#{filename}", "w") do |file|
+          file.write(image[:tempfile].read)
+          #PS only activate resize if you have ImageMagick installed and PATH setup correctly
+          #self.resize(file)
+        end
+      else
+        filename = {:error => true, :message => "uploaded file is not an image!"}
       end
     end
     filename
   end
 
-  def self.image?
-
+  def self.image? image
+    mime_type =  MIME::Types.type_for(image[:filename], false)
+    mime_type[0].media_type == 'image'
   end
 
-  def self.resize(image)
+  def self.resize(file)
+    image = MiniMagick::Image.new(file.path)
+    image.resize "100x100"
+  end
 
+  def self.generate_filename image
+    "#{Digest::MD5.hexdigest(image[:filename] + Time.now.to_s)}.#{image[:filename].split(".").last()}"
+  end
+
+  def self.is_unique filename, public_folder
+      !filename.nil? and !File.exist? "#{public_folder}/images/items/#{filename}"
   end
 end
