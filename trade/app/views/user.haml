@@ -1,3 +1,10 @@
+:javascript
+  $(document).ready(function() {
+     $('.powertip').powerTip({
+          placement: 's' // north-east tooltip positio
+     });
+  })
+
 - if !user.nil? #SH Only show this for an existing user
   %h1 User #{user.name}
   Credits: #{user.credits}
@@ -14,13 +21,9 @@
         - type = 'inactive'
       %tr{:class => "#{type}"}
         %td.list
-          %a{:href => "/item/#{item.id}", :class => "tooltip"}
+          %a{:href => "/item/#{item.id}",  "data-powertip" => "#{item.description.gsub("\n", "<br>")}</br><img src=#{item.image_path} width=150 />", :class => "powertip"}
             #{item.name}
-            -unless item.description == ""
-              %span #{item.description.gsub("\n", "<br>")}
         %td.list.padding_left #{item.price}
-        %td.list
-          %img{:src =>"#{item.image_path}", :width => "150", :height => "150"}
         - if item.active
           %td.list.padding_left yes
           -if user.name==session[:name] #SH If the user shown is the user who is logged in, show de-/activate button
