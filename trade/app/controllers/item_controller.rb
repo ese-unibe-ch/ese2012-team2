@@ -1,6 +1,6 @@
 require 'haml'
 require 'app/models/user'
-class Item < Sinatra::Application
+class ItemController < Sinatra::Application
   #SH Get the user by session
   before do
     @active_user = Models::User.by_name(session[:name])
@@ -9,7 +9,7 @@ class Item < Sinatra::Application
   #SH Triggers status of an item
   post "/change/:item" do
     redirect '/login' unless session[:name]
-    item = Models::Item.by_id(params[:item].to_i)
+    item = Models::ItemController.by_id(params[:item].to_i)
 
     if params[:action] == "Activate" && item.owner == @active_user
       item.active = true
@@ -78,16 +78,16 @@ class Item < Sinatra::Application
   end
 
   post "/delete/:item" do
-    item = Models::Item.by_id params[:item].to_i
+    item = Models::ItemController.by_id params[:item].to_i
     if item != nil && item.owner == @active_user
-      Models::Item.delete_item item
+      Models::ItemController.delete_item item
     end
     redirect back
   end
 
   get "/item/:item" do
     redirect '/login' unless session[:name]
-    item = Models::Item.by_id params[:item].to_i
+    item = Models::ItemController.by_id params[:item].to_i
     haml :item, :locals => {:item => item}
   end
 end

@@ -12,7 +12,7 @@ class App < Sinatra::Base
 
   use Authentication
   use Main
-  use Item
+  use ItemController
   use ChangePassword
 
   enable :sessions
