@@ -20,7 +20,8 @@ class App < Sinatra::Base
 
   enable :sessions
   set :show_exceptions, false
-  set :public_folder, "app/public"
+  set :root, File.dirname(__FILE__)
+  set :public_folder, Proc.new { File.join(root, "public") }
 
   configure :development do
     #now use the DataOverlay
