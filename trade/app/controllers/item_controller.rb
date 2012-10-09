@@ -80,4 +80,14 @@ class ItemController < Sinatra::Application
     item = Models::ItemController.by_id params[:item].to_i
     haml :item, :locals => {:item => item}
   end
+
+  post "/item/:item/edit" do
+    item = Models::ItemController.by_id params[:item].to_i
+    name = params[item.name]
+    price = params[item.price]
+    description = params[item.description]
+
+    haml :edit_item, :locals => {:name => name, :price => price, :description => description}
+
+  end
 end
