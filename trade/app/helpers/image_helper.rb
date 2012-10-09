@@ -19,8 +19,6 @@ class ImageHelper
           #PS only activate resize if you have ImageMagick installed and PATH setup correctly
           #self.resize(file)
         end
-      else
-        filename = {:error => true, :message => "uploaded file is not an image!"}
       end
     end
     filename

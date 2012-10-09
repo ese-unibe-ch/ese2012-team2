@@ -111,8 +111,7 @@ class ItemController < Sinatra::Application
       item.name = name
       item.price = price
       item.description = description
-
-      filename = ImageHelper.save params[:image], settings.public_folder
+      item.image = ImageHelper.save params[:image], settings.public_folder
     end
     redirect "/user/#{@active_user.name}"
   end
