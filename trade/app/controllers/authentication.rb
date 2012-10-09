@@ -1,5 +1,5 @@
 require 'haml'
-require 'app/models/user'
+require '../app/models/user'
 class Authentication < Sinatra::Application
 
   #SH The normal login page
@@ -17,7 +17,7 @@ class Authentication < Sinatra::Application
   post "/login" do
     name = params[:username]
     password = params[:password]
-    user = Models::User.by_name(name)
+    user = Models::DataOverlay.instance.user_by_name name
     if user.nil? || !user.authenticated?(password)
       redirect '/login/wrong'
     else

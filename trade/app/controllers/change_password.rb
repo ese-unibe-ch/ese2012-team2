@@ -1,5 +1,5 @@
 require "haml"
-require "app/models/user"
+require "../app/models/user"
 
 class ChangePassword < Sinatra::Application
 
@@ -12,7 +12,7 @@ class ChangePassword < Sinatra::Application
   #AS attempts to change password
   post "/change_password" do
     new_passwd=params[:new_passwd]
-    user= Models::User.by_name(session[:name])
+    user= Models::DataOverlay.instance.user_by_name(session[:name])
     user.set_passwd(new_passwd)
     redirect "change_password/password_changed"
   end
