@@ -49,7 +49,7 @@ body {
     left: 0;
     float: left;
     width: 150px;
-    border-right: 1px solid #23496B;;
+    border-right: 1px solid #23496B;
     top: 235px;
     bottom:15px;
 }
@@ -109,6 +109,7 @@ a.tooltip:hover span
 
 
 a, a.visited {
+    font-size: 1em;
     color: #23496B;
     text-decoration: none;
 }
@@ -135,6 +136,8 @@ th {
     background: none;
     border: none;
     color: #23496B;
+    font-size: 1em;
+    font-family: Calibri, Verdana, Arial, sans-serif;
 }
 
 .button_as_link:hover {
@@ -188,3 +191,14 @@ th {
 .padding_left{
     padding-left: 4px;
 }
+
+/********************************/
+/*********Image styling**********/
+/********************************/
+
+.image_float_left{
+     float: left;
+    padding: 5px;
+    margin-right: 5px;
+    border-right: 1px solid #23496B;
+ }
