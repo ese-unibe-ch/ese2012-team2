@@ -7,7 +7,6 @@ class ImageHelper
     filename = nil
 
     unless image.nil?
-
       if self.image? image
         until self.is_unique(filename, public_folder) do
           #PS potential eternal loop...

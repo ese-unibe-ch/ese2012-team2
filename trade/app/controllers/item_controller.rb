@@ -1,6 +1,5 @@
 require_relative '../models/user'
 require_relative '../helpers/image_helper'
-require_relative '../helpers/item_validator'
 
 class ItemController < Sinatra::Application
 
@@ -33,18 +32,21 @@ class ItemController < Sinatra::Application
     price = params[:price]
     description = params[:description]
 
-    if ItemValidator.name_empty?(name)
+    if name == ""
       redirect "/additem/invalid_item"
     end
 
-    price = ItemValidator.delete_leading_zeros(price)
+    #SH Removing heading zeros because these would make the int oct
+    while price.start_with?("0") and price.length > 1
+      price.slice!(0)
+    end
 
     #SH Check if price is an int
-    unless ItemValidator.price_is_integer?(price)
+    unless price.to_s.match(/\A[+-]?\d+?(\.\d+)?\Z/) == nil ? false : true
       redirect "/additem/invalid_price"
     end
 
-    if ItemValidator.price_negative?(price)
+    if price.to_i < 0
       redirect "/additem/negative_price"
     end
 
@@ -66,58 +68,16 @@ class ItemController < Sinatra::Application
   end
 
   post "/delete/:item" do
-    item = Models::Item.by_id params[:item].to_i
+    item = Models::ItemController.by_id params[:item].to_i
     if item != nil && item.owner == @active_user
-      Models::Item.delete_item item
+      Models::ItemController.delete_item item
     end
     redirect back
   end
 
   get "/item/:item" do
     redirect '/login' unless session[:name]
-    item = Models::Item.by_id params[:item].to_i
+    item = Models::ItemController.by_id params[:item].to_i
     haml :item, :locals => {:item => item}
   end
-
-  get "/item/:item/edit" do
-    item = Models::Item.by_id params[:item].to_i
-
-    haml :edit_item, :locals => {:item => item, :message => nil}
-
-  end
-
-  post "/item/:item/edit" do
-    item = Models::Item.by_id params[:item].to_i
-    if item.owner == Models::DataOverlay.instance.user_by_name(session[:name])
-      name = params[:name]
-      price = params[:price]
-      description = params[:description]
-
-      if ItemValidator.name_empty?(name)
-        redirect "/item/#{item.id}/edit/invalid_item"
-      end
-
-      price = ItemValidator.delete_leading_zeros(price)
-
-      #SH Check if price is an int
-      unless ItemValidator.price_is_integer?(price)
-        redirect "/item/#{item.id}/edit/invalid_price"
-      end
-
-      if ItemValidator.price_negative?(price)
-        redirect "/item/#{item.id}/edit/negative_price"
-      end
-
-      item.name = name
-      item.price = price
-      item.description = description
-      item.image = ImageHelper.save params[:image], settings.public_folder
-    end
-    redirect "/user/#{@active_user.name}"
-  end
-
-  get "/item/:item/edit/:message" do
-    haml :edit_item, :locals=>{:item => Models::Item.by_id(params[:item].to_i), :message => params[:message]}
-  end
-
 end

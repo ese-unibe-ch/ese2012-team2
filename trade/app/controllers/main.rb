@@ -57,7 +57,6 @@ class Main  < Sinatra::Application
       #will change this later, so that it throws an errer..
       redirect "/register"
     end
-
   end
 
   #SH Shows a list of all user and their credits

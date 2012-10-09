@@ -16,10 +16,11 @@
         %td.list
           %a{:href => "/item/#{item.id}", :class => "tooltip"}
             #{item.name}
-            %span #{item.description.gsub("\n", "<br>")}
+            -unless item.description == ""
+              %span #{item.description.gsub("\n", "<br>")}
         %td.list.padding_left #{item.price}
         %td.list
-          %img{:src =>"#{item.image_path}", :width => "200", :height => "200"}
+          %img{:src =>"#{item.image_path}", :width => "150", :height => "150"}
         - if item.active
           %td.list.padding_left yes
           -if user.name==session[:name] #SH If the user shown is the user who is logged in, show de-/activate button
@@ -40,3 +41,5 @@
           -if user.name==session[:name]
             %td.list
               %a{:href => "/item/#{item.id}/edit"}Edit
+        -else
+          %td.list
