@@ -1,7 +1,9 @@
 require 'test/unit'
-require '../app/models/data_overlay'
-require '../app/models/item'
-require '../app/models/user'
+require 'rubygems'
+require 'require_relative'
+require_relative '../app/models/data_overlay'
+require_relative '../app/models/user'
+require_relative '../app/models/item'
 
 class DataOverlayTest < Test::Unit::TestCase
   def test_item_by_id_empty

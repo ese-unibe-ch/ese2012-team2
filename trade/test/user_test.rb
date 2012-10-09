@@ -1,6 +1,8 @@
 require 'test/unit'
-require 'app/models/user'
-require 'app/models/item'
+require 'rubygems'
+require 'require_relative'
+require_relative '../app/models/user'
+require_relative '../app/models/item'
 
 class UserTest < Test::Unit::TestCase
 
