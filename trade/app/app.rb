@@ -28,7 +28,7 @@ class App < Sinatra::Base
     overlay = Models::DataOverlay.instance
     user1 = overlay.new_user "Hat man", "pwHatman"
     overlay.new_item "Ghastly gibus", 10, "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.", user1, true
-    overlay.new_item "Ye olde baker boy", 15, "aslkghdkjfghöadkfhgsödkjghsödkjfhgsödkhgösdhsödlkjghösfklgjhsdkljgfsödlkgjhösflkghjsfklöghjsödklgfjsödkljghösdklfgjhklösfghjklösfjghklösfgjhöfljghlöfgjhlösfjghslöfkjhöernbizrötklghjaöitjsdbkögsdklzhjskjödghaköghp", user1, true
+    overlay.new_item "Ye olde baker boy", 15, "aslkghdk jfghöa dkfhgsödkjghsöd kjfhgsödkhgös dhsödlkjghös fklgjhsdkljg fsödlkgjh ösflkg hjs fklöghjsödkl gfjsödkljghösdklfgjhk lösfgh  jklösf jghklö sfgjhöfljghl öfgjhlösfjghslöfk jhöe rnbizrötklgh jaöitjsdbkög sdk lzh jskjödgh aköghp", user1, true
 
     user3 = overlay.new_user "Darth Vader", "pwDarthVader"
     overlay.new_item "Death Star", 10000, "Big ass space ship", user3, true
