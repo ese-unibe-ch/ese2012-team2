@@ -6,7 +6,7 @@ Pony.mail({
   :via_options => {
       :address => 'smtp.web.de',
       :port => '587',
-      :user_name => 'justfsh',
+      :user_name => '',
       :password => '', #I wont tell you
       :authentication => :plain
   },
