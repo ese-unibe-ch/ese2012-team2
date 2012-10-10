@@ -1,4 +1,3 @@
-require 'mime/types'
 
 class ImageHelper
 
@@ -30,7 +29,7 @@ class ImageHelper
 
   def self.resize(file)
     image = MiniMagick::Image.new(file.path)
-    image.resize "100x100"
+    image.resize "150x150"
   end
 
   def self.generate_filename image
