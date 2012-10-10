@@ -60,7 +60,6 @@ module Models
       else
          return "/images/items/" + self.image
       end
-
     end
   end
 end
