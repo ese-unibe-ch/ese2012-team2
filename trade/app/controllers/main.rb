@@ -23,7 +23,13 @@ class Main  < Sinatra::Application
   get "/user/:name" do
     redirect '/login' unless session[:name]
     user = Models::DataOverlay.instance.user_by_name(params[:name])
-    haml :user, :locals =>{:user => user, :items => Models::DataOverlay.instance.items_by_user(user)}
+    if user.name == @active_user.name
+     items = Models::DataOverlay.instance.items_by_user(user)
+    else
+     items = Models::DataOverlay.instance.active_items_by_user(user)
+    end
+
+    haml :user, :locals =>{:user => user, :items => items}
   end
 
   #SH Buys an item. If an error occurs, redirect to the buy error page

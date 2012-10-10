@@ -32,6 +32,10 @@ module Models
       @items[item.id] = item
     end
 
+    def delete_item(item)
+      @items.delete item.id
+    end
+
     def new_item(name, price, description, owner, active, image=nil)
       item = Item.named name, price, owner, description, image
       item.active = active
@@ -53,6 +57,17 @@ module Models
           |value|
         if(value.owner==user)
          result.push value
+        end
+      }
+      return result
+    end
+
+    def active_items_by_user(user)
+      result = Array.new
+      @items.each_value {
+          |value|
+        if(value.owner==user and value.active)
+          result.push value
         end
       }
       return result

@@ -66,16 +66,16 @@ class ItemController < Sinatra::Application
   end
 
   post "/delete/:item" do
-    item = Models::ItemController.by_id params[:item].to_i
+    item = Models::DataOverlay.instance.item_by_id params[:item].to_i
     if item != nil && item.owner == @active_user
-      Models::ItemController.delete_item item
+      Models::DataOverlay.instance.delete_item item
     end
     redirect back
   end
 
   get "/item/:item" do
     redirect '/login' unless session[:name]
-    item = Models::ItemController.by_id params[:item].to_i
+    item = Models::DataOverlay.instance.item_by_id params[:item].to_i
     haml :item, :locals => {:item => item}
   end
 
@@ -87,7 +87,7 @@ class ItemController < Sinatra::Application
   end
 
   post "/item/:item/edit" do
-    item = Models::Item.by_id params[:item].to_i
+    item = Models::DataOverlay.instance.item_by_id params[:item].to_i
     if item.owner == Models::DataOverlay.instance.user_by_name(session[:name])
       name = params[:name]
       price = params[:price]
@@ -111,17 +111,15 @@ class ItemController < Sinatra::Application
       item.name = name
       item.price = price
       item.description = description
-
-      if params[:image] != nil
-        filename = ImageHelper.save params[:image], settings.public_folder
-      end
+      #PS it's nilsafe ;)
+      item.image = ImageHelper.save params[:image], settings.public_folder
 
     end
     redirect "/user/#{@active_user.name}"
   end
 
   get "/item/:item/edit/:message" do
-    haml :edit_item, :locals=>{:item => Models::Item.by_id(params[:item].to_i), :message => params[:message]}
+    haml :edit_item, :locals=>{:item => Models::DataOverlay.instance.item_by_id(params[:item].to_i), :message => params[:message]}
   end
 
 end
