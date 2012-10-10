@@ -4,8 +4,12 @@
   %title
     Trade
   -#SH Load css and favicon
-  %link{:rel =>"stylesheet", :type =>"text/css", :href => url("style.css")}
+  %link{:rel =>"stylesheet", :type =>"text/css", :href => url("css/style.css")}
+  %link{:rel =>"stylesheet", :type =>"text/css", :href => url("css/jquery.powertip.css")}
   %link{:rel => "shortcut icon", :type=>"image/png", :href => url("images/favicon.png")}
+  %script{:type => "text/javascript", :src => url("js/lib/jquery-1.8.2.js")}
+  %script{:type => "text/javascript", :src => url("js/lib/jquery.powertip-1.1.0.min.js")}
+
 %body
   #body
     -#SH Shows the logo on top of the page

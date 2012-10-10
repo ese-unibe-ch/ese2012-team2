@@ -1,3 +1,13 @@
+-#AS Error messages..
+-if message == "password_invalid"
+  .error
+    Your password is invalid.
+-if message == "wrong_repetition"
+  .error
+    Password and password repetition have to be identical.
+-if message == "user_exists"
+  .error
+    User already exists.
 %h1 Add new user
 %form{:action=>"/register", :method=>"POST"}
   %table
@@ -13,6 +23,12 @@
           Password:
       %td
         %input{:type=>"password", :name=>"passwd"}
+    %tr
+      %td
+        %label
+          Repeat password:
+      %td
+        %input{:type=>"password", :name=>"passwd_repetition"}
     %tr
       %td
       %td

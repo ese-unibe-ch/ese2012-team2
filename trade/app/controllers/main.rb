@@ -23,7 +23,13 @@ class Main  < Sinatra::Application
   get "/user/:name" do
     redirect '/login' unless session[:name]
     user = Models::DataOverlay.instance.user_by_name(params[:name])
-    haml :user, :locals =>{:user => user, :items => Models::DataOverlay.instance.items_by_user(user)}
+    if user.name == @active_user.name
+     items = Models::DataOverlay.instance.items_by_user(user)
+    else
+     items = Models::DataOverlay.instance.active_items_by_user(user)
+    end
+
+    haml :user, :locals =>{:user => user, :items => items}
   end
 
   #SH Buys an item. If an error occurs, redirect to the buy error page
@@ -51,12 +57,24 @@ class Main  < Sinatra::Application
   #SH Adds an user an redirect to the login page
   post "/register" do
     if Models::User.passwd_valid?(params[:passwd])
-      Models::DataOverlay.instance.new_user(params[:username], params[:passwd])
-      redirect "/login"
+      if params[:passwd]==params[:passwd_repetition]
+        if !Models::DataOverlay.instance.user_exists?(params[:username])
+        Models::DataOverlay.instance.new_user(params[:username], params[:passwd])
+        redirect "/login"
+        else
+          redirect "/register/user_exists"
+        end
+      else
+        redirect "/register/wrong_repetition"
+      end
     else
-      #will change this later, so that it throws an errer..
-      redirect "/register"
+      redirect "/register/password_invalid"
     end
+  end
+
+  #AS sending a message about success to the register view
+  get "/register/:message" do
+    haml :register, :locals=>{:message => params[:message]}
   end
 
   #SH Shows a list of all user and their credits

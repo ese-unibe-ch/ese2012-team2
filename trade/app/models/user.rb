@@ -3,7 +3,7 @@ require "digest/md5"
 module Models
   class User
     @@users = Array.new #SH A list of all users
-    attr_accessor :name, :credits, :passwd_hash
+    attr_accessor :name, :credits, :passwd_hash, :image
 
     #SH Gets a user by its name
     def self.by_name(name)
@@ -23,8 +23,8 @@ module Models
     end
 
     #AS Checks if a password is valid (criteria need to be defined - at the moment it's just a "not-empty-test")
-    def self.passwd_valid?(passwd)
-      passwd != ""
+    def self.passwd_valid?(password)
+      !password.nil? and password.length > 7 and password.match('^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$')
     end
 
     #SH Setup standard values
@@ -90,6 +90,14 @@ module Models
     #AS Checks if the given password is correct.
     def authenticated?(passwd)
     self.passwd_hash==encrypt(passwd)
+    end
+
+    def image_path
+      if self.image.nil? then
+        return "/images/users/default.png"
+      else
+        return "/images/users/" + self.image
+      end
     end
   end
 end

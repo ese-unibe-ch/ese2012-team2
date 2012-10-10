@@ -32,6 +32,10 @@ module Models
       @items[item.id] = item
     end
 
+    def delete_item(item)
+      @items.delete item.id
+    end
+
     def new_item(name, price, description, owner, active, image=nil)
       item = Item.named name, price, owner, description, image
       item.active = active
@@ -58,6 +62,17 @@ module Models
       return result
     end
 
+    def active_items_by_user(user)
+      result = Array.new
+      @items.each_value {
+          |value|
+        if(value.owner==user and value.active)
+          result.push value
+        end
+      }
+      return result
+    end
+
     #KR returns all active items
     def active_items
       result = Array.new
@@ -78,6 +93,12 @@ module Models
     #returns nil if there is no such user
     def user_by_name(name)
       @users[name]
+
+    end
+
+    #AS checks if a user exists
+    def user_exists?(name)
+      @users.member?(name)
     end
 
     #KR adds a new user to the environment

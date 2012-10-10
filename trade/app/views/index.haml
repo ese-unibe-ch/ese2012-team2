@@ -1,3 +1,9 @@
+:javascript
+  $(document).ready(function() {
+     $('.powertip').powerTip({
+          placement: 's' // north-east tooltip positio
+     });
+  })
 -#SH Shows an error when buy failed
 -if error == "credit"
   .error
@@ -14,9 +20,8 @@
     - if item.active
       %tr
         %td.list
-          %a{:href => "/item/#{item.id}", :class => "tooltip"}
+          %a{:href => "/item/#{item.id}",  "data-powertip" => "#{item.description.gsub("\n", "<br>")}</br><img src=#{item.image_path} width=150 />", :class => "powertip"}
             #{item.name}
-            %span #{item.description.gsub("\n", "<br>")}
         %td.right.list.padding_left #{item.price}
         %td.list.padding_left
           %a{:href=> "/user/#{item.owner}"} #{item.owner}
