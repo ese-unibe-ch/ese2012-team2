@@ -80,7 +80,7 @@ class ItemController < Sinatra::Application
   end
 
   get "/item/:item/edit" do
-    item = Models::Item.by_id params[:item].to_i
+    item = Models::DataOverlay.instance.item_by_id params[:item].to_i
 
     haml :edit_item, :locals => {:item => item, :message => nil}
 
