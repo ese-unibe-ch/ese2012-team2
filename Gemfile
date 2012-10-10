@@ -3,4 +3,5 @@ gem "sinatra"
 gem 'haml'
 gem 'require_relative'
 gem 'mime-types'
+gem 'pony'
 gem "mini_magick", "~> 3.4"
