@@ -1,4 +1,17 @@
 /********************************/
+/***********Variables************/
+/********************************/
+
+@base-color: #23496B;
+@light-gray: #CCC;
+@dark-gray: #AAA;
+@success-color: #8e8;
+@error-color: #f66;
+@white: #FFF;
+@black: #000;
+@inactive-link-color: @base-color + #333;
+
+/********************************/
 /********General layout**********/
 /********************************/
 
@@ -27,7 +40,7 @@ body {
 }
 
 #page {
-    background-color: #FFF;
+    background-color: @white;
     min-height: 500px;
     overflow: auto;
 }
@@ -49,7 +62,7 @@ body {
     left: 0;
     float: left;
     width: 150px;
-    border-right: 1px solid #23496B;
+    border-right: 1px solid @base-color;
     top: 235px;
     bottom:15px;
 }
@@ -57,49 +70,12 @@ body {
 li.menu_entry {
     list-style: none outside;
     position: relative;
-    border-top: 1px dashed #aaa;
+    border-top: 1px dashed @dark-gray;
     padding: 1px;
-    background-color: #fcfefe;
 }
 
 ul.no_indented{
   padding: 0;
-}
-
-/********************************/
-/************Tooltip*************/
-/********************************/
-
-
-a.tooltip
-{
-    position:relative;
-    z-index:1;
-}
-
-a.tooltip:hover
-{
-    z-index:2;
-}
-
-a.tooltip span
-{
-    display: none;
-}
-
-a.tooltip:hover span
-{
-    display:block;
-    position:absolute;
-    top:20px;
-    left:20px;
-    width:250px;
-    border:1px dashed #ccc;
-    background-color:#246E82;
-    color:#FFF;
-    text-align: center;
-    padding: 5px;
-    font-size: 0.8em;
 }
 
 
@@ -110,16 +86,24 @@ a.tooltip:hover span
 
 a, a.visited {
     font-size: 1em;
-    color: #23496B;
+    color: @base-color;
     text-decoration: none;
 }
 
 a:hover {
-    color: #aaa;
+    color: @light-gray;
+}
+
+.inactive a{
+  color: @inactive-link-color;
+}
+
+.inactive a:hover{
+  color: @light-gray;
 }
 
 h2 {
-    color: #23496B;
+    color: @base-color;
     margin: 0px;
 }
 
@@ -135,13 +119,17 @@ th {
 .button_as_link {
     background: none;
     border: none;
-    color: #23496B;
+    color: @base-color;
     font-size: 1em;
     font-family: Calibri, Verdana, Arial, sans-serif;
 }
 
+.inactive .button_as_link{
+color: @inactive-link-color;
+}
+
 .button_as_link:hover {
-    color: #aaa;
+    color: @light-gray;
     cursor: pointer;
 }
 
@@ -155,17 +143,17 @@ th {
 
 .error, .success {
     margin-top: 25px;
-    border: solid 1px #000;
+    border: solid 1px @black;
     width: 200px;
     padding: 0 0 0 1px;
 }
 
 .error{
-    background: #f66;
+    background: @error-color;
 }
 
 .success {
-    background: #8e8;
+    background: @success-color;
 }
 
 /********************************/
@@ -177,7 +165,7 @@ th {
 }
 
 .inactive {
-    color: #aaa;
+    color: @light-gray;
 }
 
 .right {
@@ -185,7 +173,7 @@ th {
 }
 
 .list {
-    border-top: dashed 1px #ccc;
+    border-top: dashed 1px @light-gray;
 }
 
 .padding_left{
@@ -197,8 +185,8 @@ th {
 /********************************/
 
 .image_float_left{
-     float: left;
+    float: left;
     padding: 5px;
     margin-right: 5px;
-    border-right: 1px solid #23496B;
+    border-right: 1px solid @base-color;
  }
