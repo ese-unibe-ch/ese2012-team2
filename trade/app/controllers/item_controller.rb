@@ -1,18 +1,13 @@
 require_relative '../models/user'
 require_relative '../helpers/image_helper'
 require_relative '../helpers/item_validator'
+require_relative 'base_controller'
 
-class ItemController < Sinatra::Application
-
-  #SH Get the user by session
-  before do
-    @active_user = Models::DataOverlay.instance.user_by_name(session[:name])
-  end
+class ItemController < BaseController
 
   #SH Triggers status of an item
   post "/change/:item" do
-    redirect '/login' unless session[:name]
-    item = Models::DataOverlay.instance.item_by_id(params[:item].to_i)
+    item = @data.item_by_id(params[:item].to_i)
 
     if params[:action] == "Activate" && item.owner == @active_user
       item.active = true
@@ -27,7 +22,6 @@ class ItemController < Sinatra::Application
 
   #SH Tries to add an item. Redirect to the additem message page.
   post "/additem" do
-    redirect '/login' unless session[:name]
 
     name = params[:name]
     price = params[:price]
@@ -50,13 +44,12 @@ class ItemController < Sinatra::Application
 
     filename = ImageHelper.save params[:image], settings.public_folder
 
-    Models::DataOverlay.instance.new_item(name, price.to_i, description, @active_user, false, filename)
+    @data.new_item(name, price.to_i, description, @active_user, false, filename)
     redirect "/additem/success"
   end
 
   #SH Shows a form to add items
   get "/additem" do
-    redirect '/login' unless session[:name]
     haml :add_new_item, :locals=>{:message => nil}
   end
 
@@ -66,29 +59,27 @@ class ItemController < Sinatra::Application
   end
 
   post "/delete/:item" do
-    item = Models::DataOverlay.instance.item_by_id params[:item].to_i
+    item = @data.item_by_id params[:item].to_i
     if item != nil && item.owner == @active_user
-      Models::DataOverlay.instance.delete_item item
+      @data.delete_item item
     end
     redirect back
   end
 
   get "/item/:item" do
-    redirect '/login' unless session[:name]
-    item = Models::DataOverlay.instance.item_by_id params[:item].to_i
+    item = @data.item_by_id params[:item].to_i
     haml :item, :locals => {:item => item}
   end
 
   get "/item/:item/edit" do
-    item = Models::DataOverlay.instance.item_by_id params[:item].to_i
+    item = @data.item_by_id params[:item].to_i
 
     haml :edit_item, :locals => {:item => item, :message => nil}
-
   end
 
   post "/item/:item/edit" do
-    item = Models::DataOverlay.instance.item_by_id params[:item].to_i
-    if item.owner == Models::DataOverlay.instance.user_by_name(session[:name])
+    item = @data.item_by_id params[:item].to_i
+    if item.owner == @data.user_by_name(session[:name])
       name = params[:name]
       price = params[:price]
       description = params[:description]
@@ -112,14 +103,14 @@ class ItemController < Sinatra::Application
       item.price = price
       item.description = description
       #PS it's nilsafe ;)
-      item.image = ImageHelper.save params[:image], settings.public_folder
+      item.image = ImageHelper.save params[:image], settings.public_folder + "/images/items"
 
     end
     redirect "/user/#{@active_user.name}"
   end
 
   get "/item/:item/edit/:message" do
-    haml :edit_item, :locals=>{:item => Models::DataOverlay.instance.item_by_id(params[:item].to_i), :message => params[:message]}
+    haml :edit_item, :locals=>{:item => @data.item_by_id(params[:item].to_i), :message => params[:message]}
   end
 
 end

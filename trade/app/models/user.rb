@@ -89,7 +89,7 @@ module Models
 
     #AS Checks if the given password is correct.
     def authenticated?(passwd)
-    self.passwd_hash==encrypt(passwd)
+      self.passwd_hash==encrypt(passwd)
     end
 
     def image_path
