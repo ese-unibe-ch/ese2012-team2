@@ -14,9 +14,14 @@ class ResetPassword  < Sinatra::Application
     redirect '/user' if session[:name]
     user = @overlay.user_by_name params[:username]
     redirect "/reset_password/unknown_user" unless user
-    pw='yourNewPassword' #TODO KR replace static pw with generation method
+    pw= ResetPassword.random_password
     user.set_passwd pw
     EmailSender.send_new_password(user, pw)
     redirect '/login'
+  end
+
+  def self.random_password(size = 8)
+    pool = ('a'..'z').to_a + ('0'..'9').to_a
+    (1..size).collect{|a| pool[rand(pool.size)]}.join
   end
 end

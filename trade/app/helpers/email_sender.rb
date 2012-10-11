@@ -17,7 +17,8 @@ class EmailSender
      Pony.mail ({
        #:to => user.mail,
        :to => 'kenneth.radunz@web.de',
-       :body => "Dear #{user.name} \n Your password was reset.
+       :body => "Dear #{user.name}
+Your password was reset.
 Your new password is #{pw}.
 Please do not reply."
      })
