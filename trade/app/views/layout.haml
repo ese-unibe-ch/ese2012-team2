@@ -14,39 +14,18 @@
   %script{:type => "text/javascript", :src => url("js/lib/jquery-1.8.2.js")}
   %script{:type => "text/javascript", :src => url("js/lib/jquery.powertip-1.1.0.min.js")}
 
-
-
-
 %body
+  #header
+    #logo
+      %img{:src => url("images/logo_small.png"), :alt => "The site logo", :height => "100px", :width => "100px"}
+      %p Emporium
+    =haml :menu;
+    #header_bar
   #body
     -#SH Shows the logo on top of the page
-    #logo
-      %img{:src => url("images/logo.png"), :alt => "The site logo"}
     #page
-      -#SH The navigation
-      #menu
-        #head_entry
-          %h2 Navigation
-        %ul.no_indented
-          - if session[:name]
-            %li.menu_entry
-              %a{:href => url("/")} Home
-            %li.menu_entry
-              %a{:href => url("/user/#{session[:name]}")} Your profile
-            %li.menu_entry
-              %a{:href => url("/user")} All users
-            %li.menu_entry
-              %a{:href => url("/additem")} Add Item
-            %li.menu_entry
-              %a{:href => url("/change_password")} Change Password
-            %li.menu_entry
-              %a{:href => url("/logout")} Logout
-          - else
-            %li.menu_entry
-              %a{:href => url("/login")} Login
-            %li.menu_entry
-              %a{:href => url("/register")} Register
-
-      -#SH Here are the other haml files added
+      -#SH Here were the other haml files added
+      #side_box
+        =haml :side_box, locals => {:user => @active_user}
       #content
         = yield

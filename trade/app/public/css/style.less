@@ -2,139 +2,205 @@
 /***********Variables************/
 /********************************/
 
-@base-color: #23496B;
+@base-color: #381037;
+@body-bg-color: #6B1F68;
 @light-gray: #CCC;
 @dark-gray: #AAA;
 @success-color: #8e8;
 @error-color: #f66;
-@white: #FFF;
+@content-background-color: #FFF;
 @black: #000;
 @inactive-link-color: @base-color + #333;
+@header-color:#381037 ;
+@header-bar-color:#B834B4 ;
+@tab-border-color: @body-bg-color;
+@nav-hover-background: @light-gray;
+@nav-hover-font: @dark-gray;
+@page-color: rgba(255, 255, 255, 0.5);
+@logo-color: @light-gray;
+
+@header-bar-height: 10px;
 
 /********************************/
 /********General layout**********/
 /********************************/
 
 body {
-    background: url(../images/bg_body.png) repeat;
-    font-family: Calibri, Verdana, Arial, sans-serif;
-}
-
-#content {
-    padding: 15px;
-    position: relative;
-    float: left;
-    left: 170px;
-    width: 600px;
-    overflow: visible;
+  background: url(../images/bg_body.png) repeat;
+  font-family: Calibri, Verdana, Arial, sans-serif;
+  margin: 0;
+  padding: 0 0 50px 0;
+  background-color: @body-bg-color;
 }
 
 #body {
-    margin: 0 auto 0 auto;
-    width: 800px;
-    position: relative;
+  top: 200px;
+  margin: 0 auto 0 auto;
+  width: 900px;
+  position: relative;
+  z-index: 0;
 }
 
 #logo {
-    margin: 10px 0 10px 0;
+  positin: absolute;
+  margin:0 auto;
+  font-size: 5em;
+  color: @logo-color;
+  width: 900px;
+}
+
+#logo p{
+  display: inline;
 }
 
 #page {
-    background-color: @white;
-    min-height: 500px;
-    overflow: auto;
+  background-color: @page-color;
+  min-height: 500px;
+  overflow: auto;
+  padding: 10px;
+}
+
+#content {
+  background-color: @content-background-color;
+  padding: 15px;
+  position: relative;
+  float: right;
+  width: 61%;
+  min-height: inherit;
+  overflow: visible;
+}
+
+#side_box {
+  background-color: @content-background-color;
+  float: left;
+  width: 31%;
+  padding: 15px;
+}
+
+#side_box ul{
+  padding: inherit;
+}
+
+#header {
+  background-color: @header-color;
+  position: fixed;
+  top: 0;
+  min-height: 100px;
+  width: 100%;
+  z-index: 1;
+}
+
+#header p{
+  display: compact;
+  bottom: 10px;
+}
+
+#header_bar {
+  background-color: @header-bar-color;
+  width: 100%;
+  height: @header-bar-height+1px;
+  bottom: - @header-bar-height;
+  position: absolute;
+  border-bottom: 1px solid @body-bg-color;
 }
 
 /********************************/
 /**************Menu**************/
 /********************************/
 
-#head_entry {
-    position: relative;
-    padding: 1px;
-    vertical-align: bottom;
-}
-
 #menu {
-    margin-top: 20px;
-    padding:0 10px 0 10px;
-    position: absolute;
-    left: 0;
-    float: left;
-    width: 150px;
-    border-right: 1px solid @base-color;
-    top: 235px;
-    bottom:15px;
+  margin: 0 auto 0 auto;
+  padding: 0 10px 0 10px;
+  position: absolute;
+  bottom: -1px;
+  right: 0;
 }
 
-li.menu_entry {
-    list-style: none outside;
-    position: relative;
-    border-top: 1px dashed @dark-gray;
-    padding: 1px;
+#menu li {
+  display: inline;
+  list-style: none;
+  position: relative;
+  margin: 1px;
+  float: left;
+  background-color: @header-bar-color;
+  border-top: 1px solid @tab-border-color;
+  border-right: 1px solid @tab-border-color;
+  border-left: 1px solid @tab-border-color;
 }
 
-ul.no_indented{
+#menu li:hover{
+  background-color: @nav-hover-background;
+  color: @nav-hover-font;
+}
+
+#menu li:hover a{
+  color: @nav-hover-font;
+}
+
+#menu ul {
   padding: 0;
 }
 
+#menu a{
+  display: block;
+  color: @light-gray;
+  padding: 0.5em 0.7em;
+}
 
 /********************************/
 /**********General styling*******/
 /********************************/
 
-
 a, a.visited {
-    font-size: 1em;
-    color: @base-color;
-    text-decoration: none;
+  font-size: 1em;
+  color: @base-color;
+  text-decoration: none;
 }
 
 a:hover {
-    color: @light-gray;
+  color: @light-gray;
 }
 
-.inactive a{
+.inactive a {
   color: @inactive-link-color;
 }
 
-.inactive a:hover{
+.inactive a:hover {
   color: @light-gray;
 }
 
 h2 {
-    color: @base-color;
-    margin: 0px;
+  color: @base-color;
+  margin: 0px;
 }
 
 th {
-    text-align: left;
+  text-align: left;
 }
 
 /********************************/
 /*********Button styles**********/
 /********************************/
 
-
 .button_as_link {
-    background: none;
-    border: none;
-    color: @base-color;
-    font-size: 1em;
-    font-family: Calibri, Verdana, Arial, sans-serif;
+  background: none;
+  border: none;
+  color: @base-color;
+  font-size: 1em;
+  font-family: Calibri, Verdana, Arial, sans-serif;
 }
 
-.inactive .button_as_link{
-color: @inactive-link-color;
+.inactive .button_as_link {
+  color: @inactive-link-color;
 }
 
 .button_as_link:hover {
-    color: @light-gray;
-    cursor: pointer;
+  color: @light-gray;
+  cursor: pointer;
 }
 
-.button_margin{
-    margin: 2px 0 0 0;
+.button_margin {
+  margin: 2px 0 0 0;
 }
 
 /********************************/
@@ -142,18 +208,18 @@ color: @inactive-link-color;
 /********************************/
 
 .error, .success {
-    margin-top: 25px;
-    border: solid 1px @black;
-    width: 200px;
-    padding: 0 0 0 1px;
+  margin-top: 25px;
+  border: solid 1px @black;
+  width: 200px;
+  padding: 0 0 0 1px;
 }
 
-.error{
-    background: @error-color;
+.error {
+  background: @error-color;
 }
 
 .success {
-    background: @success-color;
+  background: @success-color;
 }
 
 /********************************/
@@ -161,32 +227,64 @@ color: @inactive-link-color;
 /********************************/
 
 .center {
-    text-align: center;
+  text-align: center;
 }
 
 .inactive {
-    color: @light-gray;
+  color: @light-gray;
 }
 
 .right {
-    text-align: right;
+  text-align: right;
 }
 
 .list {
-    border-top: dashed 1px @light-gray;
+  border-top: dashed 1px @light-gray;
 }
 
-.padding_left{
-    padding-left: 4px;
+.padding_left(@value: 4px) {
+  padding-left: @value;
+}
+
+.padding_right(@value: 4px) {
+  padding-right: @value;
 }
 
 /********************************/
 /*********Image styling**********/
 /********************************/
 
-.image_float_left{
-    float: left;
-    padding: 5px;
-    margin-right: 5px;
-    border-right: 1px solid @base-color;
- }
+.image_float_left {
+  float: left;
+  padding: 5px;
+  margin-right: 5px;
+  border-right: 1px solid @base-color;
+}
+
+.image_margin {
+  margin: 5px;
+}
+
+/********************************/
+/**************Mixins************/
+/********************************/
+
+.grey_dashed_border(all) {
+  border: 1px dashed @light-gray;
+}
+
+.grey_dashed_border(top) {
+  border-top: 1px dashed @light-gray;
+}
+
+.grey_dashed_border(right) {
+  border-right: 1px dashed @light-gray;
+}
+
+.grey_dashed_border(bottom) {
+  border-bottom: 1px dashed @light-gray;
+}
+
+.grey_dashed_border(left) {
+  border-left: 1px dashed @light-gray;
+}

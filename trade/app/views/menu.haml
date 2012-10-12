@@ -1,0 +1,20 @@
+#menu
+  %ul
+    - if session[:name]
+      %li
+        %a{:href => url("/")} Home
+      %li
+        %a{:href => url("/user/#{session[:name]}")} Your profile
+      %li
+        %a{:href => url("/user")} All users
+      %li
+        %a{:href => url("/additem")} Add Item
+      %li
+        %a{:href => url("/change_password")} Change Password
+      %li
+        %a{:href => url("/logout")} Logout
+    - else
+      %li
+        %a{:href => url("/login")} Login
+      %li
+        %a{:href => url("/register")} Register
