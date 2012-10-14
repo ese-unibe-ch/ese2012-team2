@@ -38,9 +38,9 @@ class Authentication < Sinatra::Application
   end
 
 
-  #SH Shows the register form
+  #SH Shows a form to register new user
   get "/register" do
-    haml :register
+    haml :register, :locals=>{:message => nil}
   end
 
   #SH Adds an user an redirect to the login page
