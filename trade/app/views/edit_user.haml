@@ -1,0 +1,23 @@
+-if message == "user_exists"
+  .error
+    User already exists.
+%h1 Edit user
+%form{:action=>"/user/#{user}/edit", :method=>"POST"}
+  %table
+    %tr
+      %td
+        %label
+        Username:
+      %td
+        %input{:type=>"text", :name=>"username", :value=>"#{user.name}"}
+    %tr
+      %td
+        %label
+          Image:
+          %br
+          %input{:type=>"file", :name=>"image"}
+          %br
+    %tr
+      %td
+      %td
+        %input{:type=>"submit", :class=>"button_margin", :value => "Save"}
