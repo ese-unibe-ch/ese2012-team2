@@ -73,7 +73,6 @@ class ItemController < BaseController
 
   get "/item/:item/edit" do
     item = @data.item_by_id params[:item].to_i
-
     haml :edit_item, :locals => {:item => item, :message => nil}
   end
 
