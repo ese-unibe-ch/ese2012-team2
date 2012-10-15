@@ -7,7 +7,7 @@
     %li
       %a{:href=> url("/user/#{@active_user.name}")} View profile
     %li
-      %a{:href=> url("#")} Edit profile
+      %a{:href=> url("/user/#{@active_user}/edit")} Edit profile
 - else
   %h1 Not logged in
   %ul
