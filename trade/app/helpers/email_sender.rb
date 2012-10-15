@@ -14,9 +14,9 @@ class EmailSender
   }
 
   def self.send_new_password(user, pw)
-     Pony.mail ({
+     Pony.mail({
        #:to => user.mail,
-       :to => 'kenneth.radunz@web.de',
+       :to => user.email,
        :body => "Dear #{user.name}
 Your password was reset.
 Your new password is #{pw}.
