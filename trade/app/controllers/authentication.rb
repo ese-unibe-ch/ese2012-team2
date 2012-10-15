@@ -40,7 +40,7 @@ class Authentication < Sinatra::Application
   end
 
 
-  #SH Shows the register form
+  #SH Shows a form to register new user
   get "/register" do
     @title = "Register"
     haml :register, :locals => {:message => nil}

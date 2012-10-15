@@ -3,7 +3,7 @@ require "digest/md5"
 module Models
   class User
     @@users = Array.new #SH A list of all users
-    attr_accessor :name, :credits, :passwd_hash, :image
+    attr_accessor :name, :credits, :passwd_hash, :image, :email
 
     #SH Gets a user by its name
     def self.by_name(name)
@@ -16,8 +16,8 @@ module Models
     end
 
     #SH Creates a new user with his name
-    def self.named(name, passwd)
-     user = self.new(name, passwd)
+    def self.named(name, passwd, email)
+     user = self.new(name, passwd, email)
      @@users.push(user)
      user
     end
@@ -28,9 +28,10 @@ module Models
     end
 
     #SH Setup standard values
-    def initialize (name, passwd)
+    def initialize (name, passwd, email)
       self.credits=100
       self.name = name
+      self.email = email
       set_passwd(passwd)
     end
 

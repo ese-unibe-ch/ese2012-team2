@@ -23,6 +23,8 @@
     #page
       #side_box
         =haml :side_box, locals => {:user => @active_user}
+            %li.menu_entry
+              %a{:href => url("/reset_password")} Reset Password
       #content
         = yield
     #footer_border

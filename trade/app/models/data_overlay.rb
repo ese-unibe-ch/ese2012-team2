@@ -110,8 +110,8 @@ module Models
       @users[user.name] = user
     end
 
-    def new_user(name, pw)
-      user =  User.named(name, pw)
+    def new_user(name, pw, email)
+      user =  User.named(name, pw, email)
       add_user user
       return user
     end
