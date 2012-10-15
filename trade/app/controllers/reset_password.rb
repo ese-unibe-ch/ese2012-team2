@@ -1,6 +1,7 @@
 require_relative '../models/data_overlay'
 require_relative '../helpers/email_sender'
 class ResetPassword  < Sinatra::Application
+
   before  do
      @overlay = Models::DataOverlay.instance
   end

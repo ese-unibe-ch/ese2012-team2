@@ -15,10 +15,10 @@ require_relative 'models/data_overlay'
 class App < Sinatra::Base
 
   use Authentication
+  use ResetPassword
   use Main
   use ItemController
   use ChangePassword
-  use ResetPassword
 
   enable :sessions
   set :show_exceptions, false
