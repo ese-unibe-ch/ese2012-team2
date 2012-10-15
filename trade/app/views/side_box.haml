@@ -1,6 +1,6 @@
 -unless(@active_user == nil)
-  %h1 #{@active_user.name}
-  %img{:src => url("#{@active_user.image_path}", :alt=>"")}
+  %h1 Logged in as: #{@active_user.name}
+  %img{:src => url("#{@active_user.image_path}"), :alt=>"User Image"}
   %br
   Your credits: #{@active_user.credits}
   %ul
@@ -8,3 +8,10 @@
       %a{:href=> url("/user/#{@active_user.name}")} View profile
     %li
       %a{:href=> url("#")} Edit profile
+- else
+  %h1 Not logged in
+  %ul
+    %li
+      %a{:href => url("/login")} Login
+    %li
+      %a{:href => url("/register")} Register

@@ -12,11 +12,13 @@ class Main  < BaseController
 
   #SH Check if logged in and show a list of all active items if true
   get "/index" do
+    @title = "Home"
     haml :index, :locals => {:current_name => session[:name], :items => @data.all_items, :error => nil }
   end
 
   #SH Shows all items of a user
   get "/user/:name" do
+    @title = "User " + params[:name]
     user = @data.user_by_name(params[:name])
     if user.name == @active_user.name
      items = @data.items_by_user(user)
@@ -39,11 +41,13 @@ class Main  < BaseController
 
   #SH Shows errors caused by buy on the main page
   get "/index/:error" do
+    @title = "Home"
     haml :index, :locals => {:current_name => session[:name], :items => @data.all_items, :error => params[:error] }
   end
 
   #SH Shows a list of all user and their credits
   get "/user" do
+    @title = "All users"
     haml :users, :locals => {:users => Models::User.all}
   end
 end

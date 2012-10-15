@@ -50,11 +50,13 @@ class ItemController < BaseController
 
   #SH Shows a form to add items
   get "/additem" do
+    @title = "Add item"
     haml :add_new_item, :locals=>{:message => nil}
   end
 
   #SH Shows either an error or an success message above the add item form
   get "/additem/:message" do
+    @title = "Add item"
     haml :add_new_item, :locals=>{:message => params[:message]}
   end
 
@@ -68,12 +70,13 @@ class ItemController < BaseController
 
   get "/item/:item" do
     item = @data.item_by_id params[:item].to_i
+    @title = "Item " + item.name
     haml :item, :locals => {:item => item}
   end
 
   get "/item/:item/edit" do
     item = @data.item_by_id params[:item].to_i
-
+    @title = "Edit item " + item.name
     haml :edit_item, :locals => {:item => item, :message => nil}
   end
 
@@ -110,6 +113,7 @@ class ItemController < BaseController
   end
 
   get "/item/:item/edit/:message" do
+    title = "Edit item " + item.name
     haml :edit_item, :locals=>{:item => @data.item_by_id(params[:item].to_i), :message => params[:message]}
   end
 

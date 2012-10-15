@@ -8,5 +8,6 @@ class BaseController < Sinatra::Application
     #set current user
     @data = Models::DataOverlay.instance
     @active_user = @data.user_by_name(session[:name])
+    @title = ""
   end
 end

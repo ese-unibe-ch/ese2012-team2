@@ -8,11 +8,13 @@ class Authentication < Sinatra::Application
 
   #SH The normal login page
   get "/login" do
+    @title = "Login"
     haml :login, :locals =>{:error => nil}
   end
 
   #SH The login page when an error occurred
   get "/login/:error" do
+    @title = "Login"
     haml :login , :locals =>{:error => params[:error]}
   end
 
@@ -40,7 +42,8 @@ class Authentication < Sinatra::Application
 
   #SH Shows the register form
   get "/register" do
-    haml :register
+    @title = "Register"
+    haml :register, :locals => {:message => nil}
   end
 
   #SH Adds an user an redirect to the login page
@@ -63,6 +66,7 @@ class Authentication < Sinatra::Application
 
   #AS sending a message about success to the register view
   get "/register/:message" do
+    @title = "Register"
     haml :register, :locals=>{:message => params[:message]}
   end
 
