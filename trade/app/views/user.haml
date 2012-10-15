@@ -10,6 +10,8 @@
   Credits: #{user.credits}
   #userimage
     %img{:src => user.image_path, :width => "150", :alt=>"User image"}
+  %a{:href => "/user/#{user}/edit"}Edit profile
+  %p
   %h2 Items
   %table
     %tr
