@@ -3,7 +3,7 @@ require_relative "password"
 module Models
   class User
     @@users = Array.new #SH A list of all users
-    attr_accessor :name, :credits, :password, :image, :email, :interests
+    attr_accessor :name, :displayname, :credits, :password, :image, :email, :interests
 
     #SH Gets a user by its name
     def self.by_name(name)
@@ -16,8 +16,8 @@ module Models
     end
 
     #SH Creates a new user with his name
-    def self.named(name, passwd, email, interests)
-     user = self.new(name, passwd, email, interests)
+    def self.named(name, displayname, passwd, email, interests)
+     user = self.new(name, displayname, passwd, email, interests)
      @@users.push(user)
      user
     end
@@ -29,9 +29,10 @@ module Models
     end
 
     #SH Setup standard values
-    def initialize (name, passwd, email, interests)
+    def initialize (name, displayname, passwd, email, interests)
       self.credits=100
       self.name = name
+      self.displayname = displayname
       self.email = email
       self.password= Models::Password.make(passwd)
       self.interests= interests

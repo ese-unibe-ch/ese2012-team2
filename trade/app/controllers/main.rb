@@ -52,28 +52,23 @@ class Main  < BaseController
   end
 
   get "/user/:user/edit" do
-    name = params[:username]
-    user = @data.user_by_name name
-    haml :edit_user, :locals=>{:user=>user, :message=>nil}
+    haml :edit_user, :locals=>{:message=>nil}
   end
 
   post "/user/:user/edit" do
-    name = params[:username]
-    user = @data.user_by_name name
 
-    if @data.user_exists?(params[:username])
-      redirect "/register/user_exists"
+    if @data.user_exists?(params[:display_name])
+      redirect "/user/#{@active_user.name}/edit/user_exists"
     else
-      user.name = name
-      user.image = ImageHelper.save params[:image], settings.public_folder
+      @active_user.displayname = params[:display_name]
+    #TODO edit image
+      @active_user.interests = params[:interests]
     end
-    redirect back
+    redirect "/user/#{@active_user.name}"
   end
 
   get "/user/:user/edit/:message" do
-    name = params[:username]
-    user = @data.user_by_name name
-    haml :edit_user, :locals=>{:user=>user, :message=>params[:message]}
+    haml :edit_user, :locals=>{:message=>params[:message]}
   end
 
 end
