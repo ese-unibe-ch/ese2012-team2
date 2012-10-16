@@ -52,7 +52,7 @@ class Authentication < Sinatra::Application
   post "/register" do
     if Models::User.passwd_valid?(params[:passwd])
       if params[:passwd]==params[:passwd_repetition]
-        unless @data.user_exists?(params[:username])
+        unless @data.user_exists?(params[:username]) and @data.user_display_name_exists?(params[:display_name])
           @data.new_user(params[:username], params[:display_name], params[:passwd], params[:email], params[:interests])
           #TODO Add image to user
           redirect "/login"
