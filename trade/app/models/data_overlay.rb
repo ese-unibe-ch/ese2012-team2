@@ -101,6 +101,15 @@ module Models
       @users.member?(name)
     end
 
+    def user_display_name_exists?(display_name)
+      @users.each do |user|
+        if user[1].displayname == display_name
+          return true
+        end
+      end
+      return false
+    end
+
     #KR adds a new user to the environment
     # if name or id are already in use, this function raises an error
     def add_user(user)

@@ -6,7 +6,7 @@
   })
 
 - if !user.nil? #SH Only show this for an existing user
-  %h1 User #{user.name}
+  %h1 User #{user.displayname}
   Credits: #{user.credits}
   #userimage
     %img{:src => user.image_path, :width => "150", :alt=>"User image"}

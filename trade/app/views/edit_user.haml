@@ -1,6 +1,6 @@
 -if message == "user_exists"
   .error
-    User already exists.
+    Name already exists.
 %h1 Edit user
 %form{:action=>"/user/#{@active_user.name}/edit", :method=>"POST"}
   %label
