@@ -1,7 +1,7 @@
 require_relative '../models/user'
-require_relative 'base_controller'
+require_relative 'base_secure_controller'
 
-class ChangePassword < BaseController
+class ChangePassword < BaseSecureController
 
   #AS if not logged in => log in!
   get "/change_password" do

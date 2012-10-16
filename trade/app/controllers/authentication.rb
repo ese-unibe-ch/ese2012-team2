@@ -2,7 +2,7 @@ require_relative '../models/user'
 require_relative '../helpers/image_helper'
 require_relative 'base_controller'
 
-class Authentication < Sinatra::Application
+class Authentication < BaseController
 
   before do
     @data = Models::DataOverlay.instance

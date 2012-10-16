@@ -1,9 +1,9 @@
 require_relative '../models/item'
 require_relative '../models/user'
 require 'digest/md5'
-require_relative 'base_controller'
+require_relative 'base_secure_controller'
 
-class Main  < BaseController
+class Main  < BaseSecureController
 
   attr_accessor :items
 
