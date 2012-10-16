@@ -11,6 +11,12 @@
 -if message == "display_name_exists"
   .error
     Display name already exists.
+-if message == "incorrect_email"
+  .error
+    Incorrect email address.
+-if message == "missing_data"
+  .error
+    Data are missing.
 %h1 Add new user
 %form{:action=>"/register", :method=>"POST"}
   %table

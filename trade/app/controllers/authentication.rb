@@ -1,7 +1,7 @@
 require_relative '../models/user'
 require_relative '../helpers/image_helper'
 require_relative 'base_controller'
-require_relative '../helpers/username_helper'
+require_relative '../helpers/user_data_helper'
 
 class Authentication < Sinatra::Application
 
@@ -53,8 +53,19 @@ class Authentication < Sinatra::Application
   post "/register" do
     if Models::User.passwd_valid?(params[:passwd])
       if params[:passwd]==params[:passwd_repetition]
-        unless @data.user_exists?(params[:username]) and @data.user_display_name_exists?(params[:display_name])
-          @data.new_user(params[:username], params[:display_name], params[:passwd], params[:email], params[:interests])
+        unless @data.user_exists?(params[:username])
+          display_name = params[:display_name]
+          display_name = UserDataHelper.remove_white_spaces(display_name)
+          if params[:username] == "" || params[:display_name] == "" || params[:passwd] == "" || params[:email] == ""
+            redirect "/register/missing_data"
+          else if @data.user_display_name_exists?(display_name)
+            redirect "/register/display_name_exists"
+            end
+            if !UserDataHelper.right_email?(params[:email])
+            redirect "/register/incorrect_email"
+            end
+          end
+          @data.new_user(params[:username], display_name, params[:passwd], params[:email], params[:interests])
           #TODO Add image to user
           redirect "/login"
         else

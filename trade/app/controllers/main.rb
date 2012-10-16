@@ -2,7 +2,7 @@ require_relative '../models/item'
 require_relative '../models/user'
 require 'digest/md5'
 require_relative 'base_controller'
-require_relative '../helpers/username_helper'
+require_relative '../helpers/user_data_helper'
 
 class Main  < BaseController
 
@@ -59,7 +59,7 @@ class Main  < BaseController
   post "/user/:user/edit" do
     display_name = params[:display_name]
 
-    display_name = UsernameHelper.remove_white_spaces(display_name)
+    display_name = UserDataHelper.remove_white_spaces(display_name)
 
     if @data.user_display_name_exists?(display_name) and display_name != @active_user.displayname
       redirect "/user/#{@active_user.name}/edit/user_exists"

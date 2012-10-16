@@ -1,4 +1,4 @@
-class UsernameHelper
+class UserDataHelper
 
   def self.remove_white_spaces(display_name)
     while(display_name.start_with?(" "))
@@ -9,6 +9,13 @@ class UsernameHelper
       display_name = display_name.chop
     end
     display_name
+  end
+
+  def self.right_email?(email)
+    if email.include? '@' and email.include? '.'
+      return true
+    end
+    return false
   end
 
 
