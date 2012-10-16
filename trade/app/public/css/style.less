@@ -39,8 +39,8 @@ body {
   bottom: 10px;
 }
 
-#logo p{
-  display: inline;
+#logo a, #logo a:hover{
+  color: @logo-color;
 }
 
 #page {
@@ -91,11 +91,10 @@ body {
 }
 
 #footer{
-  @padding: 10px;
+  @padding: 1px;
   position: relative;
   clear: both;
   width: inherit - 2*@padding;
-  min-height: 2em;
   background-color: @content-background-color;
   text-align: center;
   padding: @padding;
