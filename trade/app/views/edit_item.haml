@@ -16,17 +16,17 @@
   %label
     Name*:
   %br
-  %input{:type => "text", :name => "name", :value => "#{item.name}"}
+  %input.normal_input{:type => "text", :name => "name", :value => "#{item.name}"}
   %br
   %label
     Price*:
   %br
-  %input{:type => "text", :name => "price", :value => "#{item.price}"}
+  %input.normal_input{:type => "text", :name => "price", :value => "#{item.price}"}
   %br
   %label
     Description:
   %br
-  %textarea{:name => "description", :style => "width:500px; height:100px"}
+  %textarea.normal_input{:name => "description", :style => "width:500px; height:100px"}
     #{item.description}
   %br
   %label
@@ -36,5 +36,5 @@
   %br
   %input{:type=>"file", :name=>"image"}
   %br
-  %input{:type => "submit",:class=>"button_margin", :value => "Save"}
+  %input.normal_input{:type => "submit",:class=>"button_margin", :value => "Save"}
 

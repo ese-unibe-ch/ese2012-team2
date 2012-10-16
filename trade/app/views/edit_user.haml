@@ -5,7 +5,7 @@
 %form{:action=>"/user/#{@active_user.name}/edit", :method=>"POST"}
   %label
     Display name:
-  %input{:type=>"text", :name=>"display_name", :value => "#{@active_user.displayname}"}
+  %input.normal_input{:type=>"text", :name=>"display_name", :value => "#{@active_user.displayname}"}
   %br
   %label
     Image:
@@ -15,7 +15,7 @@
   %label
     List of interests:
   %br
-  %textarea{:name => "interests", :style => "width:500px; height:100px"}
+  %textarea.normal_input{:name => "interests", :style => "width:500px; height:100px"}
     #{@active_user.interests}
   %br
-  %input{:type=>"submit", :class=>"button_margin", :value => "Save"}
+  %input.normal_input{:type=>"submit", :class=>"button_margin", :value => "Save"}
