@@ -17,6 +17,9 @@
 -if message == "missing_data"
   .error
     Data are missing.
+-if message == "success"
+  .success
+    Successful registered.
 %h1 Add new user
 %form{:action=>"/register", :method=>"POST"}
   %table

@@ -5,7 +5,7 @@
 %form{:action=>"/user/#{@active_user.name}/edit", :method=>"POST"}
   %label
     Display name:
-  %input.normal_input{:type=>"text", :name=>"display_name", :value => "#{@active_user.displayname}"}
+  %input.normal_input{:type=>"text", :name=>"display_name", :value => "#{@active_user.display_name}"}
   %br
   %label
     Image:

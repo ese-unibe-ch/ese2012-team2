@@ -20,42 +20,42 @@ class ItemController < BaseController
     redirect back
   end
 
-  #SH Tries to add an item. Redirect to the additem message page.
-  post "/additem" do
+  #SH Tries to add an item. Redirect to the add item message page.
+  post "/add_item" do
 
     name = params[:name]
     price = params[:price]
     description = params[:description]
 
     if ItemValidator.name_empty?(name)
-      redirect "/additem/invalid_item"
+      redirect "/add_item/invalid_item"
     end
 
     price = ItemValidator.delete_leading_zeros(price)
 
     #SH Check if price is an int
     unless ItemValidator.price_is_integer?(price)
-      redirect "/additem/invalid_price"
+      redirect "/add_item/invalid_price"
     end
 
     if ItemValidator.price_negative?(price)
-      redirect "/additem/negative_price"
+      redirect "/add_item/negative_price"
     end
 
     filename = ImageHelper.save params[:image], settings.public_folder
 
     @data.new_item(name, price.to_i, description, @active_user, false, filename)
-    redirect "/additem/success"
+    redirect "/add_item/success"
   end
 
   #SH Shows a form to add items
-  get "/additem" do
+  get "/add_item" do
     @title = "Add item"
     haml :add_new_item, :locals=>{:message => nil}
   end
 
   #SH Shows either an error or an success message above the add item form
-  get "/additem/:message" do
+  get "/add_item/:message" do
     @title = "Add item"
     haml :add_new_item, :locals=>{:message => params[:message]}
   end

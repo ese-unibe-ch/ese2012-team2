@@ -103,7 +103,7 @@ module Models
 
     def user_display_name_exists?(display_name)
       @users.each do |user|
-        if user[1].displayname == display_name
+        if user[1].display_name == display_name
           return true
         end
       end
@@ -119,8 +119,8 @@ module Models
       @users[user.name] = user
     end
 
-    def new_user(name, displayname, pw, email, interests = nil)
-      user =  User.named(name, displayname, pw, email, interests)
+    def new_user(name, display_name, pw, email, interests = nil)
+      user =  User.named(name, display_name, pw, email, interests)
       add_user user
       return user
     end

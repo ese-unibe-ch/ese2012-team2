@@ -61,10 +61,10 @@ class Main  < BaseController
 
     display_name = UserDataHelper.remove_white_spaces(display_name)
 
-    if @data.user_display_name_exists?(display_name) and display_name != @active_user.displayname
+    if @data.user_display_name_exists?(display_name) and display_name != @active_user.display_name
       redirect "/user/#{@active_user.name}/edit/user_exists"
     else
-      @active_user.displayname = display_name
+      @active_user.display_name = display_name
     #TODO edit image
       @active_user.interests = params[:interests]
     end

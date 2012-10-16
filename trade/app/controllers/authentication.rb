@@ -67,7 +67,7 @@ class Authentication < Sinatra::Application
           end
           @data.new_user(params[:username], display_name, params[:passwd], params[:email], params[:interests])
           #TODO Add image to user
-          redirect "/login"
+          redirect "/register/success"
         else
           redirect "/register/user_exists"
         end
