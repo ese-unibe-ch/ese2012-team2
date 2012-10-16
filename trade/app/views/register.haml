@@ -8,6 +8,9 @@
 -if message == "user_exists"
   .error
     User already exists.
+-if message == "display_name_exists"
+  .error
+    Display name already exists.
 %h1 Add new user
 %form{:action=>"/register", :method=>"POST"}
   %table
