@@ -5,6 +5,8 @@ require_relative 'base_controller'
 
 class Main  < BaseController
 
+  attr_accessor :items
+
   #SH Redirect to the main page
   get "/" do
     redirect "/index"
@@ -12,7 +14,8 @@ class Main  < BaseController
 
   #SH Check if logged in and show a list of all active items if true
   get "/index" do
-    haml :index, :locals => {:current_name => session[:name], :items => @data.all_items, :error => nil }
+    self.items = @data.all_items
+    haml :index, :locals => {:error => nil }
   end
 
   #SH Shows all items of a user

@@ -1,6 +1,6 @@
 class BaseController < Sinatra::Application
 
-  attr_accessor :message
+  attr_accessor :message, :active_user
 
   before do
     #redirect to login
@@ -8,5 +8,9 @@ class BaseController < Sinatra::Application
     #set current user
     @data = Models::DataOverlay.instance
     @active_user = @data.user_by_name(session[:name])
+  end
+
+  def add_message(text, type=:info)
+    self.message = {:type => type, :text => text}
   end
 end
