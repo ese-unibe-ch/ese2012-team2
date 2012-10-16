@@ -14,22 +14,36 @@
     %tr
       %td
         %label
-        Username:
+        Username*:
       %td
         %input{:type=>"text", :name=>"username"}
     %tr
       %td
         %label
-          Password:
+        Email*:
+      %td
+        %input{:type=>"text", :name=>"email"}
+    %tr
+      %td
+        %label
+          Password*:
       %td
         %input{:type=>"password", :name=>"passwd"}
     %tr
       %td
         %label
-          Repeat password:
+          Repeat password*:
       %td
         %input{:type=>"password", :name=>"passwd_repetition"}
-    %tr
-      %td
-      %td
-        %input{:type=>"submit"}
+
+  %label
+    List of interests:
+  %br
+  %textarea{:name => "interests", :style => "width:500px; height:100px"}
+  %br
+  %label
+    User image:
+  %input{:type=>"file", :name=>"image"}
+  %br
+  %br
+  %input{:type => "submit", :value => "Register"}

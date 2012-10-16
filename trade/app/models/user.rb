@@ -1,9 +1,9 @@
 require "digest/md5"
-
+require_relative "password"
 module Models
   class User
     @@users = Array.new #SH A list of all users
-    attr_accessor :name, :credits, :passwd_hash, :image
+    attr_accessor :name, :credits, :password, :image, :email, :interests
 
     #SH Gets a user by its name
     def self.by_name(name)
@@ -16,8 +16,8 @@ module Models
     end
 
     #SH Creates a new user with his name
-    def self.named(name, passwd)
-     user = self.new(name, passwd)
+    def self.named(name, passwd, email, interests)
+     user = self.new(name, passwd, email, interests)
      @@users.push(user)
      user
     end
@@ -25,13 +25,16 @@ module Models
     #AS Checks if a password is valid (criteria need to be defined - at the moment it's just a "not-empty-test")
     def self.passwd_valid?(password)
       !password.nil? and password.length > 7 and password.match('^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$')
+      true
     end
 
     #SH Setup standard values
-    def initialize (name, passwd)
+    def initialize (name, passwd, email, interests)
       self.credits=100
       self.name = name
-      set_passwd(passwd)
+      self.email = email
+      self.password= Models::Password.make(passwd)
+      self.interests= interests
     end
 
     #SH Returns the name of the user
@@ -76,20 +79,11 @@ module Models
       self.items.select {|item| item.active}
     end
 
-    #AS Encrypts a given string and returns it.
-    def encrypt(passwd)
-      digest= Digest::MD5.digest(passwd)
-      digest
-    end
 
-    #AS Sets the password.
-    def set_passwd(passwd)
-      self.passwd_hash= encrypt(passwd)
-    end
 
     #AS Checks if the given password is correct.
     def authenticated?(passwd)
-      self.passwd_hash==encrypt(passwd)
+      self.password.authenticated?(passwd)
     end
 
     def image_path

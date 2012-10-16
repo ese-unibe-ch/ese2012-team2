@@ -20,7 +20,7 @@ class DataOverlayTest < Test::Unit::TestCase
 
   def test_new_user
     overlay =  Models::DataOverlay.instance
-    user = Models::User.named("first user", "pw first user")
+    user = Models::User.named("first user", "pw first user", "ese@ese.unibe.ch")
     assert_nil(overlay.user_by_name(user.name))
     overlay.new_user(user)
     assert_equal(user, overlay.user_by_name(user.name))
