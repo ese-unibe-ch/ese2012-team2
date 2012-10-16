@@ -2,6 +2,7 @@ require_relative '../models/item'
 require_relative '../models/user'
 require 'digest/md5'
 require_relative 'base_controller'
+require_relative '../helpers/username_helper'
 
 class Main  < BaseController
 
@@ -50,4 +51,28 @@ class Main  < BaseController
     @title = "All users"
     haml :users, :locals => {:users => Models::User.all}
   end
+
+  get "/user/:user/edit" do
+    haml :edit_user, :locals=>{:message=>nil}
+  end
+
+  post "/user/:user/edit" do
+    display_name = params[:display_name]
+
+    display_name = UsernameHelper.remove_white_spaces(display_name)
+
+    if @data.user_display_name_exists?(display_name) and display_name != @active_user.displayname
+      redirect "/user/#{@active_user.name}/edit/user_exists"
+    else
+      @active_user.displayname = display_name
+    #TODO edit image
+      @active_user.interests = params[:interests]
+    end
+    redirect "/user/#{@active_user.name}"
+  end
+
+  get "/user/:user/edit/:message" do
+    haml :edit_user, :locals=>{:message=>params[:message]}
+  end
+
 end
