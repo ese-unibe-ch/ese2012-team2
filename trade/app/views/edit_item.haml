@@ -1,15 +1,3 @@
--if message == "negative_price"
-  .error
-    Price must be positive
--if message == "invalid_item"
-  .error
-    Invalid item name
--if message == "invalid_price"
-  .error
-    Your price is not a number
--if message == "success"
-  .success
-    Item edited
 -#FW&MW Shows the edit item form
 %h1 Edit Item
 %form{:action => "/item/#{item.id}/edit", :method => "POST", :enctype=>"multipart/form-data"}

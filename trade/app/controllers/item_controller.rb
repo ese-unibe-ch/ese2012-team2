@@ -27,37 +27,30 @@ class ItemController < BaseSecureController
     price = params[:price]
     description = params[:description]
 
-    if ItemValidator.name_empty?(name)
-      redirect "/add_item/invalid_item"
+    if !ItemValidator.name_empty?(name)
+      price = ItemValidator.delete_leading_zeros(price)
+      #SH Check if price is an int
+      if ItemValidator.price_is_integer?(price)
+        if !ItemValidator.price_negative?(price)
+          image_name = ImageHelper.save params[:image], "#{settings.public_folder}/images/items"
+          @data.new_item(name, price.to_i, description, @active_user, false, image_name)
+          add_message("Item added", :success)
+        else
+          add_message("Price must be positive", :error)
+        end
+      else
+        add_message("Your price is not a number", :error)
+      end
+    else
+      add_message("Invalid item name", :error)
     end
-
-    price = ItemValidator.delete_leading_zeros(price)
-
-    #SH Check if price is an int
-    unless ItemValidator.price_is_integer?(price)
-      redirect "/add_item/invalid_price"
-    end
-
-    if ItemValidator.price_negative?(price)
-      redirect "/add_item/negative_price"
-    end
-
-    filename = ImageHelper.save params[:image], settings.public_folder
-
-    @data.new_item(name, price.to_i, description, @active_user, false, filename)
-    redirect "/add_item/success"
+    haml :add_new_item
   end
 
   #SH Shows a form to add items
   get "/add_item" do
     @title = "Add item"
-    haml :add_new_item, :locals=>{:message => nil}
-  end
-
-  #SH Shows either an error or an success message above the add item form
-  get "/add_item/:message" do
-    @title = "Add item"
-    haml :add_new_item, :locals=>{:message => params[:message]}
+    haml :add_new_item
   end
 
   post "/delete/:item" do
@@ -77,7 +70,7 @@ class ItemController < BaseSecureController
   get "/item/:item/edit" do
     item = @data.item_by_id params[:item].to_i
     @title = "Edit item " + item.name
-    haml :edit_item, :locals => {:item => item, :message => nil}
+    haml :edit_item, :locals => {:item => item}
   end
 
   post "/item/:item/edit" do
@@ -87,34 +80,30 @@ class ItemController < BaseSecureController
       price = params[:price]
       description = params[:description]
 
-      if ItemValidator.name_empty?(name)
-        redirect "/item/#{item.id}/edit/invalid_item"
+      if !ItemValidator.name_empty?(name)
+        price = ItemValidator.delete_leading_zeros(price)
+        #SH Check if price is an int
+        if ItemValidator.price_is_integer?(price)
+
+          if !ItemValidator.price_negative?(price)
+            item.name = name
+            item.price = price
+            item.description = description
+            #PS it's nilsafe ;)
+            item.image = ImageHelper.save params[:image], settings.public_folder + "/images/items"
+            add_message("Item edited", :success)
+          else
+            add_message("Price must be positive", :error)
+          end
+        else
+          add_message("Your price is not a number", :error)
+        end
+      else
+        add_message("Invalid item name", :error)
       end
-
-      price = ItemValidator.delete_leading_zeros(price)
-
-      #SH Check if price is an int
-      unless ItemValidator.price_is_integer?(price)
-        redirect "/item/#{item.id}/edit/invalid_price"
-      end
-
-      if ItemValidator.price_negative?(price)
-        redirect "/item/#{item.id}/edit/negative_price"
-      end
-
-      item.name = name
-      item.price = price
-      item.description = description
-      #PS it's nilsafe ;)
-      item.image = ImageHelper.save params[:image], settings.public_folder + "/images/items"
 
     end
-    redirect "/user/#{@active_user.name}"
-  end
-
-  get "/item/:item/edit/:message" do
-    title = "Edit item " + item.name
-    haml :edit_item, :locals=>{:item => @data.item_by_id(params[:item].to_i), :message => params[:message]}
+    haml :edit_item, :locals=>{:item =>item}
   end
 
 end
