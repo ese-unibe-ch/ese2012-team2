@@ -36,9 +36,9 @@ module Models
       @items.delete item.id
     end
 
-    def new_item(name, price, description, owner, active, image=nil)
+    def new_item(name, price, description, owner, state=:inactive, image=nil)
       item = Item.named name, price, owner, description, image
-      item.active = active
+      item.state = state
       add_item item
       return item
     end
@@ -66,7 +66,7 @@ module Models
       result = Array.new
       @items.each_value {
           |value|
-        if(value.owner==user and value.active)
+        if(value.owner==user and value.state == :active)
           result.push value
         end
       }
@@ -78,7 +78,7 @@ module Models
       result = Array.new
       @items.each_value {
         |value|
-        if(value.active)
+        if(value.state == :active)
           result.push value
         end
       }

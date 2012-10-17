@@ -21,36 +21,35 @@
         %th.padding_left Price
         %th.padding_left Active
       - for item in items
-        - if item.active
-          - type = 'active'
-        - else
-          - type = 'inactive'
+        - type = item.state
         %tr{:class => "#{type}"}
           %td.list
             %a{:href => "/item/#{item.id}",  "data-powertip" => "#{item.description.gsub("\n", "<br>")}</br><img src=#{item.image_path} width=150 />", :class => "powertip"}
               #{item.name}
           %td.list.padding_left #{item.price}
-          - if item.active
+          - if item.state == :active
             %td.list.padding_left yes
             -if user.name==session[:name] #SH If the user shown is the user who is logged in, show de-/activate button
               %td.list
-                %form{:action => "/change/#{item.id}", :method => "POST"}
-                  %input{:type => "submit",:name => "action", :value => "Deactivate", :class => "button_as_link"}
-          - else
+                %form{:action => "/item/#{item.id}/change_state", :method => "POST"}
+                  %input{:type => "hidden", :name => "state", :value => "inactive"}
+                  %input{:type => "submit", :value => "Deactivate", :class => "button_as_link"}
+          - if item.state == :inactive
             %td.list.padding_left no
             -if user.name==session[:name]
               %td.list
-                %form{:action => "/change/#{item.id}", :method => "POST"}
-                  %input{:type => "submit",:name => "action", :value => "Activate", :class => "button_as_link"}
+                %form{:action => "/item/#{item.id}/change_state", :method => "POST"}
+                  %input{:type => "hidden", :name => "state", :value => "active"}
+                  %input{:type => "submit", :value => "Activate", :class => "button_as_link"}
           -if user.name==session[:name]
             %td.list
               %form{:action => "/delete/#{item.id}", :method => "POST"}
                 %input{:type => "submit",:name => "action", :value => "Delete", :class => "button_as_link"}
-          -if !item.active
+          - if item.state == :inactive
             -if user.name==session[:name]
               %td.list
                 %a{:href => "/item/#{item.id}/edit"}Edit
-          -else
+          - else
             %td.list
   - else
     %p

@@ -13,7 +13,7 @@
     %th.padding_left Owner
     %th.center Buy
   - for item in items
-    - if item.active
+    - if item.state == :active
       %tr
         %td.list
           %a{:href => "/item/#{item.id}",  "data-powertip" => "#{item.description.gsub("\n", "<br>")}</br><img src=#{item.image_path} width=150 />", :class => "powertip"}

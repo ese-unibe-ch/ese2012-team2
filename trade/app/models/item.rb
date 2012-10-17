@@ -1,7 +1,7 @@
 module Models
   class Item
 
-    attr_accessor :name, :price, :owner, :active, :description, :image
+    attr_accessor :name, :price, :owner, :state, :description, :image
 
     attr_reader :id
 
@@ -21,11 +21,10 @@ module Models
       self.description= description
       self.image = image
 
-      self.active = false
+      self.state = :inactive
       @id = @@item_count
       @@item_count += 1
     end
-
 
     def to_s
       "#{self.name}, #{self.id}, #{self.owner.name}"

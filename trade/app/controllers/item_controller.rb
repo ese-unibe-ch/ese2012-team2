@@ -6,17 +6,9 @@ require_relative 'base_secure_controller'
 class ItemController < BaseSecureController
 
   #SH Triggers status of an item
-  post "/change/:item" do
+  post "/item/:item/change_state" do
     item = @data.item_by_id(params[:item].to_i)
-
-    if params[:action] == "Activate" && item.owner == @active_user
-      item.active = true
-    end
-
-    if params[:action] == "Deactivate" && item.owner == @active_user
-      item.active = false
-    end
-
+    item.state = params[:state].to_sym
     redirect back
   end
 
@@ -33,7 +25,7 @@ class ItemController < BaseSecureController
       if ItemValidator.price_is_integer?(price)
         if !ItemValidator.price_negative?(price)
           image_name = ImageHelper.save params[:image], "#{settings.public_folder}/images/items"
-          @data.new_item(name, price.to_i, description, @active_user, false, image_name)
+          @data.new_item(name, price.to_i, description, @active_user, :inactive, image_name)
           add_message("Item added", :success)
         else
           add_message("Price must be positive", :error)
