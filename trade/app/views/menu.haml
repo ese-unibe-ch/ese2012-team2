@@ -10,7 +10,7 @@
       %li
         %a{:href => url("/add_item"), :class => [@title == "Add item" && [:active_tab]]} Add Item
       %li
-        %a{:href => url("/change_password")} Change Password
+        %a{:href => url("/change_password"), :class => [@title == "Change Password" && [:active_tab]]} Change Password
       %li
         %a{:href => url("/logout")} Logout
     - else
@@ -19,4 +19,4 @@
       %li
         %a{:href => url("/register"), :class => [@title == "Register" && [:active_tab]]} Register
       %li
-        %a{:href => url("/reset_password")} Reset Password
+        %a{:href => url("/reset_password"), :class => [@title == "Reset Password" && [:active_tab]]} Reset Password

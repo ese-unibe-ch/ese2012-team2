@@ -56,6 +56,7 @@ class Main  < BaseSecureController
   end
 
   get "/user/:user/edit" do
+    @title = "Edit user " + params[:user]
     haml :edit_user, :locals=>{:message=>nil}
   end
 
@@ -75,6 +76,7 @@ class Main  < BaseSecureController
   end
 
   get "/user/:user/edit/:message" do
+    @title = "Edit user " + params[:user]
     haml :edit_user, :locals=>{:message=>params[:message]}
   end
 

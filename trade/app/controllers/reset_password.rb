@@ -7,6 +7,7 @@ class ResetPassword  < BaseController
   end
 
   get "/reset_password" do
+    @title = "Reset Password"
     redirect '/user' if session[:name] #KR if user is already logged in, send him to his profile
     haml :reset_password, :locals => {:message => nil}
   end

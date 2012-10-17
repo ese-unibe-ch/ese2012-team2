@@ -5,6 +5,7 @@ class ChangePassword < BaseSecureController
 
   #AS if not logged in => log in!
   get "/change_password" do
+    @title = "Change Password"
     haml :change_password
   end
 
