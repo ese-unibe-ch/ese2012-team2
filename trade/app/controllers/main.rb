@@ -47,7 +47,7 @@ class Main  < BaseSecureController
   #SH Shows a list of all user and their credits
   get "/user" do
     @title = "All users"
-    haml :users, :locals => {:users => Models::User.all}
+    haml :users, :locals => {:users => @data.all_users}
   end
 
   get "/user/:user/edit" do

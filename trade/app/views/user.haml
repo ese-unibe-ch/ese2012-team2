@@ -19,7 +19,7 @@
       %tr
         %th Name
         %th.padding_left Price
-        %th.padding_left Active
+        %th.padding_left State
       - for item in items
         - type = item.state
         %tr{:class => "#{type}"}
@@ -27,36 +27,36 @@
             %a{:href => "/item/#{item.id}",  "data-powertip" => "#{item.description.gsub("\n", "<br>")}</br><img src=#{item.image_path} width=150 />", :class => "powertip"}
               #{item.name}
           %td.list.padding_left #{item.price}
-          - if item.state == :active
-            %td.list.padding_left yes
-            -if user.name==session[:name] #SH If the user shown is the user who is logged in, show de-/activate button
+          %td.list.padding_left #{item.state}
+
+
+          -if user == @active_user
+            - if item.state == :active
               %td.list
                 %form{:action => "/item/#{item.id}/change_state", :method => "POST"}
                   %input{:type => "hidden", :name => "state", :value => "inactive"}
                   %input{:type => "submit", :value => "Deactivate", :class => "button_as_link"}
-          - if item.state == :inactive
-            %td.list.padding_left no
-            -if user.name==session[:name]
+            - if item.state == :inactive
               %td.list
                 %form{:action => "/item/#{item.id}/change_state", :method => "POST"}
                   %input{:type => "hidden", :name => "state", :value => "active"}
                   %input{:type => "submit", :value => "Activate", :class => "button_as_link"}
-          - if item.state == :pending
-            %td.list.padding_left no
-            -if user.name==session[:name]
+            - if item.state == :pending
               %td.list
                 %form{:action => "/item/#{item.id}/confirm_buy", :method => "POST"}
                   %input{:type => "submit", :value => "Confirm receipt", :class => "button_as_link"}
-          -if user.name==session[:name]
-            %td.list
-              %form{:action => "/delete/#{item.id}", :method => "POST"}
-                %input{:type => "submit",:name => "action", :value => "Delete", :class => "button_as_link"}
-          - if item.state == :inactive
-            -if user.name==session[:name]
+            - unless item.state == :pending
+              %td.list
+                %form{:action => "/delete/#{item.id}", :method => "POST"}
+                  %input{:type => "submit",:name => "action", :value => "Delete", :class => "button_as_link"}
+            - if item.state == :inactive
               %td.list
                 %a{:href => "/item/#{item.id}/edit"}Edit
           - else
-            %td.list
+            - if item.state == :active
+              %td.list
+                %form{:action => "/buy/#{item.id}", :method => "POST"}
+                  %input{:type => "submit",:name => "action", :value => "Buy", :class => "button_as_link"}
   - else
     %p
       User #{user.display_name} has currently no items
