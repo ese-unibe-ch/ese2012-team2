@@ -80,6 +80,11 @@ module Models
       self.items.select {|item| item.active}
     end
 
+    #AS Sets the password.
+    def set_passwd(passwd)
+      self.passwd_hash= encrypt(passwd)
+    end
+
     #AS Checks if the given password is correct.
     def authenticated?(passwd)
       self.password.authenticated?(passwd)

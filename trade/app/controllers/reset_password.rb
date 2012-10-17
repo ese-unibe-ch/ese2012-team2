@@ -17,7 +17,7 @@ class ResetPassword  < BaseController
     user = @overlay.user_by_name params[:username]
     redirect "/reset_password/#{params[:username]}" unless user
     pw= ResetPassword.random_password
-    user.set_passwd pw
+    user.password = Models::Password.make(pw)
     EmailSender.send_new_password(user, pw)
     redirect '/login'
   end
