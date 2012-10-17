@@ -11,14 +11,8 @@ class Authentication < BaseController
 
   #SH The normal login page
   get "/login" do
-    @title = "Login"
-    haml :login, :locals =>{:error => nil}
-  end
-
-  #SH The login page when an error occurred
-  get "/login/:error" do
-    @title = "Login"
-    haml :login , :locals =>{:error => params[:error]}
+    self.title = "Login"
+    haml :login
   end
 
   #SH Checks whether login was successful and if so, log the user in.
@@ -28,12 +22,12 @@ class Authentication < BaseController
     password = params[:password]
     user = @data.user_by_name name
     if user.nil? || !user.authenticated?(password)
-      redirect '/login/wrong'
+      add_message("Wrong login", :error)
+      haml '/login'
     else
       session[:name] = name
-      redirect '/'
+      redirect '/index'
     end
-
   end
 
   #SH Logs the user out
@@ -46,7 +40,7 @@ class Authentication < BaseController
   #SH Shows a form to register new user
   get "/register" do
     @title = "Register"
-    haml :register, :locals => {:message => nil}
+    haml :register
   end
 
   #SH Adds an user an redirect to the login page
@@ -57,32 +51,27 @@ class Authentication < BaseController
           display_name = params[:display_name]
           display_name = UserDataHelper.remove_white_spaces(display_name)
           if params[:username] == "" || params[:display_name] == "" || params[:passwd] == "" || params[:email] == ""
-            redirect "/register/missing_data"
+            add_message("Data are missing.", :error)
           else if @data.user_display_name_exists?(display_name)
-            redirect "/register/display_name_exists"
-            end
+            add_message("Display name already exists.", :error)
+          end
             if !UserDataHelper.right_email?(params[:email])
-            redirect "/register/incorrect_email"
+              add_message("Incorrect email address.", :error)
             end
           end
           new_user = @data.new_user(params[:username], display_name, params[:passwd], params[:email], params[:interests])
           new_user.image = ImageHelper.save(params[:image],"#{settings.public_folder}/images/users")
-          redirect "/register/success"
+          add_message("Successful registered.", :success)
         else
-          redirect "/register/user_exists"
+          add_message("User already exists.", :error)
         end
       else
-        redirect "/register/wrong_repetition"
+        add_message("Password and password repetition have to be identical.", :error)
       end
     else
-      redirect "/register/password_invalid"
+      add_message("Your password is invalid.", :error)
     end
-  end
-
-  #AS sending a message about success to the register view
-  get "/register/:message" do
-    @title = "Register"
-    haml :register, :locals=>{:message => params[:message]}
+    haml :register
   end
 
 end
