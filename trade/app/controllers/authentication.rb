@@ -65,8 +65,8 @@ class Authentication < BaseController
             redirect "/register/incorrect_email"
             end
           end
-          @data.new_user(params[:username], display_name, params[:passwd], params[:email], params[:interests])
-          #TODO Add image to user
+          new_user = @data.new_user(params[:username], display_name, params[:passwd], params[:email], params[:interests])
+          new_user.image = ImageHelper.save(params[:image],"#{settings.public_folder}/images/users")
           redirect "/register/success"
         else
           redirect "/register/user_exists"

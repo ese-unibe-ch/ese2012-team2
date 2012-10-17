@@ -3,6 +3,7 @@ require_relative '../models/user'
 require 'digest/md5'
 require_relative 'base_secure_controller'
 require_relative '../helpers/user_data_helper'
+require_relative '../helpers/image_helper'
 
 class Main  < BaseSecureController
 
@@ -67,7 +68,7 @@ class Main  < BaseSecureController
       redirect "/user/#{@active_user.name}/edit/user_exists"
     else
       @active_user.display_name = display_name
-    #TODO edit image
+      @active_user.image = ImageHelper.save(params[:image], "#{settings.public_folder}/images/users")
       @active_user.interests = params[:interests]
     end
     redirect "/user/#{@active_user.name}"

@@ -80,8 +80,6 @@ module Models
       self.items.select {|item| item.active}
     end
 
-
-
     #AS Checks if the given password is correct.
     def authenticated?(passwd)
       self.password.authenticated?(passwd)

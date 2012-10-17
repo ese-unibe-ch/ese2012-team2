@@ -2,7 +2,7 @@
   .error
     Name already exists.
 %h1 Edit user
-%form{:action=>"/user/#{@active_user.name}/edit", :method=>"POST"}
+%form{:action=>"/user/#{@active_user.name}/edit", :method=>"POST", :enctype=>"multipart/form-data"}
   %label
     Display name:
   %input.normal_input{:type=>"text", :name=>"display_name", :value => "#{@active_user.display_name}"}
