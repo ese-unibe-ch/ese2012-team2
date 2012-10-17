@@ -18,15 +18,13 @@ class Authentication < BaseController
   #SH Checks whether login was successful and if so, log the user in.
   #SH Otherwise, redirect to the error page
   post "/login" do
-    name = params[:username]
-    password = params[:password]
-    user = @data.user_by_name name
-    if user.nil? || !user.authenticated?(password)
-      add_message("Wrong login", :error)
-      haml '/login'
-    else
-      session[:name] = name
-      redirect '/index'
+    begin
+    UserDataHelper.login(params[:username],params[:password])
+    session[:name] = params[:username]
+    redirect '/index'
+    rescue Exception => e
+      add_message(e.message, :error)
+      haml :login
     end
   end
 

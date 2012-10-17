@@ -17,4 +17,14 @@ class UserDataHelper
     end
     return false
   end
+
+  def self.login name, password
+    @data = Models::DataOverlay.instance
+    name = name
+    password = password
+    user = @data.user_by_name name
+    if user.nil? || !user.authenticated?(password)
+      raise "Wrong login"
+    end
+  end
 end
