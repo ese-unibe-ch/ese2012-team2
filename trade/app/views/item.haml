@@ -1,11 +1,12 @@
 %h1 Item #{item.name}
 %img.image_float_left{:src => "#{item.image_path}", :alt => "Item image"}
+%h2 Owner
 %span
-  Owner:
   %a{:href => "/user/#{item.owner.name}"} #{item.owner.name}
-%br
-%span Price: #{item.price}
-%br
-%span #{item.description.gsub("\n", "<br>")}
--if item.description == ""
-  %p No description available
+%h2 Price
+%span #{item.price}
+%h2 Description
+%span
+  #{item.description.gsub("\n", "<br>")}
+  -if item.description == ""
+    No description available

@@ -10,43 +10,48 @@
   Credits: #{user.credits}
   #userimage
     %img{:src => user.image_path, :width => "150", :alt=>"User image"}
+  %h2 Interests
   %p
     #{user.interests}
   %h2 Items
-  %table
-    %tr
-      %th Name
-      %th.padding_left Price
-      %th.padding_left Active
-    - for item in items
-      - if item.active
-        - type = 'active'
-      - else
-        - type = 'inactive'
-      %tr{:class => "#{type}"}
-        %td.list
-          %a{:href => "/item/#{item.id}",  "data-powertip" => "#{item.description.gsub("\n", "<br>")}</br><img src=#{item.image_path} width=150 />", :class => "powertip"}
-            #{item.name}
-        %td.list.padding_left #{item.price}
+  - unless items.length == 0
+    %table
+      %tr
+        %th Name
+        %th.padding_left Price
+        %th.padding_left Active
+      - for item in items
         - if item.active
-          %td.list.padding_left yes
-          -if user.name==session[:name] #SH If the user shown is the user who is logged in, show de-/activate button
-            %td.list
-              %form{:action => "/change/#{item.id}", :method => "POST"}
-                %input{:type => "submit",:name => "action", :value => "Deactivate", :class => "button_as_link"}
+          - type = 'active'
         - else
-          %td.list.padding_left no
+          - type = 'inactive'
+        %tr{:class => "#{type}"}
+          %td.list
+            %a{:href => "/item/#{item.id}",  "data-powertip" => "#{item.description.gsub("\n", "<br>")}</br><img src=#{item.image_path} width=150 />", :class => "powertip"}
+              #{item.name}
+          %td.list.padding_left #{item.price}
+          - if item.active
+            %td.list.padding_left yes
+            -if user.name==session[:name] #SH If the user shown is the user who is logged in, show de-/activate button
+              %td.list
+                %form{:action => "/change/#{item.id}", :method => "POST"}
+                  %input{:type => "submit",:name => "action", :value => "Deactivate", :class => "button_as_link"}
+          - else
+            %td.list.padding_left no
+            -if user.name==session[:name]
+              %td.list
+                %form{:action => "/change/#{item.id}", :method => "POST"}
+                  %input{:type => "submit",:name => "action", :value => "Activate", :class => "button_as_link"}
           -if user.name==session[:name]
             %td.list
-              %form{:action => "/change/#{item.id}", :method => "POST"}
-                %input{:type => "submit",:name => "action", :value => "Activate", :class => "button_as_link"}
-        -if user.name==session[:name]
-          %td.list
-            %form{:action => "/delete/#{item.id}", :method => "POST"}
-              %input{:type => "submit",:name => "action", :value => "Delete", :class => "button_as_link"}
-        -if !item.active
-          -if user.name==session[:name]
+              %form{:action => "/delete/#{item.id}", :method => "POST"}
+                %input{:type => "submit",:name => "action", :value => "Delete", :class => "button_as_link"}
+          -if !item.active
+            -if user.name==session[:name]
+              %td.list
+                %a{:href => "/item/#{item.id}/edit"}Edit
+          -else
             %td.list
-              %a{:href => "/item/#{item.id}/edit"}Edit
-        -else
-          %td.list
+  - else
+    %p
+      User #{user.display_name} has currently no items
