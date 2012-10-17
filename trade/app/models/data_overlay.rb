@@ -96,6 +96,10 @@ module Models
 
     end
 
+    def all_users
+      @users.values
+    end
+
     #AS checks if a user exists
     def user_exists?(name)
       @users.member?(name)
