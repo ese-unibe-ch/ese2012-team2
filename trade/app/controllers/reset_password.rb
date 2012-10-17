@@ -7,6 +7,7 @@ class ResetPassword  < BaseController
   end
 
   get "/reset_password" do
+    @title = "Reset Password"
     redirect '/user' if session[:name] #KR if user is already logged in, send him to his profile
     haml :reset_password, :locals => {:message => nil}
   end
@@ -16,7 +17,7 @@ class ResetPassword  < BaseController
     user = @overlay.user_by_name params[:username]
     redirect "/reset_password/#{params[:username]}" unless user
     pw= ResetPassword.random_password
-    user.set_passwd pw
+    user.password = Models::Password.make(pw)
     EmailSender.send_new_password(user, pw)
     redirect '/login'
   end

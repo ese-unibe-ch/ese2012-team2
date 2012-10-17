@@ -51,6 +51,7 @@ class Main  < BaseSecureController
   end
 
   get "/user/:user/edit" do
+    @title = "Edit user " + params[:user]
     haml :edit_user
   end
 
@@ -69,6 +70,4 @@ class Main  < BaseSecureController
       redirect "/user/#{@active_user.name}"
     end
   end
-
-
 end

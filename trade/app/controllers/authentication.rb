@@ -37,6 +37,7 @@ class Authentication < BaseController
 
   #SH Shows a form to register new user
   get "/register" do
+    self.title = "Register"
     @title = "Register"
     haml :register
   end
