@@ -39,8 +39,8 @@ body {
   bottom: 10px;
 }
 
-#logo p{
-  display: inline;
+#logo a, #logo a:hover{
+  color: @logo-color;
 }
 
 #page {
@@ -91,11 +91,10 @@ body {
 }
 
 #footer{
-  @padding: 10px;
+  @padding: 1px;
   position: relative;
   clear: both;
   width: inherit - 2*@padding;
-  min-height: 2em;
   background-color: @content-background-color;
   text-align: center;
   padding: @padding;
@@ -181,6 +180,14 @@ th {
   text-align: left;
 }
 
+.normal_input{
+  -moz-box-shadow: none;
+  box-shadow: none;
+  border: 1px solid @input-border-color;
+  background-color: lighten(@header-bar-color, 20%);
+}
+
+
 /********************************/
 /*********Button styles**********/
 /********************************/
@@ -205,6 +212,8 @@ th {
 .button_margin {
   margin: 2px 0 0 0;
 }
+
+
 
 /********************************/
 /************Messages************/

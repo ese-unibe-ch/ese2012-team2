@@ -8,6 +8,18 @@
 -if message == "user_exists"
   .error
     User already exists.
+-if message == "display_name_exists"
+  .error
+    Display name already exists.
+-if message == "incorrect_email"
+  .error
+    Incorrect email address.
+-if message == "missing_data"
+  .error
+    Data are missing.
+-if message == "success"
+  .success
+    Successful registered.
 %h1 Add new user
 %form{:action=>"/register", :method=>"POST"}
   %table
@@ -16,34 +28,40 @@
         %label
         Username*:
       %td
-        %input{:type=>"text", :name=>"username"}
+        %input.normal_input{:type=>"text", :name=>"username"}
+    %tr
+      %td
+        %label
+        Display name*:
+      %td
+        %input.normal_input{:type=>"text", :name=>"display_name"}
     %tr
       %td
         %label
         Email*:
       %td
-        %input{:type=>"text", :name=>"email"}
+        %input.normal_input{:type=>"text", :name=>"email"}
     %tr
       %td
         %label
           Password*:
       %td
-        %input{:type=>"password", :name=>"passwd"}
+        %input.normal_input{:type=>"password", :name=>"passwd"}
     %tr
       %td
         %label
           Repeat password*:
       %td
-        %input{:type=>"password", :name=>"passwd_repetition"}
+        %input.normal_input{:type=>"password", :name=>"passwd_repetition"}
 
   %label
     List of interests:
   %br
-  %textarea{:name => "interests", :style => "width:500px; height:100px"}
+  %textarea.normal_input{:name => "interests", :style => "width:500px; height:100px"}
   %br
   %label
     User image:
   %input{:type=>"file", :name=>"image"}
   %br
   %br
-  %input{:type => "submit", :value => "Register"}
+  %input.normal_input{:type => "submit", :value => "Register"}

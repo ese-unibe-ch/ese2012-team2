@@ -20,8 +20,9 @@
 %body
   #header
     #logo
-      %img{:src => url("images/logo_small.png"), :alt => "The site logo", :height => "100", :width => "100"}
-      %span Emporium
+      %a{:href => "/index"}
+        %img{:src => url("images/logo_small.png"), :alt => "The site logo", :height => "100", :width => "100"}
+        %span Emporium
     =haml :menu;
     #header_bar
   #body

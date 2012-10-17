@@ -1,6 +1,7 @@
 require_relative '../models/user'
 require_relative '../helpers/image_helper'
 require_relative 'base_controller'
+require_relative '../helpers/user_data_helper'
 
 class Authentication < BaseController
 
@@ -53,9 +54,20 @@ class Authentication < BaseController
     if Models::User.passwd_valid?(params[:passwd])
       if params[:passwd]==params[:passwd_repetition]
         unless @data.user_exists?(params[:username])
-          @data.new_user(params[:username], params[:passwd], params[:email], params[:interests])
+          display_name = params[:display_name]
+          display_name = UserDataHelper.remove_white_spaces(display_name)
+          if params[:username] == "" || params[:display_name] == "" || params[:passwd] == "" || params[:email] == ""
+            redirect "/register/missing_data"
+          else if @data.user_display_name_exists?(display_name)
+            redirect "/register/display_name_exists"
+            end
+            if !UserDataHelper.right_email?(params[:email])
+            redirect "/register/incorrect_email"
+            end
+          end
+          @data.new_user(params[:username], display_name, params[:passwd], params[:email], params[:interests])
           #TODO Add image to user
-          redirect "/login"
+          redirect "/register/success"
         else
           redirect "/register/user_exists"
         end
@@ -71,31 +83,6 @@ class Authentication < BaseController
   get "/register/:message" do
     @title = "Register"
     haml :register, :locals=>{:message => params[:message]}
-  end
-
-  get "/user/:user/edit" do
-    name = params[:username]
-    user = @data.user_by_name name
-    haml :edit_user, :locals=>{:user=>user, :message=>nil}
-  end
-
-  post "/user/:user/edit" do
-    name = params[:username]
-    user = @data.user_by_name name
-
-    if @data.user_exists?(params[:username])
-      redirect "/register/user_exists"
-    else
-      user.name = name
-      user.image = ImageHelper.save params[:image], settings.public_folder
-    end
-    redirect back
-  end
-
-  get "/user/:user/edit/:message" do
-    name = params[:username]
-    user = @data.user_by_name name
-    haml :edit_user, :locals=>{:user=>user, :message=>params[:message]}
   end
 
 end
