@@ -25,7 +25,7 @@ module Models
     #AS Checks if a password is valid (criteria need to be defined - at the moment it's just a "not-empty-test")
     def self.passwd_valid?(password)
       !password.nil? and password.length > 7 and password.match('^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$')
-      true
+      #true
     end
 
     #SH Setup standard values

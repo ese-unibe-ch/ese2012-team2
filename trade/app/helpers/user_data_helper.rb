@@ -17,6 +17,4 @@ class UserDataHelper
     end
     return false
   end
-
-
 end
