@@ -38,16 +38,11 @@ class Main  < BaseSecureController
     item = @data.item_by_id params[:item].to_i
 
     if @active_user.buy(item) == "credit error"
-      redirect "/index/credit"
+      add_message("Not enough credits", :error)
     end
-    redirect '/index'
+    haml :index
   end
 
-  #SH Shows errors caused by buy on the main page
-  get "/index/:error" do
-    @title = "Home"
-    haml :index, :locals => {:current_name => session[:name], :items => @data.all_items, :error => params[:error] }
-  end
 
   #SH Shows a list of all user and their credits
   get "/user" do
@@ -56,7 +51,7 @@ class Main  < BaseSecureController
   end
 
   get "/user/:user/edit" do
-    haml :edit_user, :locals=>{:message=>nil}
+    haml :edit_user
   end
 
   post "/user/:user/edit" do
@@ -65,17 +60,15 @@ class Main  < BaseSecureController
     display_name = UserDataHelper.remove_white_spaces(display_name)
 
     if @data.user_display_name_exists?(display_name) and display_name != @active_user.display_name
-      redirect "/user/#{@active_user.name}/edit/user_exists"
+      add_message("Name already exists.", :error)
+      haml :edit_user
     else
       @active_user.display_name = display_name
       @active_user.image = ImageHelper.save(params[:image], "#{settings.public_folder}/images/users")
       @active_user.interests = params[:interests]
+      redirect "/user/#{@active_user.name}"
     end
-    redirect "/user/#{@active_user.name}"
   end
 
-  get "/user/:user/edit/:message" do
-    haml :edit_user, :locals=>{:message=>params[:message]}
-  end
 
 end
