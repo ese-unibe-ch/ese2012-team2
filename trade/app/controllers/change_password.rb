@@ -5,7 +5,7 @@ class ChangePassword < BaseSecureController
 
   #AS if not logged in => log in!
   get "/change_password" do
-    haml :change_password, :locals=>{:message => nil}
+    haml :change_password
   end
 
   #AS attempts to change password
@@ -29,10 +29,5 @@ class ChangePassword < BaseSecureController
       add_message("You entered the wrong password.", :error)
     end
     haml :change_password
-  end
-
-  #AS sending a message about success to the view
-  get "/change_password/:message" do
-    haml :change_password, :locals=>{:message => params[:message]}
   end
 end
