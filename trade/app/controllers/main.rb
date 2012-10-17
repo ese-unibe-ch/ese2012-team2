@@ -40,7 +40,7 @@ class Main  < BaseSecureController
     if @active_user.buy(item) == "credit error"
       add_message("Not enough credits", :error)
     end
-    haml :index
+    redirect "/index"
   end
 
 

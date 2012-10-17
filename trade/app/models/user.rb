@@ -36,16 +36,15 @@ module Models
       if item.state == :active
         if item.price<=self.credits
           self.credits -= item.price
-          item.owner.credits += item.price
-          item.owner = self
-          item.state = :inactive
+          #item.owner.credits += item.price
+          item.take_ownership(self)
+          item.state = :pending
         else
           return "credit error"
         end
       else
         return "item error"
       end
-
     end
 
     #AS Sets the password.

@@ -1,7 +1,7 @@
 module Models
   class Item
 
-    attr_accessor :name, :price, :owner, :state, :description, :image
+    attr_accessor :name, :price, :owner, :state, :description, :image, :prev_owners
 
     attr_reader :id
 
@@ -20,10 +20,16 @@ module Models
       self.name = name
       self.description= description
       self.image = image
+      self.prev_owners = Array.new
 
       self.state = :inactive
       @id = @@item_count
       @@item_count += 1
+    end
+
+    def take_ownership(new_owner)
+      self.prev_owners << self.owner
+      self.owner = new_owner
     end
 
     def to_s

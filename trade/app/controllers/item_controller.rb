@@ -53,6 +53,14 @@ class ItemController < BaseSecureController
     redirect back
   end
 
+  post "/item/:item/confirm_buy" do
+    item = @data.item_by_id params[:item].to_i
+    prev = item.prev_owners.pop
+    prev.credits += item.price
+    item.state = :inactive
+    redirect back
+  end
+
   get "/item/:item" do
     item = @data.item_by_id params[:item].to_i
     @title = "Item " + item.name
