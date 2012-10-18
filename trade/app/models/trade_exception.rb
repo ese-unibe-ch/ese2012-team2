@@ -1,3 +1,3 @@
 class TradeException < Exception
-  #custom exception
+  #custom exception for our app
 end

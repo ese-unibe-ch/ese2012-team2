@@ -1,13 +1,13 @@
 require "digest/md5"
 
 module Models
-  #AS Represents a password
+
   class Password
 
     attr_accessor :hash, :salt
 
     def self.make(passwd)
-       password= self.new(passwd)
+       self.new(passwd)
     end
 
     def initialize(passwd)
@@ -20,10 +20,10 @@ module Models
       self.hash == encrypt(passwd)
     end
 
-    private
     #AS Hashes the given password + the previously created salt
+    private
     def encrypt(passwd)
-      digest= Digest::MD5.hexdigest(salt+passwd)
+      Digest::MD5.hexdigest(self.salt + passwd)
     end
 
     #AS Creates the salt (which basically is a random string which is added to the password before hashing to prevent rainbow table attacks)
