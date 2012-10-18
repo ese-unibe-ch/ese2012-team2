@@ -23,5 +23,4 @@
           %a{:href=> "/user/#{item.owner}"} #{item.owner.display_name}
         %td.list
           - if item.owner != @active_user #SH Don't show the buy button for your own items
-            %form{:action => "/buy/#{item.id}", :method => "POST"}
-              %input{:type => "submit",:name => "action", :value => "Buy", :class => "button_as_link"}
+            =haml :'partials/buy_button', :locals => {:itemid => item.id}

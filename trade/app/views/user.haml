@@ -55,8 +55,7 @@
           - else
             - if item.state == :active
               %td.list
-                %form{:action => "/buy/#{item.id}", :method => "POST"}
-                  %input{:type => "submit",:name => "action", :value => "Buy", :class => "button_as_link"}
+                =haml :'partials/buy_button', :locals => {:itemid => item.id}
   - else
     %p
       User #{user.display_name} has currently no items

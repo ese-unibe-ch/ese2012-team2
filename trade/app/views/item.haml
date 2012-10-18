@@ -1,4 +1,6 @@
 %h1 Item #{item.name}
+-if item.state == :active
+  =haml :'partials/buy_button', :locals => {:itemid => item.id}
 %img.image_float_left{:src => "#{item.image_path}", :alt => "Item image"}
 %h2 Owner
 %span
