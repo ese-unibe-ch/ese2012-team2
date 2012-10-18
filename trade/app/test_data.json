@@ -84,5 +84,52 @@
                   "state":"active"
                 }
               ]
+    },
+    { "name":"ttwdn",
+      "displayname":"Things the world don't need",
+      "pw":"pwese",
+      "email":"things@useless.de",
+      "interests":"Useless things",
+      "items":[ { "name":"Umbrella with sound and light",
+                  "price":30,
+                  "description":"It's an umbrella with sound and light, and it looks like a kitteh!!!",
+                  "state":"active"
+                },
+                { "name":"Glowing toilet paper",
+                  "price":10,
+                  "description":"Toilet paper that glows in the dark.",
+                  "state":"active"
+                },
+                { "name":"Dinosaur egg",
+                  "price":150,
+                  "description":"A big dinosaur egg",
+                  "state":"active"
+                },
+                { "name":"Wasabi lip balm",
+                  "price":15,
+                  "description":"Lip balm with wasabi taste.\nThat's hot!",
+                  "state":"active"
+                },
+                { "name":"Telefon glove",
+                  "price":90,
+                  "description":"A glove whitch you can use to call someone.",
+                  "state":"active"
+                },
+                { "name":"Baseball oven glove",
+                  "price":30,
+                  "description":"A oven glove that looks like a baseball glove.",
+                  "state":"active"
+                },
+                { "name":"Ice cream doorstopper",
+                  "price":10,
+                  "description":"A doorstopper in the shape of an ice cream.",
+                  "state":"active"
+                },
+                { "name":"Nothing",
+                  "price":6,
+                  "description":"A big pack of nothing",
+                  "state":"active"
+                }
+              ]
     }
   ]
