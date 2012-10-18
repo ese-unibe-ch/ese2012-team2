@@ -6,3 +6,4 @@ gem 'mime-types'
 gem 'pony'
 gem "mini_magick", "~> 3.4"
 gem 'sanitize'
+gem "json_pure"

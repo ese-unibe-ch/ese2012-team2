@@ -1,0 +1,88 @@
+[
+    { "name":"ese",
+      "displayname":"ese",
+      "pw":"pwese",
+      "email":"kenneth.radunz@web.de",
+      "interests":"computer science and stuff",
+      "items":[ { "name":"Nyan Cat",
+                  "price":80,
+                  "description":"The ultimate internet cat",
+                  "state":"active"
+                },
+                { "name":"Overly attached girlfriend",
+                  "price":0,
+                  "description":"Take it, it's free!",
+                  "state":"inactive"
+                },
+                { "name":"Pink unicorn",
+                  "price":40,
+                  "description":"UNICORN! PINK UNICORN!",
+                  "state":"inactive"
+                }
+              ]
+    },{ "name":"Hat_man",
+      "displayname":"Hatman",
+      "pw":"pwHatman",
+      "email":"hat@man.com",
+      "interests":"Hats!!!",
+      "items":[ { "name":"Ghastly gibus",
+                  "price":10,
+                  "description":"A cool hat",
+                  "state":"active"
+                },
+                { "name":"Ye olde baker boy",
+                  "price":15,
+                  "description":"A cooler hat",
+                  "state":"active"
+                },
+                { "name":"Normal hat",
+                  "price":0,
+                  "description":"Take it, it's free!",
+                  "state":"inactive"
+                }
+              ]
+    },{ "name":"Darth_Vader",
+      "displayname":"Darth Vader",
+      "pw":"pwDarthVader",
+      "email":"lord.vader@imperium.com",
+      "interests":"Power and beer",
+      "items":[ { "name":"Death star",
+                  "price":10000,
+                  "description":"Big ass space ship",
+                  "state":"active"
+                },
+                { "name":"Storm Trooper",
+                  "price":25,
+                  "description":"Do you already own one?",
+                  "state":"active"
+                },
+                { "name":"Dark side of the force",
+                  "price":20,
+                  "description":"Unlimited power!",
+                  "state":"active"
+                }
+              ]
+    },
+    { "name":"Steve",
+      "displayname":"Steve",
+      "pw":"pwSteve",
+      "email":"steve@block.ch",
+      "interests":"Mining and Blocks",
+      "items":[ { "name":"Dirt",
+                  "price":1,
+                  "description":"To build some dirt houses",
+                  "state":"active"
+                },
+                { "name":"Diamond Pickaxe",
+                  "price":70,
+                  "description":"With this, you can mine really fast",
+                  "state":"active"
+                },
+                { "name":"Wood",
+                  "price":5,
+                  "description":"The most basic block",
+                  "state":"active"
+                }
+              ]
+    }
+  ]
