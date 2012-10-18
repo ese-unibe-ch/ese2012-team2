@@ -87,7 +87,7 @@
     },
     { "name":"ttwdn",
       "displayname":"Things the world don't need",
-      "pw":"pwese",
+      "pw":"pw",
       "email":"things@useless.de",
       "interests":"Useless things",
       "items":[ { "name":"Umbrella with sound and light",
@@ -128,6 +128,106 @@
                 { "name":"Nothing",
                   "price":6,
                   "description":"A big pack of nothing",
+                  "state":"active"
+                }
+              ]
+    },
+    { "name":"knowledgepress",
+      "displayname":"Knowledge press",
+      "pw":"press",
+      "email":"knowledge@press.org",
+      "interests":"Knowledge",
+      "items":[ { "name":"Wikipedia the book, Vol. 1",
+                  "price":15,
+                  "description":"Vol. 1 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 2",
+                  "price":15,
+                  "description":"Vol. 2 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 3",
+                  "price":15,
+                  "description":"Vol. 3 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 4",
+                  "price":15,
+                  "description":"Vol. 4 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 5",
+                  "price":15,
+                  "description":"Vol. 5 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 6",
+                  "price":15,
+                  "description":"Vol. 6 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 7",
+                  "price":15,
+                  "description":"Vol. 7 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 8",
+                  "price":15,
+                  "description":"Vol. 8 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 9",
+                  "price":15,
+                  "description":"Vol. 9 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 10",
+                  "price":15,
+                  "description":"Vol. 10 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 11",
+                  "price":15,
+                  "description":"Vol. 11 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 12",
+                  "price":15,
+                  "description":"Vol. 12 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 13",
+                  "price":15,
+                  "description":"Vol. 13 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 14",
+                  "price":15,
+                  "description":"Vol. 14 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 15",
+                  "price":15,
+                  "description":"Vol. 15 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 16",
+                  "price":15,
+                  "description":"Vol. 16 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 17",
+                  "price":15,
+                  "description":"Vol. 17 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 18",
+                  "price":15,
+                  "description":"Vol. 18 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 19",
+                  "price":15,
+                  "description":"Vol. 19 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 20",
+                  "price":15,
+                  "description":"Vol. 20 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 21",
+                  "price":15,
+                  "description":"Vol. 21 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 22",
+                  "price":15,
+                  "description":"Vol. 22 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 23",
+                  "price":15,
+                  "description":"Vol. 23 of the printed version of Wikipedia, 57th edition",
                   "state":"active"
                 }
               ]
