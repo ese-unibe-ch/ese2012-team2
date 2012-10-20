@@ -1,0 +1,8 @@
+%h1 Search
+%form{:action=>"/search", :method=>"POST", :enctype=>"multipart/form-data"}
+  %label
+    Enter your key words: (e.g. small, white, etc. ...)
+  %br
+  %input.normal_input{:type=>"text", :name=>"key_words", :style => "width:500px"}
+  %br
+  %input.normal_input{:type=>"submit", :class=>"button_margin", :value => "Search"}

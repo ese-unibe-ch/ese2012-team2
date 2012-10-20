@@ -70,4 +70,8 @@ class Main  < BaseSecureController
       redirect "/user/#{@active_user.name}"
     end
   end
+
+  get "/search" do
+    haml :search
+  end
 end
