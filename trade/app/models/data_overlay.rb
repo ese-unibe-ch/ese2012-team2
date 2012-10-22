@@ -6,6 +6,7 @@ module Models
     def initialize
       @users = Hash.new()
       @items = Hash.new()
+      @search_requests= Hash.new() #AS id: user, value: Array of SearchRequests
     end
 
     @@instance = nil
@@ -115,5 +116,33 @@ module Models
       add_user user
       return user
     end
+
+    #AS Create a new search request and add it.
+    def new_search_request(keywords, user)
+      search_request= SearchRequest.create(keywords, user)
+      add_search_request search_request
+      search_request
+    end
+
+    #AS Add a new SearchRequest
+    def add_search_request(search_request)
+      username= search_request.user.name
+      if(@search_requests.has_key?(username))
+        @search_requests[username].push(search_request)
+      else
+        @search_requests[username]= [search_request]
+      end
+    end
+
+    #AS List SearchRequests of a user
+    def search_requests_by_user(user)
+      @search_requests[user.name]
+    end
+
+    #Remove a SearchRequest
+    def remove_search_request(search_request_to_delete)
+        @search_requests.each{|user, user_search_requests| user_search_requests.delete(search_request_to_delete)}
+    end
+
   end
 end

@@ -1,3 +1,4 @@
+=begin
 require 'test/unit'
 require 'rubygems'
 require 'require_relative'
@@ -55,3 +56,5 @@ class ItemTest < Test::Unit::TestCase
     #TODO PS does item.by_id fetch the expected item?
   end
 end
+
+=end
