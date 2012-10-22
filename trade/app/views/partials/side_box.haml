@@ -7,7 +7,7 @@
       %a{:href => url("/register")} Register
 - else
   %h1 Logged in as: #{@active_user.display_name}
-  %img{:src => url("#{@active_user.image_path}"), :alt=>"User Image", :width => "150px"}
+  %img{:src => url("#{@active_user.image_path}"), :alt=>"User Image", :width => "150"}
   %br
   Your credits: #{@active_user.credits}
   %ul

@@ -3,7 +3,6 @@
 //@import url("blue-green-theme.less");
 @import url("blue-theme.less");
 
-
 /********************************/
 /***********Variables************/
 /********************************/
@@ -37,14 +36,14 @@ textarea, input {
 
 #logo {
   positin: absolute;
-  margin:0 auto;
+  margin: 0 auto;
   font-size: 5em;
   color: @logo-color;
   width: 900px;
   bottom: 10px;
 }
 
-#logo a, #logo a:hover{
+#logo a, #logo a:hover {
   color: @logo-color;
 }
 
@@ -71,12 +70,12 @@ textarea, input {
   float: left;
   width: 31%;
   padding: 15px;
-  ul{
+  ul {
     padding: inherit;
   }
 }
 
-#side_box ul{
+#side_box ul {
 
 }
 
@@ -98,7 +97,7 @@ textarea, input {
   border-bottom: 1px solid @body-bg-color;
 }
 
-#footer{
+#footer {
   @padding: 1px;
   position: relative;
   clear: both;
@@ -108,7 +107,7 @@ textarea, input {
   padding: @padding;
 }
 
-#footer_border{
+#footer_border {
   width: 880px;
   background-color: @page-color;
   padding: 10px;
@@ -126,7 +125,7 @@ textarea, input {
   right: 0;
 }
 
-#menu li:hover, #menu li a.active_tab, .active_tab{
+#menu li:hover, #menu li a.active_tab, .active_tab {
   background-color: @header-bar-color;
   color: @nav-hover-font;
 }
@@ -144,7 +143,7 @@ textarea, input {
   color: @nav-color;
 }
 
-#menu li:hover a{
+#menu li:hover a {
   color: @nav-hover-font;
 }
 
@@ -152,7 +151,7 @@ textarea, input {
   padding: 0;
 }
 
-#menu a{
+#menu a {
   display: block;
   color: @nav-color;
   padding: 0.5em 0.7em;
@@ -189,19 +188,80 @@ th {
   text-align: left;
 }
 
-.normal_input{
+.normal_input {
   -moz-box-shadow: none;
   box-shadow: none;
   border: 1px solid @input-border-color;
   background-color: lighten(@header-bar-color, 20%);
 }
 
-input{
+input {
   -moz-box-shadow: none;
   box-shadow: none;
   border: 1px solid @input-border-color;
   background-color: lighten(@header-bar-color, 20%);
 }
+
+/********************************/
+/*********Table styles**********/
+/********************************/
+
+table.tablesorter {
+  width: 100%;
+  text-align: left;
+
+  thead tr {
+    th {
+      background-color: @nav-background;
+    }
+
+    .header {
+      background-image: url(../images/bg.gif);
+      background-repeat: no-repeat;
+      background-position: center right;
+      cursor: pointer;
+    }
+    .headerSortUp {
+      background-image: url(../images/asc.gif);
+    }
+    .headerSortDown {
+      background-image: url(../images/desc.gif);
+    }
+    .headerSortDown, .headerSortUp {
+      background-color: @header-bar-color;
+    }
+  }
+  tbody {
+    tr.odd td {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+  #pager {
+    padding-top: 5px;
+    text-align: center;
+    .grey_dashed_border(top);
+
+    span {
+      padding: 0 5px 0 5px;
+    }
+    img {
+
+      .prev {
+        width: auto;
+        margin-right: 10px;
+      }
+      .next {
+        width: auto;
+        margin-left: 10px;
+      }
+    }
+    input {
+      width: 50px;
+      text-align: center;
+    }
+  }
+
 
 
 /********************************/
@@ -228,8 +288,6 @@ input{
 .button_margin {
   margin: 2px 0 0 0;
 }
-
-
 
 /********************************/
 /************Messages************/
