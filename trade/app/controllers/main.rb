@@ -1,5 +1,6 @@
 require_relative '../models/item'
 require_relative '../models/user'
+require_relative '../models/search_request'
 require 'digest/md5'
 require_relative 'base_secure_controller'
 require_relative '../helpers/user_data_helper'
@@ -71,7 +72,8 @@ class Main  < BaseSecureController
     end
   end
 
-  get "/search" do
-    haml :search
+  post "/search" do
+    search_request = @data.new_search_request(params[:keywords], @active_user)
+    haml :search, :locals => {:search_request => search_request}
   end
 end

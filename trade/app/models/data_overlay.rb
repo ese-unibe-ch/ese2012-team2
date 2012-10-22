@@ -23,8 +23,8 @@ module Models
       return @@instance
     end
 
-    @users = nil
-    @items = nil
+    #@users = nil
+    #@items = nil
 
     #KR adds a new item to the environment.
     # if the id is already in use, raises an error
@@ -39,9 +39,9 @@ module Models
       @items.delete item.id
     end
 
-    def new_item(name, price, description, owner, active, image=nil)
+    def new_item(name, price, description, owner, state=:inactive, image=nil)
       item = Item.named name, price, owner, description, image
-      item.active = active
+      item.state = state
       add_item item
       return item
     end
@@ -99,6 +99,10 @@ module Models
 
     end
 
+    def all_users
+      @users.values
+    end
+
     #AS checks if a user exists
     def user_exists?(name)
       @users.member?(name)
@@ -113,8 +117,8 @@ module Models
       @users[user.name] = user
     end
 
-    def new_user(name, pw, email)
-      user =  User.named(name, pw, email)
+    def new_user(name, display_name, pw, email, interests)
+      user =  User.named(name, display_name, pw, email, interests)
       add_user user
       return user
     end

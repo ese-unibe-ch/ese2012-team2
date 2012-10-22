@@ -1,8 +1,11 @@
-%h1 Search
+%h1 Hello #{@active_user.display_name}
+%p
 %form{:action=>"/search", :method=>"POST", :enctype=>"multipart/form-data"}
   %label
-    Enter your key words: (e.g. small, white, etc. ...)
+    Enter your key words: (e.g. small white etc. ...)
   %br
-  %input.normal_input{:type=>"text", :name=>"key_words", :style => "width:500px"}
+  %input.normal_input{:type=>"text", :name=>"keywords", :style => "width:500px", :value => "#{search_request.keywords}"}
   %br
   %input.normal_input{:type=>"submit", :class=>"button_margin", :value => "Search"}
+  %input.normal_input{:type=>"submit", :class=>"button_margin", :value => "Subscribe"}
+%p
