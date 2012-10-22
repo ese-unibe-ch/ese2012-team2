@@ -31,7 +31,7 @@ class App < Sinatra::Base
   def self.load_test_data
     overlay = Models::DataOverlay.instance
 
-    document = IO.read("test_data.json")
+    document = IO.read(File.dirname(__FILE__) + "/test_data.json")
     data = JSON.parse(document)
 
     data.each do |user|
