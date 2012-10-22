@@ -41,11 +41,11 @@ textarea, input {
   color: @logo-color;
   width: 900px;
   bottom: 10px;
+  a, a:hover{
+    color: @logo-color;
+  }
 }
 
-#logo a, #logo a:hover {
-  color: @logo-color;
-}
 
 #page {
   background-color: @page-color;
@@ -73,10 +73,6 @@ textarea, input {
   ul {
     padding: inherit;
   }
-}
-
-#side_box ul {
-
 }
 
 #header {
@@ -123,38 +119,35 @@ textarea, input {
   position: absolute;
   bottom: -1px;
   right: 0;
-}
 
-#menu li:hover, #menu li a.active_tab, .active_tab {
-  background-color: @header-bar-color;
-  color: @nav-hover-font;
-}
+  li:hover, li a.active_tab, .active_tab {
+    background-color: @header-bar-color;
+    color: @nav-hover-font;
+  }
 
-#menu li {
-  display: inline;
-  list-style: none;
-  position: relative;
-  margin: 1px;
-  float: left;
-  background-color: @nav-background;
-  border-top: 1px solid @tab-border-color;
-  border-right: 1px solid @tab-border-color;
-  border-left: 1px solid @tab-border-color;
-  color: @nav-color;
-}
-
-#menu li:hover a {
-  color: @nav-hover-font;
-}
-
-#menu ul {
-  padding: 0;
-}
-
-#menu a {
-  display: block;
-  color: @nav-color;
-  padding: 0.5em 0.7em;
+  li {
+    display: inline;
+    list-style: none;
+    position: relative;
+    margin: 1px;
+    float: left;
+    background-color: @nav-background;
+    border-top: 1px solid @tab-border-color;
+    border-right: 1px solid @tab-border-color;
+    border-left: 1px solid @tab-border-color;
+    color: @nav-color;
+  }
+  ul {
+    padding: 0;
+  }
+  a {
+    display: block;
+    color: @nav-color;
+    padding: 0.5em 0.7em;
+  }
+  li:hover a {
+    color: @nav-hover-font;
+  }
 }
 
 /********************************/
