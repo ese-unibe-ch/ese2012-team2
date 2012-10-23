@@ -151,7 +151,7 @@ module Models
     #AS Remove a SearchRequest
     def remove_search_request(search_request_to_delete)
         @search_requests.delete(search_request_to_delete.id)
-        Event::ItemUpdateEVent.remove_handler search_request_to_delete
+        Event::ItemUpdateEvent.remove_handler search_request_to_delete
     end
 
     #AS Get SearchRequest by id
