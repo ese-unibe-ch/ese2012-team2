@@ -70,7 +70,7 @@ module Models
       result = Array.new
       @items.each_value {
           |value|
-        if(value.owner==user and value.active)
+        if(value.owner==user and value.state == :active)
           result.push value
         end
       }
