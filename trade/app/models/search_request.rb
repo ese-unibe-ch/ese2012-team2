@@ -1,3 +1,5 @@
+require_relative '../helpers/email_sender'
+
 module Models
   #AS Models a search request. Create one by giving the keywords and check with applies? if an item matches.
   class SearchRequest
@@ -39,6 +41,14 @@ module Models
     #AS A little helper, to split the keyword-query up correctly.
     def self.splitUp(keywords)
       keywords.split(" ")
+    end
+
+    #KR the Event calls this method, if fired
+    def << args
+      item = args[:item]
+      if(self.applies? item)
+         EmailSender.send_item_found(self.user, self, item)
+      end
     end
   end
 end

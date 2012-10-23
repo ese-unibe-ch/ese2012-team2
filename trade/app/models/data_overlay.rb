@@ -137,6 +137,7 @@ module Models
         #error
       else
         @search_requests[search_request.id]= search_request
+        Event::ItemUpdateEvent.add_handler search_request
       end
     end
 
@@ -150,6 +151,7 @@ module Models
     #AS Remove a SearchRequest
     def remove_search_request(search_request_to_delete)
         @search_requests.delete(search_request_to_delete.id)
+        Event::ItemUpdateEVent.remove_handler search_request_to_delete
     end
 
     #AS Get SearchRequest by id
