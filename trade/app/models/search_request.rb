@@ -2,6 +2,10 @@ module Models
   #AS Models a search request. Create one by giving the keywords and check with applies? if an item matches.
   class SearchRequest
     attr_accessor :keywords, :user
+    attr_reader :id
+
+    @@count=0 #AS Static variable which stores the amount of SearchRequests created.
+
     def self.create(keywords, user)
       self.new(keywords, user)
     end
@@ -9,6 +13,8 @@ module Models
     def initialize(keywords, user)
       self.keywords=keywords
       self.user= user
+      @id=@@count
+      @@count+=1
     end
 
     #AS Check if a given Item matches to the SearchRequest instance
@@ -18,7 +24,7 @@ module Models
         if !applies_for_all
           break
         end
-        applies_for_all= applies_for_all && ((item.name.include? keyword) || (item.description.include? keyword))
+        applies_for_all= applies_for_all && ((item.name.downcase.include? keyword.downcase) || (item.description.downcase.include? keyword.downcase))
       end
       applies_for_all
     end

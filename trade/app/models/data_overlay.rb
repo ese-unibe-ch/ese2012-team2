@@ -132,22 +132,28 @@ module Models
 
     #AS Add a new SearchRequest
     def add_search_request(search_request)
-      username= search_request.user.name
-      if(@search_requests.has_key?(username))
-        @search_requests[username].push(search_request)
+      if(@search_requests.has_key?(search_request.id))
+        #error
       else
-        @search_requests[username]= [search_request]
+        @search_requests[search_request.id]= search_request
       end
     end
 
     #AS List SearchRequests of a user
     def search_requests_by_user(user)
-      @search_requests[user.name]
+      result= Array.new(@search_requests.values)
+      result.delete_if{|search_request| search_request.user != user}
+      result
     end
 
-    #Remove a SearchRequest
+    #AS Remove a SearchRequest
     def remove_search_request(search_request_to_delete)
-        @search_requests.each{|user, user_search_requests| user_search_requests.delete(search_request_to_delete)}
+        @search_requests.delete(search_request_to_delete.id)
+    end
+
+    #AS Get SearchRequest by id
+    def search_request_by_id(id)
+    @search_requests[id]
     end
 
   end
