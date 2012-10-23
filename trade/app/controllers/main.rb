@@ -73,16 +73,10 @@ class Main  < BaseSecureController
   end
 
   post "/search" do
-    if (params[:submit] == "Search")
-      keyword = Models::SearchRequest.splitUp(params[:keywords])
-      search_request = Models::SearchRequest.create(keyword, @active_user)
-      items = search_request.get_matching_items(@data.all_items)
-      haml :search, :locals => {:search_request => search_request, :items => items}
-    else
-      @data.new_search_request(params[:keywords], @active_user)
-      add_message("Successfully subscribed.", :success)
-      redirect back
-    end
+    keyword = Models::SearchRequest.splitUp(params[:keywords])
+    search_request = Models::SearchRequest.create(keyword, @active_user)
+    items = search_request.get_matching_items(@data.all_items)
+    haml :search, :locals => {:search_request => search_request, :items => items}
   end
 
   get "/search_requests" do
@@ -90,7 +84,7 @@ class Main  < BaseSecureController
     haml :search_requests, :locals => {:search_requests => search_requests}
   end
 
-  post "/delete/:search_request" do
+  get "/delete/:search_request" do
     search_request = @data.search_request_by_id params[:search_request].to_i
     if search_request != nil && search_request.user == @active_user
       @data.remove_search_request(search_request)
@@ -104,5 +98,11 @@ class Main  < BaseSecureController
     search_request = Models::SearchRequest.create(keyword, @active_user)
     items = search_request.get_matching_items(@data.all_items)
     haml :search, :locals => {:search_request => search_request, :items => items}
+  end
+
+  post "/subscribe" do
+    @data.new_search_request(params[:keywords], @active_user)
+    add_message("Successfully subscribed.", :success)
+    redirect "/search_requests"
   end
 end
