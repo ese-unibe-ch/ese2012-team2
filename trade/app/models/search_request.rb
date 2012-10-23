@@ -24,7 +24,7 @@ module Models
         if !applies_for_all
           break
         end
-        applies_for_all= applies_for_all && ((item.name.include? keyword) || (item.description.include? keyword))
+        applies_for_all= applies_for_all && ((item.name.downcase.include? keyword.downcase) || (item.description.downcase.include? keyword.downcase))
       end
       applies_for_all
     end

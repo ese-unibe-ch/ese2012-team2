@@ -10,7 +10,7 @@ class SearchRequestTest < Test::Unit::TestCase
   def test_should_match
     user = Models::User.named("Darth Vader", "pwDarthVader", "lord.vader@imperium.com")
     item= Models::Item.named("Death Star", 10000, user, "Big ass space ship")
-    keywords = ["Star", "Death", "ship"]
+    keywords = ["StAr", "DeAth", "ship"]
     sr= Models::SearchRequest.create(keywords, user)
     assert(sr.applies?(item), "Keywords should apply.")
   end
@@ -37,7 +37,7 @@ class SearchRequestTest < Test::Unit::TestCase
     item2= Models::Item.named("blaaa bla blabla", 10000, user, "bla bla Suchwort1 blaaa Suchwort2")
     item3= Models::Item.named("blaaa bla blabla", 10000, user, "bla bla Suchwort1 blaaa")
 
-    keywords = ["Suchwort1", "Suchwort2"]
+    keywords = ["SuchwORt1", "SUChwort2"]
     sr= Models::SearchRequest.create(keywords, user)
     assert(sr.get_matching_items([item1, item2, item3]) == [item1, item2], "item1 and item2 should be returned.")
   end
