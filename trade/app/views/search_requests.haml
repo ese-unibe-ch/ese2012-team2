@@ -3,12 +3,11 @@
   %tr
     %th Keywords
   - for search_request in search_requests
-    - if item.state == :active
-      %tr
-        %td.list
-          #{search_request.keywords}
-        %td.right.list.padding_left
-          %form{:action => "/research/#{search_request.id}", :method => "POST"}
-            %input{:type => "submit",:name => "action", :value => "Research", :class => "button_as_link"}
-        %td.list.padding_left
-          %a{:href => "/delete/#{search_request.id}"} Delete
+    %tr
+      %td.list
+        #{search_request.keywords}
+      %td.right.list.padding_left
+        %form{:action => "/research/#{search_request.id}", :method => "POST"}
+          %input{:type => "submit",:name => "action", :value => "Research", :class => "button_as_link"}
+      %td.list.padding_left
+        %a{:href => "/delete/#{search_request.id}"} Delete
