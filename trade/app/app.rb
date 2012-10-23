@@ -17,16 +17,17 @@ require_relative 'models/data_overlay'
 
 class App < Sinatra::Base
 
+  enable :sessions
+  set :show_exceptions, false
+  set :root, File.dirname(__FILE__)
+  set :public_folder, Proc.new { File.join(root, "public") }
+  set :safe_passwords, false
+
   use Authentication
   use ResetPassword
   use Main
   use ItemController
   use ChangePassword
-
-  enable :sessions
-  set :show_exceptions, false
-  set :root, File.dirname(__FILE__)
-  set :public_folder, Proc.new { File.join(root, "public") }
 
   def self.load_test_data
     overlay = Models::DataOverlay.instance
@@ -45,6 +46,13 @@ class App < Sinatra::Base
 
   configure :development do
     self.load_test_data
+    puts settings.safe_passwords
+    set :image_resize, false
+  end
+
+  configure :production do
+    set :safe_passwords, true
+    set :image_resize, true
   end
 
 

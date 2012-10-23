@@ -76,7 +76,7 @@
                 { "name":"Diamond Pickaxe",
                   "price":70,
                   "description":"With this, you can mine really fast",
-                  "state":"active"
+                  "state":"inactive"
                 },
                 { "name":"Wood",
                   "price":5,
