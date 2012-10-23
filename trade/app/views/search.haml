@@ -10,7 +10,7 @@
   %label
     Enter your key words: (e.g. small white etc. ...)
   %br
-  %input.normal_input{:type=>"text", :name=>"keywords", :style => "width:500px", :value => "#{search_request.keywords}"}
+  %input.normal_input{:type=>"text", :name=>"keywords", :style => "width:500px", :value => "#{params[:keywords]}"}
   %br
   %input.normal_input{:type=>"submit", :class=>"button_margin", :value => "Search"}
   %form{:action=>"/subscribe", :method=>"POST", :enctype=>"multipart/form-data"}
