@@ -4,7 +4,9 @@ require 'require_relative'
 require_relative '../app/models/data_overlay'
 require_relative '../app/models/user'
 require_relative '../app/models/item'
-
+require_relative '../app/models/search_request'
+require_relative '../app/event/base_event'
+require_relative '../app/event/item_update_event'
 class DataOverlayTest < Test::Unit::TestCase
 =begin  AS commented out old, failing tests, because I think the other group is working on cleaning these things up..
   def test_item_by_id_empty
