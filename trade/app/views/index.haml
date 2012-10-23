@@ -17,6 +17,15 @@
   })
 
 %h1 Hello #{@active_user.display_name}
+%p
+%form{:action=>"/search", :method=>"POST", :enctype=>"multipart/form-data"}
+  %label
+    Enter your key words: (e.g. small white etc. ...)
+  %br
+  %input.normal_input{:type=>"text", :name=>"keywords", :style => "width:500px"}
+  %br
+  %input.normal_input{:type=>"submit", :class=>"button_margin", :value => "Search"}
+%p
 -#SH Shows a table of all active items
 %table{:id=>"itemTable", :class=>"tablesorter pager"}
   %thead

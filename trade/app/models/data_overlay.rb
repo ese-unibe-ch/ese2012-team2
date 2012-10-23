@@ -6,8 +6,9 @@ module Models
   class DataOverlay
 
     def initialize
-      @users = Hash.new
-      @items = Hash.new
+      @users = Hash.new()
+      @items = Hash.new()
+      @search_requests= Hash.new() #AS id: user, value: Array of SearchRequests
     end
 
     @@instance = nil
@@ -22,11 +23,14 @@ module Models
       return @@instance
     end
 
+    #@users = nil
+    #@items = nil
+
     #KR adds a new item to the environment.
     # if the id is already in use, raises an error
     def add_item(item)
-      if @items[item.id]
-        raise TradeException, "Item already exists"
+      if(@items.has_key?(item.id))
+        #raise error here
       end
       @items[item.id] = item
     end
@@ -51,16 +55,37 @@ module Models
     #KR returns all items currently owned by the given user
     #if the user is not in the user list, an error will be raised
     def items_by_user(user)
-      @items.values.select {  |value| value.owner==user }
+      result = Array.new
+      @items.each_value {
+          |value|
+        if(value.owner==user)
+         result.push value
+        end
+      }
+      return result
     end
 
     def active_items_by_user(user)
-      @items.values.select { |value| value.owner==user and value.state == :active }
+      result = Array.new
+      @items.each_value {
+          |value|
+        if(value.owner==user and value.active)
+          result.push value
+        end
+      }
+      return result
     end
 
     #KR returns all active items
     def active_items
-      @items.values.select { |value| value.state == :active }
+      result = Array.new
+      @items.each_value {
+        |value|
+        if(value.active)
+          result.push value
+        end
+      }
+      return result
     end
 
     def all_items
@@ -71,6 +96,7 @@ module Models
     #returns nil if there is no such user
     def user_by_name(name)
       @users[name]
+
     end
 
     def all_users
@@ -82,24 +108,54 @@ module Models
       @users.member?(name)
     end
 
-    #PS all objects are true except nil & false ;)
-    def user_display_name_exists?(display_name)
-      @users.values.detect { |user| user.display_name == display_name }
-    end
-
     #KR adds a new user to the environment
     # if name or id are already in use, this function raises an error
     def add_user(user)
-      if @users[user.name]
-        raise TradeException, "User already exists!"
+      if(@users.has_key?(user.name))
+        #raise error here
       end
       @users[user.name] = user
     end
 
-    def new_user(name, display_name, pw, email, interests = nil)
+    def new_user(name, display_name, pw, email, interests)
       user =  User.named(name, display_name, pw, email, interests)
       add_user user
       return user
     end
+
+    #AS Create a new search request and add it.
+    def new_search_request(keywords, user)
+      search_request= SearchRequest.create(keywords, user)
+      add_search_request search_request
+      search_request
+    end
+
+    #AS Add a new SearchRequest
+    def add_search_request(search_request)
+      puts 'add search request'
+      if(@search_requests.has_key?(search_request.id))
+        #error
+      else
+        @search_requests[search_request.id]= search_request
+      end
+    end
+
+    #AS List SearchRequests of a user
+    def search_requests_by_user(user)
+      result= Array.new(@search_requests.values)
+      result.delete_if{|search_request| search_request.user != user}
+      result
+    end
+
+    #AS Remove a SearchRequest
+    def remove_search_request(search_request_to_delete)
+        @search_requests.delete(search_request_to_delete.id)
+    end
+
+    #AS Get SearchRequest by id
+    def search_request_by_id(id)
+    @search_requests[id]
+    end
+
   end
 end
