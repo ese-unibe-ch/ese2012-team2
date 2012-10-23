@@ -33,6 +33,7 @@ module Models
         #raise error here
       end
       @items[item.id] = item
+      Event::ItemUpdateEvent.item_created item
     end
 
     def delete_item(item)

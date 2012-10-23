@@ -31,8 +31,10 @@ Please do not reply."
         :body => "Dear #{user.name}
 One of your subscribed Searches matched with an item:
 Keywords: #{search_request.keywords}
-Item: #{item}
-"
-              })
+Item: #{item.name}
+Price: #{item.price}
+Description: #{item.description}
+Owner: #{item.owner}
+"})
   end
 end

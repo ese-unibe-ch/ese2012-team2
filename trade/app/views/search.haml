@@ -23,8 +23,8 @@
   %br
   %input.normal_input{:type=>"text", :name=>"keywords", :style => "width:500px", :value => "#{params[:keywords]}"}
   %br
-  %input.normal_input{:type=>"submit", :name=> "submit", :class=>"button_margin", :value => "Search"}
-  %input.normal_input{:type=>"submit", :name=> "submit", :class=>"button_margin", :value => "Subscribe"}
+  %input.normal_input{:type=>"submit", :name=> "searchButton", :class=>"button_margin", :value => "Search"}
+  %input.normal_input{:type=>"submit", :name=> "subscribeButton", :formaction => "/subscribe", :class=>"button_margin", :value => "Subscribe"}
 %p
 %h2 Search results
 %table{:id=>"itemTable", :class=>"tablesorter pager"}
