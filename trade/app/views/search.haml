@@ -1,3 +1,9 @@
+:javascript
+  $(document).ready(function() {
+     $('.powertip').powerTip({
+          placement: 's' // north-east tooltip positio
+     });
+  })
 %h1 Hello #{@active_user.display_name}
 %p
 %form{:action=>"/search", :method=>"POST", :enctype=>"multipart/form-data"}
@@ -7,5 +13,25 @@
   %input.normal_input{:type=>"text", :name=>"keywords", :style => "width:500px", :value => "#{search_request.keywords}"}
   %br
   %input.normal_input{:type=>"submit", :class=>"button_margin", :value => "Search"}
-  %input.normal_input{:type=>"submit", :class=>"button_margin", :value => "Subscribe"}
+  %form{:action=>"/subscribe", :method=>"POST", :enctype=>"multipart/form-data"}
+    %input.normal_input{:type=>"submit", :class=>"button_margin", :value => "Subscribe"}
 %p
+%h2 Search results
+%table
+  %tr
+    %th Name
+    %th.padding_left Price
+    %th.padding_left Owner
+    %th.center Buy
+  - for item in items
+    - if item.state == :active
+      %tr
+        %td.list
+          %a{:href => "/item/#{item.id}",  "data-powertip" => "#{item.description.gsub("\n", "<br>")}</br><img src=#{item.image_path} width=150 />", :class => "powertip"}
+            #{item.name}
+        %td.right.list.padding_left #{item.price}
+        %td.list.padding_left
+          %a{:href=> "/user/#{item.owner}"} #{item.owner.display_name}
+        %td.list
+          - if item.owner != @active_user #SH Don't show the buy button for your own items
+            =haml :'partials/buy_button', :locals => {:itemid => item.id}

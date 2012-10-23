@@ -73,7 +73,19 @@ class Main  < BaseSecureController
   end
 
   post "/search" do
-    search_request = @data.new_search_request(params[:keywords], @active_user)
-    haml :search, :locals => {:search_request => search_request}
+    search_request = Models::SearchRequest.create(params[:keywords], @active_user)
+    items = search_request.get_matching_items(@data.all_items)
+    haml :search, :locals => {:search_request => search_request, :items => items}
+  end
+
+  get "/search_requests" do
+
+    haml :search_requests
+  end
+
+  post "/subscribe" do
+    @data.new_search_request(params[:keywords], @active_user)
+    add_message("Successfully subscribed.", :success)
+    redirect back
   end
 end
