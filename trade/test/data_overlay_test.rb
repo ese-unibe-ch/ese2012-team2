@@ -37,12 +37,14 @@ class DataOverlayTest < Test::Unit::TestCase
     overlay.new_search_request(["again","some","keywords"], user2)
     overlay.new_search_request(["again","some","other","keywords"], user2)
 
+    assert(overlay.search_request_by_id(0)==sr1)
     assert(overlay.search_requests_by_user(user1).size == 2, "User1 should have 2 SearchRequests")
     overlay.remove_search_request(sr1)
     assert(overlay.search_requests_by_user(user1).size == 1, "User1 should now have 1 SearchRequest")
     assert(overlay.search_requests_by_user(user2).size == 2, "User2 should have 2 SearchRequests")
 
   end
+
 
 
 end
