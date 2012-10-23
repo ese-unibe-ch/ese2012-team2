@@ -1,5 +1,6 @@
 require_relative '../models/item'
 require_relative '../models/user'
+require_relative '../models/search_request'
 require 'digest/md5'
 require_relative 'base_secure_controller'
 require_relative '../helpers/user_data_helper'
@@ -69,5 +70,39 @@ class Main  < BaseSecureController
       @active_user.interests = params[:interests]
       redirect "/user/#{@active_user.name}"
     end
+  end
+
+  post "/search" do
+    keyword = Models::SearchRequest.splitUp(params[:keywords])
+    search_request = Models::SearchRequest.create(keyword, @active_user)
+    items = search_request.get_matching_items(@data.all_items)
+    haml :search, :locals => {:search_request => search_request, :items => items}
+  end
+
+  get "/search_requests" do
+    search_requests = @data.search_requests_by_user(@active_user)
+    haml :search_requests, :locals => {:search_requests => search_requests}
+  end
+
+  get "/delete/:search_request" do
+    search_request = @data.search_request_by_id params[:search_request].to_i
+    if search_request != nil && search_request.user == @active_user
+      @data.remove_search_request(search_request)
+    end
+    redirect back
+  end
+
+  post "/research/:search_request" do
+    search_request = @data.search_request_by_id params[:search_request].to_i
+    keyword = Models::SearchRequest.splitUp(search_request.keywords)
+    search_request = Models::SearchRequest.create(keyword, @active_user)
+    items = search_request.get_matching_items(@data.all_items)
+    haml :search, :locals => {:search_request => search_request, :items => items}
+  end
+
+  post "/subscribe" do
+    @data.new_search_request(params[:keywords], @active_user)
+    add_message("Successfully subscribed.", :success)
+    redirect "/search_requests"
   end
 end

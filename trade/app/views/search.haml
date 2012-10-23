@@ -4,29 +4,29 @@
           placement: 's' // north-east tooltip positio
      });
 
-    $("#itemTable")
-      .tablesorter({
-              headers: {3: {sorter: false}},
-              sortList: [[0,0], [1,0]],
-              widgets: ['zebra']
-      })
-      .tablesorterPager({
-              container: $("#pager"),
-              positionFixed: false
-      });
+     $("#itemTable")
+        .tablesorter({
+                headers: {3: {sorter: false}},
+                sortList: [[0,0], [1,0]],
+                widgets: ['zebra']
+        })
+        .tablesorterPager({
+                container: $("#pager"),
+                positionFixed: false
+     });
   })
-
 %h1 Hello #{@active_user.display_name}
 %p
 %form{:action=>"/search", :method=>"POST", :enctype=>"multipart/form-data"}
   %label
     Enter your key words: (e.g. small white etc. ...)
   %br
-  %input.normal_input{:type=>"text", :name=>"keywords", :style => "width:500px"}
+  %input.normal_input{:type=>"text", :name=>"keywords", :style => "width:500px", :value => "#{params[:keywords]}"}
   %br
-  %input.normal_input{:type=>"submit", :name=> "submit", :class=>"button_margin", :value => "Search"}
+  %input.normal_input{:type=>"submit", :name=> "searchButton", :class=>"button_margin", :value => "Search"}
+  %input.normal_input{:type=>"submit", :name=> "subscribeButton", :formaction => "/subscribe", :class=>"button_margin", :value => "Subscribe"}
 %p
--#SH Shows a table of all active items
+%h2 Search results
 %table{:id=>"itemTable", :class=>"tablesorter pager"}
   %thead
     %tr
