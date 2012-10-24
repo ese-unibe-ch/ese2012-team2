@@ -31,7 +31,7 @@
   %thead
     %tr
       %th Name
-      %th.padding_left Price
+      %th.padding_left.price_column Price
       %th.padding_left Owner
       %th.center Buy
   %tbody
@@ -47,15 +47,4 @@
           %td.list
             - if item.owner != @active_user #SH Don't show the buy button for your own items
               =haml :'partials/buy_button', :locals => {:itemid => item.id}
-%div{:id => "pager", :class => "pager"}
-  %form
-    %img{:src => "../images/pager/first.png", :class => "first", :alt =>"first"}
-    %img{:src => "../images/pager/prev.png", :class => "prev", :alt =>"prev"}
-    %input{:class => "pagedisplay", :type => "text"}
-    %img{:src => "../images/pager/next.png", :class => "next", :alt =>"next"}
-    %img{:src => "../images/pager/last.png", :class => "last", :alt =>"last"}
-    %select{:class => "pagesize"}
-      %option{:selected => "selected", :value => "10"}  10
-      %option{:value => "20"} 20
-      %option{:value => "30"} 30
-      %option{:value => "50"} 50
+=haml :'partials/pager'
