@@ -91,6 +91,7 @@ class ItemController < BaseSecureController
             item.description = description
             #PS it's nilsafe ;)
             item.image = ImageHelper.save params[:image], settings.public_folder + "/images/items"
+            Event::ItemUpdateEvent.item_changed item
             add_message("Item edited", :success)
           else
             add_message("Price must be positive", :error)
