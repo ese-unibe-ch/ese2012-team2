@@ -36,8 +36,9 @@ class UserDataHelper
     #PS check some stuff
     self.register_checks(params)
     #PS create the new user
-    new_user = data.new_user(params[:username], display_name, params[:passwd], params[:email], params[:interests])
+    new_user = data.new_user(params[:username], params[:display_name], params[:passwd], params[:email], params[:interests])
     new_user.image = ImageHelper.save(params[:image],"#{settings.public_folder}/images/users")
+    new_user
   end
 
   #PS check for required fields and contents
@@ -62,8 +63,8 @@ class UserDataHelper
 
     display_name = UserDataHelper.remove_white_spaces(params[:display_name])
 
-    if data.user_display_name_exists?(display_name)
-      raise TradeException, "Display name already exists."
-    end
+  #  if data.user_display_name_exists?(display_name)
+  #    raise TradeException, "Display name already exists."
+  #  end
   end
 end
