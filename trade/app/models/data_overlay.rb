@@ -56,14 +56,7 @@ module Models
     #KR returns all items currently owned by the given user
     #if the user is not in the user list, an error will be raised
     def items_by_user(user)
-      result = Array.new
-      @items.each_value {
-          |value|
-        if(value.owner==user)
-         result.push value
-        end
-      }
-      return result
+      @items.values.select { |value| value.owner==user }
     end
 
     def active_items_by_user(user)
