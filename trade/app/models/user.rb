@@ -1,9 +1,10 @@
 require "digest/md5"
 require_relative "password"
+require_relative "trader"
 module Models
-  class User
+  class User  < Models::Trader
 
-    attr_accessor :name, :display_name, :credits, :password, :image, :email, :interests
+    attr_accessor :name, :display_name, :password, :image, :email, :interests
 
     #SH Creates a new user with his name
     def self.named(name, display_name, passwd, email, interests)
@@ -29,22 +30,6 @@ module Models
     #SH Returns the name of the user
     def to_s
       self.name
-    end
-
-    #SH Checks whether the user can buy an item and then buys it
-    def buy(item)
-      if item.state == :active
-        if item.price<=self.credits
-          self.credits -= item.price
-          #item.owner.credits += item.price
-          item.take_ownership(self)
-          item.state = :pending
-        else
-          return "credit error"
-        end
-      else
-        return "item error"
-      end
     end
 
     #AS Sets the password.
