@@ -5,8 +5,8 @@
   %a{:href => "/user/#{organization.admin.name}"} #{organization.admin.name}
 %h2 Interests
 %span
-  #{organization.description.gsub("\n", "<br>")}
-  -if organization.description == ""
+  #{organization.interests.gsub("\n", "<br>")}
+  -if organization.interests == ""
     No interests available
 %h2 Members
 %table

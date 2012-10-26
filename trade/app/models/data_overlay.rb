@@ -120,7 +120,7 @@ module Models
     #SH returns the organization with the given name
     #returns nil if there is no such user
     def organization_by_name(name)
-      @organization[name]
+      @organizations[name]
     end
 
     def all_organizations

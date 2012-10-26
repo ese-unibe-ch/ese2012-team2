@@ -23,7 +23,7 @@ class OrganizationController  < BaseSecureController
    end
 
   get "/organization/:organization" do
-    organization = @data.organzation_by_name(params[:organization])
+    organization = @data.organization_by_name(params[:organization])
     haml :organization, :locals => {:organization => organization}
   end
 end

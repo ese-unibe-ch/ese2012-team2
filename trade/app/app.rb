@@ -50,6 +50,9 @@ class App < Sinatra::Base
 
   configure :development do
     self.load_test_data
+
+    overlay =  Models::DataOverlay.instance
+    overlay.new_organization("Test", "Bla", overlay.user_by_name("ese"))
   end
 
 

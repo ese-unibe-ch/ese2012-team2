@@ -2,7 +2,7 @@
     class Organization < Models::Trader
       attr_accessor :name, :image, :interests
 
-      @members = []
+
 
       def self.named(name,  interests, admin)
         return self.new(name, interests, admin)
@@ -14,6 +14,8 @@
         self.name = name
         self.interests= interests
         @admin = admin
+        @members = Array.new()
+        @members.push(admin)
       end
 
       def admin
