@@ -1,0 +1,16 @@
+%h1 Organization #{organization.name}
+%img.image_float_left{:src => "#{organization.image_path}", :alt => "Organization image"}
+%h2 Admin
+%span
+  %a{:href => "/user/#{organization.admin.name}"} #{organization.admin.name}
+%h2 Interests
+%span
+  #{organization.description.gsub("\n", "<br>")}
+  -if organization.description == ""
+    No interests available
+%h2 Members
+%table
+  -for member in organization.members
+    %tr
+      %td
+        %a{:href => "/user/#{member.name}"} #{member.name}
