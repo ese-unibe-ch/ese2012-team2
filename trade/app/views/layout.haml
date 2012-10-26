@@ -21,8 +21,9 @@
       %a{:href => "/index"}
         %img{:src => url("images/logo_small.png"), :alt => "The site logo", :height => "100", :width => "100"}
         %span Emporium
-    =haml :'partials/menu';
+    =haml :'partials/menu'
     #header_bar
+  =haml :'partials/search_bar'
   #body
     #page
       #side_box
@@ -34,4 +35,4 @@
         = yield
     #footer_border
       #footer
-        %p Copyright by emporium
+        %p Copyright &copy; 2012 by emporium

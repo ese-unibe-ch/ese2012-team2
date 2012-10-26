@@ -41,11 +41,31 @@ textarea, input {
   color: @logo-color;
   width: 900px;
   bottom: 10px;
-  a, a:hover{
+  a, a:hover {
     color: @logo-color;
   }
 }
 
+#search_bar {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  width: 220px;
+
+  input[type = text] {
+
+    background-position: right center;
+    background-image: url(../images/search.png);
+    background-repeat: no-repeat;
+    max-width: 150px;
+  }
+
+  input {
+    margin: 0;
+    display: compact;
+  }
+}
 
 #page {
   background-color: @page-color;
@@ -195,7 +215,7 @@ input {
   background-color: lighten(@header-bar-color, 20%);
 }
 
-.price_column{
+.price_column {
   min-width: 50px;
 }
 
@@ -234,32 +254,31 @@ table.tablesorter {
     }
   }
 }
-  #pager, #pager2 {
-    padding-top: 5px;
-    text-align: center;
-    .grey_dashed_border(top);
 
-    span {
-      padding: 0 5px 0 5px;
+#pager, #pager2 {
+  padding-top: 5px;
+  text-align: center;
+  .grey_dashed_border(top);
+
+  span {
+    padding: 0 5px 0 5px;
+  }
+  img {
+    cursor: pointer;
+    .prev {
+      width: auto;
+      margin-right: 10px;
     }
-    img {
-      cursor: pointer;
-      .prev {
-        width: auto;
-        margin-right: 10px;
-      }
-      .next {
-        width: auto;
-        margin-left: 10px;
-      }
-    }
-    input {
-      width: 50px;
-      text-align: center;
+    .next {
+      width: auto;
+      margin-left: 10px;
     }
   }
-
-
+  input {
+    width: 50px;
+    text-align: center;
+  }
+}
 
 /********************************/
 /*********Button styles**********/
