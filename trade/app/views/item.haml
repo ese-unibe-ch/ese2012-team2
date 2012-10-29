@@ -12,3 +12,7 @@
   #{item.description.gsub("\n", "<br>")}
   -if item.description == ""
     No description available
+%h2 Comments
+%form{:action => "/add_comment/#{item.id}", :method => "POST", :enctype=>"multipart/form-data"}
+%textarea.normal_input{:name => "text", :style => "width:500px; height:100px", :placeholder => "Your comment"}
+%input.normal_input{:type => "submit",:class=>"button_margin", :value => "comment"}
