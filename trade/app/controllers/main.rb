@@ -100,7 +100,7 @@ class Main  < BaseSecureController
     haml :search, :locals => {:search_request => search_request, :items => items}
   end
 
-  post "/subscribe" do
+  get "/subscribe" do
     @data.new_search_request(params[:keywords], @active_user)
     add_message("Successfully subscribed.", :success)
     redirect "/search_requests"

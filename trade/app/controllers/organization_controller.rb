@@ -27,7 +27,7 @@ class OrganizationController  < BaseSecureController
     haml :organization, :locals => {:organization => organization}
   end
 
-   post '/work_for' do
+   post "/work_for" do
      work_for= params[:work_for]
      if work_for.nil?
       @active_user.working_for=nil
