@@ -4,11 +4,20 @@ require_relative "trader"
 module Models
   class User  < Models::Trader
 
-    attr_accessor :name, :display_name, :password, :image, :email, :interests
+    attr_accessor :name, :display_name, :password, :image, :email, :interests, :working_for
 
     #SH Creates a new user with his name
     def self.named(name, display_name, passwd, email, interests)
      return self.new(name, display_name, passwd, email, interests)
+    end
+
+    #AS Implements buying for an organization (Override)
+    def buy(item)
+      if working_for.nil?
+        super
+      else
+        working_for.buy(item)
+      end
     end
 
     #AS Checks if a password is valid (criteria need to be defined - at the moment it's just a "not-empty-test")

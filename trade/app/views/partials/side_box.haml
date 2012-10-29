@@ -15,3 +15,15 @@
       %a{:href=> url("/user/#{@active_user.name}")} View profile
     %li
       %a{:href=> url("/user/#{@active_user.name}/edit")} Edit profile
+
+  %form{:action=>"/work_for", :method=>"POST", :enctype=>"multipart/form-data"}
+    %label Work for:
+    %select{:name=>"work_for"}
+      %option{:value=>"myself"} myself
+      - for organization in @data.organizations_by_user(@active_user)
+        %option{:value=>organization} #{organization}
+    %input.normal_input{:type=>"submit", :name=> "submit", :value => "set"}
+  - if !@active_user.working_for.nil?
+    Working for: #{@active_user.working_for}
+  - else
+    Working for: myself

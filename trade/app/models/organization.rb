@@ -38,6 +38,9 @@
         self.name
       end
 
+      def is_member?(user)
+        @members.include? user
+      end
       def image_path
         if self.image.nil? then
           return "/images/organizations/default.png"

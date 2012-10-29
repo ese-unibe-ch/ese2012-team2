@@ -124,7 +124,7 @@ module Models
     end
 
     def all_organizations
-      @organization.values
+      @organizations.values
     end
 
     #SH checks if a organization exists
@@ -138,7 +138,14 @@ module Models
       if@organizations.has_key?(organization.name)
         #raise error here
       end
+      puts "adding"
       @organizations[organization.name] = organization
+
+      @organizations.each do |org|
+        puts org
+
+    end
+
     end
 
     def new_organization(name, interests, admin)
@@ -154,6 +161,12 @@ module Models
       search_request
     end
 
+    #AS Get the organizations which a user is part of
+    def organizations_by_user(user)
+      result= Array.new(@organizations.values)
+      result.delete_if{|org| !org.is_member?(user)}
+      result
+    end
     #AS Add a new SearchRequest
     def add_search_request(search_request)
       if(@search_requests.has_key?(search_request.id))

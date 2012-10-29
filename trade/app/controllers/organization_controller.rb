@@ -26,4 +26,15 @@ class OrganizationController  < BaseSecureController
     organization = @data.organization_by_name(params[:organization])
     haml :organization, :locals => {:organization => organization}
   end
+
+   post '/work_for' do
+     work_for= params[:work_for]
+     if work_for.nil?
+      @active_user.working_for=nil
+     else
+       @active_user.working_for=@data.organization_by_name(work_for)
+     end
+
+     redirect "/index"
+   end
 end
