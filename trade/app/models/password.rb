@@ -7,7 +7,7 @@ module Models
     attr_accessor :hash, :salt
 
     def self.make(passwd)
-       password= self.new(passwd)
+      self.new(passwd)
     end
 
     def initialize(passwd)
@@ -23,7 +23,7 @@ module Models
     private
     #AS Hashes the given password + the previously created salt
     def encrypt(passwd)
-      digest= Digest::MD5.hexdigest(salt+passwd)
+      Digest::MD5.hexdigest(salt+passwd)
     end
 
     #AS Creates the salt (which basically is a random string which is added to the password before hashing to prevent rainbow table attacks)
@@ -32,6 +32,5 @@ module Models
       pool = ('a'..'z').to_a + ('0'..'9').to_a
       self.salt= (1..size).collect{|a| pool[rand(pool.size)]}.join
     end
-
   end
 end
