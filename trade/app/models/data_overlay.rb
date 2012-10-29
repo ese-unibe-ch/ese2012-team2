@@ -156,7 +156,6 @@ module Models
 
     #AS Add a new SearchRequest
     def add_search_request(search_request)
-      puts 'add search request'
       if(@search_requests.has_key?(search_request.id))
         #error
       else

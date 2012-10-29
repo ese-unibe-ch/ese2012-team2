@@ -21,14 +21,16 @@ module Models
 
     #AS Check if a given Item matches to the SearchRequest instance
     def applies?(item)
-      applies_for_all = true
-      keywords.each do |keyword|
-        if !applies_for_all
-          break
+      unless item.owner == self.user
+        applies_for_all = true
+        keywords.each do |keyword|
+          if !applies_for_all
+            break
+          end
+          applies_for_all= applies_for_all && ((item.name.downcase.include? keyword.downcase) || (item.description.downcase.include? keyword.downcase))
         end
-        applies_for_all= applies_for_all && ((item.name.downcase.include? keyword.downcase) || (item.description.downcase.include? keyword.downcase))
+        applies_for_all
       end
-      applies_for_all
     end
 
     #AS Given an Array of Items return an Array of Items which match to the SearchRequest instance
