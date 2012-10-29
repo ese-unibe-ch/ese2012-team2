@@ -26,9 +26,9 @@ class Main  < BaseSecureController
     @title = "User " + params[:name]
     user = @data.user_by_name(params[:name])
     if user.name == @active_user.name
-     items = @data.items_by_user(user)
+     items = @data.items_by_trader(user)
     else
-     items = @data.active_items_by_user(user)
+     items = @data.active_items_by_trader(user)
     end
 
     haml :user, :locals =>{:user => user, :items => items}

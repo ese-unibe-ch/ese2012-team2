@@ -1,6 +1,8 @@
 require 'test/unit'
 require 'rubygems'
 require 'require_relative'
+require 'bundler'
+Bundler.require
 require_relative '../app/models/data_overlay'
 require_relative '../app/models/user'
 require_relative '../app/models/item'
@@ -30,10 +32,10 @@ class DataOverlayTest < Test::Unit::TestCase
   end
 =end
   def test_search_requests
-    user1 = Models::User.named("Darth Vader", "pwDarthVader", "lord.vader@imperium.com")
-    user2 = Models::User.named("bla", "pwblblablar", "ablabl@asfdewaf.com")
 
     overlay =  Models::DataOverlay.instance
+    user1 = overlay.new_user("vader", "Darth Vader", "pwDarthVader", "lord.vader@imperium.com", nil)
+    user2 = overlay.new_user("bla", "Mr Blaaa", "pwblblablar", "ablabl@asfdewaf.com", nil)
     sr1= overlay.new_search_request(["some","keywords"], user1)
     overlay.new_search_request(["some","other","keywords"], user1)
     overlay.new_search_request(["again","some","keywords"], user2)

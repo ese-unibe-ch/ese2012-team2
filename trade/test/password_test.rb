@@ -1,23 +1,27 @@
 require 'test/unit'
 require 'rubygems'
 require 'require_relative'
-require_relative '../app/models/user'
+require_relative '../app/models/password'
 
 
 class PasswordTest < Test::Unit::TestCase
 
-  def accept_correct_passwd
-
-    user = Models::User.named("Test", "passwd", "ese@ese.unibe.ch")
-
-    assert(User.authenticated?("passwd"))
+  def test_create_password
+    pwd = Models::Password.make "testpw"
+    assert_not_nil(pwd.hash)
+    assert_not_nil(pwd.salt)
+    assert_match(/[0-9a-z]{32}/, pwd.hash)
+    assert_match(/[0-9a-z]{10}/, pwd.salt)
   end
 
-  def decline_incorrect_passwd
+  def test_accept_correct_passwd
+    pwd = Models::Password.make "testpw"
+    assert(pwd.authenticated?("testpw"))
+  end
 
-    user = Models::User.named("Test", "passwd", "ese@ese.unibe.ch")
-
-    assert(!User.authenticated?("qasswd"))
+  def test_decline_incorrect_passwd
+    pwd = Models::Password.make "testpw"
+    assert(!pwd.authenticated?("testfghpw"))
   end
 
 end

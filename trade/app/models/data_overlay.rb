@@ -8,6 +8,7 @@ module Models
     def initialize
       @users = Hash.new()
       @items = Hash.new()
+      @organizations = Hash.new()
       @search_requests= Hash.new() #AS id: user, value: Array of SearchRequests
     end
 
@@ -55,15 +56,15 @@ module Models
 
     #KR returns all items currently owned by the given user
     #if the user is not in the user list, an error will be raised
-    def items_by_user(user)
-      @items.values.select { |value| value.owner==user }
+    def items_by_trader(trader)
+      @items.values.select { |value| value.owner==trader }
     end
 
-    def active_items_by_user(user)
+    def active_items_by_trader(trader)
       result = Array.new
       @items.each_value {
           |value|
-        if(value.owner==user and value.state == :active)
+        if(value.owner==trader and value.state == :active)
           result.push value
         end
       }
@@ -90,7 +91,6 @@ module Models
     #returns nil if there is no such user
     def user_by_name(name)
       @users[name]
-
     end
 
     def all_users
@@ -117,6 +117,43 @@ module Models
       return user
     end
 
+    #SH returns the organization with the given name
+    #returns nil if there is no such user
+    def organization_by_name(name)
+      @organizations[name]
+    end
+
+    def all_organizations
+      @organizations.values
+    end
+
+    #SH checks if a organization exists
+    def organization_exists?(name)
+      @organizations.member?(name)
+    end
+
+    #SH adds a new organization to the environment
+    # if name or id are already in use, this function raises an error
+    def add_organization(organization)
+      if@organizations.has_key?(organization.name)
+        #raise error here
+      end
+      puts "adding"
+      @organizations[organization.name] = organization
+
+      @organizations.each do |org|
+        puts org
+
+    end
+
+    end
+
+    def new_organization(name, interests, admin)
+      organization =  Organization.named(name, interests, admin)
+      add_organization organization
+      organization
+    end
+
     #AS Create a new search request and add it.
     def new_search_request(keywords, user)
       search_request= SearchRequest.create(keywords, user)
@@ -124,9 +161,14 @@ module Models
       search_request
     end
 
+    #AS Get the organizations which a user is part of
+    def organizations_by_user(user)
+      result= Array.new(@organizations.values)
+      result.delete_if{|org| !org.is_member?(user)}
+      result
+    end
     #AS Add a new SearchRequest
     def add_search_request(search_request)
-      puts 'add search request'
       if(@search_requests.has_key?(search_request.id))
         #error
       else

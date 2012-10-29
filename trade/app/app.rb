@@ -9,11 +9,13 @@ require_relative 'event/item_update_event'
 require_relative 'models/user'
 require_relative 'models/item'
 require_relative 'models/data_overlay'
+require_relative 'models/trader'
 require_relative 'controllers/main'
 require_relative 'controllers/authentication'
 require_relative 'controllers/item_controller'
 require_relative 'controllers/change_password'
 require_relative 'controllers/reset_password'
+require_relative 'controllers/organization_controller'
 require_relative 'controllers/base_controller'
 require_relative 'controllers/base_secure_controller'
 
@@ -24,7 +26,7 @@ class App < Sinatra::Base
   use Main
   use ItemController
   use ChangePassword
-  use ResetPassword
+  use OrganizationController
 
   enable :sessions
   set :show_exceptions, false
@@ -48,6 +50,9 @@ class App < Sinatra::Base
 
   configure :development do
     self.load_test_data
+
+    overlay =  Models::DataOverlay.instance
+    overlay.new_organization("Test", "Bla", overlay.user_by_name("ese"))
   end
 
 
