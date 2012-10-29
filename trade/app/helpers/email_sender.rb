@@ -13,18 +13,20 @@ class EmailSender
   }
 
   def self.send_new_password(user, pw)
-     Pony.mail({
-       :to => user.email,
-       :subject => 'Password reset',
-       :body => "Dear #{user.name}
-
+    Thread.new {
+       Pony.mail({
+         :to => user.email,
+         :subject => 'Password reset',
+         :body => "Dear #{user.name}
 Your password was reset.
 Your new password is #{pw}.
 Please do not reply."
-     })
+       })
+     }
   end
 
   def self.send_item_found(user, search_request, item)
+    Thread.new {
       Pony.mail({
         :to => user.email,
         :subject => "Your Search matched an item",
@@ -34,7 +36,8 @@ Keywords: #{search_request.keywords}
 Item: #{item.name}
 Price: #{item.price}
 Description: #{item.description}
-Owner: #{item.owner}
-"})
+Owner: #{item.owner}"
+                })
+      }
   end
 end
