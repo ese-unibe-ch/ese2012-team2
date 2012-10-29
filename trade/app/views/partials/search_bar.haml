@@ -1,0 +1,4 @@
+#search_bar
+  %form{:action=>"/search", :method=>"GET", :enctype=>"multipart/form-data"}
+    %input.normal_input{:type=>"text", :name=>"keywords", :title => "Search item", :id => "search", :placeholder=>"Search item"}
+    %input.normal_input{:type=>"submit", :name=> "submit", :value => "Search"}

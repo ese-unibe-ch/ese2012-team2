@@ -23,5 +23,6 @@ doc/
 *.iml
 
 /trade/app/public/images/items/*
+/trade/app/public/images/users/*
 .DS_STORE
 

@@ -1,3 +1,4 @@
+=begin
 require 'test/unit'
 require 'rubygems'
 require 'require_relative'
@@ -18,14 +19,14 @@ class ItemTest < Test::Unit::TestCase
   def test_item_price
     name = "Item1"
     price = "10"
-    user = Models::User.named("Test", "passwd")
+    user = Models::User.named("Test", "passwd", "ese@ese.unibe.ch")
     description = "Lorem ipsum"
     item = Models::Item.named(name, price, user, description)
     assert(item.price == price)
   end
 
   def test_item_active
-    user = Models::User.named("Test", "passwd")
+    user = Models::User.named("Test", "passwd", "ese@ese.unibe.ch")
     description = "Lorem ipsum"
     item1 = Models::Item.named("Item1", 10, user, description)
     item2 = Models::Item.named("Item2", 5, user, description)
@@ -38,7 +39,7 @@ class ItemTest < Test::Unit::TestCase
   end
 
   def test_item_owner
-    user = Models::User.named("Test", "passwd")
+    user = Models::User.named("Test", "passwd", "ese@ese.unibe.ch")
     description = "Lorem ipsum"
     item1 = Models::Item.named("Item1", 10, user, description)
     item2 = Models::Item.named("Item2", 5, nil, description)
@@ -55,3 +56,5 @@ class ItemTest < Test::Unit::TestCase
     #TODO PS does item.by_id fetch the expected item?
   end
 end
+
+=end

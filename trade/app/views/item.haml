@@ -1,9 +1,14 @@
 %h1 Item #{item.name}
-%p
-  Owner:
-  %a{:href => "/user/#{item.owner.name}"} #{item.owner.name}
-%p Price: #{item.price}
+-if item.state == :active
+  =haml :'partials/buy_button', :locals => {:itemid => item.id}
 %img.image_float_left{:src => "#{item.image_path}", :alt => "Item image"}
-%p #{item.description.gsub("\n", "<br>")}
--if item.description == ""
-  %p No description available
+%h2 Owner
+%span
+  %a{:href => "/user/#{item.owner.name}"} #{item.owner.name}
+%h2 Price
+%span #{item.price}
+%h2 Description
+%span
+  #{item.description.gsub("\n", "<br>")}
+  -if item.description == ""
+    No description available

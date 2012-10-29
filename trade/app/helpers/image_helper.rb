@@ -2,17 +2,17 @@
 class ImageHelper
 
   #PS saves the image and return the filename
-  def self.save image, public_folder
+  def self.save image, target_folder
     filename = nil
 
     unless image.nil?
       if self.image? image
-        until self.is_unique(filename, public_folder) do
+        until self.is_unique(filename, target_folder) do
           #PS potential eternal loop...
           filename = self.generate_filename image
         end
 
-        File.open("#{public_folder}/images/items/#{filename}", "w") do |file|
+        File.open("#{target_folder}/#{filename}", "w") do |file|
           file.write(image[:tempfile].read)
           #PS only activate resize if you have ImageMagick installed and PATH setup correctly
           #self.resize(file)
@@ -23,6 +23,7 @@ class ImageHelper
   end
 
   def self.image? image
+    puts image[:filename]
     mime_type =  MIME::Types.type_for(image[:filename], false)
     mime_type[0].media_type == 'image'
   end

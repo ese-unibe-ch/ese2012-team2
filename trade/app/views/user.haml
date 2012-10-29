@@ -3,49 +3,112 @@
      $('.powertip').powerTip({
           placement: 's' // north-east tooltip positio
      });
+     $("#itemTable")
+           .tablesorter({
+                   headers: {3: {sorter: false}},
+                   sortList: [[2,0], [0,0]],
+                   widgets: ['zebra']
+           })
+           .tablesorterPager({
+                   container: $("#pager"),
+                   positionFixed: false
+           });
+     $("#itemTable2")
+                .tablesorter({
+                        headers: {3: {sorter: false}},
+                        sortList: [[2,0], [0,0]],
+                        widgets: ['zebra']
+                })
+                .tablesorterPager({
+                        container: $("#pager2"),
+                        positionFixed: false
+                });
   })
 
 - if !user.nil? #SH Only show this for an existing user
-  %h1 User #{user.name}
+  %h1 User #{user.display_name}
   Credits: #{user.credits}
   #userimage
-    %img{:src => user.image_path, :width => "150px"}
-
+    %img{:src => user.image_path, :width => "150", :alt=>"User image"}
+  %h2 Interests
+  %p
+    #{user.interests}
   %h2 Items
-  %table
-    %tr
-      %th Name
-      %th.padding_left Price
-      %th.padding_left Active
-    - for item in items
-      - if item.active
-        - type = 'active'
-      - else
-        - type = 'inactive'
-      %tr{:class => "#{type}"}
-        %td.list
-          %a{:href => "/item/#{item.id}",  "data-powertip" => "#{item.description.gsub("\n", "<br>")}</br><img src=#{item.image_path} width=150 />", :class => "powertip"}
-            #{item.name}
-        %td.list.padding_left #{item.price}
-        - if item.active
-          %td.list.padding_left yes
-          -if user.name==session[:name] #SH If the user shown is the user who is logged in, show de-/activate button
+  - unless items.length == 0
+    %table{:id=>"itemTable", :class=>"tablesorter pager"}
+      %thead
+        %tr
+          %th Name
+          %th.padding_left.price_column Price
+          %th.padding_left State
+      %tbody
+        - for item in items
+          - type = item.state
+          %tr{:class => "#{type}"}
             %td.list
-              %form{:action => "/change/#{item.id}", :method => "POST"}
-                %input{:type => "submit",:name => "action", :value => "Deactivate", :class => "button_as_link"}
-        - else
-          %td.list.padding_left no
-          -if user.name==session[:name]
-            %td.list
-              %form{:action => "/change/#{item.id}", :method => "POST"}
-                %input{:type => "submit",:name => "action", :value => "Activate", :class => "button_as_link"}
-        -if user.name==session[:name]
-          %td.list
-            %form{:action => "/delete/#{item.id}", :method => "POST"}
-              %input{:type => "submit",:name => "action", :value => "Delete", :class => "button_as_link"}
-        -if !item.active
-          -if user.name==session[:name]
-            %td.list
-              %a{:href => "/item/#{item.id}/edit"}Edit
-        -else
-          %td.list
+              %a{:href => "/item/#{item.id}",  "data-powertip" => "#{item.description.gsub("\n", "<br>")}</br><img src=#{item.image_path} width=150 />", :class => "powertip"}
+                #{item.name}
+            %td.list.padding_left #{item.price}
+            %td.list.padding_left #{item.state}
+
+            -if user == @active_user
+              - if item.state == :active
+                %td.list
+                  %form{:action => "/item/#{item.id}/change_state", :method => "POST"}
+                    %input{:type => "hidden", :name => "state", :value => "inactive"}
+                    %input{:type => "submit", :value => "Deactivate", :class => "button_as_link"}
+              - if item.state == :inactive
+                %td.list
+                  %form{:action => "/item/#{item.id}/change_state", :method => "POST"}
+                    %input{:type => "hidden", :name => "state", :value => "active"}
+                    %input{:type => "submit", :value => "Activate", :class => "button_as_link"}
+              - if item.state == :pending
+                %td.list
+                  %form{:action => "/item/#{item.id}/confirm_buy", :method => "POST"}
+                    %input{:type => "submit", :value => "Confirm receipt", :class => "button_as_link"}
+              - unless item.state == :pending
+                %td.list
+                  %form{:action => "/delete/#{item.id}", :method => "POST"}
+                    %input{:type => "submit",:name => "action", :value => "Delete", :class => "button_as_link"}
+              - if item.state == :inactive
+                %td.list
+                  %a{:href => "/item/#{item.id}/edit"}Edit
+            - else
+              - if item.state == :active
+                %td.list
+                  =haml :'partials/buy_button', :locals => {:itemid => item.id}
+    =haml :'partials/pager'
+    - if user == @active_user
+      %h2 Pending items
+      %table{:id=>"itemTable2", :class=>"tablesorter pager2"}
+        %thead
+          %tr
+            %th Name
+            %th.price_column Price
+            %th Buyer
+        %tbody
+          - for item in @data.all_items
+            -if item.state == :pending and item.prev_owners[item.prev_owners.length-1] == user
+              %tr
+                %td.list
+                  %a{:href => "/item/#{item.id}",  "data-powertip" => "#{item.description.gsub("\n", "<br>")}</br><img src=#{item.image_path} width=150 />", :class => "powertip"}
+                    #{item.name}
+                %td.list.padding_left #{item.price}
+                %td.list
+                  %a{:href => "/user/#{item.owner}"} #{item.owner}
+      %div{:id => "pager2", :class => "pager2"}
+        %form
+          %img{:src => "../images/pager/first.png", :class => "first", :alt =>"first"}
+          %img{:src => "../images/pager/prev.png", :class => "prev", :alt =>"prev"}
+          %input{:class => "pagedisplay", :type => "text"}
+          %img{:src => "../images/pager/next.png", :class => "next", :alt =>"next"}
+          %img{:src => "../images/pager/last.png", :class => "last", :alt =>"last"}
+          %select{:class => "pagesize"}
+            %option{:selected => "selected", :value => "10"}  10
+            %option{:value => "20"} 20
+            %option{:value => "30"} 30
+            %option{:value => "50"} 50
+  - else
+    %p
+      User #{user.display_name} has currently no items
+

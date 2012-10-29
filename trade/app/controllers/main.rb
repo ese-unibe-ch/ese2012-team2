@@ -1,12 +1,14 @@
 require_relative '../models/item'
 require_relative '../models/user'
+require_relative '../models/search_request'
 require 'digest/md5'
+require_relative 'base_secure_controller'
+require_relative '../helpers/user_data_helper'
+require_relative '../helpers/image_helper'
 
-class Main  < Sinatra::Application
-  #SH Get the user by session
-  before do
-     @active_user = Models::DataOverlay.instance.user_by_name(session[:name])
-  end
+class Main  < BaseSecureController
+
+  attr_accessor :items
 
   #SH Redirect to the main page
   get "/" do
@@ -15,18 +17,18 @@ class Main  < Sinatra::Application
 
   #SH Check if logged in and show a list of all active items if true
   get "/index" do
-    redirect '/login' unless session[:name]
-    haml :index, :locals => {:current_name => session[:name], :items => Models::DataOverlay.instance.all_items, :error => nil }
+    @title = "Home"
+    haml :index, :locals => {:current_name => session[:name], :items => @data.all_items, :error => nil }
   end
 
   #SH Shows all items of a user
   get "/user/:name" do
-    redirect '/login' unless session[:name]
-    user = Models::DataOverlay.instance.user_by_name(params[:name])
+    @title = "User " + params[:name]
+    user = @data.user_by_name(params[:name])
     if user.name == @active_user.name
-     items = Models::DataOverlay.instance.items_by_user(user)
+     items = @data.items_by_user(user)
     else
-     items = Models::DataOverlay.instance.active_items_by_user(user)
+     items = @data.active_items_by_user(user)
     end
 
     haml :user, :locals =>{:user => user, :items => items}
@@ -34,52 +36,73 @@ class Main  < Sinatra::Application
 
   #SH Buys an item. If an error occurs, redirect to the buy error page
   post "/buy/:item" do
-    redirect '/login' unless session[:name]
-    item = Models::DataOverlay.instance.item_by_id params[:item].to_i
+    item = @data.item_by_id params[:item].to_i
 
     if @active_user.buy(item) == "credit error"
-      redirect "/index/credit"
+      add_message("Not enough credits", :error)
     end
-    redirect '/index'
+    redirect "/index"
   end
 
-  #SH Shows errors caused by buy on the main page
-  get "/index/:error" do
-    redirect '/login' unless session[:name]
-    haml :index, :locals => {:current_name => session[:name], :items => Models::DataOverlay.instance.all_items, :error => params[:error] }
-  end
-
-  #SH Shows the register form
-  get "/register" do
-    haml :register
-  end
-
-  #SH Adds an user an redirect to the login page
-  post "/register" do
-    if Models::User.passwd_valid?(params[:passwd])
-      if params[:passwd]==params[:passwd_repetition]
-        if !Models::DataOverlay.instance.user_exists?(params[:username])
-        Models::DataOverlay.instance.new_user(params[:username], params[:passwd])
-        redirect "/login"
-        else
-          redirect "/register/user_exists"
-        end
-      else
-        redirect "/register/wrong_repetition"
-      end
-    else
-      redirect "/register/password_invalid"
-    end
-  end
-
-  #AS sending a message about success to the register view
-  get "/register/:message" do
-    haml :register, :locals=>{:message => params[:message]}
-  end
 
   #SH Shows a list of all user and their credits
   get "/user" do
-    redirect '/login' unless session[:name]
-    haml :users, :locals => {:users => Models::User.all}
+    @title = "All users"
+    haml :users, :locals => {:users => @data.all_users}
+  end
+
+  get "/user/:user/edit" do
+    @title = "Edit user " + params[:user]
+    haml :edit_user
+  end
+
+  post "/user/:user/edit" do
+    display_name = params[:display_name]
+
+    display_name = UserDataHelper.remove_white_spaces(display_name)
+
+    if @data.user_display_name_exists?(display_name) and display_name != @active_user.display_name
+      add_message("Name already exists.", :error)
+      haml :edit_user
+    else
+      @active_user.display_name = display_name
+      @active_user.image = ImageHelper.save(params[:image], "#{settings.public_folder}/images/users")
+      @active_user.interests = params[:interests]
+      redirect "/user/#{@active_user.name}"
+    end
+  end
+
+  get "/search" do
+    keyword = Models::SearchRequest.splitUp(params[:keywords])
+    search_request = Models::SearchRequest.create(keyword, @active_user)
+    items = search_request.get_matching_items(@data.all_items)
+    haml :search, :locals => {:search_request => search_request, :items => items}
+  end
+
+  get "/search_requests" do
+    search_requests = @data.search_requests_by_user(@active_user)
+    haml :search_requests, :locals => {:search_requests => search_requests}
+  end
+
+  get "/delete/:search_request" do
+    search_request = @data.search_request_by_id params[:search_request].to_i
+    if search_request != nil && search_request.user == @active_user
+      @data.remove_search_request(search_request)
+    end
+    redirect back
+  end
+
+  post "/research/:search_request" do
+    search_request = @data.search_request_by_id params[:search_request].to_i
+    keyword = Models::SearchRequest.splitUp(search_request.keywords)
+    search_request = Models::SearchRequest.create(keyword, @active_user)
+    items = search_request.get_matching_items(@data.all_items)
+    haml :search, :locals => {:search_request => search_request, :items => items}
+  end
+
+  post "/subscribe" do
+    @data.new_search_request(params[:keywords], @active_user)
+    add_message("Successfully subscribed.", :success)
+    redirect "/search_requests"
   end
 end

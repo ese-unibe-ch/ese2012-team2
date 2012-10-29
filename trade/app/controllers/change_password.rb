@@ -1,36 +1,34 @@
-require_relative "../models/user"
-class ChangePassword < Sinatra::Application
+require_relative '../models/user'
+require_relative 'base_secure_controller'
+
+class ChangePassword < BaseSecureController
 
   #AS if not logged in => log in!
   get "/change_password" do
-    redirect '/login' unless session[:name]
-    haml :change_password, :locals=>{:message => nil}
+    @title = "Change Password"
+    haml :change_password
   end
 
   #AS attempts to change password
   post "/change_password" do
-    user= Models::DataOverlay.instance.user_by_name(session[:name])
-    passwd= params[:passwd]
+    user = @data.user_by_name(session[:name])
+    passwd = params[:passwd]
     if user.authenticated?(passwd)
-      new_passwd=params[:new_passwd]
+      new_passwd = params[:new_passwd]
       passwd_repetition=params[:passwd_repetition]
       if new_passwd == passwd_repetition
         if Models::User.passwd_valid?(new_passwd)
-          user.set_passwd(new_passwd)
-          redirect "change_password/password_changed"
+          user.password = Models::Password.make(new_passwd)
+          add_message("Your password was changed.", :success)
         else
-          redirect "change_password/password_invalid"
+          add_message("Your password is not invalid. Password must be at least 8 characters and contain upper- and lowercase characters as well as at least one number.", :error)
         end
       else
-        redirect "change_password/wrong_repetition"
+        add_message("The password repetition and the new password have to be identical.", :error)
       end
     else
-      redirect "change_password/wrong_password"
+      add_message("You entered the wrong password.", :error)
     end
-  end
-
-  #AS sending a message about success to the view
-  get "/change_password/:message" do
-    haml :change_password, :locals=>{:message => params[:message]}
+    haml :change_password
   end
 end

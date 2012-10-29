@@ -1,0 +1,319 @@
+[
+    { "name":"ese",
+      "displayname":"Ese",
+      "pw":"pwese",
+      "email":"kenneth.radunz@web.de",
+      "interests":"computer science and stuff",
+      "items":[ { "name":"Nyan Cat",
+                  "price":80,
+                  "description":"The ultimate internet cat",
+                  "state":"active"
+                },
+                { "name":"Overly attached girlfriend",
+                  "price":0,
+                  "description":"Take it, it's free!",
+                  "state":"inactive"
+                },
+                { "name":"Pink unicorn",
+                  "price":40,
+                  "description":"UNICORN! PINK UNICORN!",
+                  "state":"inactive"
+                }
+              ]
+    },{ "name":"Hat_man",
+      "displayname":"Hatman",
+      "pw":"pwHatman",
+      "email":"hat@man.com",
+      "interests":"Hats!!!",
+      "items":[ { "name":"Ghastly gibus",
+                  "price":10,
+                  "description":"A cool hat",
+                  "state":"active"
+                },
+                { "name":"Ye olde baker boy",
+                  "price":15,
+                  "description":"A cooler hat",
+                  "state":"active"
+                },
+                { "name":"Normal hat",
+                  "price":0,
+                  "description":"Take it, it's free!",
+                  "state":"inactive"
+                }
+              ]
+    },{ "name":"Darth_Vader",
+      "displayname":"Darth Vader",
+      "pw":"pwDarthVader",
+      "email":"lord.vader@imperium.com",
+      "interests":"Power and beer",
+      "items":[ { "name":"Death star",
+                  "price":10000,
+                  "description":"Big ass space ship",
+                  "state":"active"
+                },
+                { "name":"Storm Trooper",
+                  "price":25,
+                  "description":"Do you already own one?",
+                  "state":"active"
+                },
+                { "name":"Dark side of the force",
+                  "price":20,
+                  "description":"Unlimited power!",
+                  "state":"active"
+                }
+              ]
+    },
+    { "name":"Steve",
+      "displayname":"Steve",
+      "pw":"pwSteve",
+      "email":"steve@block.ch",
+      "interests":"Mining and Blocks",
+      "items":[ { "name":"Dirt",
+                  "price":1,
+                  "description":"To build some dirt houses",
+                  "state":"active"
+                },
+                { "name":"Diamond Pickaxe",
+                  "price":70,
+                  "description":"With this, you can mine really fast",
+                  "state":"inactive"
+                },
+                { "name":"Wood",
+                  "price":5,
+                  "description":"The most basic block",
+                  "state":"active"
+                }
+              ]
+    },
+    { "name":"ttwdn",
+      "displayname":"Things the world doesn't need",
+      "pw":"pw",
+      "email":"things@useless.de",
+      "interests":"Useless things",
+      "items":[ { "name":"Umbrella with sound and light",
+                  "price":30,
+                  "description":"It's an umbrella with sound and light, and it looks like a kitteh!!!",
+                  "state":"active"
+                },
+                { "name":"Glowing toilet paper",
+                  "price":10,
+                  "description":"Toilet paper that glows in the dark.",
+                  "state":"active"
+                },
+                { "name":"Dinosaur egg",
+                  "price":150,
+                  "description":"A big dinosaur egg",
+                  "state":"active"
+                },
+                { "name":"Wasabi lip balm",
+                  "price":15,
+                  "description":"Lip balm with wasabi taste.\nThat's hot!",
+                  "state":"active"
+                },
+                { "name":"Telefon glove",
+                  "price":90,
+                  "description":"A glove whitch you can use to call someone.",
+                  "state":"active"
+                },
+                { "name":"Baseball oven glove",
+                  "price":30,
+                  "description":"A oven glove that looks like a baseball glove.",
+                  "state":"active"
+                },
+                { "name":"Ice cream doorstopper",
+                  "price":10,
+                  "description":"A doorstopper in the shape of an ice cream.",
+                  "state":"active"
+                },
+                { "name":"Nothing",
+                  "price":6,
+                  "description":"A big pack of nothing",
+                  "state":"active"
+                }
+              ]
+    },
+    { "name":"knowledgepress",
+      "displayname":"Knowledge press",
+      "pw":"press",
+      "email":"knowledge@press.org",
+      "interests":"Knowledge",
+      "items":[ { "name":"Wikipedia the book, Vol. 1",
+                  "price":15,
+                  "description":"Vol. 1 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 2",
+                  "price":15,
+                  "description":"Vol. 2 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 3",
+                  "price":15,
+                  "description":"Vol. 3 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 4",
+                  "price":15,
+                  "description":"Vol. 4 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 5",
+                  "price":15,
+                  "description":"Vol. 5 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 6",
+                  "price":15,
+                  "description":"Vol. 6 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 7",
+                  "price":15,
+                  "description":"Vol. 7 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 8",
+                  "price":15,
+                  "description":"Vol. 8 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 9",
+                  "price":15,
+                  "description":"Vol. 9 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 10",
+                  "price":15,
+                  "description":"Vol. 10 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 11",
+                  "price":15,
+                  "description":"Vol. 11 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 12",
+                  "price":15,
+                  "description":"Vol. 12 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 13",
+                  "price":15,
+                  "description":"Vol. 13 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 14",
+                  "price":15,
+                  "description":"Vol. 14 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 15",
+                  "price":15,
+                  "description":"Vol. 15 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 16",
+                  "price":15,
+                  "description":"Vol. 16 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 17",
+                  "price":15,
+                  "description":"Vol. 17 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 18",
+                  "price":15,
+                  "description":"Vol. 18 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 19",
+                  "price":15,
+                  "description":"Vol. 19 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 20",
+                  "price":15,
+                  "description":"Vol. 20 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 21",
+                  "price":15,
+                  "description":"Vol. 21 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 22",
+                  "price":15,
+                  "description":"Vol. 22 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                },{ "name":"Wikipedia the book, Vol. 23",
+                  "price":15,
+                  "description":"Vol. 23 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                }
+              ]
+    },
+    { "name":"ikea",
+      "displayname":"IKEA",
+      "pw":"ikea",
+      "email":"ik@ea.se",
+      "interests":"Furniture",
+      "items":[ { "name":"Bj&ouml;rn",
+                  "price":15,
+                  "description":"A stylish table",
+                  "state":"active"
+                },{ "name":"Ingvar",
+                  "price":10,
+                  "description":"A really cool bookshelf",
+                  "state":"active"
+                },{ "name":"B&ouml;d&ouml;",
+                  "price":8,
+                  "description":"A very useful locker",
+                  "state":"active"
+                },{ "name":"&Auml;lg",
+                  "price":19,
+                  "description":"A moose",
+                  "state":"active"
+                },{ "name":"Billy",
+                  "price":19,
+                  "description":"A chair",
+                  "state":"active"
+                }
+              ]
+    },
+    { "name":"glados",
+      "displayname":"GLaDOS",
+      "pw":"test",
+      "email":"glados@portal.com",
+      "interests":"Tests, tests and more tests!",
+      "items":[ { "name":"Testchamber 1",
+                  "price":15,
+                  "description":"A very deathly testchamber",
+                  "state":"active"
+                },{ "name":"Chell",
+                  "price":0,
+                  "description":"A stupid, worthless female human.",
+                  "state":"active"
+                },{ "name":"Testchamber 2",
+                  "price":10,
+                  "description":"A very, very deathly testchamber",
+                  "state":"active"
+                },{ "name":"Testchamber 3",
+                  "price":10,
+                  "description":"A certainly deathly testchamber",
+                  "state":"active"
+                },{ "name":"Turret",
+                  "price":5,
+                  "description":"A little self-shooting tower. Good to test some subjects.",
+                  "state":"active"
+                },{ "name":"Portalgun",
+                  "price":100,
+                  "description":"A gun that shoot portals. You can use this for tests.",
+                  "state":"active"
+                },{ "name":"Cake",
+                  "price":5,
+                  "description":"The cake is a lie!",
+                  "state":"active"
+                }
+              ]
+    },
+    { "name":"oak",
+      "displayname":"Prof. Oak",
+      "pw":"pkmn",
+      "email":"oak@pkmn.com",
+      "interests":"Pokemons",
+      "items":[ { "name":"Bulbasaur",
+                  "price":15,
+                  "description":"It carries a seed on its back right from birth. As it grows older, the seed also grows larger.",
+                  "state":"active"
+                },{ "name":"Squirtle",
+                  "price":10,
+                  "description":"The shell, which hardens soon after it is born, is resilient. If you poke it, it will bounce back out",
+                  "state":"active"
+                },{ "name":"Pikachu",
+                  "price":10,
+                  "description":"A pokemon. It is yellow.",
+                  "state":"active"
+                }
+              ]
+    }
+  ]

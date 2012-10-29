@@ -1,35 +1,57 @@
 require_relative '../models/user'
-class Authentication < Sinatra::Application
+require_relative '../helpers/image_helper'
+require_relative 'base_controller'
+require_relative '../helpers/user_data_helper'
+require_relative '../models/trade_exception'
+
+class Authentication < BaseController
+
+  before do
+    @data = Models::DataOverlay.instance
+  end
 
   #SH The normal login page
   get "/login" do
-    haml :login, :locals =>{:error => nil}
-  end
-
-  #SH The login page when an error occurred
-  get "/login/:error" do
-    haml :login , :locals =>{:error => params[:error]}
+    self.title = "Login"
+    haml :login
   end
 
   #SH Checks whether login was successful and if so, log the user in.
   #SH Otherwise, redirect to the error page
   post "/login" do
-    name = params[:username]
-    password = params[:password]
-    user = Models::DataOverlay.instance.user_by_name name
-    if user.nil? || !user.authenticated?(password)
-      redirect '/login/wrong'
-    else
-      session[:name] = name
-      redirect '/'
+    begin
+    UserDataHelper.login(params[:username],params[:password])
+    session[:name] = params[:username]
+    redirect '/index'
+    rescue TradeException => e
+      add_message(e.message, :error)
+      haml :login
     end
-
   end
 
   #SH Logs the user out
   get "/logout" do
-    session[:name] = nil
+    session.clear
     redirect '/login'
+  end
+
+
+  #SH Shows a form to register new user
+  get "/register" do
+    self.title = "Register"
+    @title = "Register"
+    haml :register
+  end
+
+  #SH Adds an user an redirect to the login page
+  post "/register" do
+    begin
+    new_user = UserDataHelper.register(params)
+    add_message("Successfully registered user #{new_user.name}.", :success)
+    rescue TradeException => e
+     add_message(e.message, :error)
+    end
+    haml :register
   end
 
 end
