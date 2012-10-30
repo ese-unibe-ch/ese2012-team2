@@ -13,4 +13,18 @@
   -for member in organization.members
     %tr
       %td
-        %a{:href => "/user/#{member.name}"} #{member.name}
+        %a{:href => "/user/#{member.name}"} #{member.display_name}
+      %td
+        - if organization.admin == @active_user and member != organization.admin
+          %form{:action => "/organization/#{organization.name}/remove_member/#{member.name}", :method => "POST"}
+            %input{:type => "submit", :value => "Remove"}
+  - if organization.admin == @active_user
+    %tr
+      %form{:action => "/organization/#{organization.name}/add_member", :method => "POST"}
+        %td
+          %select{:name => "user"}
+            - for user in @data.all_users
+              -unless organization.members.include? user
+                %option{:value => "#{user.name}"}#{user.display_name}
+        %td
+          %input{:type => "submit", :value => "Send request"}

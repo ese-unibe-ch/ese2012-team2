@@ -27,3 +27,8 @@
     Working for: #{@active_user.working_for}
   - else
     Working for: myself
+  -unless @active_user.organization_request.last.nil?
+    %br
+    You have organization requests
+    %br
+    %a{:href => "/user/#{@active_user}/requests"} Show requests

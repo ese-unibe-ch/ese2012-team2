@@ -34,6 +34,15 @@ module Models
       self.email = email
       self.password= Models::Password.make(passwd)
       self.interests= interests
+      @organization_request = Array.new()
+    end
+
+    def add_request(organization)
+      @organization_request.push organization
+    end
+
+    def organization_request
+      @organization_request
     end
 
     #SH Returns the name of the user

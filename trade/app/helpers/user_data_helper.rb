@@ -63,8 +63,8 @@ class UserDataHelper
 
     display_name = UserDataHelper.remove_white_spaces(params[:display_name])
 
-  #  if data.user_display_name_exists?(display_name)
-  #    raise TradeException, "Display name already exists."
-  #  end
+    if data.user_display_name_exists?(display_name)
+      raise TradeException, "Display name already exists."
+    end
   end
 end
