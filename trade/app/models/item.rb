@@ -42,7 +42,7 @@ module Models
     end
 
     def to_s
-      "#{self.name}, #{self.id}, #{self.owner.name}"
+      self.name
     end
 
     def image_path

@@ -26,9 +26,9 @@ class Main  < BaseSecureController
     @title = "User " + params[:name]
     user = @data.user_by_name(params[:name])
     if self.is_active_user? user
-     items = @data.items_by_trader(user)
+     items = user.items
     else
-     items = @data.active_items_by_trader(user)
+     items = user.active_items
     end
 
     if user.nil?

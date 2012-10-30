@@ -11,6 +11,7 @@ class UserTest < Test::Unit::TestCase
     @user = Models::User.new("Darth Vader", "DarthVader", "pwDarthVader", "lord.vader@imperium.com", "")
     @d_star = Models::Item.named("Death Star", 50, @user, "Big ass space ship")
     @d_star.state = :active
+    @d_star2 = Models::Item.named("Death Star 2", 50, @user, "Big ass space ship")
     @org = Models::Organization.new("the Test", "none", @user, nil)
   end
 
@@ -49,6 +50,16 @@ class UserTest < Test::Unit::TestCase
     @user.buy(@d_star)
     assert(@org.items.include?(@d_star))
     assert(!@user.items.include?(@d_star))
+  end
+
+  def test_active_items
+    assert(@user.active_items.include?(@d_star))
+    assert(!@user.active_items.include?(@d_star2))
+  end
+
+  def test_all_items
+    assert(@user.items.include?(@d_star))
+    assert(@user.items.include?(@d_star2))
   end
 
 end

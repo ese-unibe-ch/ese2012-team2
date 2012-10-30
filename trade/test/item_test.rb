@@ -30,7 +30,7 @@ class ItemTest < Test::Unit::TestCase
   end
 
   def test_to_s
-
+     assert_equal("test Item", @item.to_s)
   end
 
 end

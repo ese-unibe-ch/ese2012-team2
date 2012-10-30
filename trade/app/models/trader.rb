@@ -26,6 +26,10 @@ module Models
       self.overlay.items_by_trader(self)
     end
 
+    def active_items
+      self.overlay.active_items_by_trader(self)
+    end
+
     def overlay
       unless @data
          @data = Models::DataOverlay.instance

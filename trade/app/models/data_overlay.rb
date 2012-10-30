@@ -58,14 +58,7 @@ module Models
     end
 
     def active_items_by_trader(trader)
-      result = Array.new
-      @items.each_value {
-          |value|
-        if (value.owner==trader and value.state == :active)
-          result.push value
-        end
-      }
-      return result
+      @items.values.select { |value| value.owner==trader and value.state == :active }
     end
 
     #KR returns all active items
