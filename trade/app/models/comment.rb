@@ -1,12 +1,14 @@
 module Models
   class Comment
-    attr_accessor :text, :owner, :timestamp
+    attr_accessor :text, :user, :owner, :timestamp
 
-    def self.create text, owner, timestamp
+    def self.create text, user, owner, timestamp
       comment = Comment.new
       comment.text = text
       comment.owner = owner
+      comment.user = user
       comment.timestamp = timestamp
+      comment
     end
 
     def to_s
