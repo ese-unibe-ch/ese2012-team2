@@ -1,5 +1,7 @@
 -#SH Shows the add item form
 %h1 Add Item
+- unless @active_user.working_for.nil?
+  %p Adding item for organization: #{@active_user.working_for}
 %form{:action => "/add_item", :method => "POST", :enctype=>"multipart/form-data"}
   %input.normal_input{:type => "text", :name => "name", :placeholder => "Name"}
   %br
