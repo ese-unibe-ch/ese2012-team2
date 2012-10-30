@@ -11,12 +11,6 @@ module Models
      return self.new(name, display_name, passwd, email, interests)
     end
 
-    #AS Checks if a password is valid (criteria need to be defined - at the moment it's just a "not-empty-test")
-    def self.passwd_valid?(password)
-      !password.nil? and password.length > 7 and password.match('^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$')
-      #true
-    end
-
     #SH Setup standard values
     def initialize (name, display_name, passwd, email, interests)
       self.credits=100

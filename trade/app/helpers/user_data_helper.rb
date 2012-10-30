@@ -49,7 +49,7 @@ class UserDataHelper
       raise TradeException, "Data are missing."
     end
 
-    unless Models::User.passwd_valid?(params[:passwd])
+    unless Models::Password.passwd_valid?(params[:passwd])
       raise TradeException, "Your password is invalid."
     end
 
