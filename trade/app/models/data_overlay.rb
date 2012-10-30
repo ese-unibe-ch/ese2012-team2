@@ -24,9 +24,6 @@ module Models
       return @@instance
     end
 
-    #@users = nil
-    #@items = nil
-
     #KR adds a new item to the environment.
     # if the id is already in use, raises an error
     def add_item(item)
