@@ -12,3 +12,21 @@
   #{item.description.gsub("\n", "<br>")}
   -if item.description == ""
     No description available
+%table
+  %thead
+    %tr
+      %th Comments
+  %tbody
+    -for comment in comments
+      %tr
+        %th
+          %table{:class => "tablesorter pager"}
+            %tbody
+              %tr
+                %th #{comment.user.name}
+              %tr
+                %th #{comment.timestamp}
+        %th #{comment.text}
+%form{:action => "/add_comment/#{item.id}", :method => "POST", :enctype=>"multipart/form-data"}
+  %textarea.normal_input{:name => "text", :style => "width:500px; height:100px", :placeholder => "Your comment"}
+  %input.normal_input{:type => "submit",:class=>"button_margin", :value => "comment"}
