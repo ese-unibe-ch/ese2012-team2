@@ -1,6 +1,6 @@
 module Models
   class Trader
-    attr_accessor :credits
+    attr_accessor :credits, :name, :image, :interests, :display_name
 
     def buy(item)
       if item.state == :active
@@ -17,8 +17,14 @@ module Models
     end
 
     def items
-      @data = Models::DataOverlay.instance
-      @data.items_by_trader(self)
+      self.overlay.items_by_trader(self)
+    end
+
+    def overlay
+      unless @data
+         @data = Models::DataOverlay.instance
+      end
+      @data
     end
   end
 end

@@ -15,14 +15,6 @@ class TraderTest < Test::Unit::TestCase
     @d_star.state = :active
   end
 
-  # Called after every test method runs. Can be used to tear
-  # down fixture information.
-
-  def teardown
-    # Do nothing
-  end
-
-  # Fake test
   def test_buy_success
     assert_equal(@buyer.credits, 100)
     assert_equal(@seller.credits, 0)

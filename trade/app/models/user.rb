@@ -4,11 +4,13 @@ require_relative "trader"
 module Models
   class User  < Models::Trader
 
-    attr_accessor :name, :display_name, :password, :image, :email, :interests, :working_for
+    attr_accessor :password, :email, :working_for
+    attr_reader :organization_request
 
     #SH Creates a new user with his name
     def self.named(name, display_name, passwd, email, interests)
-     return self.new(name, display_name, passwd, email, interests)
+     user = self.new(name, display_name, passwd, email, interests)
+     user.overlay.add_user(user)
     end
 
     #AS Implements buying for an organization (Override)
@@ -32,21 +34,12 @@ module Models
     end
 
     def add_request(organization)
-      @organization_request.push organization
-    end
-
-    def organization_request
-      @organization_request
+      self.organization_request.push organization
     end
 
     #SH Returns the name of the user
     def to_s
       self.name
-    end
-
-    #AS Sets the password.
-    def set_passwd(passwd)
-      self.passwd_hash= encrypt(passwd)
     end
 
     #AS Checks if the given password is correct.
