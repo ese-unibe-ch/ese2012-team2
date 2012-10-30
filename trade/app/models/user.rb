@@ -21,6 +21,14 @@ module Models
       self.overlay.organizations_by_user(self)
     end
 
+    def confirm_receipt item
+      unless item.owner == self
+        raise TradeException, "Only the owner can confirm receipt!"
+      end
+      item.prev_owners.pop.credits += item.price
+      item.state = :inactive
+    end
+
     #SH Setup standard values
     def initialize (name, display_name, passwd, email, interests, image=nil)
       self.credits=100

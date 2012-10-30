@@ -60,9 +60,7 @@ class ItemController < BaseSecureController
 
   post "/item/:item/confirm_buy" do
     item = @data.item_by_id params[:item].to_i
-    prev = item.prev_owners.pop
-    prev.credits += item.price
-    item.state = :inactive
+    @active_user.confirm_receipt item
     redirect back
   end
 
