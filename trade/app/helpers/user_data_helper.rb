@@ -14,11 +14,13 @@ class UserDataHelper
   end
 
   def self.right_email?(email)
-    #TODO check that it isn't used yet
-    if email.include? '@' and email.include? '.'
-      return true
-    end
-    return false
+    return self.matches_regex?(email, /^[\w*\.?]+@(\w*\.)+\w{2,3}\z/ )
+  end
+
+  def self.matches_regex?(string, regex)
+    match = regex.match(string)
+    return false unless match
+    return (match[0] == string) unless match.nil?
   end
 
   def self.login name, password

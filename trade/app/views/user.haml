@@ -37,6 +37,4 @@
   =haml :'partials/item_listing', :locals => {:user => user}
   - if user == @active_user
     - unless  @active_user.working_for.nil?
-      %p
-        =haml :'partials/item_listing', :locals => {:user => @active_user.working_for}
-
+      =haml :'partials/item_listing', :locals => {:user => @active_user.working_for}

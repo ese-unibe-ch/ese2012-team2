@@ -34,8 +34,11 @@
               #{item.name}
           %td.right.list.padding_left #{item.price}
           %td.list.padding_left
-            %a{:href=> "/user/#{item.owner}"} #{item.owner.display_name}
+            -if item.owner.class == Models::User
+              %a{:href=> "/user/#{item.owner}"} #{item.owner.display_name}
+            -else
+              %a{:href=> "/organization/#{item.owner}"} #{item.owner.name}
           %td.list
-            - if item.owner != @active_user #SH Don't show the buy button for your own items
+            - if item.owner != @active_user and item.owner != @active_user.working_for #SH Don't show the buy button for your own items
               =haml :'partials/buy_button', :locals => {:itemid => item.id}
 =haml :'partials/pager'

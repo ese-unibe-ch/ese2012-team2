@@ -24,7 +24,8 @@
         %option{:value=>organization} #{organization}
     %input.normal_input{:type=>"submit", :name=> "submit", :value => "set"}
   - if !@active_user.working_for.nil?
-    Working for: #{@active_user.working_for}
+    Working for:
+    %a{:href => "/organization/#{@active_user.working_for}"}#{@active_user.working_for}
   - else
     Working for: myself
   -unless @active_user.organization_request.last.nil?
