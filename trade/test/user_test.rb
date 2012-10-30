@@ -3,11 +3,12 @@ require 'rubygems'
 require 'require_relative'
 require_relative '../app/models/user'
 require_relative '../app/models/item'
+require_relative '../app/models/trade_exception'
 
 class UserTest < Test::Unit::TestCase
 
   def setup
-    @user = Models::User.named("Darth Vader", "DarthVader", "pwDarthVader", "lord.vader@imperium.com", "")
+    @user = Models::User.new("Darth Vader", "DarthVader", "pwDarthVader", "lord.vader@imperium.com", "")
   end
 
  def test_to_s
@@ -25,11 +26,11 @@ class UserTest < Test::Unit::TestCase
   end
 
   def test_authenticated
-    assert(@user.authenticated?("pwDarthVader"))
+    assert_nothing_raised { @user.authenticate("pwDarthVader") }
   end
 
   def test_authenticated_fail
-    assert(!@user.authenticated?("pwDarthder"))
+    assert_raise(TradeException) { !@user.authenticate("pwDarthder") }
   end
 
   def test_buy

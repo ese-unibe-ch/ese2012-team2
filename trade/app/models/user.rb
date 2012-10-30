@@ -1,17 +1,12 @@
 require "digest/md5"
 require_relative "password"
 require_relative "trader"
+require_relative "trade_exception"
 module Models
   class User  < Models::Trader
 
     attr_accessor :password, :email, :working_for
     attr_reader :organization_request
-
-    #SH Creates a new user with his name
-    def self.named(name, display_name, passwd, email, interests)
-     user = self.new(name, display_name, passwd, email, interests)
-     user.overlay.add_user(user)
-    end
 
     #AS Implements buying for an organization (Override)
     def buy(item)
@@ -23,14 +18,34 @@ module Models
     end
 
     #SH Setup standard values
-    def initialize (name, display_name, passwd, email, interests)
+    def initialize (name, display_name, passwd, email, interests, image=nil)
       self.credits=100
+      if name.empty?
+        raise TradeException, "Username must not be empty!"
+      end
       self.name = name
-      self.display_name = display_name
+
+      if display_name.empty?
+        self.display_name = name
+      else
+        self.display_name = display_name
+      end
+
+      unless self.valid_email? email
+        raise Exception, "Invalid email address!"
+      end
       self.email = email
+
       self.password= Models::Password.make(passwd)
       self.interests= interests
+      self.image = image
       @organization_request = Array.new()
+
+      self.overlay.add_user(self)
+    end
+
+    def valid_email? email
+      email.match(/^[\w*\.?]+@(\w*\.)+\w{2,3}\z/)
     end
 
     def add_request(organization)
@@ -43,8 +58,8 @@ module Models
     end
 
     #AS Checks if the given password is correct.
-    def authenticated?(passwd)
-      self.password.authenticated?(passwd)
+    def authenticate(passwd)
+      self.password.authenticate(passwd)
     end
 
     def image_path

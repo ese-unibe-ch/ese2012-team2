@@ -106,18 +106,8 @@ module Models
     end
 
     #KR adds a new user to the environment
-    # if name or id are already in use, this function raises an error
     def add_user(user)
-      if (@users.has_key?(user.name))
-        #raise error here
-      end
       @users[user.name] = user
-    end
-
-    def new_user(name, display_name, pw, email, interests)
-      user = User.named(name, display_name, pw, email, interests)
-      add_user user
-      return user
     end
 
     #SH returns the organization with the given name
@@ -131,8 +121,8 @@ module Models
     end
 
     #SH checks if a organization exists
-    def organization_exists?(org)
-      @organizations.member?(org.name)
+    def organization_exists?(name)
+      @organizations.member?(name)
     end
 
     def add_organization(organization)

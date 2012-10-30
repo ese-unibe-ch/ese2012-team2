@@ -1,4 +1,5 @@
 require "digest/md5"
+require_relative "trade_exception"
 
 module Models
 
@@ -7,6 +8,9 @@ module Models
     attr_accessor :hash, :salt
 
     def self.make(passwd)
+      unless self.passwd_valid?(passwd)
+        raise TradeException, "Password is invalid"
+      end
       self.new(passwd)
     end
 
@@ -16,13 +20,16 @@ module Models
     end
 
     #AS Checks if the given password is correct.
-    def authenticated?(passwd)
-      self.hash == encrypt(passwd)
+    def authenticate(passwd)
+      unless self.hash == encrypt(passwd)
+        raise TradeException, "Wrong password!"
+      end
+
     end
 
     #AS Checks if a password is valid
     def self.passwd_valid?(password)
-      !password.nil? and password.length > 7 and password.match('^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$')
+      !password.nil? and (password.length > 5 and password.match('^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$')) or password.length > 9
       #true
     end
 

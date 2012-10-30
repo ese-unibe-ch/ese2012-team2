@@ -9,8 +9,8 @@ require_relative '../app/models/item'
 class SearchRequestTest < Test::Unit::TestCase
 
   def setup
-    @user = Models::User.named("Darth Vader", "Darth Vader", "pwDarthVader", "lord.vader@imperium.com", "")
-    @user_search = Models::User.named("verona", "Verona Feldbush", "pwVerona", "lord.vader@imperium.com", "")
+    @user = Models::User.new("Darth Vader", "Darth Vader", "qwertzuiop", "lord.vader@imperium.com", "")
+    @user_search = Models::User.new("verona", "Verona Feldbush", "qwertzuiop", "lord.vader@imperium.com", "")
 
     @d_star = Models::Item.named("Death Star", 10000, @user, "Big ass space ship")
     @blubb = Models::Item.named("Blub", 10000, @user, "Big ass space ship")
@@ -34,7 +34,7 @@ class SearchRequestTest < Test::Unit::TestCase
   end
 
   def test_correct_items_should_match
-    @user = Models::User.named("Darth Vader", "Darth Vader", "pwDarthVader", "lord.vader@imperium.com", "")
+    @user = Models::User.new("Darth Vader", "Darth Vader", "pwDarthVader", "lord.vader@imperium.com", "")
     item1= Models::Item.named("blaaa Suchwort2  bla blabla", 10000, @user, "bla bla Suchwort1 blaaa")
     item2= Models::Item.named("blaaa bla blabla", 10000, @user, "bla bla Suchwort1 blaaa Suchwort2")
     item3= Models::Item.named("blaaa bla blabla", 10000, @user, "bla bla Suchwort1 blaaa")

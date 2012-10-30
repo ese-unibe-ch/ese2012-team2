@@ -6,8 +6,8 @@ class OrganizationTest < Test::Unit::TestCase
   # Called before every test method runs. Can be used
   # to set up fixture information.
   def setup
-    @user = Models::User.named("suti", "Suti", "pwSuti", "suti@patrick.ch", "none")
-    @user1 = Models::User.named("suti1", "Suti1", "pwSuti1", "suti@patrick1.ch", "none1")
+    @user = Models::User.new("suti", "Suti", "qwertzuiop", "suti@patrick.ch", "none")
+    @user1 = Models::User.new("suti1", "Suti1", "qwertzuiop", "suti@patrick1.ch", "none1")
     @org = Models::Organization.new("the Test", "none", @user, nil)
   end
 
