@@ -139,7 +139,7 @@ module Models
     # if name or id are already in use, this function raises an error
     def add_organization(organization)
       if @organizations.has_key?(organization.name)
-        #raise error here
+        raise TradeException, "Organization already exists."
       end
       @organizations[organization.name] = organization
     end

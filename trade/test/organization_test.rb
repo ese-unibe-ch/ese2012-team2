@@ -8,7 +8,7 @@ class OrganizationTest < Test::Unit::TestCase
   def setup
     @user = Models::User.named("suti", "Suti", "pwSuti", "suti@patrick.ch", "none")
     @user1 = Models::User.named("suti1", "Suti1", "pwSuti1", "suti@patrick1.ch", "none1")
-    @org = Models::Organization.named("the Test", "none", @user)
+    @org = Models::Organization.new("the Test", "none", @user, nil)
   end
 
   # Fake test

@@ -12,6 +12,13 @@ module Models
       item = self.new(name, price, owner, description, image)
     end
 
+    def overlay
+      unless @data
+        @data = Models::DataOverlay.instance
+      end
+      @data
+    end
+
     #SH Sets the name, the price, and the owner of the item
     #SH If the user is not nil, adds the item to the item list of the owner
     def initialize(name, price, owner, description, image=nil)
@@ -25,6 +32,8 @@ module Models
       self.state = :inactive
       @id = @@item_count
       @@item_count += 1
+
+      self.overlay.add_item(self)
     end
 
     def take_ownership(new_owner)

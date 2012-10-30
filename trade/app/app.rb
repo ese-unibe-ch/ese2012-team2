@@ -51,23 +51,15 @@ class App < Sinatra::Base
 
   configure :development do
     self.load_test_data
-<<<<<<< HEAD
-    puts settings.safe_passwords
-    set :image_resize, false
-  end
 
-  configure :production do
-    set :safe_passwords, true
-    set :image_resize, true
-=======
+    data = Models::DataOverlay.instance
 
     overlay =  Models::DataOverlay.instance
-    overlay.new_organization("Test", "Bla", overlay.user_by_name("ese")).add_member(overlay.user_by_name("Steve"))
+    org =  Models::Organization.new("Test", "Bla", overlay.user_by_name("ese"), nil)
+    org.add_member(overlay.user_by_name("Steve"))
+    data.add_organization(org)
 
->>>>>>> master
   end
-
-
 end
 
 App.run!

@@ -4,17 +4,17 @@
       attr_accessor :admin
       attr_reader :pending_members, :members
 
-      def self.named(name,  interests, admin)
-        return self.new(name, interests, admin)
-      end
-
       #SH Setup standard values
-      def initialize (name, interests, admin)
+      def initialize (name, interests, admin, image)
         self.credits=100
         self.display_name = name
+        if name.nil? or name.empty?
+          raise TradeException, "Empty name"
+        end
         self.name = name.downcase.delete(" ")
         self.interests= interests
         self.admin = admin
+        self.image = image
         @members = Array.new()
         @members.push(admin)
         @pending_members = Array.new()

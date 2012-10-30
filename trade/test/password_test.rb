@@ -24,4 +24,14 @@ class PasswordTest < Test::Unit::TestCase
     assert(!pwd.authenticated?("testfghpw"))
   end
 
+  def test_valid_pw
+    pwd = Models::Password.make "testpw"
+    assert(pwd.authenticated? "testpw" )
+  end
+
+  def test_invalid_pw
+    pwd = Models::Password.make "testpw"
+    assert(!pwd.authenticated?("testewfpw"))
+  end
+
 end

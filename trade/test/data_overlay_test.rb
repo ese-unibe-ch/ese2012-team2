@@ -10,27 +10,15 @@ require_relative '../app/models/search_request'
 require_relative '../app/event/base_event'
 require_relative '../app/event/item_update_event'
 class DataOverlayTest < Test::Unit::TestCase
-=begin  AS commented out old, failing tests, because I think the other group is working on cleaning these things up..
+
+  def setup
+    @overlay =  Models::DataOverlay.instance
+  end
+
   def test_item_by_id_empty
-     overlay =  Models::DataOverlay.instance
-    assert_nil(overlay.item_by_id(0))
+    assert_nil(@overlay.item_by_id(0))
   end
 
-  def test_new_item
-    overlay = Models::DataOverlay.instance
-    item = Models::Item.named("bla", 40, nil, "description", nil)
-    overlay.new_item item
-    assert_not_nil overlay.item_by_id(item.id)
-  end
-
-  def test_new_user
-    overlay =  Models::DataOverlay.instance
-    user = Models::User.named("first user", "pw first user",nil)
-    assert_nil(overlay.user_by_name(user.name))
-    overlay.new_user(user)
-    assert_equal(user, overlay.user_by_name(user.name))
-  end
-=end
   def test_search_requests
 
     overlay =  Models::DataOverlay.instance
