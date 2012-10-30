@@ -29,7 +29,7 @@
 %img.image_float_left{:src => "#{organization.image_path}", :alt => "Organization image"}
 %h2 Admin
 %span
-  %a{:href => "/user/#{organization.admin.name}"} #{organization.admin.name}
+  %a{:href => "/user/#{organization.admin.name}"} #{organization.admin.display_name}
 %h2 Interests
 %span
   #{organization.interests.gsub("\n", "<br>")}
