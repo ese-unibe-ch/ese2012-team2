@@ -99,7 +99,6 @@ module Models
       @users.values.detect { |user| user.display_name == display_name }
     end
 
-
     #AS checks if a user exists
     def user_exists?(name)
       @users.member?(name)
@@ -129,12 +128,6 @@ module Models
       @organizations[organization.name] = organization
     end
 
-    def new_organization(name, interests, admin)
-      organization = Organization.named(name, interests, admin)
-      add_organization organization
-      organization
-    end
-
     #AS Create a new search request and add it.
     def new_search_request(keywords, user)
       search_request= SearchRequest.create(keywords, user)
@@ -144,9 +137,7 @@ module Models
 
     #AS Get the organizations which a user is part of
     def organizations_by_user(user)
-      result= Array.new(@organizations.values)
-      result.delete_if { |org| !org.is_member?(user) }
-      result
+      @organizations.values.select { |org| org.is_member?(user) }
     end
 
     #AS Add a new SearchRequest

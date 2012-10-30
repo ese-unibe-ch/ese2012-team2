@@ -9,6 +9,9 @@ class UserTest < Test::Unit::TestCase
 
   def setup
     @user = Models::User.new("Darth Vader", "DarthVader", "pwDarthVader", "lord.vader@imperium.com", "")
+    @d_star = Models::Item.named("Death Star", 50, @user, "Big ass space ship")
+    @d_star.state = :active
+    @org = Models::Organization.new("the Test", "none", @user, nil)
   end
 
  def test_to_s
@@ -30,19 +33,22 @@ class UserTest < Test::Unit::TestCase
   end
 
   def test_authenticated_fail
-    assert_raise(TradeException) { !@user.authenticate("pwDarthder") }
+    assert_raise(TradeException) { @user.authenticate("pwDarthder") }
   end
 
   def test_buy
 
   end
 
-  def test_buy_own
-
+  def test_fail_buy_own
+    assert_raise(TradeException) { @user.buy(@d_star) }
   end
 
   def test_buy_for_organization
-
+    @user.working_for = @org
+    @user.buy(@d_star)
+    assert(@org.items.include?(@d_star))
+    assert(!@user.items.include?(@d_star))
   end
 
 end

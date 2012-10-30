@@ -35,11 +35,13 @@ class OrganizationTest < Test::Unit::TestCase
     @org.add_member(@user1)
     @org.remove_member(@user1)
     assert(!@org.members.include?(@user1))
+    assert(!@user1.organizations.include?(@org))
   end
 
   def test_remove_admin
     @org.remove_member(@user)
     assert(@org.members.include?(@user))
+    assert(@user.organizations.include?(@org))
   end
 
   def test_send_and_accept_request
@@ -69,5 +71,12 @@ class OrganizationTest < Test::Unit::TestCase
 
   def test_to_s
     assert_equal("the Test", @org.to_s)
+  end
+
+  def test_user_organizations
+    assert(@user.organizations.include?(@org))
+    assert(!@user1.organizations.include?(@org))
+    @org.add_member(@user1)
+    assert(@user1.organizations.include?(@org))
   end
 end

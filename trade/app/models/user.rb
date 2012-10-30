@@ -17,6 +17,10 @@ module Models
       end
     end
 
+    def organizations
+      self.overlay.organizations_by_user(self)
+    end
+
     #SH Setup standard values
     def initialize (name, display_name, passwd, email, interests, image=nil)
       self.credits=100
