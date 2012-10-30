@@ -25,7 +25,12 @@ class ItemController < BaseSecureController
       if ItemValidator.price_is_integer?(price)
         if !ItemValidator.price_negative?(price)
           image_name = ImageHelper.save params[:image], "#{settings.public_folder}/images/items"
-          @data.new_item(name, price.to_i, description, @active_user, :inactive, image_name)
+          if (@active_user.working_for.nil?)
+            user = @active_user
+          else
+            user = @active_user.working_for
+          end
+          @data.new_item(name, price.to_i, description, user, :inactive, image_name)
           add_message("Item added", :success)
         else
           add_message("Price must be positive", :error)

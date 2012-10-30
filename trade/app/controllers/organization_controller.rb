@@ -29,12 +29,9 @@ class OrganizationController  < BaseSecureController
 
    post "/work_for" do
      work_for= params[:work_for]
-     if work_for.nil?
-      @active_user.working_for=nil
-     else
-       @active_user.working_for=@data.organization_by_name(work_for)
+     unless work_for.nil?
+       session[:working_for] = work_for
      end
-
      redirect "/index"
    end
 

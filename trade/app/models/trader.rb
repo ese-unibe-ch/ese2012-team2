@@ -15,5 +15,10 @@ module Models
         return "item error"
       end
     end
+
+    def items
+      @data = Models::DataOverlay.instance
+      @data.items_by_trader(self)
+    end
   end
 end

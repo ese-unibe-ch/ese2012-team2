@@ -10,6 +10,9 @@ class BaseSecureController < BaseController
     #set current user
     @data = Models::DataOverlay.instance
     @active_user = @data.user_by_name(session[:name])
+    if session[:working_for]
+      @active_user.working_for = @data.organization_by_name(session[:working_for])
+    end
     @title = ""
   end
 end
