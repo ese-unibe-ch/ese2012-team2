@@ -52,7 +52,8 @@ class App < Sinatra::Base
     self.load_test_data
 
     overlay =  Models::DataOverlay.instance
-    overlay.new_organization("Test", "Bla", overlay.user_by_name("ese"))
+    overlay.new_organization("Test", "Bla", overlay.user_by_name("ese")).add_member(overlay.user_by_name("Steve"))
+
   end
 
 

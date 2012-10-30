@@ -1,19 +1,8 @@
 %h1 Login
 %form{:action => "/login", :method=> "POST"}
-  %table
-    %tr
-      %td
-        %label
-        Username:
-      %td
-        %input.normal_input{:type=>"text", :name=>"username"}
-    %tr
-      %td
-        %label
-        Password:
-      %td
-        %input.normal_input{:type=>"password", :name=>"password"}
-    %tr
-      %td
-      %td
-        %input.normal_input{:type=>"submit",:class=>"button_margin", :value => "Sign in"}
+  %input.normal_input{:type=>"text", :name=>"username",:placeholder=>"Username"}
+  %br
+  %input.normal_input#pw{:type=>"password", :name=>"password", :placeholder=>"Password"}
+  %br
+  %br
+  %input.normal_input{:type=>"submit",:class=>"button_margin", :value => "Sign in"}

@@ -19,7 +19,6 @@ GEM
     rack (1.4.1)
     rack-protection (1.2.0)
       rack
-    rcov (1.0.0)
     require_relative (1.0.3)
     sanitize (2.0.3)
       nokogiri (>= 1.4.4, < 1.6)
@@ -43,7 +42,6 @@ DEPENDENCIES
   mime-types
   mini_magick (~> 3.4)
   pony
-  rcov
   require_relative
   sanitize
   sinatra

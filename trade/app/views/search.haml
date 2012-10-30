@@ -15,16 +15,12 @@
                 positionFixed: false
      });
   })
-%h1 Hello #{@active_user.display_name}
-%p
-%form{:action=>"/search", :method=>"POST", :enctype=>"multipart/form-data"}
-  %label
-    Enter your key words: (e.g. small white etc. ...)
-  %br
-  %input.normal_input{:type=>"text", :name=>"keywords", :style => "width:500px", :value => "#{params[:keywords]}"}
-  %br
-  %input.normal_input{:type=>"submit", :name=> "searchButton", :class=>"button_margin", :value => "Search"}
-  %input.normal_input{:type=>"submit", :name=> "subscribeButton", :formaction => "/subscribe", :class=>"button_margin", :value => "Subscribe"}
+%h1 Search item
+%p{:style => "width: 100%"}
+%form{:action=>"/search", :method=>"GET", :enctype=>"multipart/form-data"}
+  %input.normal_input{:type=>"text", :name=>"keywords", :value => "#{params[:keywords]}", :placeholder => "Keywords",:style => "width: 50%"}
+  %input.normal_input{:type=>"submit", :name=> "searchButton", :class=>"button_margin", :value => "Search",:style => "width: 14%"}
+  %input.normal_input{:type=>"submit", :name=> "subscribeButton", :formaction => "/subscribe", :class=>"button_margin", :value => "Subscribe",:style => "width: 18%"}
 %p
 %h2 Search results
 %table{:id=>"itemTable", :class=>"tablesorter pager"}

@@ -4,11 +4,20 @@ require_relative "trader"
 module Models
   class User  < Models::Trader
 
-    attr_accessor :name, :display_name, :password, :image, :email, :interests
+    attr_accessor :name, :display_name, :password, :image, :email, :interests, :working_for
 
     #SH Creates a new user with his name
     def self.named(name, display_name, passwd, email, interests)
      return self.new(name, display_name, passwd, email, interests)
+    end
+
+    #AS Implements buying for an organization (Override)
+    def buy(item)
+      if working_for.nil?
+        super
+      else
+        working_for.buy(item)
+      end
     end
 
     #SH Setup standard values
@@ -19,6 +28,15 @@ module Models
       self.email = email
       self.password= Models::Password.make(passwd)
       self.interests= interests
+      @organization_request = Array.new()
+    end
+
+    def add_request(organization)
+      @organization_request.push organization
+    end
+
+    def organization_request
+      @organization_request
     end
 
     #SH Returns the name of the user

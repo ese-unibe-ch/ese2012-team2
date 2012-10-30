@@ -26,4 +26,52 @@ class OrganizationController  < BaseSecureController
     organization = @data.organization_by_name(params[:organization])
     haml :organization, :locals => {:organization => organization}
   end
+
+   post "/work_for" do
+     work_for= params[:work_for]
+     if work_for.nil?
+      @active_user.working_for=nil
+     else
+       @active_user.working_for=@data.organization_by_name(work_for)
+     end
+
+     redirect "/index"
+   end
+
+   post "/organization/:organization/remove_member/:member" do
+     organization = @data.organization_by_name(params[:organization])
+     member = @data.user_by_name params[:member]
+
+     if @active_user == organization.admin
+        organization.remove_member(member)
+     end
+     redirect back
+   end
+
+   post "/organization/:organization/add_member" do
+     organization = @data.organization_by_name(params[:organization])
+     member = @data.user_by_name params[:user]
+
+     if @active_user == organization.admin
+       organization.send_request(member)
+     end
+     redirect back
+   end
+
+  post "/organization/:organization/accept_request" do
+    organization = @data.organization_by_name(params[:organization])
+    organization.accept_request @active_user
+    redirect back
+  end
+
+   post "/organization/:organization/decline_request" do
+     organization = @data.organization_by_name(params[:organization])
+     organization.decline_request @active_user
+     redirect back
+   end
+
+   get "/user/:user/requests" do
+     haml :organization_request
+   end
+
 end

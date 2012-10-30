@@ -18,7 +18,7 @@ module Models
     # The instance is singleton so it stays the same at every point in runtime
     # on the first call the instance is constructed
     def self.instance
-      if(@@instance == nil)
+      if (@@instance == nil)
         @@instance = DataOverlay.new
       end
       return @@instance
@@ -30,7 +30,7 @@ module Models
     #KR adds a new item to the environment.
     # if the id is already in use, raises an error
     def add_item(item)
-      if(@items.has_key?(item.id))
+      if (@items.has_key?(item.id))
         #raise error here
       end
       @items[item.id] = item
@@ -64,7 +64,7 @@ module Models
       result = Array.new
       @items.each_value {
           |value|
-        if(value.owner==trader and value.state == :active)
+        if (value.owner==trader and value.state == :active)
           result.push value
         end
       }
@@ -75,8 +75,8 @@ module Models
     def active_items
       result = Array.new
       @items.each_value {
-        |value|
-        if(value.active)
+          |value|
+        if (value.active)
           result.push value
         end
       }
@@ -97,6 +97,12 @@ module Models
       @users.values
     end
 
+    #PS all objects are true except nil & false ;)
+    def user_display_name_exists?(display_name)
+      @users.values.detect { |user| user.display_name == display_name }
+    end
+
+
     #AS checks if a user exists
     def user_exists?(name)
       @users.member?(name)
@@ -105,14 +111,14 @@ module Models
     #KR adds a new user to the environment
     # if name or id are already in use, this function raises an error
     def add_user(user)
-      if(@users.has_key?(user.name))
+      if (@users.has_key?(user.name))
         #raise error here
       end
       @users[user.name] = user
     end
 
     def new_user(name, display_name, pw, email, interests)
-      user =  User.named(name, display_name, pw, email, interests)
+      user = User.named(name, display_name, pw, email, interests)
       add_user user
       return user
     end
@@ -124,7 +130,7 @@ module Models
     end
 
     def all_organizations
-      @organization.values
+      @organizations.values
     end
 
     #SH checks if a organization exists
@@ -135,14 +141,21 @@ module Models
     #SH adds a new organization to the environment
     # if name or id are already in use, this function raises an error
     def add_organization(organization)
-      if@organizations.has_key?(organization.name)
+      if @organizations.has_key?(organization.name)
         #raise error here
       end
+      puts "adding"
       @organizations[organization.name] = organization
+
+      @organizations.each do |org|
+        puts org
+
+      end
+
     end
 
     def new_organization(name, interests, admin)
-      organization =  Organization.named(name, interests, admin)
+      organization = Organization.named(name, interests, admin)
       add_organization organization
       organization
     end
@@ -154,9 +167,16 @@ module Models
       search_request
     end
 
+    #AS Get the organizations which a user is part of
+    def organizations_by_user(user)
+      result= Array.new(@organizations.values)
+      result.delete_if { |org| !org.is_member?(user) }
+      result
+    end
+
     #AS Add a new SearchRequest
     def add_search_request(search_request)
-      if(@search_requests.has_key?(search_request.id))
+      if (@search_requests.has_key?(search_request.id))
         #error
       else
         @search_requests[search_request.id]= search_request
@@ -167,19 +187,19 @@ module Models
     #AS List SearchRequests of a user
     def search_requests_by_user(user)
       result= Array.new(@search_requests.values)
-      result.delete_if{|search_request| search_request.user != user}
+      result.delete_if { |search_request| search_request.user != user }
       result
     end
 
     #AS Remove a SearchRequest
     def remove_search_request(search_request_to_delete)
-        @search_requests.delete(search_request_to_delete.id)
-        Event::ItemUpdateEvent.remove_handler search_request_to_delete
+      @search_requests.delete(search_request_to_delete.id)
+      Event::ItemUpdateEvent.remove_handler search_request_to_delete
     end
 
     #AS Get SearchRequest by id
     def search_request_by_id(id)
-    @search_requests[id]
+      @search_requests[id]
     end
 
   end
