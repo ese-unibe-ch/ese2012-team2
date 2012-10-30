@@ -107,4 +107,11 @@ class ItemController < BaseSecureController
     haml :edit_item, :locals=>{:item =>item}
   end
 
+  post "/item/:id/transfer/:organization" do
+    item = @data.item_by_id params[:id].to_i
+    organization = @data.organization_by_name params[:organization]
+    item.take_ownership(organization)
+    redirect back
+  end
+
 end

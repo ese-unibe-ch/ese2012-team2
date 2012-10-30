@@ -73,6 +73,10 @@
               - if item.state == :inactive
                 %td.list
                   %a{:href => "/item/#{item.id}/edit"}Edit
+                -unless @active_user.working_for.nil?
+                  %td.list
+                    %form{:action => "/item/#{item.id}/transfer/#{@active_user.working_for}", :method => "POST"}
+                      %input.button_as_link{:type => "submit", :value => "Transfer"}
             - else
               - if item.state == :active
                 %td.list

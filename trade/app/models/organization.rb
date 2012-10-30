@@ -19,6 +19,10 @@
         @pending_members = Array.new()
       end
 
+      def display_name
+        @name
+      end
+
       def admin
         @admin
       end
