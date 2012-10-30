@@ -154,17 +154,5 @@ module Models
     def search_request_by_id(id)
       @search_requests[id]
     end
-    #KR creates a comment corresponding to the parameters
-    def new_comment(owner, user, timestamp, text)
-      puts "owner of new comment: #{owner}"
-      @comments[owner.id] = Array.new unless @comments.has_key? owner.id
-      @comments[owner.id].push Models::Comment.create(text, user, owner, timestamp)
-    end
-
-    #KR returns an Array with all comments belonging to that owner
-    def comments_by_owner owner
-      return @comments[owner.id].select{|value| true} if @comments[owner.id]
-      Array.new
-    end
   end
 end

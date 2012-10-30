@@ -3,7 +3,7 @@ module Models
 
     attr_accessor :name, :price, :owner, :state, :description, :image, :prev_owners
 
-    attr_reader :id
+    attr_reader :id, :comments
 
     @@item_count = 0
 
@@ -28,6 +28,8 @@ module Models
       self.description= description
       self.image = image
       self.prev_owners = Array.new
+
+      @comments = Array.new
 
       self.state = :inactive
       @id = @@item_count

@@ -69,7 +69,7 @@ class ItemController < BaseSecureController
   get "/item/:item" do
     item = @data.item_by_id params[:item].to_i
     @title = "Item " + item.name
-    haml :item, :locals => {:item => item, :comments => @data.comments_by_owner(item)}
+    haml :item, :locals => {:item => item}
   end
 
   get "/item/:item/edit" do
