@@ -1,18 +1,24 @@
+require_relative 'trade_exception'
+
 module Models
   class Trader
     attr_accessor :credits, :name, :image, :interests, :display_name
 
     def buy(item)
+      unless item.owner == self
       if item.state == :active
         if item.price<=self.credits
           self.credits -= item.price
           item.take_ownership(self)
           item.state = :pending
         else
-          return "credit error"
+          raise TradeException, "You don't have enough credits to buy this item!"
         end
       else
-        return "item error"
+        raise TradeException, "Item is not active!"
+      end
+      else
+        raise TradeException, "You cannot buy your own item!"
       end
     end
 

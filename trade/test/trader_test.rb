@@ -27,14 +27,14 @@ class TraderTest < Test::Unit::TestCase
 
   def test_buy_fail_credits
     @buyer.credits = 0
-    assert_equal("credit error", @buyer.buy(@d_star))
+    assert_raise(TradeException) { @buyer.buy(@d_star) }
   end
 
   def test_buy_fail_state
     @d_star.state = :inactive
-    assert_equal("item error", @buyer.buy(@d_star))
+    assert_raise(TradeException) { @buyer.buy(@d_star) }
     @d_star.state = :pending
-    assert_equal("item error", @buyer.buy(@d_star))
+    assert_raise(TradeException) { @buyer.buy(@d_star) }
   end
 
   def test_items

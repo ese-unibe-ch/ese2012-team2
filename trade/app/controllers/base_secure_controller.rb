@@ -15,4 +15,8 @@ class BaseSecureController < BaseController
     end
     @title = ""
   end
+
+  def is_active_user? user
+     user == @active_user
+  end
 end

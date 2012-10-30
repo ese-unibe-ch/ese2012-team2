@@ -37,4 +37,12 @@ class UserTest < Test::Unit::TestCase
 
   end
 
+  def test_buy_own
+
+  end
+
+  def test_buy_for_organization
+
+  end
+
 end

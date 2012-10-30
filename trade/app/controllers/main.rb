@@ -18,17 +18,21 @@ class Main  < BaseSecureController
   #SH Check if logged in and show a list of all active items if true
   get "/index" do
     @title = "Home"
-    haml :index, :locals => {:current_name => session[:name], :items => @data.all_items, :error => nil }
+    haml :index, :locals => {:items => @data.all_items}
   end
 
   #SH Shows all items of a user
   get "/user/:name" do
     @title = "User " + params[:name]
     user = @data.user_by_name(params[:name])
-    if user.name == @active_user.name
+    if self.is_active_user? user
      items = @data.items_by_trader(user)
     else
      items = @data.active_items_by_trader(user)
+    end
+
+    if user.nil?
+      add_message("User not found", :error)
     end
 
     haml :user, :locals =>{:user => user, :items => items}
@@ -36,12 +40,13 @@ class Main  < BaseSecureController
 
   #SH Buys an item. If an error occurs, redirect to the buy error page
   post "/buy/:item" do
+    begin
     item = @data.item_by_id params[:item].to_i
-
-    if @active_user.buy(item) == "credit error"
-      add_message("Not enough credits", :error)
+    @active_user.buy(item)
+    rescue TradeException => e
+      add_message(e.message, :error)
     end
-    redirect "/index"
+    haml :index, :locals => {:items => @data.all_items }
   end
 
 
@@ -57,19 +62,13 @@ class Main  < BaseSecureController
   end
 
   post "/user/:user/edit" do
-    display_name = params[:display_name]
-
-    display_name = UserDataHelper.remove_white_spaces(display_name)
-
-    if @data.user_display_name_exists?(display_name) and display_name != @active_user.display_name
-      add_message("Name already exists.", :error)
-      haml :edit_user
-    else
-      @active_user.display_name = display_name
-      @active_user.image = ImageHelper.save(params[:image], "#{settings.public_folder}/images/users")
-      @active_user.interests = params[:interests]
-      redirect "/user/#{@active_user.name}"
+    begin
+    UserDataHelper.edit_user(params, @active_user)
+    add_message("successfully saved user", :success)
+    rescue TradeException => e
+      add_message(e.message, :error)
     end
+    haml :edit_user
   end
 
   get "/search" do
