@@ -55,6 +55,5 @@
                 %option{:value => "#{user.name}"}#{user.display_name}
         %td
           %input{:type => "submit", :value => "Send request"}
--items = @data.items_by_trader(organization)
 %h2 Items
 =haml :'partials/item_listing', :locals => {:user => organization}

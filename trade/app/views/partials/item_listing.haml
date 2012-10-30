@@ -1,4 +1,7 @@
-- items =  user.items
+- if @active_user ==  user or @active_user.working_for == user
+  - items = user.items
+- else
+  - items = user.active_items
 
 - unless items.length == 0
   %table{:id=>"itemTable", :class=>"tablesorter pager"}
