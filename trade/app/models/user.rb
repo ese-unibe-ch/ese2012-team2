@@ -1,18 +1,25 @@
 require "digest/md5"
 require_relative "password"
+require_relative "trader"
 module Models
-  class User
+  class User  < Models::Trader
 
-    attr_accessor :name, :display_name, :credits, :password, :image, :email, :interests
+    attr_accessor :password, :email, :working_for
+    attr_reader :organization_request
 
     #SH Creates a new user with his name
     def self.named(name, display_name, passwd, email, interests)
-     return self.new(name, display_name, passwd, email, interests)
+     user = self.new(name, display_name, passwd, email, interests)
+     user.overlay.add_user(user)
     end
 
-    #AS Checks if a password is valid (criteria need to be defined - at the moment it's just a "not-empty-test")
-    def self.passwd_valid?(password)
-      !password.nil? and password.length > 7 and password.match('^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$')
+    #AS Implements buying for an organization (Override)
+    def buy(item)
+      if working_for.nil?
+        super
+      else
+        working_for.buy(item)
+      end
     end
 
     #SH Setup standard values
@@ -23,32 +30,16 @@ module Models
       self.email = email
       self.password= Models::Password.make(passwd)
       self.interests= interests
+      @organization_request = Array.new()
+    end
+
+    def add_request(organization)
+      self.organization_request.push organization
     end
 
     #SH Returns the name of the user
     def to_s
       self.name
-    end
-
-    #SH Checks whether the user can buy an item and then buys it
-    def buy(item)
-      if item.state == :active
-        if item.price<=self.credits
-          self.credits -= item.price
-          #item.owner.credits += item.price
-          item.take_ownership(self)
-          item.state = :pending
-        else
-          return "credit error"
-        end
-      else
-        return "item error"
-      end
-    end
-
-    #AS Sets the password.
-    def set_passwd(passwd)
-      self.passwd_hash= encrypt(passwd)
     end
 
     #AS Checks if the given password is correct.

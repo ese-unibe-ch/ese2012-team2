@@ -1,44 +1,21 @@
 %h1 Add new user
 %form{:action=>"/register", :method=>"POST", :enctype=>"multipart/form-data"}
-  %table
-    %tr
-      %td
-        %label
-        Username*:
-      %td
-        %input.normal_input{:type=>"text", :name=>"username"}
-    %tr
-      %td
-        %label
-        Display name*:
-      %td
-        %input.normal_input{:type=>"text", :name=>"display_name"}
-    %tr
-      %td
-        %label
-        Email*:
-      %td
-        %input.normal_input{:type=>"text", :name=>"email"}
-    %tr
-      %td
-        %label
-          Password*:
-      %td
-        %input.normal_input{:type=>"password", :name=>"passwd"}
-    %tr
-      %td
-        %label
-          Repeat password*:
-      %td
-        %input.normal_input{:type=>"password", :name=>"passwd_repetition"}
 
-  %label
-    List of interests:
+  %input.normal_input{:type=>"text", :name=>"username", :placeholder => "Username"}
   %br
-  %textarea.normal_input{:name => "interests", :style => "width:500px; height:100px"}
+  %input.normal_input{:type=>"text", :name=>"display_name", :placeholder => "Displayname"}
+  %br
+  %input.normal_input{:type=>"email", :name=>"email", :placeholder => "Email"}
+  %br
+  %input.normal_input{:type=>"password", :name=>"passwd", :placeholder => "Password"}
+  %br
+  %input.normal_input{:type=>"password", :name=>"passwd_repetition", :placeholder => "Repeat password"}
+  %br
+  %textarea.normal_input{:name => "interests", :style => "width:500px; height:100px", :placeholder => "List of interests (optional)"}
   %br
   %label
     User image:
+  %br
   %input{:type=>"file", :name=>"image"}
   %br
   %br

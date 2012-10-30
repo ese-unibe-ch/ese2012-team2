@@ -1,6 +1,6 @@
 [
     { "name":"ese",
-      "displayname":"ese",
+      "displayname":"Ese",
       "pw":"pwese",
       "email":"kenneth.radunz@web.de",
       "interests":"computer science and stuff",
@@ -86,7 +86,7 @@
               ]
     },
     { "name":"ttwdn",
-      "displayname":"Things the world don't need",
+      "displayname":"Things the world doesn't need",
       "pw":"pw",
       "email":"things@useless.de",
       "interests":"Useless things",
@@ -228,6 +228,90 @@
                 },{ "name":"Wikipedia the book, Vol. 23",
                   "price":15,
                   "description":"Vol. 23 of the printed version of Wikipedia, 57th edition",
+                  "state":"active"
+                }
+              ]
+    },
+    { "name":"ikea",
+      "displayname":"IKEA",
+      "pw":"ikea",
+      "email":"ik@ea.se",
+      "interests":"Furniture",
+      "items":[ { "name":"Bj&ouml;rn",
+                  "price":15,
+                  "description":"A stylish table",
+                  "state":"active"
+                },{ "name":"Ingvar",
+                  "price":10,
+                  "description":"A really cool bookshelf",
+                  "state":"active"
+                },{ "name":"B&ouml;d&ouml;",
+                  "price":8,
+                  "description":"A very useful locker",
+                  "state":"active"
+                },{ "name":"&Auml;lg",
+                  "price":19,
+                  "description":"A moose",
+                  "state":"active"
+                },{ "name":"Billy",
+                  "price":19,
+                  "description":"A chair",
+                  "state":"active"
+                }
+              ]
+    },
+    { "name":"glados",
+      "displayname":"GLaDOS",
+      "pw":"test",
+      "email":"glados@portal.com",
+      "interests":"Tests, tests and more tests!",
+      "items":[ { "name":"Testchamber 1",
+                  "price":15,
+                  "description":"A very deathly testchamber",
+                  "state":"active"
+                },{ "name":"Chell",
+                  "price":0,
+                  "description":"A stupid, worthless female human.",
+                  "state":"active"
+                },{ "name":"Testchamber 2",
+                  "price":10,
+                  "description":"A very, very deathly testchamber",
+                  "state":"active"
+                },{ "name":"Testchamber 3",
+                  "price":10,
+                  "description":"A certainly deathly testchamber",
+                  "state":"active"
+                },{ "name":"Turret",
+                  "price":5,
+                  "description":"A little self-shooting tower. Good to test some subjects.",
+                  "state":"active"
+                },{ "name":"Portalgun",
+                  "price":100,
+                  "description":"A gun that shoot portals. You can use this for tests.",
+                  "state":"active"
+                },{ "name":"Cake",
+                  "price":5,
+                  "description":"The cake is a lie!",
+                  "state":"active"
+                }
+              ]
+    },
+    { "name":"oak",
+      "displayname":"Prof. Oak",
+      "pw":"pkmn",
+      "email":"oak@pkmn.com",
+      "interests":"Pokemons",
+      "items":[ { "name":"Bulbasaur",
+                  "price":15,
+                  "description":"It carries a seed on its back right from birth. As it grows older, the seed also grows larger.",
+                  "state":"active"
+                },{ "name":"Squirtle",
+                  "price":10,
+                  "description":"The shell, which hardens soon after it is born, is resilient. If you poke it, it will bounce back out",
+                  "state":"active"
+                },{ "name":"Pikachu",
+                  "price":10,
+                  "description":"A pokemon. It is yellow.",
                   "state":"active"
                 }
               ]

@@ -14,11 +14,13 @@ class UserDataHelper
   end
 
   def self.right_email?(email)
-    #TODO check that it isn't used yet
-    if email.include? '@' and email.include? '.'
-      return true
-    end
-    return false
+    return self.matches_regex?(email, /^[\w*\.?]+@(\w*\.)+\w{2,3}\z/ )
+  end
+
+  def self.matches_regex?(string, regex)
+    match = regex.match(string)
+    return false unless match
+    return (match[0] == string) unless match.nil?
   end
 
   def self.login name, password
@@ -36,8 +38,9 @@ class UserDataHelper
     #PS check some stuff
     self.register_checks(params)
     #PS create the new user
-    new_user = data.new_user(params[:username], display_name, params[:passwd], params[:email], params[:interests])
+    new_user = data.new_user(params[:username], params[:display_name], params[:passwd], params[:email], params[:interests])
     new_user.image = ImageHelper.save(params[:image],"#{settings.public_folder}/images/users")
+    new_user
   end
 
   #PS check for required fields and contents
@@ -48,7 +51,7 @@ class UserDataHelper
       raise TradeException, "Data are missing."
     end
 
-    unless Models::User.passwd_valid?(params[:passwd])
+    unless Models::Password.passwd_valid?(params[:passwd])
       raise TradeException, "Your password is invalid."
     end
 

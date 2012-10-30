@@ -1,0 +1,12 @@
+%h1 Organization requests
+%table
+  -for request in @active_user.organization_request
+    %tr
+      %td
+        %a{:href => "/organization/#{request.name}"} #{request.name}
+      %td
+        %form{:action => "/organization/#{request.name}/accept_request", :method => "POST"}
+          %input{:type => "submit", :value => "Accept"}
+      %td
+        %form{:action => "/organization/#{request.name}/decline_request", :method => "POST"}
+          %input{:type => "submit", :value => "Decline"}

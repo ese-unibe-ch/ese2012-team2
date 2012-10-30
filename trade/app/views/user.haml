@@ -3,6 +3,26 @@
      $('.powertip').powerTip({
           placement: 's' // north-east tooltip positio
      });
+     $("#itemTable")
+           .tablesorter({
+                   headers: {3: {sorter: false}},
+                   sortList: [[2,0], [0,0]],
+                   widgets: ['zebra']
+           })
+           .tablesorterPager({
+                   container: $("#pager"),
+                   positionFixed: false
+           });
+     $("#itemTable2")
+                .tablesorter({
+                        headers: {3: {sorter: false}},
+                        sortList: [[2,0], [0,0]],
+                        widgets: ['zebra']
+                })
+                .tablesorterPager({
+                        container: $("#pager2"),
+                        positionFixed: false
+                });
   })
 
 - if !user.nil? #SH Only show this for an existing user
@@ -14,48 +34,7 @@
   %p
     #{user.interests}
   %h2 Items
-  - unless items.length == 0
-    %table
-      %tr
-        %th Name
-        %th.padding_left Price
-        %th.padding_left State
-      - for item in items
-        - type = item.state
-        %tr{:class => "#{type}"}
-          %td.list
-            %a{:href => "/item/#{item.id}",  "data-powertip" => "#{item.description.gsub("\n", "<br>")}</br><img src=#{item.image_path} width=150 />", :class => "powertip"}
-              #{item.name}
-          %td.list.padding_left #{item.price}
-          %td.list.padding_left #{item.state}
-
-
-          -if user == @active_user
-            - if item.state == :active
-              %td.list
-                %form{:action => "/item/#{item.id}/change_state", :method => "POST"}
-                  %input{:type => "hidden", :name => "state", :value => "inactive"}
-                  %input{:type => "submit", :value => "Deactivate", :class => "button_as_link"}
-            - if item.state == :inactive
-              %td.list
-                %form{:action => "/item/#{item.id}/change_state", :method => "POST"}
-                  %input{:type => "hidden", :name => "state", :value => "active"}
-                  %input{:type => "submit", :value => "Activate", :class => "button_as_link"}
-            - if item.state == :pending
-              %td.list
-                %form{:action => "/item/#{item.id}/confirm_buy", :method => "POST"}
-                  %input{:type => "submit", :value => "Confirm receipt", :class => "button_as_link"}
-            - unless item.state == :pending
-              %td.list
-                %form{:action => "/delete/#{item.id}", :method => "POST"}
-                  %input{:type => "submit",:name => "action", :value => "Delete", :class => "button_as_link"}
-            - if item.state == :inactive
-              %td.list
-                %a{:href => "/item/#{item.id}/edit"}Edit
-          - else
-            - if item.state == :active
-              %td.list
-                =haml :'partials/buy_button', :locals => {:itemid => item.id}
-  - else
-    %p
-      User #{user.display_name} has currently no items
+  =haml :'partials/item_listing', :locals => {:user => user}
+  - if user == @active_user
+    - unless  @active_user.working_for.nil?
+      =haml :'partials/item_listing', :locals => {:user => @active_user.working_for}

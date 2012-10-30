@@ -7,7 +7,7 @@ module Models
     attr_accessor :hash, :salt
 
     def self.make(passwd)
-       self.new(passwd)
+      self.new(passwd)
     end
 
     def initialize(passwd)
@@ -20,6 +20,13 @@ module Models
       self.hash == encrypt(passwd)
     end
 
+    #AS Checks if a password is valid
+    def self.passwd_valid?(password)
+      !password.nil? and password.length > 7 and password.match('^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$')
+      #true
+    end
+
+    private
     #AS Hashes the given password + the previously created salt
     private
     def encrypt(passwd)
@@ -32,6 +39,5 @@ module Models
       pool = ('a'..'z').to_a + ('0'..'9').to_a
       self.salt= (1..size).collect{|a| pool[rand(pool.size)]}.join
     end
-
   end
 end

@@ -6,52 +6,31 @@ require_relative '../app/models/item'
 
 class ItemTest < Test::Unit::TestCase
 
-  def test_item_name
-    name = "Item1"
-    price = "10"
-    user = Models::User.named("Test", "passwd")
-    description = "Lorem ipsum"
-    item = Models::Item.named(name, price, user, description)
-    assert(item.name == name)
+  def setup
+    @user = Models::User.named("suti", "Suti", "pwSuti", "suti@patrick.ch", "none")
+    @user1 = Models::User.named("suti1", "Suti1", "pwSuti1", "suti@patrick1.ch", "none1")
+    @item = Models::Item.named("test Item", 500, @user, "none")
   end
 
-  def test_item_price
-    name = "Item1"
-    price = "10"
-    user = Models::User.named("Test", "passwd", "ese@ese.unibe.ch")
-    description = "Lorem ipsum"
-    item = Models::Item.named(name, price, user, description)
-    assert(item.price == price)
+  def test_takeownership
+    @item.take_ownership(@user1)
+    assert_equal(1, @item.prev_owners.length)
+    assert(@item.prev_owners.include?(@user))
+    assert_equal(@user1, @item.owner)
   end
 
-  def test_item_active
-    user = Models::User.named("Test", "passwd", "ese@ese.unibe.ch")
-    description = "Lorem ipsum"
-    item1 = Models::Item.named("Item1", 10, user, description)
-    item2 = Models::Item.named("Item2", 5, user, description)
-
-    item1.active = false
-    item2.active=true
-
-    assert(!item1.active)
-    assert(item2.active)
+  def test_inactive_after_creation
+   assert_equal(:inactive, @item.state)
   end
 
-  def test_item_owner
-    user = Models::User.named("Test", "passwd", "ese@ese.unibe.ch")
-    description = "Lorem ipsum"
-    item1 = Models::Item.named("Item1", 10, user, description)
-    item2 = Models::Item.named("Item2", 5, nil, description)
-
-    assert(item1.owner==user)
-    assert(item2.owner==nil)
+  def test_image_path
+    assert_equal("/images/items/default.png", @item.image_path)
+    @item.image = "test.png"
+    assert_equal("/images/items/test.png", @item.image_path)
   end
 
-  def  test_id_generation
-    #TODO PS are id's generated correctly?
+  def test_to_s
+
   end
 
-  def get_item_by_id
-    #TODO PS does item.by_id fetch the expected item?
-  end
 end

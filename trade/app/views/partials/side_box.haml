@@ -7,7 +7,7 @@
       %a{:href => url("/register")} Register
 - else
   %h1 Logged in as: #{@active_user.display_name}
-  %img{:src => url("#{@active_user.image_path}"), :alt=>"User Image", :width => "150px"}
+  %img{:src => url("#{@active_user.image_path}"), :alt=>"User Image", :width => "150"}
   %br
   Your credits: #{@active_user.credits}
   %ul
@@ -15,3 +15,21 @@
       %a{:href=> url("/user/#{@active_user.name}")} View profile
     %li
       %a{:href=> url("/user/#{@active_user.name}/edit")} Edit profile
+
+  %form{:action=>"/work_for", :method=>"POST", :enctype=>"multipart/form-data"}
+    %label Work for:
+    %select{:name=>"work_for"}
+      %option{:value=>"myself"} myself
+      - for organization in @data.organizations_by_user(@active_user)
+        %option{:value=>organization.name} #{organization.display_name}
+    %input.normal_input{:type=>"submit", :name=> "submit", :value => "set"}
+  - if !@active_user.working_for.nil?
+    Working for:
+    %a{:href => "/organization/#{@active_user.working_for.name}"}#{@active_user.working_for.display_name}
+  - else
+    Working for: myself
+  -unless @active_user.organization_request.last.nil?
+    %br
+    You have organization requests
+    %br
+    %a{:href => "/user/#{@active_user}/requests"} Show requests

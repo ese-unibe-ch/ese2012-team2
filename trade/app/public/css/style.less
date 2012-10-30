@@ -3,7 +3,6 @@
 //@import url("blue-green-theme.less");
 @import url("blue-theme.less");
 
-
 /********************************/
 /***********Variables************/
 /********************************/
@@ -37,15 +36,35 @@ textarea, input {
 
 #logo {
   positin: absolute;
-  margin:0 auto;
+  margin: 0 auto;
   font-size: 5em;
   color: @logo-color;
   width: 900px;
   bottom: 10px;
+  a, a:hover {
+    color: @logo-color;
+  }
 }
 
-#logo a, #logo a:hover{
-  color: @logo-color;
+#search_bar {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  width: 220px;
+
+  input[type = text] {
+
+    background-position: right center;
+    background-image: url(../images/search.png);
+    background-repeat: no-repeat;
+    max-width: 150px;
+  }
+
+  input {
+    margin: 0;
+    display: compact;
+  }
 }
 
 #page {
@@ -61,7 +80,7 @@ textarea, input {
   padding: 15px;
   position: relative;
   float: right;
-  width: 61%;
+  width: 65%;
   min-height: inherit;
   overflow: visible;
 }
@@ -69,15 +88,11 @@ textarea, input {
 #side_box {
   background-color: @content-background-color;
   float: left;
-  width: 31%;
+  width: 27%;
   padding: 15px;
-  ul{
+  ul {
     padding: inherit;
   }
-}
-
-#side_box ul{
-
 }
 
 #header {
@@ -98,7 +113,7 @@ textarea, input {
   border-bottom: 1px solid @body-bg-color;
 }
 
-#footer{
+#footer {
   @padding: 1px;
   position: relative;
   clear: both;
@@ -108,7 +123,7 @@ textarea, input {
   padding: @padding;
 }
 
-#footer_border{
+#footer_border {
   width: 880px;
   background-color: @page-color;
   padding: 10px;
@@ -124,38 +139,35 @@ textarea, input {
   position: absolute;
   bottom: -1px;
   right: 0;
-}
 
-#menu li:hover, #menu li a.active_tab, .active_tab{
-  background-color: @header-bar-color;
-  color: @nav-hover-font;
-}
+  li:hover, li a.active_tab, .active_tab {
+    background-color: @header-bar-color;
+    color: @nav-hover-font;
+  }
 
-#menu li {
-  display: inline;
-  list-style: none;
-  position: relative;
-  margin: 1px;
-  float: left;
-  background-color: @nav-background;
-  border-top: 1px solid @tab-border-color;
-  border-right: 1px solid @tab-border-color;
-  border-left: 1px solid @tab-border-color;
-  color: @nav-color;
-}
-
-#menu li:hover a{
-  color: @nav-hover-font;
-}
-
-#menu ul {
-  padding: 0;
-}
-
-#menu a{
-  display: block;
-  color: @nav-color;
-  padding: 0.5em 0.7em;
+  li {
+    display: inline;
+    list-style: none;
+    position: relative;
+    margin: 1px;
+    float: left;
+    background-color: @nav-background;
+    border-top: 1px solid @tab-border-color;
+    border-right: 1px solid @tab-border-color;
+    border-left: 1px solid @tab-border-color;
+    color: @nav-color;
+  }
+  ul {
+    padding: 0;
+  }
+  a {
+    display: block;
+    color: @nav-color;
+    padding: 0.5em 0.7em;
+  }
+  li:hover a {
+    color: @nav-hover-font;
+  }
 }
 
 /********************************/
@@ -189,20 +201,85 @@ th {
   text-align: left;
 }
 
-.normal_input{
+.normal_input {
   -moz-box-shadow: none;
   box-shadow: none;
   border: 1px solid @input-border-color;
   background-color: lighten(@header-bar-color, 20%);
 }
 
-input{
+input {
   -moz-box-shadow: none;
   box-shadow: none;
   border: 1px solid @input-border-color;
   background-color: lighten(@header-bar-color, 20%);
+  margin-bottom: 5px;
 }
 
+.price_column {
+  min-width: 50px;
+}
+
+/********************************/
+/*********Table styles**********/
+/********************************/
+
+table.tablesorter {
+  width: 100%;
+  text-align: left;
+
+  thead tr {
+    th {
+      background-color: @nav-background;
+    }
+
+    .header {
+      background-image: url(../images/tablesort/bg.gif);
+      background-repeat: no-repeat;
+      background-position: center right;
+      cursor: pointer;
+    }
+    .headerSortUp {
+      background-image: url(../images/tablesort/asc.gif);
+    }
+    .headerSortDown {
+      background-image: url(../images/tablesort/desc.gif);
+    }
+    .headerSortDown, .headerSortUp {
+      background-color: @header-bar-color;
+    }
+  }
+  tbody {
+    tr.odd td {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+#pager, #pager2 {
+  padding-top: 5px;
+  text-align: center;
+  .grey_dashed_border(top);
+
+  span {
+    padding: 0 5px 0 5px;
+  }
+  img {
+    cursor: pointer;
+    .prev {
+      width: auto;
+      margin-right: 10px;
+    }
+    .next {
+      width: auto;
+      margin-left: 10px;
+    }
+  }
+  input {
+    width: 50px;
+    text-align: center;
+  }
+}
 
 /********************************/
 /*********Button styles**********/
@@ -228,8 +305,6 @@ input{
 .button_margin {
   margin: 2px 0 0 0;
 }
-
-
 
 /********************************/
 /************Messages************/
@@ -277,6 +352,7 @@ input{
 .padding_right(@value: 4px) {
   padding-right: @value;
 }
+
 
 /********************************/
 /*********Image styling**********/

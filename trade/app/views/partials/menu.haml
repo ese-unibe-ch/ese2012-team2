@@ -3,14 +3,14 @@
     - if session[:name]
       %li
         %a{:href => url("/"), :class => [@title == "Home" && [:active_tab]]} Home
-      //%li
-      //  %a{:href => url("/user/#{session[:name]}"), :class => [@title == "User " + session[:name] && [:active_tab]]} Your profile
       %li
         %a{:href => url("/user"), :class => [@title == "All users" && [:active_tab]]} All users
       %li
         %a{:href => url("/add_item"), :class => [@title == "Add item" && [:active_tab]]} Add Item
       %li
-        %a{:href => url("/change_password"), :class => [@title == "Change Password" && [:active_tab]]} Change Password
+        %a{:href => url("/organization/add"), :class => [@title == "Add organization" && [:active_tab]]} Add organization
+      %li
+        %a{:href => url("/search_requests"), :class => [@title == "My Subscriptions" && [:active_tab]]} My Subscriptions
       %li
         %a{:href => url("/logout")} Logout
     - else

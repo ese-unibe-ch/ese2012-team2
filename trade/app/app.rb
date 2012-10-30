@@ -4,16 +4,20 @@ require 'json/pure'
 # This actually requires the bundled gems
 Bundler.require
 
+require_relative 'event/base_event'
+require_relative 'event/item_update_event'
+require_relative 'models/user'
+require_relative 'models/item'
+require_relative 'models/data_overlay'
+require_relative 'models/trader'
 require_relative 'controllers/main'
 require_relative 'controllers/authentication'
 require_relative 'controllers/item_controller'
 require_relative 'controllers/change_password'
 require_relative 'controllers/reset_password'
+require_relative 'controllers/organization_controller'
 require_relative 'controllers/base_controller'
 require_relative 'controllers/base_secure_controller'
-require_relative 'models/user'
-require_relative 'models/item'
-require_relative 'models/data_overlay'
 
 class App < Sinatra::Base
 
@@ -28,6 +32,7 @@ class App < Sinatra::Base
   use Main
   use ItemController
   use ChangePassword
+  use OrganizationController
 
   def self.load_test_data
     overlay = Models::DataOverlay.instance
@@ -46,6 +51,7 @@ class App < Sinatra::Base
 
   configure :development do
     self.load_test_data
+<<<<<<< HEAD
     puts settings.safe_passwords
     set :image_resize, false
   end
@@ -53,6 +59,12 @@ class App < Sinatra::Base
   configure :production do
     set :safe_passwords, true
     set :image_resize, true
+=======
+
+    overlay =  Models::DataOverlay.instance
+    overlay.new_organization("Test", "Bla", overlay.user_by_name("ese")).add_member(overlay.user_by_name("Steve"))
+
+>>>>>>> master
   end
 
 

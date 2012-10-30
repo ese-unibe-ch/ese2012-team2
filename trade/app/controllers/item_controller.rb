@@ -25,7 +25,12 @@ class ItemController < BaseSecureController
       if ItemValidator.price_is_integer?(price)
         if !ItemValidator.price_negative?(price)
           image_name = ImageHelper.save params[:image], "#{settings.public_folder}/images/items"
-          @data.new_item(name, price.to_i, description, @active_user, :inactive, image_name)
+          if (@active_user.working_for.nil?)
+            user = @active_user
+          else
+            user = @active_user.working_for
+          end
+          @data.new_item(name, price.to_i, description, user, :inactive, image_name)
           add_message("Item added", :success)
         else
           add_message("Price must be positive", :error)
@@ -91,6 +96,7 @@ class ItemController < BaseSecureController
             item.description = description
             #PS it's nilsafe ;)
             item.image = ImageHelper.save params[:image], settings.public_folder + "/images/items"
+            Event::ItemUpdateEvent.item_changed item
             add_message("Item edited", :success)
           else
             add_message("Price must be positive", :error)
@@ -104,6 +110,13 @@ class ItemController < BaseSecureController
 
     end
     haml :edit_item, :locals=>{:item =>item}
+  end
+
+  post "/item/:id/transfer/:organization" do
+    item = @data.item_by_id params[:id].to_i
+    organization = @data.organization_by_name params[:organization]
+    item.take_ownership(organization)
+    redirect back
   end
 
 end
