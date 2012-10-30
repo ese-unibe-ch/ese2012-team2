@@ -13,10 +13,15 @@ class DataOverlayTest < Test::Unit::TestCase
 
   def setup
     @overlay =  Models::DataOverlay.instance
+    @user = Models::User.new("Darth Vader", "DarthVader", "pwDarthVader", "lord.vader@imperium.com", "")
+    @d_star = Models::Item.named("Death Star", 50, @user, "Big ass space ship")
+    @d_star.state = :active
   end
 
-  def test_item_by_id_empty
-    assert_nil(@overlay.item_by_id(0))
+  def test_active_items
+    for item in @overlay.active_items
+      assert_equal(:active, item.state)
+    end
   end
 
   def test_search_requests

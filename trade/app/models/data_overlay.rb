@@ -63,14 +63,7 @@ module Models
 
     #KR returns all active items
     def active_items
-      result = Array.new
-      @items.each_value {
-          |value|
-        if (value.active)
-          result.push value
-        end
-      }
-      return result
+      @items.values.select { |value| value.state == :active }
     end
 
     def all_items
