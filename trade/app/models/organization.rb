@@ -2,8 +2,6 @@
     class Organization < Models::Trader
       attr_accessor :name, :image, :interests
 
-
-
       def self.named(name,  interests, admin)
         return self.new(name, interests, admin)
       end

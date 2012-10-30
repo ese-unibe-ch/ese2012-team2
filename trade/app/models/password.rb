@@ -20,6 +20,12 @@ module Models
       self.hash == encrypt(passwd)
     end
 
+    #AS Checks if a password is valid
+    def self.passwd_valid?(password)
+      !password.nil? and password.length > 7 and password.match('^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$')
+      #true
+    end
+
     private
     #AS Hashes the given password + the previously created salt
     def encrypt(passwd)
