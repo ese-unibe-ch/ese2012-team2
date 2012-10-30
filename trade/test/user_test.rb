@@ -32,4 +32,8 @@ class UserTest < Test::Unit::TestCase
     assert(!@user.authenticated?("pwDarthder"))
   end
 
+  def test_buy
+
+  end
+
 end

@@ -131,16 +131,11 @@ module Models
     end
 
     #SH checks if a organization exists
-    def organization_exists?(name)
-      @organizations.member?(name)
+    def organization_exists?(org)
+      @organizations.member?(org.name)
     end
 
-    #SH adds a new organization to the environment
-    # if name or id are already in use, this function raises an error
     def add_organization(organization)
-      if @organizations.has_key?(organization.name)
-        raise TradeException, "Organization already exists."
-      end
       @organizations[organization.name] = organization
     end
 

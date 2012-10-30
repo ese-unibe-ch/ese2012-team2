@@ -18,6 +18,8 @@
         @members = Array.new()
         @members.push(admin)
         @pending_members = Array.new()
+
+        self.overlay.add_organization(self)
       end
 
       def add_member(member)

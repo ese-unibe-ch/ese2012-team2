@@ -8,6 +8,9 @@ class OrganizationDataHelper
     org = Models::Organization.new(params[:name], params[:interests], active_user, image)
 
     data = Models::DataOverlay.instance
+    if data.organization_exists? org
+      raise TradeException, "Organization already exists!"
+    end
     data.add_organization(org)
   end
 
