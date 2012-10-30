@@ -141,14 +141,7 @@ module Models
       if @organizations.has_key?(organization.name)
         #raise error here
       end
-      puts "adding"
       @organizations[organization.name] = organization
-
-      @organizations.each do |org|
-        puts org
-
-      end
-
     end
 
     def new_organization(name, interests, admin)

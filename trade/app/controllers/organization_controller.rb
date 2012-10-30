@@ -29,10 +29,11 @@ class OrganizationController  < BaseSecureController
 
    post "/work_for" do
      work_for= params[:work_for]
+     puts "work for: " + work_for
      unless work_for.nil?
        session[:working_for] = work_for
      end
-     redirect "/index"
+     redirect back
    end
 
    post "/organization/:organization/remove_member/:member" do

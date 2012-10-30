@@ -21,11 +21,11 @@
     %select{:name=>"work_for"}
       %option{:value=>"myself"} myself
       - for organization in @data.organizations_by_user(@active_user)
-        %option{:value=>organization} #{organization}
+        %option{:value=>organization.name} #{organization.display_name}
     %input.normal_input{:type=>"submit", :name=> "submit", :value => "set"}
   - if !@active_user.working_for.nil?
     Working for:
-    %a{:href => "/organization/#{@active_user.working_for}"}#{@active_user.working_for}
+    %a{:href => "/organization/#{@active_user.working_for.name}"}#{@active_user.working_for.display_name}
   - else
     Working for: myself
   -unless @active_user.organization_request.last.nil?
