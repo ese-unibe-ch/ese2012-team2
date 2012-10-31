@@ -22,8 +22,11 @@ module Models
     end
 
     def confirm_receipt item
-      unless item.owner == self
+      unless item.owner == self or item.owner == self.working_for
         raise TradeException, "Only the owner can confirm receipt!"
+      end
+      unless item.state == :pending
+        raise TradeException, "Only pending items can be confirmed"
       end
       item.prev_owners.pop.credits += item.price
       item.state = :inactive

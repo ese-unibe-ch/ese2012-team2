@@ -13,6 +13,8 @@ class UserTest < Test::Unit::TestCase
     @d_star.state = :active
     @d_star2 = Models::Item.named("Death Star 2", 50, @user, "Big ass space ship")
     @org = Models::Organization.new("the Test", "none", @user, nil)
+    @d_star3 = Models::Item.named("Death Star 2", 50, @org, "Big ass space ship")
+    @d_star3.state = :active
   end
 
  def test_to_s
@@ -38,7 +40,8 @@ class UserTest < Test::Unit::TestCase
   end
 
   def test_buy
-
+    assert_nothing_raised { @user.buy(@d_star3) }
+    assert(@user.items.include?(@d_star3))
   end
 
   def test_fail_buy_own
@@ -60,6 +63,29 @@ class UserTest < Test::Unit::TestCase
   def test_all_items
     assert(@user.items.include?(@d_star))
     assert(@user.items.include?(@d_star2))
+  end
+
+  def test_confirm_receipt
+     @user.buy(@d_star3)
+     assert_equal(100, @org.credits)
+     assert_equal(50, @user.credits)
+     assert_nothing_raised { @user.confirm_receipt(@d_star3) }
+     assert_equal(150, @org.credits)
+  end
+
+  def test_receipt_fail_owner
+    @org.buy(@d_star)
+    assert_raise(TradeException) { @user.confirm_receipt(@d_star)}
+  end
+
+  def test_receipt_fail_state
+    assert_raise(TradeException) { @user.confirm_receipt(@d_star)}
+  end
+
+  def test_confirm_receipt_org
+    @user.working_for = @org
+    @user.buy(@d_star)
+    assert_nothing_raised { @user.confirm_receipt(@d_star) }
   end
 
 end
