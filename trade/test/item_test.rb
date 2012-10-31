@@ -3,6 +3,7 @@ require 'rubygems'
 require 'require_relative'
 require_relative '../app/models/user'
 require_relative '../app/models/item'
+require_relative '../app/models/comment'
 
 class ItemTest < Test::Unit::TestCase
 
@@ -31,6 +32,16 @@ class ItemTest < Test::Unit::TestCase
 
   def test_to_s
      assert_equal("test Item", @item.to_s)
+  end
+
+  def test_comment
+    assert_equal([],@item.comments)
+    comment = Models::Comment.new("test text", @user1)
+    comment1 = Models::Comment.new("test text1", @user1)
+    @item.add_comment comment
+    @item.add_comment comment1
+    assert(@item.comments.include?(comment))
+    assert_equal(comment1,@item.comments.pop)
   end
 
 end

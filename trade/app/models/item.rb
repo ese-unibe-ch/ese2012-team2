@@ -38,6 +38,10 @@ module Models
       self.overlay.add_item(self)
     end
 
+    def add_comment comment
+      self.comments.push comment
+    end
+
     def take_ownership(new_owner)
       self.prev_owners << self.owner
       self.owner = new_owner
