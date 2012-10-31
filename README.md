@@ -48,3 +48,5 @@ STARTUP
    NOTE: starting the app from within the RubyMine IDE will not work for image resizing because the
    PATH environment variable needs to be accessed in order to call the command
    line interface of the ImageMagick library.
+
+    user "ese" has password "qwertzuiop" (like every other user, check the test_data.json file for some more users...)
