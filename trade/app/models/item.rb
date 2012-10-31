@@ -45,7 +45,7 @@ module Models
 
     def self.validate_price price
       if price.is_a?(String)
-        unless price.match('[0-9]+')
+        unless price.match('^[0-9]+$')
           raise TradeException, "Price must be number"
         end
         p = price.to_i
