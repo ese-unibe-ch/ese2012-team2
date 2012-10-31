@@ -1,10 +1,15 @@
 %h1 Item #{item.name}
--if item.state == :active
-  =haml :'partials/buy_button', :locals => {:itemid => item.id}
+-if item.owner != @active_user and item.owner != @active_user.working_for
+  -if item.state == :active
+    =haml :'partials/buy_button', :locals => {:itemid => item.id}
+- if item.owner == @active_user
+  - unless @active_user.working_for.nil?
+    %form{:action => "/item/#{item.id}/transfer/#{@active_user.working_for.name}", :method => "POST"}
+      %input{:type => "submit",:name => "action", :value => "Transfer item to organization #{@active_user.working_for.display_name}", :class => "button_as_link"}
 %img.image_float_left{:src => "#{item.image_path}", :alt => "Item image"}
 %h2 Owner
 %span
-  %a{:href => "/user/#{item.owner.name}"} #{item.owner.name}
+  %a{:href => "/user/#{item.owner.name}"} #{item.owner.display_name}
 %h2 Price
 %span #{item.price}
 %h2 Description
