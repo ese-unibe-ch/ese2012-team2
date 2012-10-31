@@ -15,7 +15,7 @@ class ImageHelper
         File.open("#{target_folder}/#{filename}", "w") do |file|
           file.write(image[:tempfile].read)
           #PS only activate resize if you have ImageMagick installed and PATH setup correctly
-          self.resize(file)
+          #self.resize(file)
         end
       end
     end

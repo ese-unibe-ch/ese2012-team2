@@ -20,6 +20,7 @@ require_relative 'controllers/organization_controller'
 require_relative 'controllers/base_controller'
 require_relative 'controllers/base_secure_controller'
 require_relative 'controllers/comment_controller'
+require_relative 'controllers/last_resort_controller'
 
 class App < Sinatra::Base
 
@@ -37,6 +38,7 @@ class App < Sinatra::Base
   use OrganizationController
   use ResetPassword
   use CommentController
+  use LastResortController
 
   enable :sessions
   set :show_exceptions, false
