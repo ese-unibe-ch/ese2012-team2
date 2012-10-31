@@ -45,19 +45,24 @@ class ItemTest < Test::Unit::TestCase
   end
 
   def test_item_illegal_price
-
+     assert_raise(TradeException) { Models::Item.new("test", "rfehru", @user, "description") }
   end
 
   def test_item_negative_price
-
+    assert_raise(TradeException) { Models::Item.new("test", "-78", @user, "description") }
   end
 
   def test_item_empty_name
+    assert_raise(TradeException) { Models::Item.new("", "78", @user, "description") }
+  end
 
+  def test_price_string
+    assert_nothing_raised { @item3 = Models::Item.new("test", "78", @user, "description") }
+    assert_equal(78, @item3.price)
   end
 
   def test_item_empty_owner
-
+    assert_raise(TradeException) { Models::Item.new("test", "78", nil, "description") }
   end
 
 end
