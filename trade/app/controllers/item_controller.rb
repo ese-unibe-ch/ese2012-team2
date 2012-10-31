@@ -14,7 +14,7 @@ class ItemController < BaseSecureController
 
   #SH Tries to add an item. Redirect to the add item message page.
   post "/add_item" do
-
+    @title = "Add item"
     name = params[:name]
     price = params[:price]
     description = params[:description]
@@ -78,6 +78,7 @@ class ItemController < BaseSecureController
 
   post "/item/:item/edit" do
     item = @data.item_by_id params[:item].to_i
+    @title = "Edit item " + item.name
     if item.owner == @data.user_by_name(session[:name])
       name = params[:name]
       price = params[:price]

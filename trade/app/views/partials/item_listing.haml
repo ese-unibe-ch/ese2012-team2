@@ -79,4 +79,7 @@
           %option{:value => "50"} 50
 - else
   %p
-    User #{user.display_name} has currently no items
+    -if user.class == Models::User
+      User #{user.display_name} has currently no items
+    -else
+      Organization #{user.display_name} has currently no items
