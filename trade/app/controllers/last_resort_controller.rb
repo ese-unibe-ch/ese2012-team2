@@ -5,6 +5,7 @@ require_relative 'base_secure_controller'
 
 class LastResortController < BaseSecureController
 
+  #PS matches any GET Route, little convenience hack
   get %r{(/.*?)+} do
      redirect "/index"
   end
