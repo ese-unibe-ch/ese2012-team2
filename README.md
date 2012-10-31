@@ -33,6 +33,11 @@ prerequisites: Ruby 1.8.7 installed
 
         see: http://www.imagemagick.org/script/binary-releases.php#windows
 
+===================================
+Running Tests
+===================================
+
+Please run the tests from within RubyMine with the option "All tests in folder" and the file name mask pattern: "**/{*_test,test_*}.rb"
 
 ===================================
 STARTUP
