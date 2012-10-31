@@ -27,6 +27,9 @@
 
 %h1 Organization #{organization.name}
 %img.image_float_left{:src => "#{organization.image_path}", :alt => "Organization image"}
+%h2 Credits
+%span
+  #{organization.credits}
 %h2 Admin
 %span
   %a{:href => "/user/#{organization.admin.name}"} #{organization.admin.display_name}

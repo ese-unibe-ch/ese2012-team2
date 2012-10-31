@@ -68,6 +68,7 @@ class UserTest < Test::Unit::TestCase
      assert_equal(100, @org.credits)
      assert_equal(50, @user.credits)
      assert_nothing_raised { @user.confirm_receipt(@d_star3) }
+     assert(@d_star3.prev_owners.include?(@org))
      assert_equal(150, @org.credits)
   end
 

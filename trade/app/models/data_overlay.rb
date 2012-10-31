@@ -73,6 +73,9 @@ module Models
     def all_users
       @users.values
     end
+    def pending_items_by_user user
+      @items.values.select { |item| item.state == :pending and item.prev_owners.last == user }
+    end
 
     #PS all objects are true except nil & false ;)
     def user_display_name_exists?(display_name)

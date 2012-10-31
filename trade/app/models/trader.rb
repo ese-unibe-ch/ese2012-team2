@@ -9,6 +9,7 @@ module Models
       if item.state == :active
         if item.price<=self.credits
           self.credits -= item.price
+          puts "i am #{self}"
           item.take_ownership(self)
           item.state = :pending
         else
@@ -28,6 +29,10 @@ module Models
 
     def active_items
       self.overlay.active_items_by_trader(self)
+    end
+
+    def pending_items
+      self.overlay.pending_items_by_user(self)
     end
 
     def overlay
