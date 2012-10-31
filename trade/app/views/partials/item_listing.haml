@@ -3,7 +3,7 @@
 - else
   - items = user.active_items
 
-- unless items.length == 0
+- unless items.length == 0  and user.pending_items.length == 0
   %table{:id=>"itemTable", :class=>"tablesorter pager"}
     %thead
       %tr

@@ -48,7 +48,7 @@ class Main  < BaseSecureController
     rescue TradeException => e
       add_message(e.message, :error)
     end
-    haml :index, :locals => {:items => @data.all_items }
+    redirect "/index"
   end
 
 

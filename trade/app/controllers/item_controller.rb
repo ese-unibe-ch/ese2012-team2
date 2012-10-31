@@ -40,6 +40,8 @@ class ItemController < BaseSecureController
 
   post "/item/:item/confirm_buy" do
     item = @data.item_by_id params[:item].to_i
+    puts item.prev_owners.length
+    puts item.name
     @active_user.confirm_receipt item
     redirect back
   end
@@ -60,7 +62,7 @@ class ItemController < BaseSecureController
 
     item = @data.item_by_id params[:item].to_i
     @title = "Edit item " + item.name
-    if item.owner == @data.user_by_name(session[:name])
+    if item.owner == @data.user_by_name(session[:name]) or item.owner == @active_user.working_for
       begin
       name = params[:name]
       price = params[:price]

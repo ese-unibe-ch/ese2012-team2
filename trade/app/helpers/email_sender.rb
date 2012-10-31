@@ -13,7 +13,7 @@ class EmailSender
   }
 
   def self.send_item_bought(item)
-    seller = item.prev_owners.pop
+    seller = item.prev_owners.last
     buyer = item.owner
     Thread.new {
        Pony.mail({
