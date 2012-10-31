@@ -12,8 +12,8 @@ class SearchRequestTest < Test::Unit::TestCase
     @user = Models::User.new("Darth Vader", "Darth Vader", "qwertzuiop", "lord.vader@imperium.com", "")
     @user_search = Models::User.new("verona", "Verona Feldbush", "qwertzuiop", "lord.vader@imperium.com", "")
 
-    @d_star = Models::Item.named("Death Star", 10000, @user, "Big ass space ship")
-    @blubb = Models::Item.named("Blub", 10000, @user, "Big ass space ship")
+    @d_star = Models::Item.new("Death Star", 10000, @user, "Big ass space ship")
+    @blubb = Models::Item.new("Blub", 10000, @user, "Big ass space ship")
   end
   def test_should_applie
     keywords = ["StAr", "DeAth", "ship"]
@@ -35,9 +35,9 @@ class SearchRequestTest < Test::Unit::TestCase
 
   def test_correct_items_should_match
     @user = Models::User.new("Darth Vader", "Darth Vader", "pwDarthVader", "lord.vader@imperium.com", "")
-    item1= Models::Item.named("blaaa Suchwort2  bla blabla", 10000, @user, "bla bla Suchwort1 blaaa")
-    item2= Models::Item.named("blaaa bla blabla", 10000, @user, "bla bla Suchwort1 blaaa Suchwort2")
-    item3= Models::Item.named("blaaa bla blabla", 10000, @user, "bla bla Suchwort1 blaaa")
+    item1= Models::Item.new("blaaa Suchwort2  bla blabla", 10000, @user, "bla bla Suchwort1 blaaa")
+    item2= Models::Item.new("blaaa bla blabla", 10000, @user, "bla bla Suchwort1 blaaa Suchwort2")
+    item3= Models::Item.new("blaaa bla blabla", 10000, @user, "bla bla Suchwort1 blaaa")
 
     keywords = ["SuchwORt1", "SUChwort2"]
     sr= Models::SearchRequest.create(keywords, @user_search)

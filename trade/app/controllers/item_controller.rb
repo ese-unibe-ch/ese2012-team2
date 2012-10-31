@@ -14,32 +14,11 @@ class ItemController < BaseSecureController
 
   #SH Tries to add an item. Redirect to the add item message page.
   post "/add_item" do
-
-    name = params[:name]
-    price = params[:price]
-    description = params[:description]
-
-    if !ItemValidator.name_empty?(name)
-      price = ItemValidator.delete_leading_zeros(price)
-      #SH Check if price is an int
-      if ItemValidator.price_is_integer?(price)
-        if !ItemValidator.price_negative?(price)
-          image_name = ImageHelper.save params[:image], "#{settings.public_folder}/images/items"
-          if (@active_user.working_for.nil?)
-            user = @active_user
-          else
-            user = @active_user.working_for
-          end
-          @data.new_item(name, price.to_i, description, user, :inactive, image_name)
-          add_message("Item added", :success)
-        else
-          add_message("Price must be positive", :error)
-        end
-      else
-        add_message("Your price is not a number", :error)
-      end
-    else
-      add_message("Invalid item name", :error)
+    begin
+    ItemValidator.add_item(params, @active_user)
+    add_message("Item successfully created!", :success)
+    rescue TradeException => e
+      add_message(e.message, :error)
     end
     haml :add_new_item
   end
@@ -77,35 +56,29 @@ class ItemController < BaseSecureController
   end
 
   post "/item/:item/edit" do
+
     item = @data.item_by_id params[:item].to_i
     if item.owner == @data.user_by_name(session[:name])
+      begin
       name = params[:name]
       price = params[:price]
       description = params[:description]
 
-      if !ItemValidator.name_empty?(name)
-        price = ItemValidator.delete_leading_zeros(price)
-        #SH Check if price is an int
-        if ItemValidator.price_is_integer?(price)
-
-          if !ItemValidator.price_negative?(price)
-            item.name = name
-            item.price = price
-            item.description = description
-            #PS it's nilsafe ;)
-            item.image = ImageHelper.save params[:image], settings.public_folder + "/images/items"
-            Event::ItemUpdateEvent.item_changed item
-            add_message("Item edited", :success)
-          else
-            add_message("Price must be positive", :error)
-          end
-        else
-          add_message("Your price is not a number", :error)
-        end
+      p = Models::Item.validate_price(price)
+      if name.empty?
+         add_message("Item name must not be empty!", :error)
       else
-        add_message("Invalid item name", :error)
+        item.name = name
+        item.price = p
+        item.description = description
+        #PS it's nilsafe ;)
+        item.image = ImageHelper.save params[:image], settings.public_folder + "/images/items"
+        Event::ItemUpdateEvent.item_changed item
+        add_message("Item edited!", :success)
       end
-
+      rescue TradeException => e
+      add_message(e.message, :error)
+    end
     end
     haml :edit_item, :locals=>{:item =>item}
   end

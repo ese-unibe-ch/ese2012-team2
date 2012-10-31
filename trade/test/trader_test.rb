@@ -11,8 +11,7 @@ class TraderTest < Test::Unit::TestCase
     @buyer.credits = 100
     @seller.credits = 0
 
-    @d_star = Models::Item.named("Death Star", 50, @seller, "Big ass space ship")
-    @d_star.state = :active
+    @d_star = Models::Item.new("Death Star", 50, @seller, "Big ass space ship", :active)
   end
 
   def test_buy_success

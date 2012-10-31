@@ -14,7 +14,7 @@ class DataOverlayTest < Test::Unit::TestCase
   def setup
     @overlay =  Models::DataOverlay.instance
     @user = Models::User.new("Darth Vader", "DarthVader", "pwDarthVader", "lord.vader@imperium.com", "")
-    @d_star = Models::Item.named("Death Star", 50, @user, "Big ass space ship")
+    @d_star = Models::Item.new("Death Star", 50, @user, "Big ass space ship")
     @d_star.state = :active
   end
 

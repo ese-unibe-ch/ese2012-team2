@@ -1,11 +1,6 @@
-class ItemValidator
+require_relative '../models/item'
 
-  def self.name_empty?(name)
-    if name == ""
-      return true
-    end
-    return false
-  end
+class ItemValidator
 
   #SH Removing heading zeros because these would make the int oct
   def self.delete_leading_zeros(price)
@@ -15,19 +10,20 @@ class ItemValidator
     return price
   end
 
-  #SH Check if price is an int
-  def self.price_is_integer?(price)
-    unless price.to_s.match(/\A[+-]?\d+?(\.\d+)?\Z/) == nil ? false : true
-      return false
-    end
-    return true
-  end
+  def self.add_item params, active_user
+    name = params[:name]
+    price = params[:price]
+    description = params[:description]
 
-  def self.price_negative?(price)
-    if price.to_i < 0
-      return true
-    end
-    return false
-  end
+    price = ItemValidator.delete_leading_zeros(price)
 
+    if (active_user.working_for.nil?)
+      user = active_user
+    else
+      user = active_user.working_for
+    end
+    item = Models::Item.new(name, price, user, description)
+    image_name = ImageHelper.save params[:image], "#{settings.public_folder}/images/items"
+    item.image = image_name
+  end
 end

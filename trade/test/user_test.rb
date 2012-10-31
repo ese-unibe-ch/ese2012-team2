@@ -9,12 +9,10 @@ class UserTest < Test::Unit::TestCase
 
   def setup
     @user = Models::User.new("Darth Vader", "DarthVader", "pwDarthVader", "lord.vader@imperium.com", "")
-    @d_star = Models::Item.named("Death Star", 50, @user, "Big ass space ship")
-    @d_star.state = :active
-    @d_star2 = Models::Item.named("Death Star 2", 50, @user, "Big ass space ship")
+    @d_star = Models::Item.new("Death Star", 50, @user, "Big ass space ship", :active)
+    @d_star2 = Models::Item.new("Death Star 2", 50, @user, "Big ass space ship")
     @org = Models::Organization.new("the Test", "none", @user, nil)
-    @d_star3 = Models::Item.named("Death Star 2", 50, @org, "Big ass space ship")
-    @d_star3.state = :active
+    @d_star3 = Models::Item.new("Death Star 2", 50, @org, "Big ass space ship", :active)
   end
 
  def test_to_s

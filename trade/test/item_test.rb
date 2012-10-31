@@ -10,7 +10,7 @@ class ItemTest < Test::Unit::TestCase
   def setup
     @user = Models::User.new("suti", "Suti", "qwertzuiop", "suti@patrick.ch", "none")
     @user1 = Models::User.new("suti1", "Suti1", "qwertzuiop", "suti@patrick1.ch", "none1")
-    @item = Models::Item.named("test Item", 500, @user, "none")
+    @item = Models::Item.new("test Item", 500, @user, "none")
   end
 
   def test_takeownership
@@ -42,6 +42,22 @@ class ItemTest < Test::Unit::TestCase
     @item.add_comment comment1
     assert(@item.comments.include?(comment))
     assert_equal(comment1,@item.comments.pop)
+  end
+
+  def test_item_illegal_price
+
+  end
+
+  def test_item_negative_price
+
+  end
+
+  def test_item_empty_name
+
+  end
+
+  def test_item_empty_owner
+
   end
 
 end

@@ -39,13 +39,6 @@ module Models
       @items.delete item.id
     end
 
-    def new_item(name, price, description, owner, state=:inactive, image=nil)
-      item = Item.named name, price, owner, description, image
-      item.state = state
-      add_item item
-      return item
-    end
-
     #KR returns the item corresponding to the id
     # returns nil if there is no such item
     def item_by_id(id)

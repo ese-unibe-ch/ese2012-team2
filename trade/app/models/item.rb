@@ -1,3 +1,5 @@
+require_relative 'trade_exception'
+
 module Models
   class Item
 
@@ -6,11 +8,6 @@ module Models
     attr_reader :id, :comments
 
     @@item_count = 0
-
-    #SH Creates a new item with a name, a price and an owner
-    def self.named(name, price, owner, description, image=nil)
-      item = self.new(name, price, owner, description, image)
-    end
 
     def overlay
       unless @data
@@ -21,9 +18,17 @@ module Models
 
     #SH Sets the name, the price, and the owner of the item
     #SH If the user is not nil, adds the item to the item list of the owner
-    def initialize(name, price, owner, description, image=nil)
-      self.price = price
+    def initialize(name, price, owner, description, state=:inactive, image=nil)
+      self.price = Models::Item.validate_price price
+
+      if owner.nil?
+        raise TradeException, "Owner may not be empty!"
+      end
       self.owner = owner
+
+      if name.empty?
+        raise TradeException, "Name must not be empty!"
+      end
       self.name = name
       self.description= description
       self.image = image
@@ -31,11 +36,26 @@ module Models
 
       @comments = Array.new
 
-      self.state = :inactive
+      self.state = state
       @id = @@item_count
       @@item_count += 1
 
       self.overlay.add_item(self)
+    end
+
+    def self.validate_price price
+      if price.is_a?(String)
+        unless price.match('[0-9]+')
+          raise TradeException, "Price must be number"
+        end
+        p = price.to_i
+      else
+        p = price
+      end
+      unless p >= 0
+        raise TradeException, "Price must be positive"
+      end
+      p
     end
 
     def add_comment comment

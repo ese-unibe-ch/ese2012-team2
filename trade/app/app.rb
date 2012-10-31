@@ -52,7 +52,7 @@ class App < Sinatra::Base
     data.each do |user|
       new_user = Models::User.new(user["name"], user["displayname"], user["pw"], user["email"], user["interests"])
       user["items"].each do |item|
-        overlay.new_item(item["name"], item["price"], item["description"], new_user, item["state"].to_sym)
+        Models::Item.new(item["name"], item["price"], new_user, item["description"], item["state"].to_sym)
       end
     end
   end
