@@ -12,17 +12,31 @@ class EmailSender
       :from => 'trade-corp-noreply@web.de'
   }
 
-  def self.send_new_password(user, pw)
+  def self.send_item_bought(item)
+    seller = item.prev_owners.pop
+    buyer = item.owner
     Thread.new {
        Pony.mail({
-         :to => user.email,
+         :to => seller.email,
          :subject => 'Password reset',
-         :body => "Dear #{user.name}
-Your password was reset.
-Your new password is #{pw}.
+         :body => "Dear #{seller.display_name}
+Your item #{item.name} has been bought by #{buyer.display_name}
 Please do not reply."
        })
      }
+  end
+
+  def self.send_new_password(user, pw)
+    Thread.new {
+      Pony.mail({
+                    :to => user.email,
+                    :subject => 'Password reset',
+                    :body => "Dear #{user.name}
+Your password was reset.
+Your new password is #{pw}.
+Please do not reply."
+                })
+    }
   end
 
   def self.send_item_found(user, search_request, item)

@@ -44,6 +44,7 @@ class Main  < BaseSecureController
     begin
     item = @data.item_by_id params[:item].to_i
     @active_user.buy(item)
+    EmailSender.send_item_bought(item)
     rescue TradeException => e
       add_message(e.message, :error)
     end

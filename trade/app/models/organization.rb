@@ -22,6 +22,10 @@
         self.overlay.add_organization(self)
       end
 
+      def email
+        self.admin.email
+      end
+
       def add_member(member)
         @members.push(member)
       end
