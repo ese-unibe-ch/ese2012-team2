@@ -12,7 +12,7 @@
   %label
     List of interests:
   %br
-  %textarea.normal_input{:name => "interests", :style => "width:500px; height:100px"}
+  %textarea.normal_input.default_textarea_size{:name => "interests"}
     #{@active_user.interests}
   %br
   %input.normal_input{:type=>"submit", :class=>"button_margin", :value => "Save"}

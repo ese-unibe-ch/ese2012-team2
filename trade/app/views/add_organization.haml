@@ -1,14 +1,10 @@
 %h1 Add Organization
 %form{:action => "/organization/add", :method => "POST", :enctype=>"multipart/form-data"}
-  %label
-    Name*:
   %br
-  %input.normal_input{:type => "text", :name => "name"}
+  %input.normal_input{:type => "text", :name => "name", :placeholder => "Name"}
   %br
-  %label
-    List of interests:
   %br
-  %textarea.normal_input{:name => "interests", :style => "width:500px; height:100px"}
+  %textarea.normal_input.default_textarea_size{:name => "interests", :placeholder => "List of interests (optional)"}
   %br
   %label
     Image:

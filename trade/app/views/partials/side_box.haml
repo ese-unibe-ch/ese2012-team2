@@ -16,18 +16,17 @@
     %li
       %a{:href=> url("/user/#{@active_user.name}/edit")} Edit profile
 
-  %form{:action=>"/work_for", :method=>"POST", :enctype=>"multipart/form-data"}
+  %form{:action=>"/work_for", :method=>"POST"}
     %label Work for:
-    %select{:name=>"work_for"}
-      %option{:value=>"myself"} myself
+    %select{:onchange => "this.form.submit();", :name=>"work_for"}
+      %option{:value=>"myself", :selected => @active_user.working_for.nil?} Myself
       - for organization in @active_user.organizations
-        %option{:value=>organization.name} #{organization.display_name}
-    %input.normal_input{:type=>"submit", :name=> "submit", :value => "set"}
+        %option{:value=>organization.name, :selected => (organization == @active_user.working_for && !@active_user.working_for.nil?) } #{organization.display_name}
   - if !@active_user.working_for.nil?
     Working for:
     %a{:href => "/organization/#{@active_user.working_for.name}"}#{@active_user.working_for.display_name}
   - else
-    Working for: myself
+    Working for: Myself
   -unless @active_user.organization_request.last.nil?
     %br
     You have organization requests

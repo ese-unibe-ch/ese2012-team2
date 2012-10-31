@@ -24,6 +24,7 @@ class OrganizationController  < BaseSecureController
 
   get "/organization/:organization" do
     organization = @data.organization_by_name(params[:organization])
+    @title = "Organization" + organization.name
     haml :organization, :locals => {:organization => organization}
   end
 
@@ -69,6 +70,7 @@ class OrganizationController  < BaseSecureController
    end
 
    get "/user/:user/requests" do
+     @title = "Organization requests"
      haml :organization_request
    end
 

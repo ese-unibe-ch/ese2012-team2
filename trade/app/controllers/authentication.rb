@@ -12,7 +12,7 @@ class Authentication < BaseController
 
   #SH The normal login page
   get "/login" do
-    self.title = "Login"
+    @title = "Login"
     haml :login
   end
 
@@ -38,7 +38,6 @@ class Authentication < BaseController
 
   #SH Shows a form to register new user
   get "/register" do
-    self.title = "Register"
     @title = "Register"
     haml :register
   end

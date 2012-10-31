@@ -23,6 +23,7 @@ class ResetPassword  < BaseController
   end
 
   get "/reset_password/:unknown_user" do
+    @title = "Reset Password"
     redirect 'user' if session[:name]
     haml :reset_password, :locals => {:message => "#{params[:unknown_user]} was not found"}
   end

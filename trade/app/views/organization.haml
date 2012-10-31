@@ -51,7 +51,7 @@
         %td
           %select{:name => "user"}
             - for user in @data.all_users
-              -unless organization.members.include? user
+              -unless organization.members.include?(user) || organization.pending_members.include?(user)
                 %option{:value => "#{user.name}"}#{user.display_name}
         %td
           %input{:type => "submit", :value => "Send request"}
