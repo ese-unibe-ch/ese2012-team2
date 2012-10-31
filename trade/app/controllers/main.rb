@@ -40,6 +40,7 @@ class Main  < BaseSecureController
 
   #SH Buys an item. If an error occurs, redirect to the buy error page
   post "/buy/:item" do
+    @title = "Home"
     begin
     item = @data.item_by_id params[:item].to_i
     @active_user.buy(item)
@@ -62,6 +63,7 @@ class Main  < BaseSecureController
   end
 
   post "/user/:user/edit" do
+    @title = "Edit profile"
     begin
     UserDataHelper.edit_user(params, @active_user)
     add_message("successfully saved user", :success)
@@ -72,6 +74,7 @@ class Main  < BaseSecureController
   end
 
   get "/search" do
+    @title = "Search"
     keyword = Models::SearchRequest.splitUp(params[:keywords])
     search_request = Models::SearchRequest.create(keyword, @active_user)
     items = search_request.get_matching_items(@data.all_items)
@@ -79,6 +82,7 @@ class Main  < BaseSecureController
   end
 
   get "/search_requests" do
+    @title = "Subscriptions"
     search_requests = @data.search_requests_by_user(@active_user)
     haml :search_requests, :locals => {:search_requests => search_requests}
   end
@@ -92,6 +96,7 @@ class Main  < BaseSecureController
   end
 
   post "/research/:search_request" do
+    @title = "Search"
     search_request = @data.search_request_by_id params[:search_request].to_i
     keyword = Models::SearchRequest.splitUp(search_request.keywords)
     search_request = Models::SearchRequest.create(keyword, @active_user)
