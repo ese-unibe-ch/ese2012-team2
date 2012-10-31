@@ -6,7 +6,7 @@ module Models
   class User  < Models::Trader
 
     attr_accessor :password, :email, :working_for
-    attr_reader :organization_request
+    attr_reader :organization_request, :wish_list
 
     #AS Implements buying for an organization (Override)
     def buy(item)
@@ -55,8 +55,19 @@ module Models
       self.interests= interests
       self.image = image
       @organization_request = Array.new()
+      @wish_list = Array.new()
 
       self.overlay.add_user(self)
+    end
+
+    def add_wish item
+      unless self.wish_list.include? item
+        self.wishlist << item
+      end
+    end
+
+    def remove_wish item
+      self.wish_list.delete item
     end
 
     def valid_email? email

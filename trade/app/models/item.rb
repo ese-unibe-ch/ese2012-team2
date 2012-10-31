@@ -64,6 +64,9 @@ module Models
 
     def take_ownership(new_owner)
       self.prev_owners << self.owner
+      if new_owner.is_a?(Models::User)
+        new_owner.remove_wish self
+      end
       self.owner = new_owner
     end
 
