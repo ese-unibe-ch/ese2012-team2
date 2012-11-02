@@ -1,6 +1,9 @@
 -#FW&MW Shows the edit item form
 %h1 Edit Item
 %form{:action => "/item/#{item.id}/edit", :method => "POST", :enctype=>"multipart/form-data"}
+  %a{:href => "/item/#{item.id}/for_auction"}Add for Auction
+  %br
+  %br
   %label
     Name*:
   %br
@@ -25,4 +28,5 @@
   %input{:type=>"file", :name=>"image"}
   %br
   %input.normal_input{:type => "submit",:class=>"button_margin", :value => "Save"}
+
 

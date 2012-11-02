@@ -1,0 +1,36 @@
+-#put information to add item for auction
+%h1 Add Item For Auction
+%form{:action => "/item/#{item.id}/show_auction", :method => "POST", :enctype => "multipart/form-data"}
+  %img.image_float_right{:src => url("#{item.image_path}"), :width => "150px"}
+  %br
+  %label Name*:
+  %br
+  %input.normal_input{:type => "text", :name => "name", :value => "#{item.name}"}
+  %br
+  %label Price*:
+  %br
+  %input.normal_input{:type => "text", :name => "price", :value => "#{item.price}"}
+  %br
+  %label Minimal Price*:
+  %br
+  %input.normal_input{:type => "text", :name => "minimal", :placeholder => "0 $"}
+  %br
+  %label Increment Step*:
+  %br
+  %input.normal_input{:type => "text", :name => "increment", :placeholder => "0 $"}
+  %br
+  %label Auction End Time*:
+  %br
+  %input.normal_input{:type => "text", :name => "time", :placeholder => "--:--"}
+  %br
+  %label Description:
+  %br
+  %textarea.normal_input.default_textarea_size{:name => "description"}
+    #{item.description}
+  %br
+  %label Change Picture
+  %br
+  %input{:type=>"file", :name=>"image"}
+  %br
+  %br
+  %input.normal_input{:type => "submit",:class => "button_margin", :value => "Start Auction"}
