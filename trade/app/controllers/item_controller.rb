@@ -67,7 +67,8 @@ class ItemController < BaseSecureController
 
   get "/auction/:auction" do
     @title = "Chosen Auction"
-    haml :show_auction
+    auction = @data.auction_by_id params[:auction].to_i
+    haml :show_auction, :locals => { :auction => auction}
   end
 
   #-------------------------------

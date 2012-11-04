@@ -36,5 +36,13 @@ module Models
     def inc
       self.price += increment
     end
+
+    def image_path
+      if self.image.nil? then
+        return "/images/items/default.png"
+      else
+        return "/images/items/" + self.image
+      end
+    end
   end
 end

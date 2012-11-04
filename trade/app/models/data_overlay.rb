@@ -27,11 +27,7 @@ module Models
     end
 
     def add_auction(auction)
-      if (@items.has_key?(item.id))
-        #raise error here and do not add
-      else
-        @auctions[auction.id] = auction
-      end
+      @auctions[auction.id] = auction
     end
 
     def delete_auction(auction)

@@ -1,1 +1,9 @@
 %h1 Item Auction
+%img.image_float_right{:src => url("#{auction.image_path}"), :width => "150px"}
+%h2 Item: #{auction.name}
+%h3 Owner: #{auction.user}
+%h3 Description: #{auction.description}
+%h3 Minimal Price: #{auction.minimal}$
+%h3 Minimal Increment Step: #{auction.increment}$
+%h3 Highest Bid: #{"highest bid"}$
+%h3 Time Left: #{auction.time}
