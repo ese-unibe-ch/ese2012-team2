@@ -2,6 +2,7 @@ require_relative '../models/user'
 require_relative '../helpers/image_helper'
 require_relative '../helpers/item_validator'
 require_relative 'base_secure_controller'
+require_relative '../models/auction'
 
 class ItemController < BaseSecureController
 
@@ -34,46 +35,36 @@ class ItemController < BaseSecureController
 
   post "/item/:item/show_auction" do
     item = @data.item_by_id params[:item].to_i
-    #@title = "Edit item " + item.name
+    @title = "Edit item " + item.name
     if item.owner == @data.user_by_name(session[:name]) or item.owner == @active_user.working_for
       begin
         name = params[:name]
         price = params[:price]
-        description = params[:description]
-        minimal_price = param[:minimal]
-        increment = params[:increment]
-        time = params[:time]
-
         p = Models::Item.validate_price(price)
         if name.empty?
           add_message("Item name should not be empty!", :error)
         else
-          item.name = name
-          item.price = p
-          item.description = description
-          item.minimal_price = minimal_price
-          item.increment = increment
-          item.time = time
-          item.image = ImageHelper.save params[:image], settings.public_folder + "/images/items"
-          Event::ItemUpdateEvent.item_changed item
-          add_message("Item edited!", :success)
+          Models::Auction.new(@active_user, item, params)
         end
       rescue TradeException => e
         add_message(e.message, :error)
       end
     end
-
-    haml :show_auction, :locals=>{:item =>item}
+    add_message("New Auction Added!", :success)
+    redirect "/item/auction"
   end
 
   get "/item/:item/for_auction" do
     item = @data.item_by_id params[:item].to_i
-    #@title = "Edit item " + item.name
+    @title = "Add Item For Auction"
     haml :add_for_auction, :locals => {:item => item}
   end
 
   get "/item/auction" do
-    haml :list_auctions
+    @title = "All auctions"
+    haml :list_auctions, :locals => {:auctions => @data.all_auctions,
+                                     #:users => @data.all_users
+                                    }
   end
 
   #-------------------------------

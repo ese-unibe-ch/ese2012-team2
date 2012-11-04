@@ -1,1 +1,19 @@
 %h1 All Items For Auction
+%table
+  %tr
+    %th Item
+    %th Owner
+    %th Actual Bid
+    %th Time Less
+  - for auction in auctions
+    %tr
+      %td.list
+        %a{:href => url("/user/#{auction.id}")} #{auction.name}
+      %td.list
+        -user = auction.user
+        %a{:href => url("/user/#{user.name}")} #{user.display_name}
+      %td.list
+        #{"actual bid"}
+      %td.list
+        -#less = auction.time-Time.now
+        #{Time.now}

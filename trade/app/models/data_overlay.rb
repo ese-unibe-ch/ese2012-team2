@@ -11,6 +11,7 @@ module Models
       @organizations = Hash.new()
       @search_requests= Hash.new() #AS id: user, value: Array of SearchRequests
       @comments = Hash.new() #KR id:owner, value: Array of Comments
+      @auctions = Hash.new()
     end
 
     @@instance = nil
@@ -23,6 +24,18 @@ module Models
         @@instance = DataOverlay.new
       end
       return @@instance
+    end
+
+    def add_auction(auction)
+      @auctions[auction.id] = auction
+    end
+
+    def all_auctions
+      @auctions.values
+    end
+
+    def auction_by_id(id)
+      @auctions[id]
     end
 
     #KR adds a new item to the environment.
