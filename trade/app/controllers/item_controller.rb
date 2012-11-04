@@ -33,7 +33,7 @@ class ItemController < BaseSecureController
 
   #----------------------------------------
 
-  post "/item/:item/show_auction" do
+  post "/item/:item/show_auction_adding" do
     item = @data.item_by_id params[:item].to_i
     @title = "Edit item " + item.name
     if item.owner == @data.user_by_name(session[:name]) or item.owner == @active_user.working_for
@@ -62,9 +62,12 @@ class ItemController < BaseSecureController
 
   get "/item/auction" do
     @title = "All auctions"
-    haml :list_auctions, :locals => {:auctions => @data.all_auctions,
-                                     #:users => @data.all_users
-                                    }
+    haml :list_auctions, :locals => {:auctions => @data.all_auctions}
+  end
+
+  get "/auction/:auction" do
+    @title = "Chosen Auction"
+    haml :show_auction
   end
 
   #-------------------------------

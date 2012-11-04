@@ -27,7 +27,15 @@ module Models
     end
 
     def add_auction(auction)
-      @auctions[auction.id] = auction
+      if (@items.has_key?(item.id))
+        #raise error here and do not add
+      else
+        @auctions[auction.id] = auction
+      end
+    end
+
+    def delete_auction(auction)
+      @auctions.delete auction.id
     end
 
     def all_auctions
@@ -36,6 +44,13 @@ module Models
 
     def auction_by_id(id)
       @auctions[id]
+    end
+
+    def include?(item)
+      if @auctions[item.id] == nil
+        return false
+      else return true
+      end
     end
 
     #KR adds a new item to the environment.

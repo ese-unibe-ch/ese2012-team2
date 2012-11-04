@@ -1,6 +1,6 @@
 -#put information to add item for auction
 %h1 Add Item For Auction
-%form{:action => "/item/#{item.id}/show_auction", :method => "POST", :enctype => "multipart/form-data"}
+%form{:action => "/item/#{item.id}/show_auction_adding", :method => "POST", :enctype => "multipart/form-data"}
   %img.image_float_right{:src => url("#{item.image_path}"), :width => "150px"}
   %br
   %label Name*:

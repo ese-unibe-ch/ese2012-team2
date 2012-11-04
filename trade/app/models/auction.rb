@@ -4,7 +4,7 @@ module Models
   class Auction
     attr_accessor :user, :item, :name, :price, :minimal, :increment, :time, :description, :image
     attr_reader :id
-    @@auction_count = 0
+    #@@auction_count = 0
 
     def overlay
       unless @data
@@ -25,8 +25,9 @@ module Models
       self.increment = params[:increment]
       self.time = params[:time]
 
-      @id = @@auction_count
-      @@auction_count += 1
+      #@id = @@auction_count
+      #@@auction_count += 1
+      @id = item.id
 
       self.overlay.add_auction(self)
     end

@@ -8,7 +8,7 @@
   - for auction in auctions
     %tr
       %td.list
-        %a{:href => url("/user/#{auction.id}")} #{auction.name}
+        %a{:href => url("/auction/#{auction.id}")} #{auction.name}
       %td.list
         -user = auction.user
         %a{:href => url("/user/#{user.name}")} #{user.display_name}
