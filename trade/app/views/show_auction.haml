@@ -1,9 +1,25 @@
 %h1 Item Auction
 %img.image_float_right{:src => url("#{auction.image_path}"), :width => "150px"}
-%h2 Item: #{auction.name}
-%h3 Owner: #{auction.user}
-%h3 Description: #{auction.description}
-%h3 Minimal Price: #{auction.minimal}$
-%h3 Minimal Increment Step: #{auction.increment}$
-%h3 Highest Bid: #{"highest bid"}$
-%h3 Time Left: #{auction.time}
+%h2 #{auction.name}
+%br
+%h3.blue Owner:
+%h3.no-margin #{auction.user}
+%br
+%h3.blue Description:
+%h3.no-margin #{auction.description}
+%br
+%h3.blue Minimal Price:
+%h3.no-margin #{auction.minimal}$
+%br
+%h3.blue Minimal Increment Step:
+%h3.no-margin #{auction.increment}$
+%br
+%h3.blue Highest Bid:
+%h3.no-margin #{auction.bid}$
+%br
+%h3.blue Time Left:
+%h3.no-margin #{auction.time}
+
+%form{:action => "/auction/#{auction.id}/set_bid", :method => "POST", :enctype => "multipart/form-data"}
+  %input.normal_input_right{:type => "text", :name => "bid", :placeholder => "Set Bid"}
+  %input.normal_input_right{:type => "submit", :class => "button_margin", :value => "Set Bid"}

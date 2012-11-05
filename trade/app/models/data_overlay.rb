@@ -42,8 +42,8 @@ module Models
       @auctions[id]
     end
 
-    def include?(item)
-      if @auctions[item.id] == nil
+    def include?(id)
+      if @auctions[id] == nil
         return false
       else return true
       end

@@ -31,6 +31,29 @@ class ItemController < BaseSecureController
     haml :add_new_item
   end
 
+  post "/delete/:item" do
+    item = @data.item_by_id params[:item].to_i
+    auction = @data.auction_by_id(item.id)
+
+    if auction =! nil
+      @data.delete_auction(auction)
+    end
+
+    if item != nil && item.owner == @active_user
+      @data.delete_item item
+    end
+
+    redirect back
+  end
+
+  post "/item/:item/confirm_buy" do
+    item = @data.item_by_id params[:item].to_i
+    puts item.prev_owners.length
+    puts item.name
+    @active_user.confirm_receipt item
+    redirect back
+  end
+
   #----------------------------------------
 
   post "/item/:item/show_auction_adding" do
@@ -71,22 +94,19 @@ class ItemController < BaseSecureController
     haml :show_auction, :locals => { :auction => auction}
   end
 
-  #-------------------------------
-  post "/delete/:item" do
-    item = @data.item_by_id params[:item].to_i
-    if item != nil && item.owner == @active_user
-      @data.delete_item item
-    end
+  post "/auction/:auction/set_bid" do
+    @title = "Set Bid"
+    auction = @data.auction_by_id params[:auction].to_i
+    #if @active_user =! auction.user
+      auction.bid = params[:bid]
+    #else add_message("Can not bid for own Item", :error)
+    #end
+    add_message("Added New Bid", :success)
     redirect back
+
   end
 
-  post "/item/:item/confirm_buy" do
-    item = @data.item_by_id params[:item].to_i
-    puts item.prev_owners.length
-    puts item.name
-    @active_user.confirm_receipt item
-    redirect back
-  end
+  #-------------------------------
 
   get "/item/:item" do
     item = @data.item_by_id params[:item].to_i
