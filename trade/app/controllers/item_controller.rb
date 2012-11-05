@@ -60,27 +60,18 @@ class ItemController < BaseSecureController
     item = @data.item_by_id params[:item].to_i
     @title = "Edit item " + item.name
     if item.owner == @data.user_by_name(session[:name]) or item.owner == @active_user.working_for
-      begin
-        name = params[:name]
-        price = params[:price]
-        p = Models::Item.validate_price(price)
-        if name.empty?
-          add_message("Item name should not be empty!", :error)
-        else
-          Models::Auction.new(@active_user, item, params)
-        end
-      rescue TradeException => e
-        add_message(e.message, :error)
-      end
+      name = params[:name]
+      price = params[:price]
+      p = Models::Item.validate_price(price)
+      Models::Auction.new(@active_user, item, params)
     end
-    add_message("New Auction Added!", :success)
     redirect "/item/auction"
   end
 
   get "/item/:item/for_auction" do
     item = @data.item_by_id params[:item].to_i
     @title = "Add Item For Auction"
-    haml :add_for_auction, :locals => {:item => item}
+    haml :add_for_auction, :locals => {:item => item, :time_now => Time.now}
   end
 
   get "/item/auction" do
