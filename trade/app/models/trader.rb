@@ -2,7 +2,7 @@ require_relative 'trade_exception'
 
 module Models
   class Trader
-    attr_accessor :credits, :name, :image, :interests, :display_name
+    attr_accessor :credits, :name, :image, :interests, :display_name, :auction_bid
 
     def buy(item)
       unless item.owner == self
@@ -33,6 +33,10 @@ module Models
 
     def pending_items
       self.overlay.pending_items_by_user(self)
+    end
+
+    def bid_on_auction
+      auction_bid.push()
     end
 
     def overlay
