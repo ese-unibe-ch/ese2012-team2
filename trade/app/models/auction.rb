@@ -18,11 +18,11 @@ module Models
       self.user = user
       self.item = item
       self.name = params[:name]
-      self.price = params[:price]
+      self.price = params[:price].to_i
       self.description = params[:description]
       self.image = ImageHelper.save params[:image], settings.public_folder + "/images/items"
-      self.minimal = params[:minimal]
-      self.increment = params[:increment]
+      self.minimal = params[:minimal].to_i
+      self.increment = params[:increment].to_i
       self.time = params[:time]
       self.bid = 0
 
@@ -38,9 +38,15 @@ module Models
       self.price += increment
     end
 
+    def set_bid(new_bid)
+      if new_bid >= self.bid + self.increment && new_bid >= self.minimal + self.increment
+        self.bid = new_bid
+      end
+    end
+
     def image_path
       if self.image.nil? then
-        return "/images/items/default.png"
+        return item.image_path
       else
         return "/images/items/" + self.image
       end

@@ -13,7 +13,7 @@
         -user = auction.user
         %a{:href => url("/user/#{user.name}")} #{user.display_name}
       %td
-        #{"actual bid"}
+        #{auction.bid}
       %td
         -#less = auction.time-Time.now
         #{Time.now}

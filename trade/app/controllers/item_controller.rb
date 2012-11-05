@@ -98,12 +98,11 @@ class ItemController < BaseSecureController
     @title = "Set Bid"
     auction = @data.auction_by_id params[:auction].to_i
     #if @active_user =! auction.user
-      auction.bid = params[:bid]
+      bid = Models::Item.validate_price(params[:bid])
+      auction.set_bid(bid)
     #else add_message("Can not bid for own Item", :error)
     #end
-    add_message("Added New Bid", :success)
     redirect back
-
   end
 
   #-------------------------------
