@@ -41,6 +41,8 @@ module Models
     def set_bid(new_bid)
       if new_bid >= self.bid + self.increment && new_bid >= self.minimal + self.increment
         self.bid = new_bid
+      else
+        raise TradeException, "To small bid!"
       end
     end
 
