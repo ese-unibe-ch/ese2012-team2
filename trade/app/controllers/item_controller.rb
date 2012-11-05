@@ -62,8 +62,6 @@ class ItemController < BaseSecureController
     if item.owner == @data.user_by_name(session[:name]) or item.owner == @active_user.working_for
       begin
         name = params[:name]
-        price = params[:price]
-        p = Models::Item.validate_price(price)
         if name.empty?
           add_message("Item name should not be empty!", :error)
         else

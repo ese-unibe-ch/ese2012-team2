@@ -2,7 +2,7 @@ require_relative 'trade_exception'
 
 module Models
   class Auction
-    attr_accessor :user, :item, :name, :price, :minimal, :increment, :time, :description, :image, :bid
+    attr_accessor :user, :item, :name, :minimal, :increment, :time, :description, :image, :bid #price
     attr_reader :id
     #@@auction_count = 0
 
@@ -18,7 +18,7 @@ module Models
       self.user = user
       self.item = item
       self.name = params[:name]
-      self.price = params[:price].to_i
+      #self.price = params[:price].to_i
       self.description = params[:description]
       self.image = ImageHelper.save params[:image], settings.public_folder + "/images/items"
       self.minimal = params[:minimal].to_i
