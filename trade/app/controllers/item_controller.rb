@@ -96,13 +96,20 @@ class ItemController < BaseSecureController
 
   post "/auction/:auction/set_bid" do
     @title = "Set Bid"
-    auction = @data.auction_by_id params[:auction].to_i
-    #if @active_user =! auction.user
+    begin
+      auction = @data.auction_by_id params[:auction].to_i
       bid = Models::Item.validate_price(params[:bid])
       auction.set_bid(bid)
+      add_message("Bid successful!", :success)
+    rescue TradeException => e
+      add_message(e.message, :error)
+    end
+
+    #if @active_user =! auction.user
+
     #else add_message("Can not bid for own Item", :error)
     #end
-    redirect back
+    haml :show_auction, :locals => { :auction => auction}
   end
 
   #-------------------------------
