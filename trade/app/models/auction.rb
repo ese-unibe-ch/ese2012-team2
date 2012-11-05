@@ -2,7 +2,7 @@ require_relative 'trade_exception'
 
 module Models
   class Auction
-    attr_accessor :user, :item, :name, :minimal, :increment, :time, :description, :image, :bid #price
+    attr_accessor :user, :item, :name, :minimal, :increment, :due_date, :description, :image, :bid #price
     attr_reader :id
     #@@auction_count = 0
 
@@ -27,7 +27,7 @@ module Models
       month = params[:month].to_i
       day = params[:month].to_i
       hour = params[:month].to_i
-      self.time = Time.local(year, month, day, hour, 0,0)
+      self.due_date = Time.local(year, month, day, hour, 0,0)
       self.bid = 0
 
       #@id = @@auction_count

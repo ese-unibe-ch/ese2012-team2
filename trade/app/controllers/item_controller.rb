@@ -90,7 +90,7 @@ class ItemController < BaseSecureController
     begin
       auction = @data.auction_by_id params[:auction].to_i
       bid = Models::Item.validate_price(params[:bid])
-      auction.set_bid(bid)
+      @active_user.give_bid(auction, bid)
       add_message("Bid successful!", :success)
     rescue TradeException => e
       add_message(e.message, :error)

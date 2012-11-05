@@ -2,7 +2,7 @@ require_relative 'trade_exception'
 
 module Models
   class Trader
-    attr_accessor :credits, :name, :image, :interests, :display_name
+    attr_accessor :credits, :credits_in_auction, :name, :image, :interests, :display_name
 
     def buy(item)
       unless item.owner == self
@@ -21,6 +21,18 @@ module Models
       else
         raise TradeException, "You cannot buy your own item!"
       end
+    end
+
+    def give_bid(auction, bid)
+      if self.credits < bid
+        raise TradeException, "Not enough money!"
+      end
+      if Time.now > auction.due_date
+        raise TradeException, "Out of time"
+      end
+      auction.set_bid(bid)
+      self.credits -= bid
+      self.credits_in_auction += bid
     end
 
     def items
