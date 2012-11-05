@@ -61,7 +61,7 @@ class ItemController < BaseSecureController
     @title = "Edit item " + item.name
     if item.owner == @data.user_by_name(session[:name]) or item.owner == @active_user.working_for
       name = params[:name]
-      price = params[:price]
+      price = params[:minimal]
       p = Models::Item.validate_price(price)
       Models::Auction.new(@active_user, item, params)
     end
@@ -71,7 +71,7 @@ class ItemController < BaseSecureController
   get "/item/:item/for_auction" do
     item = @data.item_by_id params[:item].to_i
     @title = "Add Item For Auction"
-    haml :add_for_auction, :locals => {:item => item}
+    haml :add_for_auction, :locals => {:item => item, :time_now => Time.now}
   end
 
   get "/item/auction" do
