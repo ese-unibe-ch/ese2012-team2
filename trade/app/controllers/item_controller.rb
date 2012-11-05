@@ -35,8 +35,8 @@ class ItemController < BaseSecureController
     item = @data.item_by_id params[:item].to_i
     auction = @data.auction_by_id(item.id)
 
-    if auction =! nil
-      @data.delete_auction(auction)
+    if auction != nil
+      @data.delete_auction auction
     end
 
     if item != nil && item.owner == @active_user
