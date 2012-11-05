@@ -57,12 +57,6 @@ function validate_data(form, year, month, day, hour){
         return false;
     }
 
-    else if (form.price.value == ""){
-        form.price.style.backgroundColor = "rgba(245, 106, 82, 0.41)";
-        document.getElementById('error_message').innerHTML = "Please enter a price!";
-        return false;
-    }
-
     else if(form.minimal.value == ""){
         form.minimal.style.backgroundColor = "rgba(245, 106, 82, 0.41)";
         document.getElementById('error_message').innerHTML = "Please enter a minimal price";
