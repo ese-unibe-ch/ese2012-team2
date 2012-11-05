@@ -17,8 +17,8 @@
 %h3.blue Highest Bid:
 %h3.no-margin #{auction.bid}$
 %br
-%h3.blue Time Left:
-%h3.no-margin #{auction.time}
+%h3.blue Due Date:
+%h3.no-margin #{auction.time.asctime}
 
 %form{:action => "/auction/#{auction.id}/set_bid", :method => "POST", :enctype => "multipart/form-data"}
   %input.normal_input_right{:type => "text", :name => "bid", :placeholder => "Set Bid"}

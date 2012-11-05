@@ -23,7 +23,11 @@ module Models
       self.image = ImageHelper.save params[:image], settings.public_folder + "/images/items"
       self.minimal = params[:minimal].to_i
       self.increment = params[:increment].to_i
-      self.time = params[:time]
+      year = params[:year].to_i
+      month = params[:month].to_i
+      day = params[:month].to_i
+      hour = params[:month].to_i
+      self.time = Time.local(year, month, day, hour, 0,0)
       self.bid = 0
 
       #@id = @@auction_count
