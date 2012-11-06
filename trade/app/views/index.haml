@@ -27,7 +27,7 @@
       %th.center Buy
   %tbody
     - for item in items
-      - if item.state == :active or item.state == :auction
+      - if item.state == :active || item.state == :auction
         %tr
           %td.list
             %a{:href => "/item/#{item.id}",  "data-powertip" => "#{item.description.gsub("\n", "<br>")}</br><img src=#{item.image_path} width=150 />", :class => "powertip"}

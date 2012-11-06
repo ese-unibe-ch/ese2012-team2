@@ -31,11 +31,12 @@ class ItemController < BaseSecureController
     haml :add_new_item
   end
 
+  # deletes an item and auction
   post "/delete/:item" do
     item = @data.item_by_id params[:item].to_i
     auction = @data.auction_by_id(item.id)
 
-    if auction =! nil
+    if auction != nil
       @data.delete_auction(auction)
     end
 
@@ -46,6 +47,7 @@ class ItemController < BaseSecureController
     redirect back
   end
 
+  # confirms the buy
   post "/item/:item/confirm_buy" do
     item = @data.item_by_id params[:item].to_i
     puts item.prev_owners.length
@@ -56,6 +58,7 @@ class ItemController < BaseSecureController
 
   #----------------------------------------
 
+  # save information to create new auction
   post "/item/:item/show_auction_adding" do
     item = @data.item_by_id params[:item].to_i
     @title = "Edit item " + item.name
@@ -81,23 +84,36 @@ class ItemController < BaseSecureController
     end
   end
 
+  # get page to create new auction
   get "/item/:item/for_auction" do
-    item = @data.item_by_id params[:item].to_i
     @title = "Add Item For Auction"
-    haml :add_for_auction, :locals => {:item => item, :time_now => Time.now}
+    item = @data.item_by_id params[:item].to_i
+    auction = @data.auction_by_id(item.id)
+    created = false
+
+    if @data.include?(item.id) && auction.bid != 0
+      created = true
+    end
+
+    haml :add_for_auction, :locals => {:item => item,
+                                       :time_now => Time.now,
+                                       :created => created }
   end
 
+  # show all active auctions
   get "/item/auction" do
     @title = "All auctions"
     haml :list_auctions, :locals => {:auctions => @data.all_auctions}
   end
 
+  # show the chosen auction
   get "/auction/:auction" do
     @title = "Chosen Auction"
     auction = @data.auction_by_id params[:auction].to_i
     haml :show_auction, :locals => { :auction => auction}
   end
 
+  # set a bid to an auction
   post "/auction/:auction/set_bid" do
     @title = "Set Bid"
     begin
@@ -110,7 +126,7 @@ class ItemController < BaseSecureController
     end
 
     #if @active_user =! auction.user
-
+    # todo
     #else add_message("Can not bid for own Item", :error)
     #end
     haml :show_auction, :locals => { :auction => auction}
@@ -146,7 +162,7 @@ class ItemController < BaseSecureController
         item.name = name
         item.price = p
         item.description = description
-        #PS it's nilsafe ;)
+        #PS it's nil safe ;)
         item.image = ImageHelper.save params[:image], settings.public_folder + "/images/items"
         Event::ItemUpdateEvent.item_changed item
         add_message("Item edited!", :success)

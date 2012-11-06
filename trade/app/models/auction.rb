@@ -2,10 +2,10 @@ require_relative 'trade_exception'
 
 module Models
   class Auction
-    attr_accessor :user, :item, :name, :minimal, :increment, :due_date, :description, :image, :bid #price
+    attr_accessor :user, :item, :name, :minimal, :increment, :due_date, :description, :image, :bid
     attr_reader :id
-    #@@auction_count = 0
 
+    # get the data from data base
     def overlay
       unless @data
         @data = Models::DataOverlay.instance
@@ -13,37 +13,30 @@ module Models
       @data
     end
 
+    # creates a new auction with the id of the item
     def initialize(user, item, params)
-      #self.price = Models::Item.validate_price price
+      @id = item.id
       self.user = user
       self.item = item
       item.state = :auction
       item.auction = self
       self.name = params[:name]
-      #self.price = params[:price].to_i
       self.description = params[:description]
       self.image = ImageHelper.save params[:image], settings.public_folder + "/images/items"
       self.minimal = params[:minimal].to_i
       self.increment = params[:increment].to_i
+      self.bid = 0
+
       year = params[:year].to_i
       month = params[:month].to_i
       day = params[:month].to_i
       hour = params[:month].to_i
       self.due_date = Time.local(year, month, day, hour, 0,0)
-      self.bid = 0
-
-      #@id = @@auction_count
-      #@@auction_count += 1
-      @id = item.id
 
       self.overlay.add_auction(self)
     end
 
-    #increments the price
-    def inc
-      self.price += increment
-    end
-
+    # set a bid under conditions
     def set_bid(new_bid)
       if new_bid >= self.bid + self.increment && new_bid >= self.minimal + self.increment
         self.bid = new_bid
@@ -53,6 +46,7 @@ module Models
       end
     end
 
+    # checks for price input
     def self.validate_minimal price
       if price.is_a?(String)
         unless price.match('^[0-9]+$')
@@ -68,6 +62,7 @@ module Models
       p
     end
 
+    # checks for increment input
     def self.validate_increment amount
       if amount.is_a?(String)
         unless amount.match('^[0-9]+$')
@@ -83,6 +78,7 @@ module Models
       p
     end
 
+    # takes the image path from item
     def image_path
       if self.image.nil? then
         return item.image_path
