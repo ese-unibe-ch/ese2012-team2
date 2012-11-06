@@ -77,7 +77,7 @@ class ItemController < BaseSecureController
     rescue TradeException => e
       add_message(e.message, :error)
     end
-    if success
+    if success or item.state == :active or item.state == :auction
       haml :list_auctions, :locals => {:auctions => @data.all_auctions}
     else
       haml :add_for_auction, :locals => {:item => item, :time_now => Time.now}
@@ -89,15 +89,8 @@ class ItemController < BaseSecureController
     @title = "Add Item For Auction"
     item = @data.item_by_id params[:item].to_i
     auction = @data.auction_by_id(item.id)
-    created = false
-
-    if @data.include?(item.id) && auction.bid != 0
-      created = true
-    end
-
     haml :add_for_auction, :locals => {:item => item,
-                                       :time_now => Time.now,
-                                       :created => created }
+                                       :time_now => Time.now}
   end
 
   # show all active auctions

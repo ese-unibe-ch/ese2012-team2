@@ -1,58 +1,53 @@
 -#put information to add item for auction
 %h1 Add Item For Auction
--if created
+%form{:action => "/item/#{item.id}/show_auction_adding", :method => "POST", :onsubmit => "return validate_data(this, #{time_now.year},#{time_now.month}, #{time_now.day}, #{time_now.hour});" , :enctype => "multipart/form-data"}
+  %img.image_float_right{:src => url("#{item.image_path}"), :width => "150px"}
+  %br
+  %label Name*:
+  %br
+  %input.normal_input{:type => "text", :name => "name", :value => "#{item.name}"}
+  %br
+  %label Minimal Price*:
+  %br
+  %input.normal_input{:type => "text", :name => "minimal", :placeholder => "0 $"}
+  %br
+  %label Increment Step*:
+  %br
+  %input.normal_input{:type => "text", :name => "increment", :placeholder => "0 $"}
+  %br
+  %label Auction End Time*:
+  %br
+  %select{:name=>"month", :onchange => "changeDate(this.options[selectedIndex].value, #{time_now.year})"}
+    %option{:value=>"na"} Month
+    %option{:value=>"1"} January
+    %option{:value=>"2"} February
+    %option{:value=>"3"} March
+    %option{:value=>"4"} April
+    %option{:value=>"5"} May
+    %option{:value=>"6"} June
+    %option{:value=>"7"} July
+    %option{:value=>"8"} August
+    %option{:value=>"9"} September
+    %option{:value=>"10"} October
+    %option{:value=>"11"} November
+    %option{:value=>"12"} December
+  %select{:name => "day", :id => "day"}
+    %option{:value => "na"} Day
+  %select{:name => "year", :id => "year"}
+    %option{:value => "na"} Year
+  %select{:name => "hour", :id => "hour"}
+    %option{:value => "na"} Hour
+  %br
+  %label Description:
+  %br
+  %textarea.normal_input.default_textarea_size{:name => "description"}
+    #{item.description}
+  %br
+  %label Change Picture
+  %br
+  %input{:type=>"file", :name=>"image"}
   %br
   %br
-  %p2 YOU CAN'T CHANGE AN ACTIVE AUCTION WITH PLACED BIDS
--else
-  %form{:action => "/item/#{item.id}/show_auction_adding", :method => "POST", :onsubmit => "return validate_data(this, #{time_now.year},#{time_now.month}, #{time_now.day}, #{time_now.hour});" , :enctype => "multipart/form-data"}
-    %img.image_float_right{:src => url("#{item.image_path}"), :width => "150px"}
-    %br
-    %label Name*:
-    %br
-    %input.normal_input{:type => "text", :name => "name", :value => "#{item.name}"}
-    %br
-    %label Minimal Price*:
-    %br
-    %input.normal_input{:type => "text", :name => "minimal", :placeholder => "0 $"}
-    %br
-    %label Increment Step*:
-    %br
-    %input.normal_input{:type => "text", :name => "increment", :placeholder => "0 $"}
-    %br
-    %label Auction End Time*:
-    %br
-    %select{:name=>"month", :onchange => "changeDate(this.options[selectedIndex].value, #{time_now.year})"}
-      %option{:value=>"na"} Month
-      %option{:value=>"1"} January
-      %option{:value=>"2"} February
-      %option{:value=>"3"} March
-      %option{:value=>"4"} April
-      %option{:value=>"5"} May
-      %option{:value=>"6"} June
-      %option{:value=>"7"} July
-      %option{:value=>"8"} August
-      %option{:value=>"9"} September
-      %option{:value=>"10"} October
-      %option{:value=>"11"} November
-      %option{:value=>"12"} December
-    %select{:name => "day", :id => "day"}
-      %option{:value => "na"} Day
-    %select{:name => "year", :id => "year"}
-      %option{:value => "na"} Year
-    %select{:name => "hour", :id => "hour"}
-      %option{:value => "na"} Hour
-    %br
-    %label Description:
-    %br
-    %textarea.normal_input.default_textarea_size{:name => "description"}
-      #{item.description}
-    %br
-    %label Change Picture
-    %br
-    %input{:type=>"file", :name=>"image"}
-    %br
-    %br
-    %input.normal_input{:type => "submit",:class => "button_margin", :value => "Start Auction"}
-    %p#error_message
+  %input.normal_input{:type => "submit",:class => "button_margin", :value => "Start Auction"}
+  %p#error_message
 

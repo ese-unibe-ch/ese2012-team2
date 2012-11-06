@@ -102,7 +102,7 @@ function validate_data(form, year, month, day, hour){
         document.getElementById('error_message').innerHTML = "Please choose a correct day for the due date!";
         return false;
     }
-    else if(form.year.value == year && form.month.value == month && form.day.value == day && form.hour.value < hour){
+    else if(form.year.value == year && form.month.value == month && form.day.value == day && form.hour.value <= hour){
         form.hour.style.backgroundColor = "rgba(245, 106, 82, 0.41)";
         document.getElementById('error_message').innerHTML = "Please choose a correct hour for the due date!";
         return false;
