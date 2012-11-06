@@ -1,14 +1,20 @@
 %h1 Item #{item.name}
--if item.owner != @active_user and item.owner != @active_user.working_for
-  -if item.state == :active
-    =haml :'partials/buy_button', :locals => {:itemid => item.id}
-    - unless @active_user.wish_list.include? item
-      %form{:action => "/item/#{item.id}/wish", :method => "POST"}
-        %input{:type => "submit",:name => "action", :value => "Add to wishlist", :class => "button_as_link"}
-- if item.owner == @active_user
-  - unless @active_user.working_for.nil?
-    %form{:action => "/item/#{item.id}/transfer/#{@active_user.working_for.name}", :method => "POST"}
-      %input{:type => "submit",:name => "action", :value => "Transfer item to organization #{@active_user.working_for.display_name}", :class => "button_as_link"}
+%div
+  -if item.owner != @active_user and item.owner != @active_user.working_for
+    -if item.state == :active
+      =haml :'partials/buy_button', :locals => {:itemid => item.id}
+      - unless @active_user.wish_list.include? item
+        %form{:action => "/item/#{item.id}/wish", :method => "POST"}
+          %input{:type => "submit",:name => "action", :value => "Add to wishlist", :class => "button_as_link"}
+    -if item.state == :auction
+      =haml :'partials/bid_button', :locals => {:auction_id => item.auction.id}
+      - unless @active_user.wish_list.include? item
+        %form{:action => "/item/#{item.id}/wish", :method => "POST"}
+          %input{:type => "submit",:name => "action", :value => "Add to wishlist", :class => "button_as_link"}
+  -if item.owner == @active_user
+    - unless @active_user.working_for.nil?
+      %form{:action => "/item/#{item.id}/transfer/#{@active_user.working_for.name}", :method => "POST"}
+        %input{:type => "submit",:name => "action", :value => "Transfer item to organization #{@active_user.working_for.display_name}", :class => "button_as_link"}
 %img.image_float_left{:src => "#{item.image_path}", :alt => "Item image"}
 %h2 Owner
 %span
