@@ -1,10 +1,6 @@
 -#FW&MW Shows the edit item form
 %h1 Edit Item
-%form{:action => "/item/#{item.id}/for_auction", :method => "GET", :enctype=>"multipart/form-data"}
-  %input.normal_input{:type => "submit",:class=>"button_margin", :value => "Add For Auction"}
 %form{:action => "/item/#{item.id}/edit", :method => "POST", :enctype=>"multipart/form-data"}
-  %br
-  %br
   %label
     Name*:
   %br

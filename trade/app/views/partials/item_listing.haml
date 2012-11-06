@@ -10,6 +10,7 @@
         %th Name
         %th.padding_left.price_column Price
         %th.padding_left State
+        %th.padding_left Change State
     %tbody
       - for item in items
         - type = item.state
@@ -21,12 +22,23 @@
           %td.list.padding_left #{item.state}
 
           -if user == @active_user or user == @active_user.working_for
-            - if item.state == :active && !@data.include?(item.id)
+            - if item.state == :auction
+              - auction = @data.auction_by_id(item.id)
+              - if auction.bid == 0
+                %td.list
+                  %form{:action => "/delete/#{item.id}", :method => "POST"}
+                    %input{:type => "hidden", :name => "state", :value => "auction"}
+                    %input{:type => "submit",:name => "action", :value => "Delete", :class => "button_as_link"}
+              - else
+                %td.list
+                  %input{:type => "hidden", :name => "state", :value => "auction"}
+                  %p4 not possible
+            - if item.state == :active
               %td.list
                 %form{:action => "/item/#{item.id}/change_state", :method => "POST"}
                   %input{:type => "hidden", :name => "state", :value => "inactive"}
                   %input{:type => "submit", :value => "Deactivate", :class => "button_as_link"}
-            - if item.state == :inactive && !@data.include?(item.id)
+            - if item.state == :inactive
               %td.list
                 %form{:action => "/item/#{item.id}/change_state", :method => "POST"}
                   %input{:type => "hidden", :name => "state", :value => "active"}
@@ -36,14 +48,18 @@
                 %form{:action => "/item/#{item.id}/confirm_buy", :method => "POST"}
                   %input{:type => "submit", :value => "Confirm receipt", :class => "button_as_link"}
             - unless item.state == :pending
-              - auction = @data.auction_by_id(item.id)
-              - if auction == nil || auction.bid == 0
+              - if item.state != :auction
                 %td.list
                   %form{:action => "/delete/#{item.id}", :method => "POST"}
                     %input{:type => "submit",:name => "action", :value => "Delete", :class => "button_as_link"}
-            - if item.state == :inactive && !@data.include?(item.id)
+            - if item.state == :inactive
               %td.list
-                %a{:href => "/item/#{item.id}/edit"}Edit
+                %form{:action => "/item/#{item.id}/edit", :method => "GET"}
+                  %input{:type => "submit", :value => "Edit",:class => "button_as_link"}
+            - if item.state == :inactive
+              %td.list
+                %form{:action => "/item/#{item.id}/for_auction", :method => "GET"}
+                  %input{:type => "submit", :value => "Auction",:class => "button_as_link"}
           - else
             - if item.state == :active
               %td.list
