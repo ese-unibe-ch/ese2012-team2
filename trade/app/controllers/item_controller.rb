@@ -31,11 +31,12 @@ class ItemController < BaseSecureController
     haml :add_new_item
   end
 
+  # deletes an item and auction
   post "/delete/:item" do
     item = @data.item_by_id params[:item].to_i
     auction = @data.auction_by_id(item.id)
 
-    if auction =! nil
+    if auction != nil
       @data.delete_auction(auction)
     end
 
@@ -46,6 +47,7 @@ class ItemController < BaseSecureController
     redirect back
   end
 
+  # confirms the buy
   post "/item/:item/confirm_buy" do
     item = @data.item_by_id params[:item].to_i
     puts item.prev_owners.length
@@ -55,6 +57,7 @@ class ItemController < BaseSecureController
   end
 
   #----------------------------------------
+
   # save information to create new auction
   post "/item/:item/show_auction_adding" do
     item = @data.item_by_id params[:item].to_i
@@ -83,9 +86,10 @@ class ItemController < BaseSecureController
   get "/item/:item/for_auction" do
     @title = "Add Item For Auction"
     item = @data.item_by_id params[:item].to_i
+    auction = @data.auction_by_id(item.id)
     created = false
 
-    if @data.include?(item.id)
+    if @data.include?(item.id) && auction.bid != 0
       created = true
     end
 

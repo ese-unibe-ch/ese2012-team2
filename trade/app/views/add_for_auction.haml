@@ -3,7 +3,7 @@
 -if created
   %br
   %br
-  %p2 YOU CAN'T CHANGE AN ACTIVE AUCTION
+  %p2 YOU CAN'T CHANGE AN ACTIVE AUCTION WITH PLACED BIDS
 -else
   %form{:action => "/item/#{item.id}/show_auction_adding", :method => "POST", :onsubmit => "return validate_data(this, #{time_now.year},#{time_now.month}, #{time_now.day}, #{time_now.hour});" , :enctype => "multipart/form-data"}
     %img.image_float_right{:src => url("#{item.image_path}"), :width => "150px"}

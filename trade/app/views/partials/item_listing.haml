@@ -29,6 +29,9 @@
                   %form{:action => "/delete/#{item.id}", :method => "POST"}
                     %input{:type => "hidden", :name => "state", :value => "auction"}
                     %input{:type => "submit",:name => "action", :value => "Delete", :class => "button_as_link"}
+                %td.list
+                  %form{:action => "/item/#{item.id}/for_auction", :method => "GET"}
+                    %input{:type => "submit", :value => "Edit",:class => "button_as_link"}
               - else
                 %td.list
                   %input{:type => "hidden", :name => "state", :value => "auction"}
