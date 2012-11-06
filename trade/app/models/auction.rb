@@ -59,11 +59,18 @@ module Models
 
     def get_current_price
       second_bid =bid[1].max_bid
+      current_price =0
       while current_price<second_bid do
         current_price+= increment
       end
 
     end
+
+    # @param [Trader] trader
+    def bidder_rise_bid(trader,to_rise)
+       bid.find(trader).rise_bid(to_rise)
+    end
+
 
   end
 end

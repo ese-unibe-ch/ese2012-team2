@@ -13,7 +13,7 @@ module Models
     max_bid = max_bid
   end
 
-  def raise_bid(increment)
+  def rise_bid(increment)
     max_bid = max_bid + increment unless increment <= 0
   end
 
