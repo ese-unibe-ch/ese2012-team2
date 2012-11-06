@@ -27,7 +27,7 @@
       %th.center Buy
   %tbody
     - for item in items
-      - if item.state == :active
+      - if item.state == :active or item.state == :auction
         %tr
           %td.list
             %a{:href => "/item/#{item.id}",  "data-powertip" => "#{item.description.gsub("\n", "<br>")}</br><img src=#{item.image_path} width=150 />", :class => "powertip"}
@@ -38,7 +38,9 @@
               %a{:href=> "/user/#{item.owner}"} #{item.owner.display_name}
             -else
               %a{:href=> "/organization/#{item.owner}"} #{item.owner.name}
-          %td.list
-            - if item.owner != @active_user and item.owner != @active_user.working_for #SH Don't show the buy button for your own items
+          %td.center
+            - if item.owner != @active_user and item.owner != @active_user.working_for and item.state == :active #SH Don't show the buy button for your own items
               =haml :'partials/buy_button', :locals => {:itemid => item.id}
+            - if item.owner != @active_user and item.owner != @active_user.working_for and item.state == :auction
+              =haml :'partials/bid_button', :locals => {:auction_id => item.auction.id}
 =haml :'partials/pager'

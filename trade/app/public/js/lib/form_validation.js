@@ -63,9 +63,9 @@ function validate_data(form, year, month, day, hour){
         return false;
     }
 
-    else if (form.increment.value == ""){
+    else if (form.increment.value == "" || form.increment.value == 0){
         form.increment.style.backgroundColor = "rgba(245, 106, 82, 0.41)";
-        document.getElementById('error_message').innerHTML = "Please enter an increment!";
+        document.getElementById('error_message').innerHTML = "Please enter a positive increment!";
         return false;
     }
 

@@ -61,10 +61,12 @@ class ItemController < BaseSecureController
     @title = "Edit item " + item.name
     success = false
     begin
-      if item.owner == @data.user_by_name(session[:name]) or item.owner == @active_user.working_for
+      if (item.owner == @data.user_by_name(session[:name]) or item.owner == @active_user.working_for) and item.state == :inactive
         name = params[:name]
-        price = params[:minimal]
-        p = Models::Item.validate_price(price)
+        minimal = params[:minimal]
+        increment = params[:increment]
+        p = Models::Auction.validate_minimal(minimal)
+        i = Models::Auction.validate_increment(increment)
         Models::Auction.new(@active_user, item, params)
         add_message("Successful added an auction", :success)
         success = true

@@ -3,7 +3,7 @@ require_relative 'trade_exception'
 module Models
   class Item
 
-    attr_accessor :name, :price, :owner, :state, :description, :image, :prev_owners
+    attr_accessor :name, :price, :owner, :state, :description, :image, :prev_owners, :auction
 
     attr_reader :id, :comments
 
@@ -18,7 +18,7 @@ module Models
 
     #SH Sets the name, the price, and the owner of the item
     #SH If the user is not nil, adds the item to the item list of the owner
-    def initialize(name, price, owner, description, state=:inactive, image=nil)
+    def initialize(name, price, owner, description, state=:inactive, image=nil, auction=nil)
       self.price = Models::Item.validate_price price
 
       if owner.nil?
@@ -32,6 +32,7 @@ module Models
       self.name = name
       self.description= description
       self.image = image
+      self.auction = auction
       self.prev_owners = Array.new
 
       @comments = Array.new

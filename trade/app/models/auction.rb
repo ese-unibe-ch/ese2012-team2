@@ -17,6 +17,8 @@ module Models
       #self.price = Models::Item.validate_price price
       self.user = user
       self.item = item
+      item.state = :auction
+      item.auction = self
       self.name = params[:name]
       #self.price = params[:price].to_i
       self.description = params[:description]
@@ -45,9 +47,40 @@ module Models
     def set_bid(new_bid)
       if new_bid >= self.bid + self.increment && new_bid >= self.minimal + self.increment
         self.bid = new_bid
+        self.item.price = new_bid
       else
         raise TradeException, "To small bid!"
       end
+    end
+
+    def self.validate_minimal price
+      if price.is_a?(String)
+        unless price.match('^[0-9]+$')
+          raise TradeException, "Minimal price must be number"
+        end
+        p = price.to_i
+      else
+        p = price
+      end
+      unless p >= 0
+        raise TradeException, "Minimal must be positive"
+      end
+      p
+    end
+
+    def self.validate_increment amount
+      if amount.is_a?(String)
+        unless amount.match('^[0-9]+$')
+          raise TradeException, "Increment must be number"
+        end
+        p = amount.to_i
+      else
+        p = amount
+      end
+      unless p > 0
+        raise TradeException, "Increment must be positive"
+      end
+      p
     end
 
     def image_path
