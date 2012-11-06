@@ -64,7 +64,7 @@ class ItemController < BaseSecureController
     @title = "Edit item " + item.name
     success = false
     begin
-      if (item.owner == @data.user_by_name(session[:name]) or item.owner == @active_user.working_for) and item.state == :inactive
+      if (item.owner == @data.user_by_name(session[:name]) or item.owner == @active_user.working_for) #and item.state == :inactive
         name = params[:name]
         minimal = params[:minimal]
         increment = params[:increment]
@@ -88,16 +88,8 @@ class ItemController < BaseSecureController
   get "/item/:item/for_auction" do
     @title = "Add Item For Auction"
     item = @data.item_by_id params[:item].to_i
-    auction = @data.auction_by_id(item.id)
-    created = false
 
-    if @data.include?(item.id) && auction.bid != 0
-      created = true
-    end
-
-    haml :add_for_auction, :locals => {:item => item,
-                                       :time_now => Time.now,
-                                       :created => created }
+    haml :add_for_auction, :locals => {:item => item, :time_now => Time.now}
   end
 
   # show all active auctions

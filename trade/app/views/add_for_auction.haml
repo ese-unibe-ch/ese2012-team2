@@ -1,6 +1,7 @@
 -#put information to add item for auction
 %h1 Add Item For Auction
--if created
+-auction = @data.auction_by_id(item.id)
+-if @data.include?(item.id) && auction.bid != 0
   %br
   %br
   %p2 YOU CAN'T CHANGE AN ACTIVE AUCTION WITH PLACED BIDS
