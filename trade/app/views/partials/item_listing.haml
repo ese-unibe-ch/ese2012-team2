@@ -23,7 +23,7 @@
           -if user == @active_user or user == @active_user.working_for
             - if item.state == :auction
               - auction = @data.auction_by_id(item.id)
-              - if auction.bid == 0
+              - if auction.bid.empty?
                 %td.list
                   %form{:action => "/delete/#{item.id}", :method => "POST"}
                     %input{:type => "hidden", :name => "state", :value => "auction"}
