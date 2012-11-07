@@ -2,8 +2,7 @@ require_relative 'trade_exception'
 
 module Models
   class Trader
-    attr_accessor :credits, :credits_in_auction, :name, :image, :interests, :display_name
-    attr_accessor :credits, :name, :image, :interests, :display_name, :auction_bid
+    attr_accessor :credits, :credits_in_auction, :name, :image, :interests, :display_name, :auction_bid
 
     def buy(item)
       unless item.owner == self

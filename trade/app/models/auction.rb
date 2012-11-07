@@ -24,7 +24,6 @@ module Models
       self.image = ImageHelper.save params[:image], settings.public_folder + "/images/items"
       self.minimal = params[:minimal].to_i
       self.increment = params[:increment].to_i
-      self.time = params[:time]
       self.bid = []
 
       year = params[:year].to_i
@@ -40,7 +39,6 @@ module Models
     def set_bid(new_bid)
       if new_bid >= self.bid + self.increment && new_bid >= self.minimal + self.increment
         self.bid.push new_bid
-        self.bid = new_bid
         self.item.price = new_bid
       else
         raise TradeException, "To small bid!"
@@ -98,8 +96,6 @@ module Models
       while current_price<second_bid do
         current_price+= increment
       end
-
     end
-
   end
 end
