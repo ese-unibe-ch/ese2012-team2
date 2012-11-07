@@ -21,7 +21,7 @@ module Models
       if working_for.nil?
         super
       else
-        working_for.buy(item)
+        working_for.give_bid(auction, bid)
       end
     end
 
