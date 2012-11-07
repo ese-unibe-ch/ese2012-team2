@@ -42,5 +42,5 @@
             - if item.owner != @active_user and item.owner != @active_user.working_for and item.state == :active #SH Don't show the buy button for your own items
               =haml :'partials/buy_button', :locals => {:itemid => item.id}
             - if item.owner != @active_user and item.owner != @active_user.working_for and item.state == :auction
-              =haml :'partials/bid_button', :locals => {:auction_id => item.auction.id}
+              %a.button_as_link{:href => "/auction/#{item.id}"} Bid
 =haml :'partials/pager'

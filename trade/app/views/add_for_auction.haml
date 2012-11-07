@@ -1,9 +1,8 @@
 -#put information to add item for auction
 %h1 Add Item For Auction
-%form{:action => "/item/#{item.id}/show_auction_adding", :method => "POST", :onsubmit => "return validate_data(this, #{time_now.year},#{time_now.month}, #{time_now.day}, #{time_now.hour});" , :enctype => "multipart/form-data"}
-  %img.image_float_right{:src => url("#{item.image_path}"), :width => "150px"}
+-auction = @data.auction_by_id(item.id)
+-if @data.include?(item.id) && auction.bid != 0
   %br
-  %label Name*:
   %br
   %input.normal_input{:type => "text", :name => "name", :value => "#{item.name}"}
   %br
