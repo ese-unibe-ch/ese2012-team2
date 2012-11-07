@@ -1,4 +1,5 @@
 require_relative 'trade_exception'
+require_relative 'bid'
 
 module Models
   class Auction
@@ -19,7 +20,7 @@ module Models
       self.user = user
       self.item = item
       item.state = :auction
-      self.name = params[:name]
+      self.name = item.name
       self.description = params[:description]
       self.image = ImageHelper.save params[:image], settings.public_folder + "/images/items"
       self.minimal = params[:minimal].to_i
@@ -30,15 +31,18 @@ module Models
       month = params[:month].to_i
       day = params[:day].to_i
       hour = params[:hour].to_i
-      self.due_date = Time.local(year, month, day, hour, 0,0)
+      self.due_date = Time.local(year, month, day, hour, 0, 0)
 
       self.overlay.add_auction(self)
     end
 
     # set a bid under conditions
-    def set_bid(new_bid)
-      if new_bid >= self.bid + self.increment && new_bid >= self.minimal + self.increment
-        self.bid.push new_bid
+    def set_bid(user, new_bid)
+      if new_bid >= self.get_current_bid + self.increment && new_bid >= self.minimal + self.increment
+        unless self.bid.empty?
+          self.bid.last.bid_placed_by.credits += self.bid.last.max_bid
+        end
+        self.bid.push Models::Bid.new_bid(user,new_bid)
         self.item.price = new_bid
       else
         raise TradeException, "To small bid!"
@@ -86,15 +90,27 @@ module Models
       end
     end
 
+    # sorts the bid array in descending order
     def get_current_ranking
-      bid.sort {|a,b|a.max_bid <=> b.max_bid}
+      bid.sort { |a, b| a.max_bid <=> b.max_bid }
       bid.reverse
     end
 
+    # returns the price incremented by highest bid
     def get_current_price
-      second_bid =bid[1].max_bid
-      while current_price<second_bid do
+      second_bid = bid[1].max_bid
+      while current_price < second_bid do
         current_price+= increment
+      end
+      return current_price
+    end
+
+    # returns the current highest bid
+    def get_current_bid
+      if self.bid.empty?
+        return 0
+      else
+        return bid.last.max_bid
       end
     end
   end
