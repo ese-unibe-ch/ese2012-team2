@@ -19,7 +19,6 @@ module Models
       self.user = user
       self.item = item
       item.state = :auction
-      item.auction = self
       self.name = params[:name]
       self.description = params[:description]
       self.image = ImageHelper.save params[:image], settings.public_folder + "/images/items"
