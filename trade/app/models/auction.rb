@@ -28,8 +28,8 @@ module Models
 
       year = params[:year].to_i
       month = params[:month].to_i
-      day = params[:month].to_i
-      hour = params[:month].to_i
+      day = params[:day].to_i
+      hour = params[:hour].to_i
       self.due_date = Time.local(year, month, day, hour, 0,0)
 
       self.overlay.add_auction(self)
