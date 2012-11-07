@@ -7,7 +7,7 @@
         %form{:action => "/item/#{item.id}/wish", :method => "POST"}
           %input{:type => "submit",:name => "action", :value => "Add to wishlist", :class => "button_as_link"}
     -if item.state == :auction
-      =haml :'partials/bid_button', :locals => {:auction_id => item.auction.id}
+      %a.button_as_link{:href => "/auction/#{item.id}"} Bid
       - unless @active_user.wish_list.include? item
         %form{:action => "/item/#{item.id}/wish", :method => "POST"}
           %input{:type => "submit",:name => "action", :value => "Add to wishlist", :class => "button_as_link"}
