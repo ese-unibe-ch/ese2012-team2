@@ -17,6 +17,14 @@ module Models
       end
     end
 
+    def give_bid(auction, bid)
+      if working_for.nil?
+        super
+      else
+        working_for.give_bid(auction, bid)
+      end
+    end
+
     def organizations
       self.overlay.organizations_by_user(self)
     end
@@ -35,6 +43,7 @@ module Models
     #SH Setup standard values
     def initialize (name, display_name, passwd, email, interests, image=nil)
       self.credits=100
+      self.credits_in_auction = 0
       if name.empty?
         raise TradeException, "Username must not be empty!"
       end

@@ -31,12 +31,13 @@ class ItemController < BaseSecureController
     haml :add_new_item
   end
 
+  # deletes an item and auction
   post "/delete/:item" do
     item = @data.item_by_id params[:item].to_i
     auction = @data.auction_by_id(item.id)
 
     if auction != nil
-      @data.delete_auction auction
+      @data.delete_auction(auction)
     end
 
     if item != nil && item.owner == @active_user
@@ -46,6 +47,7 @@ class ItemController < BaseSecureController
     redirect back
   end
 
+  # confirms the buy
   post "/item/:item/confirm_buy" do
     item = @data.item_by_id params[:item].to_i
     puts item.prev_owners.length
@@ -56,51 +58,69 @@ class ItemController < BaseSecureController
 
   #----------------------------------------
 
+  # save information to create new auction
   post "/item/:item/show_auction_adding" do
     item = @data.item_by_id params[:item].to_i
     @title = "Edit item " + item.name
-    if item.owner == @data.user_by_name(session[:name]) or item.owner == @active_user.working_for
-      begin
-        name = params[:name]
-        if name.empty?
-          add_message("Item name should not be empty!", :error)
-        else
-          Models::Auction.new(@active_user, item, params)
-        end
-      rescue TradeException => e
-        add_message(e.message, :error)
+    success = false
+    begin
+      if (item.owner == @data.user_by_name(session[:name]) or item.owner == @active_user.working_for)
+        minimal = params[:minimal]
+        increment = params[:increment]
+        p = Models::Auction.validate_minimal(minimal)
+        i = Models::Auction.validate_increment(increment)
+        Models::Auction.new(@active_user, item, params)
+        add_message("Successful added an auction", :success)
+        success = true
       end
+    rescue TradeException => e
+      add_message(e.message, :error)
     end
-    add_message("New Auction Added!", :success)
-    redirect "/item/auction"
+    if success or item.state == :active or item.state == :auction
+      haml :list_auctions, :locals => {:auctions => @data.all_auctions}
+    else
+      haml :add_for_auction, :locals => {:item => item, :time_now => Time.now}
+    end
   end
 
+  # get page to create new auction
   get "/item/:item/for_auction" do
-    item = @data.item_by_id params[:item].to_i
     @title = "Add Item For Auction"
-    haml :add_for_auction, :locals => {:item => item}
+    item = @data.item_by_id params[:item].to_i
+
+    haml :add_for_auction, :locals => {:item => item, :time_now => Time.now}
   end
 
+  # show all active auctions
   get "/item/auction" do
     @title = "All auctions"
     haml :list_auctions, :locals => {:auctions => @data.all_auctions}
   end
 
+  # show the chosen auction
   get "/auction/:auction" do
     @title = "Chosen Auction"
     auction = @data.auction_by_id params[:auction].to_i
     haml :show_auction, :locals => { :auction => auction}
   end
 
+  # set a bid to an auction
   post "/auction/:auction/set_bid" do
     @title = "Set Bid"
-    auction = @data.auction_by_id params[:auction].to_i
-    #if @active_user =! auction.user
+    begin
+      auction = @data.auction_by_id params[:auction].to_i
       bid = Models::Item.validate_price(params[:bid])
-      auction.set_bid(bid)
+      @active_user.give_bid(auction, bid)
+      add_message("Bid successful!", :success)
+    rescue TradeException => e
+      add_message(e.message, :error)
+    end
+
+    #if @active_user =! auction.user
+    # todo
     #else add_message("Can not bid for own Item", :error)
     #end
-    redirect back
+    haml :show_auction, :locals => { :auction => auction}
   end
 
   #-------------------------------
@@ -133,7 +153,7 @@ class ItemController < BaseSecureController
         item.name = name
         item.price = p
         item.description = description
-        #PS it's nilsafe ;)
+        #PS it's nil safe ;)
         item.image = ImageHelper.save params[:image], settings.public_folder + "/images/items"
         Event::ItemUpdateEvent.item_changed item
         add_message("Item edited!", :success)

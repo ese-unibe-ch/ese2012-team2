@@ -7,6 +7,7 @@
       #SH Setup standard values
       def initialize (name, interests, admin, image)
         self.credits=100
+        self.credits_in_auction = 0
         self.display_name = name
         if name.nil? or name.empty?
           raise TradeException, "Empty name"

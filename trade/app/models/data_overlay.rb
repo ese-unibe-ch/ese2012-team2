@@ -81,7 +81,7 @@ module Models
 
     #KR returns all active items
     def active_items
-      @items.values.select { |value| value.state == :active }
+      @items.values.select { |value| value.state == :active || value.state == :auction}
     end
 
     def all_items
