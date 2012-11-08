@@ -54,4 +54,17 @@ Owner: #{item.owner}"
                 })
       }
   end
+  def self.send_auction(user, item)
+    Thread.new {
+      Pony.mail({
+                    :to => user.email,
+                    :subject => "Auction Update",
+                    :body => "Dear #{user.name}
+You dont't lead the auction for #{item.name} anymore.
+Go back and raise your bid or resign
+
+"
+                })
+    }
+  end
 end
