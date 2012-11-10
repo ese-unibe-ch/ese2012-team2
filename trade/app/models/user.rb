@@ -2,6 +2,7 @@ require "digest/md5"
 require_relative "password"
 require_relative "trader"
 require_relative "trade_exception"
+
 module Models
   class User  < Models::Trader
 

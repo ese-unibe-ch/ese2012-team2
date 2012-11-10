@@ -56,8 +56,6 @@ class ItemController < BaseSecureController
     redirect back
   end
 
-  #----------------------------------------
-
   # save information to create new auction
   post "/item/:item/show_auction_adding" do
     item = @data.item_by_id params[:item].to_i
@@ -123,7 +121,15 @@ class ItemController < BaseSecureController
     haml :show_auction, :locals => { :auction => auction}
   end
 
-  #-------------------------------
+  # set item back to selling mode
+  get "/auction/go_back_to_selling_mode/:item" do
+    item = @data.item_by_id params[:item].to_i
+    auction = @data.auction_by_id(item.id)
+    @data.delete_auction(auction)
+    item.state = :inactive
+
+    redirect "/user/#{@active_user.name}"
+  end
 
   get "/item/:item" do
     item = @data.item_by_id params[:item].to_i
