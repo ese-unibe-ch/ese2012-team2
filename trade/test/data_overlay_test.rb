@@ -20,7 +20,7 @@ class DataOverlayTest < Test::Unit::TestCase
 
   def test_active_items
     for item in @overlay.active_items
-      assert_equal(:active, item.state)
+      assert(item.state == :active || item.state == :auction)
     end
   end
 

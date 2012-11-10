@@ -1,5 +1,7 @@
 require_relative 'trade_exception'
 require_relative 'bid'
+require_relative 'user'
+require_relative 'trader'
 
 module Models
   class Auction
