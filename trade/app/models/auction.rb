@@ -52,6 +52,24 @@ module Models
       else
         raise TradeException, "To small bid!"
       end
+      invariant
+    end
+
+    def user_raise_bid(user, amount)
+
+      invariant
+    end
+
+    def invariant
+      get_current_ranking
+
+      self.rank_one = self.bid.last
+      self.rank_two = self.bid[-2] unless self.bid.size <2
+
+      if self.rank_one != nil and self.rank_two!=nil
+      #send_email(self.rank_two.bid_placed_by)
+      end
+      get_current_price
     end
 
     # checks for price input
@@ -95,11 +113,6 @@ module Models
       end
     end
 
-    def get_current_winner
-      self.get_current_ranking
-      return bid[0].bid_placed_by
-    end
-
     # sorts the bid array in descending order
     def get_current_ranking
       bid.sort { |a, b| a.max_bid <=> b.max_bid }
@@ -125,9 +138,9 @@ module Models
     end
 
     def send_email(tmp_bid)
-      if tmp_bid.bid_placed_by != bid.last.bid_placed_by
-         EmailSender.send_auction(tmp_bid.bid_placed_by, self.item)
-         puts "Email sent"         #for testing only
+      if tmp_bid.bid_placed_by != self.bid.last.bid_placed_by
+        EmailSender.send_auction(tmp_bid.bid_placed_by, self.item)
+        puts "Email sendt" #for testing only
       end
     end
   end
