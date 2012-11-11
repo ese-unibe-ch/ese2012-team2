@@ -6,7 +6,7 @@ require_relative '../../../trade/app/helpers/email_sender'
 
 module Models
   class Auction
-    attr_accessor :user, :item, :name, :minimal, :increment, :due_date, :description, :image, :bid
+    attr_accessor :user, :item, :current_price, :name, :minimal, :increment, :due_date, :description, :image, :bid, :rank_one, :rank_two
     attr_reader :id
 
     # get the data from data base
