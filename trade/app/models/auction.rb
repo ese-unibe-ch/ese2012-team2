@@ -95,6 +95,11 @@ module Models
       end
     end
 
+    def get_current_winner
+      self.get_current_ranking
+      return bid[0].bid_placed_by
+    end
+
     # sorts the bid array in descending order
     def get_current_ranking
       bid.sort { |a, b| a.max_bid <=> b.max_bid }
