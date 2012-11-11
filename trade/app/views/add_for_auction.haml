@@ -9,6 +9,7 @@
   %form{:action => "/item/#{item.id}/show_auction_adding", :method => "POST", :onsubmit => "return validate_data(this, #{time_now.year},#{time_now.month}, #{time_now.day}, #{time_now.hour});" , :enctype => "multipart/form-data"}
     %img.image_float_right{:src => url("#{item.image_path}"), :width => "150px"}
     %h3 #{item.name}
+    -#%input.normal_input{:type => "text", :name => "name", :value => "#{item.name}"}
     %label Minimal Price*:
     %br
     %input.normal_input{:type => "text", :name => "minimal", :placeholder => "0 $"}

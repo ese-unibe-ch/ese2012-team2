@@ -29,7 +29,9 @@ module Models
       self.minimal = params[:minimal].to_i
       self.increment = params[:increment].to_i
       self.bid = []
-
+      self.current_price = self.minimal
+      self.rank_one=nil
+      self.rank_one=nil
       year = params[:year].to_i
       month = params[:month].to_i
       day = params[:day].to_i
@@ -41,7 +43,7 @@ module Models
 
     # set a bid under conditions
     def set_bid(user, new_bid)
-      if new_bid >= self.get_current_bid + self.increment && new_bid >= self.minimal + self.increment
+      if new_bid >= self.current_price + self.increment && new_bid >= self.minimal
         unless self.bid.empty?
           self.bid.last.bid_placed_by.credits += self.bid.last.max_bid
         end
@@ -115,17 +117,18 @@ module Models
 
     # sorts the bid array in descending order
     def get_current_ranking
-      bid.sort { |a, b| a.max_bid <=> b.max_bid }
-      bid.reverse
+      self.bid.sort { |a, b| a.max_bid <=> b.max_bid }
+      self.bid =self.bid.reverse
     end
 
     # returns the price incremented by highest bid
     def get_current_price
-      second_bid = bid[1].max_bid
-      while current_price < second_bid do
-        current_price+= increment
+      if rank_two!=nil
+          self.current_price= rank_two.max_bid + increment
+      else
+        self.current_price = self.minimal
       end
-      return current_price
+
     end
 
     # returns the current highest bid
