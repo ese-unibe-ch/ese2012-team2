@@ -2,7 +2,7 @@ module Models
   class Bid
     attr_accessor :bid_placed_by, :max_bid
 
-    def initialize
+    def self.initialize
       bid_placed_by = nil
       max_bid = 0
     end
