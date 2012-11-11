@@ -6,6 +6,7 @@ require_relative '../app/models/item'
 require_relative '../app/models/auction'
 require_relative '../app/models/bid'
 require_relative '../app/helpers/image_helper'
+require_relative '../app/helpers/email_sender'
 
 class AuctionTest < Test::Unit::TestCase
   include Models
@@ -43,5 +44,6 @@ class AuctionTest < Test::Unit::TestCase
     @user2.give_bid(@auction, 8)
     bid = Item.validate_price(@params[:bid])
     assert(@auction.get_current_bid == bid)
+    assert(@user2.credits == 92)
   end
 end

@@ -19,4 +19,4 @@ class BidTest < Test::Unit::TestCase
 
   end
 end
-end
+
