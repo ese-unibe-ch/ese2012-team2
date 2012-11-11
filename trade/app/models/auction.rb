@@ -115,6 +115,11 @@ module Models
       end
     end
 
+    #returns the current_winner of the auction
+    def get_current_winner
+      return rank_one.bid_placed_by
+    end
+
     # sorts the bid array in descending order
     def get_current_ranking
       self.bid.sort { |a, b| a.max_bid <=> b.max_bid }
