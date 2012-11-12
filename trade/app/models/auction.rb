@@ -29,9 +29,9 @@ module Models
       self.minimal = params[:minimal].to_i
       self.increment = params[:increment].to_i
       self.bid = []
-      self.current_price = self.minimal
-      self.rank_one=nil
-      self.rank_one=nil
+      self.current_price = 0
+      self.rank_one = nil
+      self.rank_one = nil
       year = params[:year].to_i
       month = params[:month].to_i
       day = params[:day].to_i
@@ -71,11 +71,6 @@ module Models
       else
         raise TradeException, "To small bid!"
       end
-      invariant
-    end
-
-    def user_raise_bid(user, amount)
-
       invariant
     end
 
@@ -138,18 +133,18 @@ module Models
     end
 
     # sorts the bid array in ascending order
+    # sorts the bid array in descending order
     def get_current_ranking
       self.bid = self.bid.sort { |a, b| a.max_bid <=> b.max_bid }
     end
 
     # returns the price incremented by highest bid
     def get_current_price
-      if rank_two!=nil
-          self.current_price= rank_two.max_bid + increment
+      if rank_two != nil
+        self.current_price = rank_two.max_bid + increment
       else
         self.current_price = self.minimal
       end
-
     end
 
     # returns the current highest bid

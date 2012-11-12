@@ -13,6 +13,6 @@
         -user = auction.user
         %a{:href => url("/user/#{user.name}")} #{user.display_name}
       %td
-        #{auction.current_price}
+        #{auction.current_price == 0 ? "---" : auction.current_price}
       %td
         #{auction.due_date.asctime}

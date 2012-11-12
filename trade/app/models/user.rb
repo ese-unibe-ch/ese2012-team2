@@ -17,6 +17,7 @@ module Models
       end
     end
 
+    # set a bid for an auction
     def give_bid(auction, bid)
       if working_for.nil?
         super

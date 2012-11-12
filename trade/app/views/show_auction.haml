@@ -15,10 +15,10 @@
 %h3.no-margin #{auction.increment}$
 %br
 %h3.blue Current Winner:
-%h3.no-margin #{auction.rank_one == nil ? "------------" : auction.get_current_winner}
+%h3.no-margin #{auction.get_current_winner == nil ? "---" : auction.get_current_winner}
 %br
 %h3.blue Current Price:
-%h3.no-margin #{auction.current_price}$
+%h3.no-margin #{auction.current_price == 0 ? "---" : auction.current_price}$
 %br
 %h3.blue Due Date:
 %h3.no-margin #{auction.due_date.asctime}
