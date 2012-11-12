@@ -99,6 +99,9 @@ class ItemController < BaseSecureController
   get "/auction/:auction" do
     @title = "Chosen Auction"
     auction = @data.auction_by_id params[:auction].to_i
+    if auction.item.state != :auction
+      redirect "/item/auction"
+    end
     haml :show_auction, :locals => { :auction => auction}
   end
 
@@ -107,6 +110,9 @@ class ItemController < BaseSecureController
     @title = "Set Bid"
     begin
       auction = @data.auction_by_id params[:auction].to_i
+      if auction.item.state != :auction
+        redirect "/item/auction"
+      end
       bid = Models::Item.validate_price(params[:bid])
       @active_user.give_bid(auction, bid)
       add_message("Bid successful!", :success)

@@ -14,6 +14,14 @@ class BaseSecureController < BaseController
       @active_user.working_for = @data.organization_by_name(session[:working_for])
     end
     @title = ""
+    @data.all_auctions.each {|x| sell_auction(x)}
+  end
+
+  def sell_auction(auction)
+    if auction.time_over?
+      auction.sell_to_current_winner
+      @data.delete_auction(auction)
+    end
   end
 
   def is_active_user? user

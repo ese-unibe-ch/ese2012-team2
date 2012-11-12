@@ -145,6 +145,19 @@ module Models
       end
     end
 
+    def sell_to_current_winner
+      if self.rank_one != nil
+        winner = self.get_current_winner
+        item.take_ownership(winner)
+        item.state = :pending
+        winner.credits_in_auction -= self.get_current_price
+      end
+    end
+
+    def time_over?
+      return self.due_date <= Time.now
+    end
+
     def send_email(tmp_bid)
       if tmp_bid.bid_placed_by != self.bid.last.bid_placed_by
         EmailSender.send_auction(tmp_bid.bid_placed_by, self.item)
