@@ -63,7 +63,7 @@ module Models
     end
 
     def invariant
-      get_current_ranking
+      self.get_current_ranking
 
       self.rank_one = self.bid.last
       self.rank_two = self.bid[-2] unless self.bid.size <2
@@ -71,7 +71,7 @@ module Models
       if self.rank_one != nil and self.rank_two!=nil
       #send_email(self.rank_two.bid_placed_by)
       end
-      get_current_price
+      self.get_current_price
     end
 
     # checks for price input
@@ -120,10 +120,9 @@ module Models
       return rank_one.bid_placed_by
     end
 
-    # sorts the bid array in descending order
+    # sorts the bid array in ascending order
     def get_current_ranking
-      self.bid.sort { |a, b| a.max_bid <=> b.max_bid }
-      #self.bid =self.bid.reverse
+      self.bid = self.bid.sort { |a, b| a.max_bid <=> b.max_bid }
     end
 
     # returns the price incremented by highest bid
@@ -138,7 +137,7 @@ module Models
 
     # returns the current highest bid
     def get_current_bid
-      self.bid.sort { |a, b| a.max_bid <=> b.max_bid }
+      self.get_current_ranking
       if self.bid.empty?
         return 0
       else
