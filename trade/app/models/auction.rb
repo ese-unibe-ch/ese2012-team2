@@ -46,6 +46,7 @@ module Models
       if new_bid >= self.current_price + self.increment && new_bid >= self.minimal
         unless self.bid.empty?
           self.bid.last.bid_placed_by.credits += self.bid.last.max_bid
+          self.bid.last.bid_placed_by.credits_in_auction -= self.bid.last.max_bid
         end
         tmp_bid = bid.last
         self.bid.push Models::Bid.new_bid(user,new_bid)
