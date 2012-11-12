@@ -6,7 +6,7 @@ require_relative '../../../trade/app/helpers/email_sender'
 
 module Models
   class Auction
-    attr_accessor :user, :item, :name, :minimal, :increment, :due_date, :description, :image, :bid
+    attr_accessor :user, :item, :current_price, :name, :minimal, :increment, :due_date, :description, :image, :bid, :rank_one, :rank_two
     attr_reader :id
 
     # get the data from data base
@@ -29,7 +29,9 @@ module Models
       self.minimal = params[:minimal].to_i
       self.increment = params[:increment].to_i
       self.bid = []
-
+      self.current_price = self.minimal
+      self.rank_one=nil
+      self.rank_one=nil
       year = params[:year].to_i
       month = params[:month].to_i
       day = params[:day].to_i
@@ -41,17 +43,38 @@ module Models
 
     # set a bid under conditions
     def set_bid(user, new_bid)
-      if new_bid >= self.get_current_bid + self.increment && new_bid >= self.minimal + self.increment
+      if new_bid >= self.current_price + self.increment && new_bid >= self.minimal
         unless self.bid.empty?
           self.bid.last.bid_placed_by.credits += self.bid.last.max_bid
         end
         tmp_bid = bid.last
-        self.bid.push Models::Bid.new_bid(user,new_bid)
+
+
+        self.bid.push Models::Bid.new_bid(user, new_bid)
+
         send_email(tmp_bid) unless tmp_bid==nil
         self.item.price = new_bid
       else
         raise TradeException, "To small bid!"
       end
+      invariant
+    end
+
+    def user_raise_bid(user, amount)
+
+      invariant
+    end
+
+    def invariant
+      get_current_ranking
+
+      self.rank_one = self.bid.last
+      self.rank_two = self.bid[-2] unless self.bid.size <2
+
+      if self.rank_one != nil and self.rank_two!=nil
+      #send_email(self.rank_two.bid_placed_by)
+      end
+      get_current_price
     end
 
     # checks for price input
@@ -97,17 +120,18 @@ module Models
 
     # sorts the bid array in descending order
     def get_current_ranking
-      bid.sort { |a, b| a.max_bid <=> b.max_bid }
-      bid.reverse
+      self.bid.sort { |a, b| a.max_bid <=> b.max_bid }
+      self.bid =self.bid.reverse
     end
 
     # returns the price incremented by highest bid
     def get_current_price
-      second_bid = bid[1].max_bid
-      while current_price < second_bid do
-        current_price+= increment
+      if rank_two!=nil
+          self.current_price= rank_two.max_bid + increment
+      else
+        self.current_price = self.minimal
       end
-      return current_price
+
     end
 
     # returns the current highest bid
@@ -120,9 +144,9 @@ module Models
     end
 
     def send_email(tmp_bid)
-      if tmp_bid.bid_placed_by != bid.last.bid_placed_by
-         EmailSender.send_auction(tmp_bid.bid_placed_by, self.item)
-         puts "Email sent"         #for testing only
+      if tmp_bid.bid_placed_by != self.bid.last.bid_placed_by
+        EmailSender.send_auction(tmp_bid.bid_placed_by, self.item)
+        puts "Email sendt" #for testing only
       end
     end
   end
