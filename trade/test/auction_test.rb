@@ -93,11 +93,11 @@ class AuctionTest < Test::Unit::TestCase
 
     @user2.give_bid(@auction, 35)
     @user3.give_bid(@auction, 25)
-    assert(@auction.get_current_bid == 25)
-    #assert(@user2.credits == 65)
-    #assert(@user3.credits == 100)
-    #assert(@auction.current_price == 20)
-    #assert_equal(@auction.get_current_winner, @user2)
+    assert(@auction.get_current_bid == 35)
+    assert(@user2.credits == 65)
+    assert(@user3.credits == 100)
+    assert(@auction.current_price == 27)
+    assert_equal(@auction.get_current_winner, @user2)
   end
 
   def test_same_increment_and_minimal
