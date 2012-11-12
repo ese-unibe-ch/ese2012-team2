@@ -2,7 +2,7 @@ require_relative 'trade_exception'
 require_relative 'bid'
 require_relative 'user'
 require_relative 'trader'
-require_relative '../../../trade/app/helpers/email_sender'
+require_relative '../helpers/email_sender'
 
 module Models
   class Auction
@@ -74,6 +74,7 @@ module Models
       invariant
     end
 
+    # helper method
     def invariant
       self.get_current_ranking
 
@@ -84,6 +85,64 @@ module Models
       #send_email(self.rank_two.bid_placed_by)
       end
       self.get_current_price
+    end
+
+    # returns the current_winner of the auction
+    def get_current_winner
+      if self.rank_one == nil
+        return nil
+      else
+        return rank_one.bid_placed_by
+      end
+    end
+
+    # sorts the bid array in ascending order
+    def get_current_ranking
+      self.bid = self.bid.sort { |a, b| a.max_bid <=> b.max_bid }
+    end
+
+    # returns the price incremented by highest bid
+    def get_current_price
+      if rank_two != nil
+        self.current_price = rank_two.max_bid + increment
+      else
+        self.current_price = self.minimal
+      end
+    end
+
+    # returns the current highest bid
+    def get_current_bid
+      self.get_current_ranking
+      if self.bid.empty?
+        return 0
+      else
+        return bid.last.max_bid
+      end
+    end
+
+    # the item get sold by current winner
+    def sell_to_current_winner
+      if self.rank_one != nil
+        winner = self.get_current_winner
+        item.price = self.get_current_price
+        item.take_ownership(winner)
+        item.state = :pending
+        winner.credits_in_auction -= self.get_current_bid
+        winner.credits += (self.get_current_bid - self.get_current_price)
+      end
+    end
+
+    # returns true if auction time is over
+    def time_over?
+      return self.due_date <= Time.now
+    end
+
+    # sends a mail to the bidder
+    def send_email(tmp_bid)
+      if tmp_bid.bid_placed_by != self.bid.last.bid_placed_by
+        EmailSender.send_auction(tmp_bid.bid_placed_by, self.item)
+        puts "Email sent" #for testing only
+      end
     end
 
     # checks for price input
@@ -124,58 +183,6 @@ module Models
         return item.image_path
       else
         return "/images/items/" + self.image
-      end
-    end
-
-    #returns the current_winner of the auction
-    def get_current_winner
-      return rank_one.bid_placed_by
-    end
-
-    # sorts the bid array in ascending order
-    # sorts the bid array in descending order
-    def get_current_ranking
-      self.bid = self.bid.sort { |a, b| a.max_bid <=> b.max_bid }
-    end
-
-    # returns the price incremented by highest bid
-    def get_current_price
-      if rank_two != nil
-        self.current_price = rank_two.max_bid + increment
-      else
-        self.current_price = self.minimal
-      end
-    end
-
-    # returns the current highest bid
-    def get_current_bid
-      self.get_current_ranking
-      if self.bid.empty?
-        return 0
-      else
-        return bid.last.max_bid
-      end
-    end
-
-    def sell_to_current_winner
-      if self.rank_one != nil
-        winner = self.get_current_winner
-        item.price = self.get_current_price
-        item.take_ownership(winner)
-        item.state = :pending
-        winner.credits_in_auction -= self.get_current_bid
-        winner.credits += (self.get_current_bid - self.get_current_price)
-      end
-    end
-
-    def time_over?
-      return self.due_date <= Time.now
-    end
-
-    def send_email(tmp_bid)
-      if tmp_bid.bid_placed_by != self.bid.last.bid_placed_by
-        EmailSender.send_auction(tmp_bid.bid_placed_by, self.item)
-        puts "Email sent" #for testing only
       end
     end
   end
