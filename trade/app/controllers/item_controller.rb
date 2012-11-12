@@ -110,7 +110,7 @@ class ItemController < BaseSecureController
     @title = "Set Bid"
     begin
       auction = @data.auction_by_id params[:auction].to_i
-      if auction.item.state != :auction
+      if auction == nil
         redirect "/item/auction"
       end
       bid = Models::Item.validate_price(params[:bid])

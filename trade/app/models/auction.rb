@@ -50,7 +50,6 @@ module Models
         tmp_bid = bid.last
         self.bid.push Models::Bid.new_bid(user,new_bid)
         send_email(tmp_bid) unless tmp_bid==nil
-        self.item.price = new_bid
       else
         raise TradeException, "To small bid!"
       end
@@ -123,7 +122,7 @@ module Models
     # sorts the bid array in descending order
     def get_current_ranking
       self.bid.sort { |a, b| a.max_bid <=> b.max_bid }
-      self.bid =self.bid.reverse
+      #self.bid =self.bid.reverse
     end
 
     # returns the price incremented by highest bid
@@ -148,9 +147,11 @@ module Models
     def sell_to_current_winner
       if self.rank_one != nil
         winner = self.get_current_winner
+        item.price = self.get_current_price
         item.take_ownership(winner)
         item.state = :pending
-        winner.credits_in_auction -= self.get_current_price
+        winner.credits_in_auction -= self.get_current_bid
+        winner.credits += (self.get_current_bid - self.get_current_price)
       end
     end
 
