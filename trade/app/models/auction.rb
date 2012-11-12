@@ -73,7 +73,9 @@ module Models
         tmp_bid = bid.last
         unless updated_own_bid
           self.bid.push Models::Bid.new_bid(user,new_bid)
-          send_email(tmp_bid) unless tmp_bid==nil and tmp_bid > new_bid
+          unless tmp_bid == nil
+            send_email(tmp_bid) if tmp_bid.value < new_bid
+          end
         end
       else
         raise TradeException, "To small bid!"
