@@ -3,8 +3,8 @@ module Models
     attr_accessor :bid_placed_by, :max_bid
 
     def self.initialize
-      bid_placed_by = nil
-      max_bid = 0
+      self.bid_placed_by = nil
+      self.max_bid = 0
     end
 
     # saves the new bid for the auction
@@ -15,14 +15,9 @@ module Models
       return bid
     end
 
-  def rise_bid(increment)
-    max_bid = max_bid + increment unless increment <= 0
-
     # raises the bid by the increment
-    def raise_bid(increment)
+    def rise_bid(increment)
       max_bid = max_bid + increment unless increment <= 0
     end
-
-  end
   end
 end

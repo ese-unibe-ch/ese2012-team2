@@ -146,7 +146,7 @@ module Models
     def send_email(tmp_bid)
       if tmp_bid.bid_placed_by != self.bid.last.bid_placed_by
         EmailSender.send_auction(tmp_bid.bid_placed_by, self.item)
-        puts "Email sendt" #for testing only
+        puts "Email sent" #for testing only
       end
     end
   end
