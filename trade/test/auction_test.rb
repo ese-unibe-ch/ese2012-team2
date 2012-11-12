@@ -1,6 +1,8 @@
 require 'test/unit'
 require 'rubygems'
 require 'require_relative'
+require 'bundler'
+Bundler.require
 require_relative '../app/models/user'
 require_relative '../app/models/item'
 require_relative '../app/models/auction'
