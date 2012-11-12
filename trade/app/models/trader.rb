@@ -31,8 +31,6 @@ module Models
         raise TradeException, "Out of time"
       end
       auction.set_bid(self, bid)
-      self.credits -= bid
-      self.credits_in_auction += bid
     end
 
     def items

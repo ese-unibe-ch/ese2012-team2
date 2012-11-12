@@ -43,14 +43,31 @@ module Models
 
     # set a bid under conditions
     def set_bid(user, new_bid)
+      updated_own_bid = false
       if new_bid >= self.current_price + self.increment && new_bid >= self.minimal
-        unless self.bid.empty?
-          self.bid.last.bid_placed_by.credits += self.bid.last.max_bid
-          self.bid.last.bid_placed_by.credits_in_auction -= self.bid.last.max_bid
-        end
+          unless self.bid.empty?
+            previous_winner = self.bid.last.bid_placed_by
+            if self.bid.last.max_bid < new_bid
+              previous_winner.credits += self.bid.last.max_bid
+              previous_winner.credits_in_auction -= self.bid.last.max_bid
+              user.credits -= new_bid
+              user.credits_in_auction += new_bid
+            end
+            if previous_winner == user and new_bid <= bid.last.max_bid
+              raise TradeException, "You've already given a higher bid!"
+            elsif previous_winner == user
+              bid.last.max_bid = new_bid
+              updated_own_bid = true
+            end
+          else
+            user.credits -= new_bid
+            user.credits_in_auction += new_bid
+          end
         tmp_bid = bid.last
-        self.bid.push Models::Bid.new_bid(user,new_bid)
-        send_email(tmp_bid) unless tmp_bid==nil
+        unless updated_own_bid
+          self.bid.push Models::Bid.new_bid(user,new_bid)
+          send_email(tmp_bid) unless tmp_bid==nil
+        end
       else
         raise TradeException, "To small bid!"
       end
