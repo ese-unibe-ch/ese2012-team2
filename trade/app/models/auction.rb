@@ -41,24 +41,31 @@ module Models
       self.overlay.add_auction(self)
     end
 
+    #Checks if an user updates his last bid or if he bids against the current_winner
+    def update_own_bid?(user, new_bid)
+      updated_own_bid = false
+      previous_winner = self.bid.last.owner
+      if self.bid.last.value < new_bid
+        previous_winner.credits += self.bid.last.value
+        previous_winner.credits_in_auction -= self.bid.last.value
+        user.credits -= new_bid
+        user.credits_in_auction += new_bid
+      end
+      if previous_winner == user and new_bid <= bid.last.value
+        raise TradeException, "You've already given a higher bid!"
+      elsif previous_winner == user
+        bid.last.value = new_bid
+        updated_own_bid = true
+      end
+      return updated_own_bid
+    end
+
     # set a bid under conditions
     def set_bid(user, new_bid)
       updated_own_bid = false
       if new_bid >= self.current_price + self.increment && new_bid >= self.minimal
           unless self.bid.empty?
-            previous_winner = self.bid.last.bid_placed_by
-            if self.bid.last.max_bid < new_bid
-              previous_winner.credits += self.bid.last.max_bid
-              previous_winner.credits_in_auction -= self.bid.last.max_bid
-              user.credits -= new_bid
-              user.credits_in_auction += new_bid
-            end
-            if previous_winner == user and new_bid <= bid.last.max_bid
-              raise TradeException, "You've already given a higher bid!"
-            elsif previous_winner == user
-              bid.last.max_bid = new_bid
-              updated_own_bid = true
-            end
+            updated_own_bid = self.update_own_bid?(user, new_bid)
           else
             user.credits -= new_bid
             user.credits_in_auction += new_bid
@@ -134,18 +141,18 @@ module Models
 
     #returns the current_winner of the auction
     def get_current_winner
-      return rank_one.bid_placed_by
+      return rank_one.owner
     end
 
     # sorts the bid array in ascending order
     def get_current_ranking
-      self.bid = self.bid.sort { |a, b| a.max_bid <=> b.max_bid }
+      self.bid = self.bid.sort { |a, b| a.value <=> b.value }
     end
 
     # returns the price incremented by highest bid
     def get_current_price
       if rank_two!=nil
-          self.current_price= rank_two.max_bid + increment
+          self.current_price= (rank_two.value + increment > rank_one.value ? rank_one.value : rank_two.value + increment)
       else
         self.current_price = self.minimal
       end
@@ -158,7 +165,7 @@ module Models
       if self.bid.empty?
         return 0
       else
-        return bid.last.max_bid
+        return bid.last.value
       end
     end
 
@@ -178,8 +185,8 @@ module Models
     end
 
     def send_email(tmp_bid)
-      if tmp_bid.bid_placed_by != self.bid.last.bid_placed_by
-        EmailSender.send_auction(tmp_bid.bid_placed_by, self.item)
+      if tmp_bid.owner != self.bid.last.owner
+        EmailSender.send_auction(tmp_bid.owner, self.item)
         puts "Email sent" #for testing only
       end
     end
