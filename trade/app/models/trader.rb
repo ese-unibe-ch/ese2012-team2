@@ -23,6 +23,7 @@ module Models
       end
     end
 
+    # checks whether the bid passes the conditions
     def give_bid(auction, bid)
       if self.credits < bid
         raise TradeException, "Not enough money!"
@@ -30,6 +31,7 @@ module Models
       if Time.now > auction.due_date
         raise TradeException, "Out of time"
       end
+
       auction.set_bid(self, bid)
       self.credits -= bid
       self.credits_in_auction += bid

@@ -15,7 +15,6 @@ class AuctionTest < Test::Unit::TestCase
 
   def setup
     @params = {}
-    @params[:bid] = 8
     @params[:increment] = "2"
     @params[:minimal] = "5"
     @params[:description] = "test it"
@@ -25,8 +24,9 @@ class AuctionTest < Test::Unit::TestCase
     @params[:day] = "21"
     @params[:hour] = "12"
 
-    @user1 = User.new("him", "Him", "qwertzuiop", "user1@mail.ch", "none1")
+    @user1 = User.new("me", "Me", "qwertzuiop", "user1@mail.ch", "none1")
     @user2 = User.new("you", "You", "qwertzuiop", "user2@mail.ch", "none2")
+    @user3 = User.new("him", "Him", "qwertzuiop", "user3@mail.ch", "none3")
     @item = Item.new("Nothing", 20, @user1, "none")
     @auction = Auction.new(@user1, @item, @params)
   end
@@ -35,6 +35,7 @@ class AuctionTest < Test::Unit::TestCase
     assert(DataOverlay.instance.include?(@item.id))
     assert(@item.id == @auction.id)
     assert(@item.state == :auction)
+    assert_equal(@auction.time_over?, false)
   end
 
   def test_delete_auction
@@ -42,10 +43,97 @@ class AuctionTest < Test::Unit::TestCase
     assert_equal(DataOverlay.instance.include?(@item.id), false)
   end
 
+  def test_first_bid
+    @user2.give_bid(@auction, 5)
+    assert(@auction.get_current_bid == 5)
+    assert(@user2.credits == 95)
+    assert_equal(@auction.get_current_winner, @user2)
+  end
+
   def test_new_bid
-    @user2.give_bid(@auction, 8)
-    bid = Item.validate_price(@params[:bid])
-    assert(@auction.get_current_bid == bid)
-    assert(@user2.credits == 92)
+    @user2.give_bid(@auction, 15)
+    assert(@auction.get_current_bid == 15)
+    assert(@user2.credits == 85)
+    assert(@auction.current_price == 5)
+    assert_equal(@auction.get_current_winner, @user2)
+  end
+
+  def test_first_bid_too_small
+    assert_raise(TradeException){@user2.give_bid(@auction, 4)}
+    assert(@auction.get_current_bid == 0)
+    assert(@user2.credits == 100)
+    assert(@auction.current_price == 0)
+    assert_equal(@auction.get_current_winner, nil)
+  end
+
+  def test_not_enough_money
+    assert_raise(TradeException){@user2.give_bid(@auction, 101)}
+    assert(@auction.get_current_bid == 0)
+    assert(@user2.credits == 100)
+    assert(@auction.current_price == 0)
+    assert_equal(@auction.get_current_winner, nil)
+  end
+
+  def test_several_bids
+    @user2.give_bid(@auction, 15)
+    @user3.give_bid(@auction, 16)
+    assert(@auction.get_current_bid == 16)
+    assert(@user2.credits == 100)
+    assert(@user3.credits == 84)
+    assert(@auction.current_price == 17)
+    assert_equal(@auction.get_current_winner, @user3)
+
+    assert_raise(TradeException){@user2.give_bid(@auction, 16)}
+    @user2.give_bid(@auction, 19)
+    assert(@auction.get_current_bid == 19)
+    assert(@user2.credits == 81)
+    assert(@user3.credits == 100)
+    assert(@auction.current_price == 18)
+    assert_equal(@auction.get_current_winner, @user2)
+
+    @user2.give_bid(@auction, 35)
+    @user3.give_bid(@auction, 25)
+    assert(@auction.get_current_bid == 25)
+    #assert(@user2.credits == 65)
+    #assert(@user3.credits == 100)
+    #assert(@auction.current_price == 20)
+    #assert_equal(@auction.get_current_winner, @user2)
+  end
+
+  def test_same_increment_and_minimal
+
+  end
+
+  def test_sell_to_current_winner
+
+  end
+
+  def test_send_mail
+
+  end
+
+  def test_validate_price_input
+    @params[:minimal] = "test"
+    assert_raise(TradeException){Auction.validate_minimal(@params[:minimal])}
+
+    @params[:minimal] = -2
+    assert_raise(TradeException){Auction.validate_minimal(@params[:minimal])}
+  end
+
+  def test_validate_increment_input
+    @params[:increment] = "nothing"
+    assert_raise(TradeException){Auction.validate_increment(@params[:increment])}
+
+    @params[:increment] = -2
+    assert_raise(TradeException){Auction.validate_increment(@params[:increment])}
+
+    @params[:increment] = 0
+    assert_raise(TradeException){Auction.validate_increment(@params[:increment])}
+  end
+
+  def test_image_path
+    assert_equal("/images/items/default.png", @auction.image_path)
+    @auction.image = "test.png"
+    assert_equal("/images/items/test.png", @auction.image_path)
   end
 end

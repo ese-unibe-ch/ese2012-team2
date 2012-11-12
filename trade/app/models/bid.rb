@@ -14,10 +14,5 @@ module Models
       bid.max_bid = max_bid
       return bid
     end
-
-    # raises the bid by the increment
-    def rise_bid(increment)
-      max_bid = max_bid + increment unless increment <= 0
-    end
   end
 end
