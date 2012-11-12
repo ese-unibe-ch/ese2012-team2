@@ -2,7 +2,7 @@ require_relative 'trade_exception'
 require_relative 'bid'
 require_relative 'user'
 require_relative 'trader'
-require_relative '../helpers/email_sender'
+require_relative '../../../trade/app/helpers/email_sender'
 
 module Models
   class Auction
@@ -29,9 +29,9 @@ module Models
       self.minimal = params[:minimal].to_i
       self.increment = params[:increment].to_i
       self.bid = []
-      self.current_price = 0
-      self.rank_one = nil
-      self.rank_one = nil
+      self.current_price = self.minimal
+      self.rank_one=nil
+      self.rank_one=nil
       year = params[:year].to_i
       month = params[:month].to_i
       day = params[:day].to_i
@@ -41,24 +41,31 @@ module Models
       self.overlay.add_auction(self)
     end
 
+    #Checks if an user updates his last bid or if he bids against the current_winner
+    def update_own_bid?(user, new_bid)
+      updated_own_bid = false
+      previous_winner = self.bid.last.owner
+      if self.bid.last.value < new_bid
+        previous_winner.credits += self.bid.last.value
+        previous_winner.credits_in_auction -= self.bid.last.value
+        user.credits -= new_bid
+        user.credits_in_auction += new_bid
+      end
+      if previous_winner == user and new_bid <= bid.last.value
+        raise TradeException, "You've already given a higher bid!"
+      elsif previous_winner == user
+        bid.last.value = new_bid
+        updated_own_bid = true
+      end
+      return updated_own_bid
+    end
+
     # set a bid under conditions
     def set_bid(user, new_bid)
       updated_own_bid = false
       if new_bid >= self.current_price + self.increment && new_bid >= self.minimal
           unless self.bid.empty?
-            previous_winner = self.bid.last.bid_placed_by
-            if self.bid.last.max_bid < new_bid
-              previous_winner.credits += self.bid.last.max_bid
-              previous_winner.credits_in_auction -= self.bid.last.max_bid
-              user.credits -= new_bid
-              user.credits_in_auction += new_bid
-            end
-            if previous_winner == user and new_bid <= bid.last.max_bid
-              raise TradeException, "You've already given a higher bid!"
-            elsif previous_winner == user
-              bid.last.max_bid = new_bid
-              updated_own_bid = true
-            end
+            updated_own_bid = self.update_own_bid?(user, new_bid)
           else
             user.credits -= new_bid
             user.credits_in_auction += new_bid
@@ -85,64 +92,6 @@ module Models
       #send_email(self.rank_two.bid_placed_by)
       end
       self.get_current_price
-    end
-
-    # returns the current_winner of the auction
-    def get_current_winner
-      if self.rank_one == nil
-        return nil
-      else
-        return rank_one.bid_placed_by
-      end
-    end
-
-    # sorts the bid array in ascending order
-    def get_current_ranking
-      self.bid = self.bid.sort { |a, b| a.max_bid <=> b.max_bid }
-    end
-
-    # returns the price incremented by highest bid
-    def get_current_price
-      if rank_two != nil
-        self.current_price = rank_two.max_bid + increment
-      else
-        self.current_price = self.minimal
-      end
-    end
-
-    # returns the current highest bid
-    def get_current_bid
-      self.get_current_ranking
-      if self.bid.empty?
-        return 0
-      else
-        return bid.last.max_bid
-      end
-    end
-
-    # the item get sold by current winner
-    def sell_to_current_winner
-      if self.rank_one != nil
-        winner = self.get_current_winner
-        item.price = self.get_current_price
-        item.take_ownership(winner)
-        item.state = :pending
-        winner.credits_in_auction -= self.get_current_bid
-        winner.credits += (self.get_current_bid - self.get_current_price)
-      end
-    end
-
-    # returns true if auction time is over
-    def time_over?
-      return self.due_date <= Time.now
-    end
-
-    # sends a mail to the bidder
-    def send_email(tmp_bid)
-      if tmp_bid.bid_placed_by != self.bid.last.bid_placed_by
-        EmailSender.send_auction(tmp_bid.bid_placed_by, self.item)
-        puts "Email sent" #for testing only
-      end
     end
 
     # checks for price input
@@ -183,6 +132,62 @@ module Models
         return item.image_path
       else
         return "/images/items/" + self.image
+      end
+    end
+
+    # returns the current_winner of the auction
+    def get_current_winner
+      if self.rank_one == nil
+        return nil
+      else
+        return rank_one.bid_placed_by
+      end
+    end
+
+    # sorts the bid array in ascending order
+    def get_current_ranking
+      self.bid = self.bid.sort { |a, b| a.value <=> b.value }
+    end
+
+    # returns the price incremented by highest bid
+    def get_current_price
+      if rank_two!=nil
+          self.current_price= (rank_two.value + increment > rank_one.value ? rank_one.value : rank_two.value + increment)
+      else
+        self.current_price = self.minimal
+      end
+
+    end
+
+    # returns the current highest bid
+    def get_current_bid
+      self.get_current_ranking
+      if self.bid.empty?
+        return 0
+      else
+        return bid.last.value
+      end
+    end
+
+    def sell_to_current_winner
+      if self.rank_one != nil
+        winner = self.get_current_winner
+        item.price = self.get_current_price
+        item.take_ownership(winner)
+        item.state = :pending
+        winner.credits_in_auction -= self.get_current_bid
+        winner.credits += (self.get_current_bid - self.get_current_price)
+      end
+    end
+
+    def time_over?
+      return self.due_date <= Time.now
+    end
+
+    def send_email(tmp_bid)
+      if tmp_bid.owner != self.bid.last.owner
+        EmailSender.send_auction(tmp_bid.owner, self.item)
+        puts "Email sent" #for testing only
       end
     end
   end
