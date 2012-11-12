@@ -140,7 +140,7 @@ module Models
       if self.rank_one == nil
         return nil
       else
-        return rank_one.bid_placed_by
+        return rank_one.owner
       end
     end
 
