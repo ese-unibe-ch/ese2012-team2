@@ -138,6 +138,7 @@ module Models
 
     # returns the current highest bid
     def get_current_bid
+      self.bid.sort { |a, b| a.max_bid <=> b.max_bid }
       if self.bid.empty?
         return 0
       else
