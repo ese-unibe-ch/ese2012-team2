@@ -23,14 +23,18 @@ module Models
       end
     end
 
-    # checks whether the bid passes the conditions
+    # checks whether the bid passes the conditions and if the same user gives the next bid
     def give_bid(auction, bid)
       if Time.now > auction.due_date
         raise TradeException, "Out of time"
-      elsif auction.user != self
-        auction.set_bid(self, bid)
+      elsif auction.bid.last != nil
+        if auction.bid.last.owner != self
+          auction.set_bid(self, bid)
+        else
+          auction.update_bid(self,bid)
+        end
       else
-        raise TradeException, "You cannot bid for your own item!"
+        auction.set_bid(self,bid)
       end
     end
 

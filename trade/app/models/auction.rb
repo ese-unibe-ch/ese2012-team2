@@ -42,50 +42,56 @@ module Models
       self.overlay.add_auction(self)
     end
 
-    #Checks if an user updates his last bid or if he bids against the current_winner
-    def update_own_bid?(user, new_bid)
-      updated_own_bid = false
+    #Updates a given bid of the same user
+    def update_bid(user, new_bid)
+      available_credits_for_update = (self.bid.last.value + user.credits)
+      if new_bid > available_credits_for_update
+        raise TradeException, "Not enough money!"
+      elsif new_bid <= self.bid.last.value
+        raise TradeException, "You've already given a higher bid!"
+      else
+        additional_credit_cost = (new_bid - self.bid.last.value)
+        user.credits -= additional_credit_cost
+        user.credits_in_auction += additional_credit_cost
+        self.bid.last.value = new_bid
+        self.invariant
+      end
+    end
+
+    #Checks if the given bid is the highest
+    def check_bids(user, new_bid)
       previous_winner = self.bid.last.owner
-      if self.bid.last.value == new_bid
+      if user.credits < new_bid
+        raise TradeException, "Not enough money!" unless user.credits >= new_bid
+      elsif self.bid.last.value == new_bid
         raise TradeException, "That's already the highest bid!"
       elsif self.bid.last.value < new_bid
         previous_winner.credits += self.bid.last.value
         previous_winner.credits_in_auction -= self.bid.last.value
-        raise TradeException, "Not enough money!" unless user.credits >= new_bid
         user.credits -= new_bid
         user.credits_in_auction += new_bid
       end
-      if previous_winner == user and new_bid <= bid.last.value
-        raise TradeException, "You've already given a higher bid!"
-      elsif previous_winner == user
-        bid.last.value = new_bid
-        updated_own_bid = true
-      end
-      return updated_own_bid
     end
 
     # set a bid under conditions
     def set_bid(user, new_bid)
-      updated_own_bid = false
       if new_bid >= self.current_price + self.increment && new_bid >= self.minimal
           unless self.bid.empty?
-            updated_own_bid = self.update_own_bid?(user, new_bid)
+            check_bids(user,new_bid)
           else
             raise TradeException, "Not enough money!" unless user.credits >= new_bid
             user.credits -= new_bid
             user.credits_in_auction += new_bid
           end
         tmp_bid = bid.last
-        unless updated_own_bid
-          self.bid.push Models::Bid.new_bid(user,new_bid)
-          unless tmp_bid == nil
-            send_email(tmp_bid) if tmp_bid.value < new_bid
-          end
+        self.bid.push Models::Bid.new_bid(user,new_bid)
+        unless tmp_bid == nil
+          send_email(tmp_bid) if tmp_bid.value < new_bid
         end
       else
         raise TradeException, "Too small bid!"
       end
-      invariant
+      self.invariant
     end
 
     # helper method
