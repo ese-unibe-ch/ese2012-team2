@@ -59,7 +59,7 @@ class AuctionTest < Test::Unit::TestCase
   end
 
   def test_first_bid_too_small
-    assert_raise(TradeException){@user2.give_bid(@auction, 4)}
+    assert_raise(TradeException, "Too small bid!"){@user2.give_bid(@auction, 4)}
     assert(@auction.get_current_bid == 0)
     assert(@user2.credits == 100)
     assert(@auction.current_price == 0)
@@ -67,7 +67,7 @@ class AuctionTest < Test::Unit::TestCase
   end
 
   def test_not_enough_money
-    assert_raise(TradeException){@user2.give_bid(@auction, 101)}
+    assert_raise(TradeException, "Not enough money!"){@user2.give_bid(@auction, 101)}
     assert(@auction.get_current_bid == 0)
     assert(@user2.credits == 100)
     assert(@auction.current_price == 0)
@@ -83,7 +83,7 @@ class AuctionTest < Test::Unit::TestCase
     assert(@auction.current_price == 16)
     assert_equal(@auction.get_current_winner, @user3)
 
-    assert_raise(TradeException, "To small bid!"){@user2.give_bid(@auction, 16)}
+    assert_raise(TradeException, "Too small bid!"){@user2.give_bid(@auction, 16)}
     @user2.give_bid(@auction, 19)
     assert(@auction.get_current_bid == 19)
     assert(@user2.credits == 81)
@@ -120,21 +120,21 @@ class AuctionTest < Test::Unit::TestCase
 
   def test_validate_price_input
     @params[:minimal] = "test"
-    assert_raise(TradeException){Auction.validate_minimal(@params[:minimal])}
+    assert_raise(TradeException, "Minimal price must be a number!"){Auction.validate_minimal(@params[:minimal])}
 
     @params[:minimal] = -2
-    assert_raise(TradeException){Auction.validate_minimal(@params[:minimal])}
+    assert_raise(TradeException, "Minimal price must be positive!"){Auction.validate_minimal(@params[:minimal])}
   end
 
   def test_validate_increment_input
     @params[:increment] = "nothing"
-    assert_raise(TradeException){Auction.validate_increment(@params[:increment])}
+    assert_raise(TradeException, "Increment must be a number!"){Auction.validate_increment(@params[:increment])}
 
     @params[:increment] = -2
-    assert_raise(TradeException){Auction.validate_increment(@params[:increment])}
+    assert_raise(TradeException, "Increment must be positive!"){Auction.validate_increment(@params[:increment])}
 
     @params[:increment] = 0
-    assert_raise(TradeException){Auction.validate_increment(@params[:increment])}
+    assert_raise(TradeException, "increment must be > 0"){Auction.validate_increment(@params[:increment])}
   end
 
   def test_image_path

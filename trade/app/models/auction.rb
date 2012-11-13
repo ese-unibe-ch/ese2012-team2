@@ -83,7 +83,7 @@ module Models
           end
         end
       else
-        raise TradeException, "To small bid!"
+        raise TradeException, "Too small bid!"
       end
       invariant
     end
@@ -100,14 +100,14 @@ module Models
     def self.validate_minimal price
       if price.is_a?(String)
         unless price.match('^[0-9]+$')
-          raise TradeException, "Minimal price must be number"
+          raise TradeException, "Minimal price must be a number!"
         end
         p = price.to_i
       else
         p = price
       end
       unless p >= 0
-        raise TradeException, "Minimal must be positive"
+        raise TradeException, "Minimal price must be positive!"
       end
       p
     end
@@ -116,14 +116,14 @@ module Models
     def self.validate_increment amount
       if amount.is_a?(String)
         unless amount.match('^[0-9]+$')
-          raise TradeException, "Increment must be number"
+          raise TradeException, "Increment must be a number!"
         end
         p = amount.to_i
       else
         p = amount
       end
       unless p > 0
-        raise TradeException, "Increment must be positive"
+        raise TradeException, "Increment must be positive!"
       end
       p
     end
