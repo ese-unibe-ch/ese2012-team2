@@ -51,6 +51,7 @@ module Models
       elsif self.bid.last.value < new_bid
         previous_winner.credits += self.bid.last.value
         previous_winner.credits_in_auction -= self.bid.last.value
+        raise TradeException, "Not enough money!" unless user.credits >= new_bid
         user.credits -= new_bid
         user.credits_in_auction += new_bid
       end
@@ -70,6 +71,7 @@ module Models
           unless self.bid.empty?
             updated_own_bid = self.update_own_bid?(user, new_bid)
           else
+            raise TradeException, "Not enough money!" unless user.credits >= new_bid
             user.credits -= new_bid
             user.credits_in_auction += new_bid
           end
