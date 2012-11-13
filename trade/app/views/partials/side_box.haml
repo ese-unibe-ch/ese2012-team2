@@ -9,7 +9,9 @@
   %h1 Logged in as: #{@active_user.display_name}
   %img{:src => url("#{@active_user.image_path}"), :alt=>"User Image", :width => "150"}
   %br
-  Your credits: #{@active_user.credits}
+  Credits on account: #{@active_user.credits}
+  %br
+  Credits in auctions: #{@active_user.credits_in_auction}
   %ul
     %li
       %a{:href=> url("/user/#{@active_user.name}")} View profile
