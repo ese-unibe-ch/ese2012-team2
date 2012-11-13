@@ -1,3 +1,4 @@
+# This class is responsible to create a new bid
 module Models
   class Bid
     attr_accessor :owner, :value

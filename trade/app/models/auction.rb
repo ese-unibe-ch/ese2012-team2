@@ -4,6 +4,7 @@ require_relative 'user'
 require_relative 'trader'
 require_relative '../helpers/email_sender'
 
+# This class is responsible for all changes for the object auction
 module Models
   class Auction
     attr_accessor :user, :item, :current_price, :name, :minimal, :increment, :due_date, :description, :image, :bid, :rank_one, :rank_two

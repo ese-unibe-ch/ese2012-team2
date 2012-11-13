@@ -80,10 +80,10 @@ class AuctionTest < Test::Unit::TestCase
     assert(@auction.get_current_bid == 16)
     assert(@user2.credits == 100)
     assert(@user3.credits == 84)
-    assert(@auction.current_price == 17)
+    assert(@auction.current_price == 16)
     assert_equal(@auction.get_current_winner, @user3)
 
-    assert_raise(TradeException){@user2.give_bid(@auction, 16)}
+    assert_raise(TradeException, "To small bid!"){@user2.give_bid(@auction, 16)}
     @user2.give_bid(@auction, 19)
     assert(@auction.get_current_bid == 19)
     assert(@user2.credits == 81)
@@ -98,13 +98,8 @@ class AuctionTest < Test::Unit::TestCase
     assert(@user3.credits == 100)
     assert(@auction.current_price == 27)
     assert_equal(@auction.get_current_winner, @user2)
-    assert_raise(TradeException){@user2.give_bid(@auction, 30)}
-  end
-
-  def test_same_increment_and_minimal
-    @params[:minimal] = 10
-    @params[:increment] = 10
-
+    assert_raise(TradeException, "You've already given a higher bid!"){@user2.give_bid(@auction, 30)}
+    assert_raise(TradeException, "That's already the highest bid!"){@user3.give_bid(@auction, 35)}
   end
 
   def test_time_over_no_bidder
