@@ -28,7 +28,10 @@ function changeDate(i, year){
                 e.add(s,null);}
             catch(ex){
                 e.add(s);}}}
-    y = year-1;
+    var e = document.getElementById('year');
+    while(e.length>0)
+        e.remove(e.length-1);
+    var y = year-1;
     while (y++<year + 10){
         var s = document.createElement('option');
         var e = document.getElementById('year');
@@ -38,7 +41,10 @@ function changeDate(i, year){
             e.add(s,null);}
         catch(ex){
             e.add(s);}}
-    h = 0
+    var e = document.getElementById('hour');
+    while(e.length>0)
+        e.remove(e.length-1);
+    var h = 0;
     while (h ++< 24){
         var s = document.createElement('option');
         var e = document.getElementById('hour');
