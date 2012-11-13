@@ -68,7 +68,7 @@ class ItemController < BaseSecureController
         p = Models::Auction.validate_minimal(minimal)
         i = Models::Auction.validate_increment(increment)
         Models::Auction.new(@active_user, item, params)
-        add_message("Successful added an auction", :success)
+        add_message("Successfully added an auction", :success)
         success = true
       end
     rescue TradeException => e
@@ -85,8 +85,9 @@ class ItemController < BaseSecureController
   get "/item/:item/for_auction" do
     @title = "Add Item For Auction"
     item = @data.item_by_id params[:item].to_i
+    auction = @data.auction_by_id params[:item].to_i
 
-    haml :add_for_auction, :locals => {:item => item, :time_now => Time.now}
+    haml :add_for_auction, :locals => {:item => item, auction => auction, :time_now => Time.now}
   end
 
   # show all active auctions

@@ -12,15 +12,15 @@
     -#%input.normal_input{:type => "text", :name => "name", :value => "#{item.name}"}
     %label Minimal Price*:
     %br
-    %input.normal_input{:type => "text", :name => "minimal", :placeholder => "0 $"}
+    %input.normal_input{:type => "text", :name => "minimal", :placeholder => "0 $", :value => (auction.minimal unless auction == nil)}
     %br
     %label Increment Step*:
     %br
-    %input.normal_input{:type => "text", :name => "increment", :placeholder => "0 $"}
+    %input.normal_input{:type => "text", :name => "increment", :placeholder => "0 $", :value => (auction.increment unless auction == nil)}
     %br
     %label Auction End Time*:
     %br
-    %select{:name=>"month", :onchange => "changeDate(this.options[selectedIndex].value, #{time_now.year})"}
+    %select{:name=>"month", :onchange => "changeDate(this.options[selectedIndex].value, #{time_now.year})", :value => (auction.due_date.month unless auction == nil)}
       %option{:value=>"na"} Month
       %option{:value=>"1"} January
       %option{:value=>"2"} February
