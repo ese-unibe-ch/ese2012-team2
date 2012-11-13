@@ -1,8 +1,8 @@
 #Code Review#
 
 
-Design
-======
+#Design
+
 - no violation of MVC, code nicely separated in model, view and controller
 - controllers don’t do heavy lifting, which is done by models -> nice!
 - nice inheritance chain for controllers which improves code reuse
