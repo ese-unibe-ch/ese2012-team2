@@ -181,6 +181,8 @@ module Models
         item.state = :pending
         winner.credits_in_auction -= self.get_current_bid
         winner.credits += (self.get_current_bid - self.get_current_price)
+      else
+        item.state = :inactive
       end
     end
 
