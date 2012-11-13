@@ -180,6 +180,7 @@ module Models
         item.state = :pending
         winner.credits_in_auction -= self.get_current_bid
         winner.credits += (self.get_current_bid - self.get_current_price)
+        EmailSender.win_auction(winner, item)
       else
         item.state = :inactive
       end
@@ -192,10 +193,8 @@ module Models
 
     # send a mail to if another user gave a higher bid
     def send_email(tmp_bid)
-      if tmp_bid.owner != self.bid.last.owner
-        EmailSender.send_auction(tmp_bid.owner, self.item)
-        puts "Email sent" #for testing only
-      end
+      EmailSender.send_auction(tmp_bid.owner, self.item)
+      puts "Email sent" #for testing only
     end
   end
 end
