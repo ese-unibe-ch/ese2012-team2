@@ -129,6 +129,8 @@ module Models
         item.state = :pending
         winner.credits_in_auction -= self.get_current_bid
         winner.credits += (self.get_current_bid - self.get_current_price)
+      else
+        item.state = :inactive
       end
     end
 
@@ -141,7 +143,7 @@ module Models
     def send_email(tmp_bid)
       if tmp_bid.bid_placed_by != self.bid.last.bid_placed_by
         EmailSender.send_auction(tmp_bid.bid_placed_by, self.item)
-        puts "Email sent" #for testing only
+        puts "Email sent to #{tmp_bid.bid_placed_by}"
       end
     end
 
