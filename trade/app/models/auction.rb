@@ -2,7 +2,7 @@ require_relative 'trade_exception'
 require_relative 'bid'
 require_relative 'user'
 require_relative 'trader'
-require_relative '../../../trade/app/helpers/email_sender'
+require_relative '../helpers/email_sender'
 
 module Models
   class Auction
@@ -29,9 +29,9 @@ module Models
       self.minimal = params[:minimal].to_i
       self.increment = params[:increment].to_i
       self.bid = []
-      self.current_price = self.minimal
+      self.current_price = 0
       self.rank_one=nil
-      self.rank_one=nil
+      self.rank_two=nil
       year = params[:year].to_i
       month = params[:month].to_i
       day = params[:day].to_i
@@ -88,13 +88,8 @@ module Models
     # helper method
     def invariant
       self.get_current_ranking
-
       self.rank_one = self.bid.last
       self.rank_two = self.bid[-2] unless self.bid.size <2
-
-      if self.rank_one != nil and self.rank_two!=nil
-      #send_email(self.rank_two.bid_placed_by)
-      end
       self.get_current_price
     end
 
@@ -173,6 +168,7 @@ module Models
       end
     end
 
+    # if time is over and a bidder exists, then item gets sold
     def sell_to_current_winner
       if self.rank_one != nil
         winner = self.get_current_winner
@@ -186,10 +182,12 @@ module Models
       end
     end
 
+    #returns true if auction time is over
     def time_over?
       return self.due_date <= Time.now
     end
 
+    # send a mail to if another user gave a higher bid
     def send_email(tmp_bid)
       if tmp_bid.owner != self.bid.last.owner
         EmailSender.send_auction(tmp_bid.owner, self.item)
