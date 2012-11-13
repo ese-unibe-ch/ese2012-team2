@@ -106,12 +106,20 @@ class AuctionTest < Test::Unit::TestCase
 
   end
 
-  def test_sell_to_current_winner
-
+  def test_time_over_no_bidder
+    @auction.sell_to_current_winner
+    assert(@item.state == :inactive)
   end
 
-  def test_send_mail
-
+  def test_sell_to_current_winner
+    @user3.give_bid(@auction, 15)
+    @user2.give_bid(@auction, 25)
+    @auction.sell_to_current_winner
+    assert(@auction.get_current_winner == @user2)
+    assert(@item.state == :pending)
+    assert(@item.price == 17)
+    assert(@user2.credits == 83)
+    assert(@item.owner == @user2)
   end
 
   def test_validate_price_input
