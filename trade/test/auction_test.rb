@@ -101,6 +101,8 @@ class AuctionTest < Test::Unit::TestCase
   end
 
   def test_same_increment_and_minimal
+    @params[:minimal] = 10
+    @params[:increment] = 10
 
   end
 
