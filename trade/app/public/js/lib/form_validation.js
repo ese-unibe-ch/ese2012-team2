@@ -28,26 +28,48 @@ function changeDate(i, year){
                 e.add(s,null);}
             catch(ex){
                 e.add(s);}}}
-    y = year-1;
+    var e = document.getElementById('year');
+    while(e.length>0)
+        e.remove(e.length-1);
+    var y = year-2;
     while (y++<year + 10){
         var s = document.createElement('option');
         var e = document.getElementById('year');
-        s.text=y;
-        s.value=y;
-        try{
-            e.add(s,null);}
-        catch(ex){
-            e.add(s);}}
-    h = 0
-    while (h ++< 24){
+        if(y==year-1){
+            s.text="Year";
+            s.value="na";
+            try{
+                e.add(s,null);}
+            catch(ex){
+                e.add(s);}}
+        else{
+            s.text=y;
+            s.value=y;
+            try{
+                e.add(s,null);}
+            catch(ex){
+                e.add(s);}}}
+    var e = document.getElementById('hour');
+    while(e.length>0)
+        e.remove(e.length-1);
+    var h = -2;
+    while (h ++< 23){
         var s = document.createElement('option');
         var e = document.getElementById('hour');
-        s.text=h;
-        s.value=h;
-        try{
-            e.add(s,null);}
-        catch(ex){
-            e.add(s);}}
+        if(h==-1){
+            s.text="Hour";
+            s.value="na";
+            try{
+                e.add(s,null);}
+            catch(ex){
+                e.add(s);}}
+        else{
+            s.text=h;
+            s.value=h;
+            try{
+                e.add(s,null);}
+            catch(ex){
+                e.add(s);}}}
 }
 
 function validate_data(form, year, month, day, hour){
