@@ -1,8 +1,8 @@
-#Code Review#
+Code Review
+===========
 
-
-#Design
-
+Design
+------
 - no violation of MVC, code nicely separated in model, view and controller
 - controllers don’t do heavy lifting, which is done by models -> nice!
 - nice inheritance chain for controllers which improves code reuse
@@ -15,7 +15,7 @@
 - well done error handling using exceptions, be careful to not use exceptions for control flow though
 
 Coding Style
-============
+------------
 - some inconsistencies with method parameters: with brackets or without brackets -> use one or the other, no brackets for one parameter, brackets for multiple parameters
 - no unnecessary return statements
 - cool use of operator overloading ( << events)
@@ -27,13 +27,13 @@ Coding Style
 - good use of helper/utility classes and methods, be careful about responsibilities though
 
 Documentation
-=============
+--------------
 - almost no class comments, so the responsibilities of the classes are not clear without reading the code, you should always write a class comment for every class
 - code is pretty much self documentary: method and variable names are very carefully chosen, no a, b, tmp, x, y -> great! No unnecessary documentation...
 - should use contracts in method documentation -> see coding style
 
 Tests
-=====
+-----
 - test cases are distinct but the tests are only running together, you can not drive a test separately
 - stating test cases would be easier with Rspec, ruby does not encourage long test method names
 - there are untested (or very sparsely) tested classes (e.g. data overlay)
