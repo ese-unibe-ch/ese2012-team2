@@ -27,8 +27,11 @@ module Models
     def give_bid(auction, bid)
       if Time.now > auction.due_date
         raise TradeException, "Out of time"
+      elsif auction.user != self
+        auction.set_bid(self, bid)
+      else
+        raise TradeException, "You cannot bid for your own item!"
       end
-      auction.set_bid(self, bid)
     end
 
     def items

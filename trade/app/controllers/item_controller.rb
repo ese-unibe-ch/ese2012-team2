@@ -121,10 +121,6 @@ class ItemController < BaseSecureController
       add_message(e.message, :error)
     end
 
-    #if @active_user =! auction.user
-    # todo
-    #else add_message("Can not bid for own Item", :error)
-    #end
     haml :show_auction, :locals => { :auction => auction}
   end
 

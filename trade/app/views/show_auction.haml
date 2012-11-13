@@ -22,7 +22,7 @@
 %br
 %h3.blue Due Date:
 %h3.no-margin #{auction.due_date.asctime}
-
-%form{:action => "/auction/#{auction.id}/set_bid", :method => "POST", :enctype => "multipart/form-data"}
-  %input.normal_input_right{:type => "text", :name => "bid", :placeholder => "Set Bid"}
-  %input.normal_input_right{:type => "submit", :class => "button_margin", :value => "Set Bid"}
+-if auction.user != @active_user
+  %form{:action => "/auction/#{auction.id}/set_bid", :method => "POST", :enctype => "multipart/form-data"}
+    %input.normal_input_right{:type => "text", :name => "bid", :placeholder => "Set Bid"}
+    %input.normal_input_right{:type => "submit", :class => "button_margin", :value => "Set Bid"}
