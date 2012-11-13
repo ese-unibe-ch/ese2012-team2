@@ -43,10 +43,6 @@ class AuctionTest < Test::Unit::TestCase
     assert_equal(DataOverlay.instance.include?(@item.id), false)
   end
 
-  def test_bid_to_own_item
-    assert_raise(TradeException, "You cannot bid for your own item!"){@user1.give_bid(@auction, 20)}
-  end
-
   def test_first_bid
     @user2.give_bid(@auction, 5)
     assert(@auction.get_current_bid == 5)
