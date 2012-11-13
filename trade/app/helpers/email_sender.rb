@@ -67,4 +67,16 @@ Go back and raise your bid or resign
                 })
     }
   end
+  def self.win_auction(user, item)
+    Thread.new {
+      Pony.mail({
+                    :to => user.email,
+                    :subject => "Auction won!",
+                    :body => "Dear #{user.name}
+Congratulations! You won the auction for #{item.name} for #{item.price}$
+
+"
+                })
+    }
+  end
 end
