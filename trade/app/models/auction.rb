@@ -45,7 +45,9 @@ module Models
     def update_own_bid?(user, new_bid)
       updated_own_bid = false
       previous_winner = self.bid.last.owner
-      if self.bid.last.value < new_bid
+      if self.bid.last.value == new_bid
+        raise TradeException, "That's already the highest bid!"
+      elsif self.bid.last.value < new_bid
         previous_winner.credits += self.bid.last.value
         previous_winner.credits_in_auction -= self.bid.last.value
         user.credits -= new_bid
