@@ -87,7 +87,7 @@ class ItemController < BaseSecureController
     item = @data.item_by_id params[:item].to_i
     auction = @data.auction_by_id params[:item].to_i
 
-    haml :add_for_auction, :locals => {:item => item, auction => auction, :time_now => Time.now}
+    haml :add_for_auction, :locals => {:item => item, :auction => auction, :time_now => Time.now}
   end
 
   # show all active auctions
