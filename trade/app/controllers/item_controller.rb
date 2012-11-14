@@ -100,7 +100,7 @@ class ItemController < BaseSecureController
   get "/auction/:auction" do
     @title = "Chosen Auction"
     auction = @data.auction_by_id params[:auction].to_i
-    if auction = nil
+    if auction == nil
       redirect "/item/auction"
     end
     haml :show_auction, :locals => { :auction => auction}
