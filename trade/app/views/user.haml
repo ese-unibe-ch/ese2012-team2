@@ -46,3 +46,5 @@
             #{wish.name}
           %form{:action => "/item/#{wish.id}/remove_wish", :method => "POST"}
             %input{:type => "submit",:name => "action", :value => "Remove", :class => "button_as_link"}
+  %h2 Activities
+  =haml :'partials/activities_list', :locals => {:activities => user.activities}

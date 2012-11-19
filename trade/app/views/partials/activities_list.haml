@@ -1,0 +1,14 @@
+- if activities.length > 0
+  %table{:id=>"itemTable", :class=>"tablesorter pager"}
+    %thead
+      %tr
+        %th Date
+        %th Activity
+    - for activity in activities
+      %tr
+        %td.list
+          #{activity.date}
+        %td.list
+          #{activity.description}
+- else
+  no Activities found
