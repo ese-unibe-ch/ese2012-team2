@@ -9,7 +9,7 @@ module Models
     end
 
     def to_s
-      "Owner: #{self.owner}, Time: #{self.timestamp}: #{text.split("\n")[0]}" #KR only display first line
+      "Owner: #{self.user}, Time: #{self.timestamp}: #{text.split("\n")[0]}" #KR only display first line
     end
   end
 end

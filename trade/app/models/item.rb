@@ -1,10 +1,36 @@
 require_relative 'trade_exception'
 require_relative 'trackable'
+require_relative 'activity'
 
 module Models
   class Item < Trackable
 
     attr_accessor :name, :price, :owner, :state, :description, :image, :prev_owners
+
+    def name=(name)
+      add_activity "name was changed from #{self.name} to #{name}" unless @name == name
+      @name=name
+    end
+
+    def price=(price)
+      add_activity "price was changed from #{self.price} to #{price}" unless @price == price
+      @price = price
+    end
+
+    def state=(state)
+      add_activity "state changed from #{self.state} to #{state}"  unless @state == state
+      @state = state
+    end
+
+    def description=(description)
+      add_activity "description was edited" unless @description == description
+      @description = description
+    end
+
+    def image=(image)
+      add_activity "image was changed" unless @image == image
+      @image = image
+    end
 
     attr_reader :id, :comments
 
@@ -20,24 +46,24 @@ module Models
     #SH Sets the name, the price, and the owner of the item
     #SH If the user is not nil, adds the item to the item list of the owner
     def initialize(name, price, owner, description, state=:inactive, image=nil)
-      self.price = Models::Item.validate_price price
+      @price = Models::Item.validate_price price
 
       if owner.nil?
         raise TradeException, "Owner may not be empty!"
       end
-      self.owner = owner
+      @owner = owner
 
       if name.empty?
         raise TradeException, "Name must not be empty!"
       end
-      self.name = name
-      self.description= description
-      self.image = image
+      @name = name
+      @description= description
+      @image = image
       self.prev_owners = Array.new
 
       @comments = Array.new
 
-      self.state = state
+      @state = state
       @id = @@item_count
       @@item_count += 1
 
@@ -60,6 +86,7 @@ module Models
     end
 
     def add_comment comment
+      add_activity "commented by #{comment.user}"
       self.comments.push comment
     end
 
@@ -70,7 +97,7 @@ module Models
       end
       self.owner.add_activity "Sold item #{self.name} to #{new_owner.name} for #{self.price}."
       new_owner.add_activity "Bought item #{self.name} from #{self.owner.name} for #{self.price}."
-      self.owner = new_owner
+      @owner = new_owner
     end
 
     def to_s
