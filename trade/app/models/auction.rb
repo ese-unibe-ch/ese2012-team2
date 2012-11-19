@@ -85,6 +85,7 @@ module Models
           end
         tmp_bid = bid.last
         self.bid.push Models::Bid.new_bid(user,new_bid)
+        user.add_activity"has bid on item #{item.name} from #{item.owner}"
         unless tmp_bid == nil
           send_email(tmp_bid) if tmp_bid.value < new_bid
         end

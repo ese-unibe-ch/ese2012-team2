@@ -68,6 +68,7 @@ module Models
       @@item_count += 1
 
       self.overlay.add_item(self)
+      owner.add_activity "has created item #{name}"
     end
 
     def self.validate_price price
@@ -87,6 +88,7 @@ module Models
 
     def add_comment comment
       add_activity "commented by #{comment.user}"
+      comment.user.add_activity "commented item #{self.name} from #{self.owner}"
       self.comments.push comment
     end
 
