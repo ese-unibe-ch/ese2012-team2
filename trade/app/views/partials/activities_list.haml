@@ -3,11 +3,16 @@
     %thead
       %tr
         %th Date
+        - if show_owner
+          %th Owner
         %th Activity
     - for activity in activities
       %tr
         %td.list
           #{activity.date}
+        - if show_owner
+          %td.list
+            #{activity.owner}
         %td.list
           #{activity.description}
 - else
