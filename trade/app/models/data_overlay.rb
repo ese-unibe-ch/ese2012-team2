@@ -12,7 +12,7 @@ module Models
       @organizations = Hash.new()
       @search_requests= Hash.new() #AS id: user, value: Array of SearchRequests
       @comments = Hash.new() #KR id:owner, value: Array of Comments
-      @auctions = Hash.new()
+      @auctions = Array.new()
     end
 
     @@instance = nil
@@ -178,14 +178,21 @@ module Models
 
     #KR adds a new activity to the system
     def add_activity(activity)
-      @activities[activity.owner] = Array.new() if @activities[activity.owner] == null
-      @activities[activity.owner].push(activity)
+      @activities.push activity
     end
 
-    #KR returns all activities of a the specified owner. Might be an empty array.
+    #KR returns all activities of a the specified owner.
     def activities_by_owner(owner)
-      return Array.new() if @activities[owner] == null
-      @activities[owner]
+      @activities.select { |act| act.owner == owner}
+    end
+
+    #PS owner is an Array of Trackable
+    def activities_by_owners(owners)
+      @activities.select { |act| owners.include? act.owner}
+    end
+
+    def remove_by_owner(owner)
+       @activities.delete_if { |act| act.owner == owner}
     end
   end
 end
