@@ -8,6 +8,7 @@ module Models
     def initialize
       @users = Hash.new()
       @items = Hash.new()
+      @activities = Hash.new()
       @organizations = Hash.new()
       @search_requests= Hash.new() #AS id: user, value: Array of SearchRequests
       @comments = Hash.new() #KR id:owner, value: Array of Comments
@@ -173,6 +174,18 @@ module Models
     #AS Get SearchRequest by id
     def search_request_by_id(id)
       @search_requests[id]
+    end
+
+    #KR adds a new activity to the system
+    def add_activity(activity)
+      @activities[activity.owner] = Array.new() if @activities[activity.owner] == null
+      @activities[activity.owner].push(activity)
+    end
+
+    #KR returns all activities of a the specified owner. Might be an empty array.
+    def activities_by_owner(owner)
+      return Array.new() if @activities[owner] == null
+      @activities[owner]
     end
   end
 end
