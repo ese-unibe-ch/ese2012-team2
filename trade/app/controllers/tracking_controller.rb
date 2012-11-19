@@ -7,7 +7,9 @@ class TrackingController < BaseSecureController
     if params[:type] == "user"
       trackee = @data.user_by_name(params[:track_id])
     end
-    @active_user.track trackee
+    unless trackee.nil?
+      @active_user.track trackee
+    end
     redirect back
   end
 

@@ -1,8 +1,8 @@
 - if type == :user
-  - target = "user/#{track_id}"
--if track
+  - target = "user/#{id}"
+-if tracked_already
   %form{:action => "/untrack/#{track_id}", :method => "POST"}
-    %input{:type => "submit",:name => "action", :value => "Untrack", :class => "button_as_link"}
+    %input{:type => "submit",:name => "action", :value => "Untrack #{name}", :class => "button_as_link"}
 -else
   %form{:action => "/track/#{target}", :method => "POST"}
-    %input{:type => "submit",:name => "action", :value => "Track", :class => "button_as_link"}
+    %input{:type => "submit",:name => "action", :value => "Track #{name}", :class => "button_as_link"}
