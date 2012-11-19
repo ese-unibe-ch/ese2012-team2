@@ -2,10 +2,13 @@ require_relative 'base_secure_controller'
 
 class TrackingController < BaseSecureController
 
-  post '/track/:type/:track_id' do
+  post '/track/:type/:id' do
     trackee = nil
     if params[:type] == "user"
-      trackee = @data.user_by_name(params[:track_id])
+      trackee = @data.user_by_name(params[:id])
+    end
+    if params[:type] == "item"
+      trackee = @data.item_by_id(params[:id].to_i)
     end
     unless trackee.nil?
       @active_user.track trackee

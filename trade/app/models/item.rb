@@ -1,7 +1,8 @@
 require_relative 'trade_exception'
+require_relative 'trackable'
 
 module Models
-  class Item
+  class Item < Trackable
 
     attr_accessor :name, :price, :owner, :state, :description, :image, :prev_owners
 
@@ -74,6 +75,10 @@ module Models
 
     def to_s
       self.name
+    end
+
+    def track_id
+      "item$#{self.id}"
     end
 
     def image_path
