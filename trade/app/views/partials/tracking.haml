@@ -1,0 +1,5 @@
+%ul
+- for trackee in user.trackees
+  %li
+    #{trackee}
+    =haml :'partials/trackbutton', :locals => {:track => true, :type => nil, :track_id => trackee.track_id}

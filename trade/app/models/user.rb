@@ -3,9 +3,9 @@ require_relative "password"
 require_relative "trader"
 require_relative "trade_exception"
 module Models
-  class User  < Models::Trader
+  class User < Models::Trader
 
-    attr_accessor :password, :email, :working_for
+    attr_accessor :password, :email, :working_for, :trackees
     attr_reader :organization_request, :wish_list
 
     #AS Implements buying for an organization (Override)
@@ -102,6 +102,22 @@ module Models
       self.password.authenticate(passwd)
     end
 
+    def track(trackee)
+      self.overlay.track(self, trackee)
+    end
+
+    def untrack(trackee)
+      self.overlay.untrack(self, trackee)
+    end
+
+    def trackees
+      self.overlay.trackees_by_user(self)
+    end
+
+    def track_id
+      "user$#{self.name}"
+    end
+
     def image_path
       if self.image.nil? then
         return "/images/users/default.png"
@@ -109,5 +125,7 @@ module Models
         return "/images/users/" + self.image
       end
     end
+
+
   end
 end

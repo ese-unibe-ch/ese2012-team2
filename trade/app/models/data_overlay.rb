@@ -8,7 +8,8 @@ module Models
     def initialize
       @users = Hash.new()
       @items = Hash.new()
-      @activities = Array .new()
+      @activities = Array.new()
+      @trackees = Hash.new(Array.new) #PS is: User, value Array of Trackables
       @organizations = Hash.new()
       @search_requests= Hash.new() #AS id: user, value: Array of SearchRequests
       @comments = Hash.new() #KR id:owner, value: Array of Comments
@@ -184,6 +185,9 @@ module Models
     #KR returns all activities of a the specified owner.
     def activities_by_owner(owner)
       acts = @activities.select { |act| act.owner == owner}
+      #if owner.is_a?(Models::Organization)
+      #  acts.push self.activities_by_owners(owner.members)
+      #end
       unless acts.nil?
         acts.sort { |a,b| b.date <=> a.date }
       end
@@ -196,6 +200,32 @@ module Models
 
     def remove_by_owner(owner)
        @activities.delete_if { |act| act.owner == owner}
+    end
+
+    #tracking items, users and organizations
+
+    def track(tracker,trackee)
+       if @trackees.has_key? tracker
+         unless @trackees[tracker].include? trackee
+           @trackees[tracker].push trackee
+         end
+       else
+         @trackees[tracker] = [trackee]
+       end
+    end
+
+    def untrack(tracker,trackee)
+      if @trackees.has_key? tracker
+        @trackees[tracker].delete trackee
+      end
+    end
+
+    def trackee_by_tracker_and_id(tracker,track_id)
+       @trackees[tracker].detect { |tr| tr.track_id == track_id}
+    end
+
+    def trackees_by_user(user)
+      @trackees[user]
     end
   end
 end

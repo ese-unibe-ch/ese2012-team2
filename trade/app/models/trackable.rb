@@ -1,5 +1,6 @@
 require_relative 'data_overlay'
 require_relative 'activity'
+require_relative 'trade_exception'
 
 module Models
   class Trackable
@@ -10,6 +11,11 @@ module Models
 
     def activities
       DataOverlay.instance.activities_by_owner(self)
+    end
+
+    #must be overridden in subclasses!
+    def track_id
+      raise TradeException, "track_id not implemented"
     end
   end
 end

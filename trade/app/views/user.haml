@@ -27,6 +27,8 @@
 
 - if !user.nil? #SH Only show this for an existing user
   %h1 User #{user.display_name}
+  - unless @active_user == user
+    =haml :'partials/trackbutton', :locals => {:track => @active_user.trackees.include?(user), :type => :user, :track_id => "#{user.name}"}
   Credits: #{user.credits}
   #userimage
     %img{:src => user.image_path, :width => "150", :alt=>"User image"}
@@ -46,5 +48,8 @@
             #{wish.name}
           %form{:action => "/item/#{wish.id}/remove_wish", :method => "POST"}
             %input{:type => "submit",:name => "action", :value => "Remove", :class => "button_as_link"}
-  %h2 Activities
+  %h2 My Activities
   =haml :'partials/activities_list', :locals => {:activities => user.activities, :show_owner => true}
+  %h2 Tracking
+  =haml :'partials/tracking', :locals => {:user => user}
+
