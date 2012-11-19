@@ -183,7 +183,7 @@ class ItemController < BaseSecureController
 
   post "/item/:id/wish" do
     item = @data.item_by_id params[:id].to_i
-    @active_user.wish_list << item
+    @active_user.add_wish item
     redirect "/user/#{@active_user.name}"
   end
 

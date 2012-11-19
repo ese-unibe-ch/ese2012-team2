@@ -72,12 +72,14 @@ module Models
 
     def add_wish item
       unless self.wish_list.include? item
-        self.wishlist << item
+        @wish_list << item
+        self.add_activity("Added #{item.name} to wish list.")
       end
     end
 
     def remove_wish item
-      self.wish_list.delete item
+      @wish_list.delete item
+      self.add_activity("Removed #{item.name} from wish list.")
     end
 
     def valid_email? email

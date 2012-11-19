@@ -185,7 +185,7 @@ module Models
     def activities_by_owner(owner)
       acts = @activities.select { |act| act.owner == owner}
       unless acts.nil?
-        acts.sort { |a,b| a.date <= b.date }
+        acts.sort { |a,b| b.date <=> a.date }
       end
     end
 
