@@ -30,9 +30,24 @@
 %h2 Credits
 %span
   #{organization.credits}
-%h2 Admin
-%span
-  %a{:href => "/user/#{organization.admin.name}"} #{organization.admin.display_name}
+%h2 Admins
+%table
+  - for admin in organization.admins
+    %tr
+      %td
+        %a{:href => "/user/#{admin.name}"} #{admin.display_name}
+      %td
+        %form{:action => "/organization/#{organization.name}/remove_admin/#{admin.name}", :method => "POST"}
+          %input{:type => "submit", :value => "Remove"}
+  %tr
+    %form{:action => "/organization/#{organization.name}/add_admin", :method => "POST"}
+      %td
+        %select{:name => "user"}
+          - for user in organization.members
+            -unless organization.admins.include?(user)
+              %option{:value => "#{user.name}"}#{user.display_name}
+      %td
+        %input{:type => "submit", :value => "Add as admin"}
 %h2 Interests
 %span
   #{organization.interests.gsub("\n", "<br>")}
@@ -45,10 +60,10 @@
       %td
         %a{:href => "/user/#{member.name}"} #{member.display_name}
       %td
-        - if organization.admin == @active_user and member != organization.admin
+        - if organization.admins.include? @active_user and not organization.admins.include? member
           %form{:action => "/organization/#{organization.name}/remove_member/#{member.name}", :method => "POST"}
             %input{:type => "submit", :value => "Remove"}
-  - if organization.admin == @active_user
+  - if organization.admins.include? @active_user
     %tr
       %form{:action => "/organization/#{organization.name}/add_member", :method => "POST"}
         %td
