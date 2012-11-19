@@ -2,10 +2,9 @@ class Activity
 
   attr_accessor :owner, :description, :date
 
-  def initialize(owner, description, date)
-    #TODO add to overlay
+  def initialize(owner, description)
     self.owner = owner
     self.description = description
-    self.date = date
+    self.date = DateTime.now
   end
 end

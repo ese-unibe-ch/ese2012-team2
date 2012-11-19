@@ -1,9 +1,15 @@
-class Trackable
-  def add_activity(text)
-    activity = Activity.new(self, text, DateTime.now)
-  end
+require_relative 'data_overlay'
+require_relative 'activity'
 
-  def activities
-    #TODO return all activities for this dingsbums
+module Models
+  class Trackable
+    def add_activity(text)
+      activity = Activity.new(self, text)
+      DataOverlay.instance.add_activity(activity)
+    end
+
+    def activities
+      DataOverlay.instance.activities_by_owner(self)
+    end
   end
 end

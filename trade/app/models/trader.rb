@@ -1,7 +1,8 @@
 require_relative 'trade_exception'
+require_relative 'trackable'
 
 module Models
-  class Trader
+  class Trader < Trackable
     attr_accessor :credits, :credits_in_auction, :name, :image, :interests, :display_name, :auction_bid
 
     def buy(item)

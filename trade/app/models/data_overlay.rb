@@ -8,11 +8,11 @@ module Models
     def initialize
       @users = Hash.new()
       @items = Hash.new()
-      @activities = Hash.new()
+      @activities = Array .new()
       @organizations = Hash.new()
       @search_requests= Hash.new() #AS id: user, value: Array of SearchRequests
       @comments = Hash.new() #KR id:owner, value: Array of Comments
-      @auctions = Array.new()
+      @auctions = Hash.new()
     end
 
     @@instance = nil
@@ -183,7 +183,10 @@ module Models
 
     #KR returns all activities of a the specified owner.
     def activities_by_owner(owner)
-      @activities.select { |act| act.owner == owner}
+      acts = @activities.select { |act| act.owner == owner}
+      unless acts.nil?
+        acts.sort { |a,b| a.date <= b.date }
+      end
     end
 
     #PS owner is an Array of Trackable

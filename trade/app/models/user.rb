@@ -66,7 +66,7 @@ module Models
       self.image = image
       @organization_request = Array.new()
       @wish_list = Array.new()
-
+      self.add_activity "User #{self.name} was created."
       self.overlay.add_user(self)
     end
 
