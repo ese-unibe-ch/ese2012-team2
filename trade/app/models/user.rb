@@ -39,6 +39,7 @@ module Models
       end
       item.prev_owners.last.credits += item.price
       item.state = :inactive
+      self.add_activity "Confirmed receipt of #{item.name}."
     end
 
     #SH Setup standard values
@@ -78,8 +79,9 @@ module Models
     end
 
     def remove_wish item
-      @wish_list.delete item
-      self.add_activity("Removed #{item.name} from wish list.")
+      if @wish_list.delete(item)
+        self.add_activity("Removed #{item.name} from wish list.")
+      end
     end
 
     def valid_email? email

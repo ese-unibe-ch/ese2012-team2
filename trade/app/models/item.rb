@@ -63,11 +63,12 @@ module Models
     end
 
     def take_ownership(new_owner)
-      puts "owner is #{self.owner}"
       self.prev_owners << self.owner
       if new_owner.is_a?(Models::User)
         new_owner.remove_wish self
       end
+      self.owner.add_activity "Sold item #{self.name} to #{new_owner.name} for #{self.price}."
+      new_owner.add_activity "Bought item #{self.name} from #{self.owner.name} for #{self.price}."
       self.owner = new_owner
     end
 
