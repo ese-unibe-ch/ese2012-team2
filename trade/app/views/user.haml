@@ -29,6 +29,14 @@
                         container: $("#activities_pager_tracking"),
                         positionFixed: false
                 });
+     $("#activities_table_org")
+                .tablesorter({
+                        widgets: ['zebra']
+                })
+                .tablesorterPager({
+                        container: $("#activities_pager_org"),
+                        positionFixed: false
+                });
      $("#itemTable2")
                 .tablesorter({
                         headers: {3: {sorter: false}},
@@ -67,4 +75,6 @@
   %h2 My Activities
   =haml :'partials/activities_list', :locals => {:activities => user.activities, :show_owner => false, :list_suffix => "self"}
   =haml :'partials/tracking', :locals => {:user => user}
+  %h2 Activities from my Organizations
+  =haml :'partials/activities_list', :locals => {:activities => user.organization_activities, :show_owner => true, :list_suffix => "org"}
 

@@ -118,6 +118,19 @@ module Models
       self.overlay.activities_by_owners(self.trackees)
     end
 
+    def organization_activities
+       trackables = Array.new()
+       self.organizations.each { |org|
+          org.members.each { |member|
+            unless member == self or trackables.include? member
+               trackables.push member
+            end
+          }
+          trackables.push org
+       }
+       self.overlay.activities_by_owners(trackables)
+    end
+
     def track_id
       "user$#{self.name}"
     end
