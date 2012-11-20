@@ -184,5 +184,9 @@ module Models
         @item_requests[item.id]=item
       end
     end
+
+    def get_item_requests()
+        @item_requests.values
+    end
   end
 end

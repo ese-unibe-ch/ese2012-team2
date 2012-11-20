@@ -110,4 +110,9 @@ class Main  < BaseSecureController
     add_message("Successfully subscribed.", :success)
     redirect "/search_requests"
   end
+
+  get "/item_requests" do
+    item_requests= @data.get_item_requests()
+    haml :item_requests, :locals => {:requests => item_requests}
+  end
 end
