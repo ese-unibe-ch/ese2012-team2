@@ -31,7 +31,7 @@
     - for item in requests
       %tr
         %td.list
-          %a{:href => "/item/#{item.id}",  "data-powertip" => "#{item.description.gsub("\n", "<br>")}</br><img src=#{item.image_path} width=150 />", :class => "powertip"}
+          %a{:href => "#",  "data-powertip" => "#{item.description.gsub("\n", "<br>")}</br><img src=#{item.image_path} width=150 />", :class => "powertip"}
             #{item.name}
         %td.right.list.padding_left #{item.price}
         %td.list.padding_left
