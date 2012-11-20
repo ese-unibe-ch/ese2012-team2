@@ -3,7 +3,7 @@ require_relative 'trade_exception'
 module Models
   class Item
 
-    attr_accessor :name, :price, :owner, :state, :description, :image, :prev_owners
+    attr_accessor :name, :price, :owner, :state, :description, :image, :prev_owners, :end_time
 
     attr_reader :id, :comments
 
@@ -69,6 +69,16 @@ module Models
         new_owner.remove_wish self
       end
       self.owner = new_owner
+    end
+
+    def over?
+      unless self.end_time == nil
+        #TODO
+      end
+    end
+
+    def end_offer
+      #TODO
     end
 
     def to_s

@@ -1,4 +1,8 @@
 -#FW&MW Shows the edit item form
+:javascript
+  $(document).ready(function() {
+     $(".datepicker").datepick({dateFormat: 'dd-mm-yyyy'});
+    })
 %h1 Edit Item
 %form{:action => "/item/#{item.id}/edit", :method => "POST", :enctype=>"multipart/form-data"}
   %label
@@ -10,6 +14,12 @@
     Price*:
   %br
   %input.normal_input{:type => "text", :name => "price", :value => "#{item.price}"}
+  %br
+  %label
+    Valid till:
+  %br
+  %input.datepicker{:type => "text", :name => "endtime", :value => "#{item.end_time}"}
+  %span.hint If field is empty, the offer will not expire
   %br
   %label
     Description:
