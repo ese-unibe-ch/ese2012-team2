@@ -1,5 +1,5 @@
 - if activities.length > 0
-  %table{:id=>"itemTable", :class=>"tablesorter pager"}
+  %table{:id=>"activities_table_#{list_suffix}", :class=>"pager"}
     %thead
       %tr
         %th Date
@@ -15,5 +15,17 @@
             #{activity.owner}
         %td.list
           #{activity.description}
+  %div{:id => "activities_pager_#{list_suffix}", :class => "activities_pager_#{list_suffix}"}
+    %form
+      %img{:src => "../images/pager/first.png", :class => "first", :alt =>"first"}
+      %img{:src => "../images/pager/prev.png", :class => "prev", :alt =>"prev"}
+      %input{:class => "pagedisplay", :type => "text"}
+      %img{:src => "../images/pager/next.png", :class => "next", :alt =>"next"}
+      %img{:src => "../images/pager/last.png", :class => "last", :alt =>"last"}
+      %select{:class => "pagesize"}
+        %option{:selected => "selected", :value => "10"}  10
+        %option{:value => "20"} 20
+        %option{:value => "30"} 30
+        %option{:value => "50"} 50
 - else
   no Activities found

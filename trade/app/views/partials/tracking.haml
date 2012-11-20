@@ -1,4 +1,6 @@
+%h2 Tracking
 %ul
 - for trackee in user.trackees
   %li
     =haml :'partials/trackbutton', :locals => {:tracked_already => true, :id => nil, :type => nil, :track_id => trackee.track_id, :name => trackee.to_s}
+=haml :'partials/activities_list', :locals => {:activities => user.tracked_activities, :show_owner => true, :list_suffix => "tracking"}

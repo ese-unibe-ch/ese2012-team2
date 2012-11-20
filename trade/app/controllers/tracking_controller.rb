@@ -10,6 +10,9 @@ class TrackingController < BaseSecureController
     if params[:type] == "item"
       trackee = @data.item_by_id(params[:id].to_i)
     end
+    if params[:type] == "organization"
+      trackee = @data.organization_by_name(params[:id])
+    end
     unless trackee.nil?
       @active_user.track trackee
     end

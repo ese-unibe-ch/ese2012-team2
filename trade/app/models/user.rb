@@ -114,6 +114,10 @@ module Models
       self.overlay.trackees_by_user(self)
     end
 
+    def tracked_activities
+      self.overlay.activities_by_owners(self.trackees)
+    end
+
     def track_id
       "user$#{self.name}"
     end

@@ -26,6 +26,7 @@
   })
 
 %h1 Organization #{organization.name}
+=haml :'partials/trackbutton', :locals => {:tracked_already => @active_user.trackees.include?(organization), :id => organization.name, :type => :organization, :track_id => organization.track_id, :name => organization.display_name }
 %img.image_float_left{:src => "#{organization.image_path}", :alt => "Organization image"}
 %h2 Credits
 %span
