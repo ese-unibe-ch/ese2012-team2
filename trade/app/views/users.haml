@@ -8,3 +8,14 @@
       %td.list
         %a{:href => url("/user/#{user.name}")} #{user.display_name}
       %td.list #{user.credits}
+%h1 All Organizations
+%table
+  %tr
+    %th Name
+    %th Credits
+  - for org in organizations
+    %tr.list
+      %td.list
+        %a{:href => url("/organization/#{org.name}")} #{org.display_name}
+      %td.list #{org.credits}
+
