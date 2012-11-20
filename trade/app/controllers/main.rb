@@ -96,6 +96,11 @@ class Main  < BaseSecureController
     redirect back
   end
 
+  post "/delete_item_request/:item_request_id" do
+    @data.delete_item_request(params[:item_request_id].to_i)
+    redirect back
+  end
+
   post "/research/:search_request" do
     @title = "Search"
     search_request = @data.search_request_by_id params[:search_request].to_i

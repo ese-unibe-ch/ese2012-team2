@@ -31,7 +31,7 @@
     - for item in requests
       %tr
         %td.list
-          -#%a{:href => "/item/#{item.id}",  "data-powertip" => "#{item.description.gsub("\n", "<br>")}</br><img src=#{item.image_path} width=150 />", :class => "powertip"}
+          %a{:href => "/item/#{item.id}",  "data-powertip" => "#{item.description.gsub("\n", "<br>")}</br><img src=#{item.image_path} width=150 />", :class => "powertip"}
             #{item.name}
         %td.right.list.padding_left #{item.price}
         %td.list.padding_left
@@ -40,5 +40,8 @@
           -else
             %a{:href=> "/organization/#{item.owner}"} #{item.owner.name}
         %td.padding_left #{item.end_time}
-
+        -if ((!@active_user.working_for.nil? && @active_user.working_for == item.owner) || (@active_user == item.owner && @active_user.working_for.nil?))
+          %td.padding_center
+            %form{:action => "/delete_item_request/#{item.id}", :method => "POST"}
+              %input{:type => "submit",:name => "action", :value => "Delete", :class => "button_as_link"}
 =haml :'partials/pager'

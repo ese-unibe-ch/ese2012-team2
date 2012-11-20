@@ -185,8 +185,15 @@ module Models
       end
     end
 
+    #AS Get array of item req
     def get_item_requests()
-        @item_requests.values
+      @item_requests.values
+    end
+    def get_item_request_by_id(id)
+      @item_requests[id]
+    end
+    def delete_item_request(request_id)
+      @item_requests.delete(request_id)
     end
   end
 end
