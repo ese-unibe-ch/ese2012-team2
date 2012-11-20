@@ -16,8 +16,10 @@ class ItemController < BaseSecureController
   #SH Tries to add an item. Redirect to the add item message page.
   post "/add_item" do
     @title = "Add item"
+    as_request= params[:action]=="Add as a request"
+
     begin
-    ItemValidator.add_item(params, @active_user)
+    ItemValidator.add_item(params, @active_user, as_request)
     add_message("Item successfully created!", :success)
     rescue TradeException => e
       add_message(e.message, :error)

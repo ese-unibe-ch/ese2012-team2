@@ -18,7 +18,8 @@ module Models
 
     #SH Sets the name, the price, and the owner of the item
     #SH If the user is not nil, adds the item to the item list of the owner
-    def initialize(name, price, owner, description, state=:inactive, image=nil)
+    #AS The parameter request means, the item is added as an item request. Defaultly it's false.
+    def initialize(name, price, owner, description, state=:inactive, image=nil, request=false)
       self.price = Models::Item.validate_price price
 
       if owner.nil?
@@ -39,8 +40,12 @@ module Models
       self.state = state
       @id = @@item_count
       @@item_count += 1
+      if(request)
+        self.overlay.add_item_request(self)
+      else
+        self.overlay.add_item(self)
+      end
 
-      self.overlay.add_item(self)
     end
 
     def self.validate_price price

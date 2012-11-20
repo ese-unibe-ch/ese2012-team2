@@ -9,9 +9,10 @@ module Models
       @users = Hash.new()
       @items = Hash.new()
       @organizations = Hash.new()
-      @search_requests= Hash.new() #AS id: user, value: Array of SearchRequests
+      @search_requests= Hash.new()
       @comments = Hash.new() #KR id:owner, value: Array of Comments
       @auctions = Hash.new()
+      @item_requests= Hash.new()
     end
 
     @@instance = nil
@@ -173,6 +174,26 @@ module Models
     #AS Get SearchRequest by id
     def search_request_by_id(id)
       @search_requests[id]
+    end
+
+    #AS Add a request for an item - eg. add an item to item_requests
+    def add_item_request(item)
+      if(@item_requests.has_key?(item.id))
+        #error
+      else
+        @item_requests[item.id]=item
+      end
+    end
+
+    #AS Get array of item req
+    def get_item_requests()
+      @item_requests.values
+    end
+    def get_item_request_by_id(id)
+      @item_requests[id]
+    end
+    def delete_item_request(request_id)
+      @item_requests.delete(request_id)
     end
   end
 end

@@ -1,0 +1,47 @@
+:javascript
+  $(document).ready(function() {
+     $('.powertip').powerTip({
+          placement: 's' // north-east tooltip positio
+     });
+
+    $("#itemTable")
+      .tablesorter({
+              headers: {3: {sorter: false}},
+              sortList: [[0,0], [1,0]],
+              widgets: ['zebra']
+      })
+      .tablesorterPager({
+              container: $("#pager"),
+              positionFixed: false
+      });
+  })
+
+%h1 All Item Requests
+-#SH Shows a table of all active items
+%table{:id=>"itemTable", :class=>"tablesorter pager"}
+  %thead
+    %tr
+      %th Name
+      %th.padding_left.price_column Price
+      %th.padding_left Owner
+      %th.padding_left Valid till
+      %th.padding_center Delete
+
+  %tbody
+    - for item in requests
+      %tr
+        %td.list
+          %a{:href => "#",  "data-powertip" => "#{item.description.gsub("\n", "<br>")}</br><img src=#{item.image_path} width=150 />", :class => "powertip"}
+            #{item.name}
+        %td.right.list.padding_left #{item.price}
+        %td.list.padding_left
+          -if item.owner.class == Models::User
+            %a{:href=> "/user/#{item.owner}"} #{item.owner.display_name}
+          -else
+            %a{:href=> "/organization/#{item.owner}"} #{item.owner.name}
+        %td.padding_left #{item.end_time}
+        -if ((!@active_user.working_for.nil? && @active_user.working_for == item.owner) || (@active_user == item.owner && @active_user.working_for.nil?))
+          %td.padding_center
+            %form{:action => "/delete_item_request/#{item.id}", :method => "POST"}
+              %input{:type => "submit",:name => "action", :value => "Delete", :class => "button_as_link"}
+=haml :'partials/pager'
