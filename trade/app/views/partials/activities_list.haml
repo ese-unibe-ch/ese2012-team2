@@ -9,7 +9,7 @@
     - for activity in activities
       %tr
         %td.list
-          #{activity.date}
+          #{activity.formatted_date}
         - if show_owner
           %td.list
             #{activity.owner}

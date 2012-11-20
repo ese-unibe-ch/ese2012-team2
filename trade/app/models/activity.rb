@@ -7,4 +7,8 @@ class Activity
     self.description = description
     self.date = DateTime.now
   end
+
+  def formatted_date
+    self.date.strftime("%d.%m.%Y - %H:%M")
+  end
 end
