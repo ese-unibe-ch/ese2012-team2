@@ -185,17 +185,21 @@ module Models
     #KR returns all activities of a the specified owner.
     def activities_by_owner(owner)
       acts = @activities.select { |act| act.owner == owner}
-      #if owner.is_a?(Models::Organization)
-      #  acts.push self.activities_by_owners(owner.members)
-      #end
       unless acts.nil?
-        acts.sort { |a,b| b.date <=> a.date }
+        self.sort_activities acts
       end
     end
 
     #PS owner is an Array of Trackable
     def activities_by_owners(owners)
-      @activities.select { |act| owners.include? act.owner}
+      acts = @activities.select { |act| owners.include? act.owner}
+      unless acts.nil?
+        self.sort_activities acts
+      end
+    end
+
+    def sort_activities activities
+      activities.sort { |a,b| b.date <=> a.date }
     end
 
     def remove_by_owner(owner)

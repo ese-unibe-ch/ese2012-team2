@@ -89,6 +89,8 @@ module Models
     end
 
     def add_request(organization)
+      organization.add_activity "offered organization membership to #{self.display_name}"
+      self.add_activity "received organization membership offer from #{organization.display_name}"
       self.organization_request.push organization
     end
 
