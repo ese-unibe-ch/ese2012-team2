@@ -13,6 +13,22 @@
                    container: $("#pager"),
                    positionFixed: false
            });
+     $("#activities_table_self")
+                .tablesorter({
+                        widgets: ['zebra']
+                })
+                .tablesorterPager({
+                        container: $("#activities_pager_self"),
+                        positionFixed: false
+                });
+     $("#activities_table_members")
+                .tablesorter({
+                        widgets: ['zebra']
+                })
+                .tablesorterPager({
+                        container: $("#activities_pager_members"),
+                        positionFixed: false
+                });
      $("#itemTable2")
                 .tablesorter({
                         headers: {3: {sorter: false}},
@@ -26,7 +42,6 @@
   })
 
 %h1 Organization #{organization.name}
-=haml :'partials/trackbutton', :locals => {:tracked_already => @active_user.trackees.include?(organization), :id => organization.name, :type => :organization, :track_id => organization.track_id, :name => organization.display_name }
 %img.image_float_left{:src => "#{organization.image_path}", :alt => "Organization image"}
 %h2 Credits
 %span
@@ -76,3 +91,10 @@
           %input{:type => "submit", :value => "Send request"}
 %h2 Items
 =haml :'partials/item_listing', :locals => {:user => organization}
+
+%h2 Activities
+=haml :'partials/trackbutton', :locals => {:tracked_already => @active_user.trackees.include?(organization), :id => organization.name, :type => :organization, :track_id => organization.track_id, :name => organization.display_name }
+=haml :'partials/activities_list', :locals => {:activities => organization.activities, :show_owner => false, :list_suffix => "self"}
+
+%h2 Members Activities
+=haml :'partials/activities_list', :locals => {:activities => organization.members_activities, :show_owner => true, :list_suffix => "members"}

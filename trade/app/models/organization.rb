@@ -74,16 +74,26 @@
         unless @admins.include? member
              if @members.include? member
                @admins.push member
+               self.add_activity "Granted admin privileges to #{member.display_name}."
              else
                raise TradeException, "Admin has to be a member"
              end
         end
       end
 
+      def activities
+         self.overlay.activities_by_owner(self)
+      end
+
+      def members_activities
+        self.overlay.activities_by_owners(self.members)
+      end
+
       def remove_admin(member)
         if @admins.include? member
           if @admins.length > 1
             @admins.delete member
+            self.add_activity "Revoked admin privileges of #{member.display_name}."
           else
             raise TradeException, "Last admin can not be removed!"
           end
