@@ -29,10 +29,7 @@ class ItemValidator
   end
 
   def self.parse_date_time(date,time)
-    unless date == "" and time == ""
-       if date == ""
-         raise TradeException, "please choose a date"
-       end
+    unless date == ""
       if time == ""
         raise TradeException, "please select a time"
       end
@@ -46,8 +43,6 @@ class ItemValidator
        rescue
          raise TradeException, "DateTime format invalid"
        end
-
     end
-
   end
 end
