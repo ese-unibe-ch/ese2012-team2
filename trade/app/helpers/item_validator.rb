@@ -33,9 +33,9 @@ class ItemValidator
       if time == ""
         raise TradeException, "please select a time"
       end
-      time_string = "#{date}T#{time}"
+      time_string = "#{date}T#{time} +0100"
        begin
-         end_time = DateTime.strptime(time_string, "%d-%m-%YT%H:%M")
+         end_time = DateTime.strptime(time_string, "%d-%m-%YT%H:%M %Z")
          if end_time < DateTime.now
            raise TradeException, "End time must be in the future"
          end

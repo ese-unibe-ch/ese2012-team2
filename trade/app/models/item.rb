@@ -131,7 +131,7 @@ module Models
 
     def over?
       unless self.end_time.nil?
-        self.end_time > DateTime.now
+        self.end_time < DateTime.now
       end
     end
 
