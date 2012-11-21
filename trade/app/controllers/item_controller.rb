@@ -156,7 +156,8 @@ class ItemController < BaseSecureController
       name = params[:name]
       price = params[:price]
       description = params[:description]
-      endtime = params[:endtime]
+      end_time = ItemValidator.parse_date_time(params[:date],params[:time])
+
 
       p = Models::Item.validate_price(price)
       if name.empty?
@@ -166,7 +167,7 @@ class ItemController < BaseSecureController
         item.price = p
         item.description = description
         #PS it's nil safe ;)
-        item.end_time = endtime
+        item.end_time = end_time
         item.image = ImageHelper.save params[:image], settings.public_folder + "/images/items"
         Event::ItemUpdateEvent.item_changed item
         add_message("Item edited!", :success)

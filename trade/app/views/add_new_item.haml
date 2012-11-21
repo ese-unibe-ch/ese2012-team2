@@ -11,8 +11,10 @@
   %br
   %input.normal_input{:type => "text", :name => "price", :placeholder => "Price"}
   %br
-  %input.datepicker{:type => "text", :name => "endtime", :placeholder => "Valid till"}
+  %input.datepicker{:type => "text", :name => "date", :placeholder => "Valid till Date"}
   %span.hint If field is empty, the offer will not expire
+  %br
+  %input.normal_input{:type => "text", :name => "time", :value => "00:00", :placeholder => "Valid till Time"}
   %br
   %textarea.normal_input.default_textarea_size{:name => "description", :placeholder => "Description (optional)"}
   %br

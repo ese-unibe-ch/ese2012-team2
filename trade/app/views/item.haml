@@ -1,6 +1,16 @@
+:javascript
+  $(document).ready(function() {
+     $("#activities_table_self")
+                .tablesorter({
+                        widgets: ['zebra']
+                })
+                .tablesorterPager({
+                        container: $("#activities_pager_self"),
+                        positionFixed: false
+                });
+  })
+
 %h1 Item #{item.name}
-- unless @active_user == item.owner
-  =haml :'partials/trackbutton', :locals => {:tracked_already => @active_user.trackees.include?(item), :id => item.id, :type => :item, :track_id => item.track_id, :name => item.name }
 %div
   -if item.owner != @active_user and item.owner != @active_user.working_for
     -if item.state == :active
@@ -24,12 +34,17 @@
 %h2 Price
 %span #{item.price}
 %h2 Valid till
-%span #{item.end_time}
+%span #{item.formatted_end_time}
 %h2 Description
 %span
   #{item.description.gsub("\n", "<br>")}
   -if item.description == ""
     No description available
+%h2 Activities
+- unless @active_user == item.owner
+  =haml :'partials/trackbutton', :locals => {:tracked_already => @active_user.trackees.include?(item), :id => item.id, :type => :item, :track_id => item.track_id, :name => item.name }
+=haml :'partials/activities_list', :locals => {:activities => item.activities, :show_owner => false, :list_suffix => "self"}
+
 %table
   %thead
     %tr

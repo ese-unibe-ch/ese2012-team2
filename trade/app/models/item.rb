@@ -36,7 +36,15 @@ module Models
     end
 
     def end_time=(end_time)
-      self.add_activity "end_time was changed" unless @end_time == end_time
+      if end_time.nil?
+        self.add_activity "end time was deleted" unless  self.end_time.nil?
+      else
+        if self.end_time.nil?
+          self.add_activity "end time was set to #{end_time.strftime("%d.%m.%Y %H:%M")}"
+        else
+          self.add_activity "end time was changed from #{self.formatted_end_time} to #{end_time.strftime("%d.%m.%Y %H:%M")}" unless @end_time == end_time
+        end
+      end
       @end_time = end_time
     end
 
@@ -55,7 +63,7 @@ module Models
     #SH If the user is not nil, adds the item to the item list of the owner
     #AS The parameter request means, the item is added as an item request. Defaultly it's false.
     def initialize(name, price, owner, description, state=:inactive, image=nil, request=false, end_time=nil)
-      self.price = Models::Item.validate_price price
+      @price = Models::Item.validate_price price
 
       if owner.nil?
         raise TradeException, "Owner may not be empty!"
@@ -86,6 +94,7 @@ module Models
 
       self.overlay.add_item(self)
       owner.add_activity "has created item #{name}"
+      self.add_activity "item was created"
     end
 
     def self.validate_price price
@@ -120,8 +129,8 @@ module Models
     end
 
     def over?
-      unless self.end_time == nil
-        self.end_time < DateTime.now
+      unless self.end_time.nil?
+        self.end_time > DateTime.now
       end
     end
 
@@ -137,12 +146,28 @@ module Models
 
     def formatted_end_time
       unless self.end_time.nil?
+        self.end_time.strftime("%d.%m.%Y %H:%M")
+      end
+    end
+
+    def formatted_end_time_date
+      unless self.end_time.nil?
         self.end_time.strftime("%d-%m-%Y")
+      end
+    end
+
+    def formatted_end_time_time
+      unless self.end_time.nil?
+        self.end_time.strftime("%H:%M")
       end
     end
 
     def track_id
       "item$#{self.id}"
+    end
+
+    def activities
+      self.overlay.activities_by_owner(self)
     end
 
     def image_path
