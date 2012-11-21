@@ -12,7 +12,6 @@ module Models
           puts "i am #{self}"
           item.take_ownership(self)
           item.state = :pending
-          item.end_time = nil
         else
           raise TradeException, "You don't have enough credits to buy this item!"
         end

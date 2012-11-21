@@ -1,9 +1,8 @@
 -#SH Shows the add item form
 :javascript
   $(document).ready(function() {
-    AnyTime.picker( "datepicker",
-        { format: "%d/%M/%Y, %H:%i", firstDOW: 1 } );
-    })
+     $(".datepicker").datepick({dateFormat: 'dd-mm-yyyy'});
+  })
 %h1 Add Item
 - unless @active_user.working_for.nil?
   %p Adding item for organization: #{@active_user.working_for}
@@ -12,7 +11,7 @@
   %br
   %input.normal_input{:type => "text", :name => "price", :placeholder => "Price"}
   %br
-  %input#datepicker{:type => "text", :name => "endtime", :placeholder => "Valid till"}
+  %input.datepicker{:type => "text", :name => "endtime", :placeholder => "Valid till"}
   %span.hint If field is empty, the offer will not expire
   %br
   %textarea.normal_input.default_textarea_size{:name => "description", :placeholder => "Description (optional)"}

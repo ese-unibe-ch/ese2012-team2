@@ -165,7 +165,8 @@ class ItemController < BaseSecureController
         item.name = name
         item.price = p
         item.description = description
-        item.end_time = DateTime.parse(endtime)
+        #PS it's nil safe ;)
+        item.end_time = endtime
         item.image = ImageHelper.save params[:image], settings.public_folder + "/images/items"
         Event::ItemUpdateEvent.item_changed item
         add_message("Item edited!", :success)
