@@ -156,7 +156,20 @@ class ItemController < BaseSecureController
       name = params[:name]
       price = params[:price]
       description = params[:description]
-      endtime = params[:endtime]
+      if params[:endtime] == ""
+        endtime = nil
+      else
+        begin
+          endtime = DateTime.strptime(params[:endtime], "%d-%m-%Y")
+          if endtime < DateTime.now
+            raise TradeException, "End time must be in the future."
+          end
+        rescue
+          raise TradeException, "Invalid date format for end time."
+        end
+
+      end
+
 
       p = Models::Item.validate_price(price)
       if name.empty?
