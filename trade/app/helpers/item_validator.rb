@@ -14,18 +14,7 @@ class ItemValidator
     name = params[:name]
     price = params[:price]
     description = params[:description]
-    if params[:endtime] == ""
-      end_time = nil
-    else
-      begin
-        end_time = DateTime.strptime(params[:endtime], "%d-%m-%Y")
-        if end_time < DateTime.now
-          raise TradeException, "End time must be in the future."
-        end
-      rescue ArgumentError
-        raise TradeException, "Invalid date format for end time"
-      end
-    end
+    end_time = self.parse_date_time(params[:date], params[:time])
 
     price = ItemValidator.delete_leading_zeros(price)
 
@@ -37,5 +26,28 @@ class ItemValidator
     item = Models::Item.new(name, price, user, description, :inactive, nil, as_request, end_time)
     image_name = ImageHelper.save params[:image], "#{settings.public_folder}/images/items"
     item.image = image_name
+  end
+
+  def self.parse_date_time(date,time)
+    unless date == "" and time == ""
+       if date == ""
+         raise TradeException, "please choose a date"
+       end
+      if time == ""
+        raise TradeException, "please select a time"
+      end
+      time_string = "#{date}T#{time}"
+       begin
+         end_time = DateTime.strptime(time_string, "%d-%m-%YT%H:%M")
+         if end_time < DateTime.now
+           raise TradeException, "End time must be in the future"
+         end
+         return end_time
+       rescue
+         raise TradeException, "DateTime format invalid"
+       end
+
+    end
+
   end
 end

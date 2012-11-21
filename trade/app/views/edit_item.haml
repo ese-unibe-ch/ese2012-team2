@@ -16,10 +16,16 @@
   %input.normal_input{:type => "text", :name => "price", :value => "#{item.price}"}
   %br
   %label
-    Valid till:
+    Valid till Date:
   %br
-  %input.datepicker{:type => "text", :name => "endtime", :value => "#{item.formatted_end_time}"}
+  %input.datepicker{:type => "text", :name => "date", :value => "#{item.formatted_end_time_date}"}
   %span.hint If field is empty, the offer will not expire
+  %br
+  %label
+    Valid till Time:
+  %br
+  %input.normal_input{:type => "text", :name => "time", :value => "#{item.formatted_end_time_time}"}
+  %span.hint Format examples: 09:56, 20:00
   %br
   %label
     Description:
