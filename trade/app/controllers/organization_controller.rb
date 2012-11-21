@@ -51,7 +51,7 @@ class OrganizationController  < BaseSecureController
      organization = @data.organization_by_name(params[:organization])
      member = @data.user_by_name params[:user]
 
-     if @active_user == organization.admin
+     if organization.admins.include? @active_user
        organization.send_request(member)
      end
      redirect back
