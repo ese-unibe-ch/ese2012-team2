@@ -231,6 +231,7 @@ module Models
 
     def trackees_by_user(user)
       @trackees[user]
+    end
 
     #AS Add a request for an item - eg. add an item to item_requests
     def add_item_request(item)
@@ -248,6 +249,7 @@ module Models
     def get_item_request_by_id(id)
       @item_requests[id]
     end
+
     def delete_item_request(request_id)
       @item_requests.delete(request_id)
     end
