@@ -72,7 +72,8 @@ class App < Sinatra::Base
 
     scheduler = Rufus::Scheduler.start_new
 
-    scheduler.every '1m' do
+    scheduler.every '10s' do
+      puts "running task"
       for item in overlay.all_items
         if item.over?
           item.end_offer

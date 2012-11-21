@@ -37,9 +37,9 @@ module Models
         self.add_activity "end time was deleted" unless  self.end_time.nil?
       else
         if self.end_time.nil?
-          self.add_activity "end time was set to #{end_time.strftime("%d-%m-%Y %H:%M")}"
+          self.add_activity "end time was set to #{end_time.strftime("%d.%m.%Y %H:%M")}"
         else
-          self.add_activity "end time was changed from #{self.formatted_end_time} to #{end_time.strftime("%d-%m-%Y %H:%M")}" unless @end_time == end_time
+          self.add_activity "end time was changed from #{self.formatted_end_time} to #{end_time.strftime("%d.%m.%Y %H:%M")}" unless @end_time == end_time
         end
       end
       @end_time = end_time
@@ -126,8 +126,8 @@ module Models
     end
 
     def over?
-      unless self.end_time == nil
-        self.end_time < DateTime.now
+      unless self.end_time.nil?
+        self.end_time > DateTime.now
       end
     end
 
@@ -143,7 +143,7 @@ module Models
 
     def formatted_end_time
       unless self.end_time.nil?
-        self.end_time.strftime("%d-%m-%Y %H:%M")
+        self.end_time.strftime("%d.%m.%Y %H:%M")
       end
     end
 
