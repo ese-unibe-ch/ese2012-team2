@@ -38,6 +38,8 @@
         if @admins.include? member
           raise TradeException "Admin can't be removed"
         else
+          self.add_activity "Removed member #{member.display_name}"
+          member.add_activity "Got kicked from organization #{self.display_name}"
           @members.delete(member)
         end
       end
