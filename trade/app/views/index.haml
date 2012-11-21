@@ -24,6 +24,7 @@
       %th Name
       %th.padding_left.price_column Price
       %th.padding_left Owner
+      %th.padding_left Valid till
       %th.center Buy
   %tbody
     - for item in items
@@ -38,6 +39,7 @@
               %a{:href=> "/user/#{item.owner}"} #{item.owner.display_name}
             -else
               %a{:href=> "/organization/#{item.owner}"} #{item.owner.name}
+          %td.padding_left #{item.end_time}
           %td.center
             - if item.owner != @active_user and item.owner != @active_user.working_for and item.state == :active #SH Don't show the buy button for your own items
               =haml :'partials/buy_button', :locals => {:itemid => item.id}

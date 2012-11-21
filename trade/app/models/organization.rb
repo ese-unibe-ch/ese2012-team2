@@ -1,7 +1,7 @@
   module Models
     class Organization < Models::Trader
 
-      attr_accessor :admin
+      attr_accessor :admins
       attr_reader :pending_members, :members
 
       #SH Setup standard values
@@ -14,7 +14,8 @@
         end
         self.name = name.downcase.delete(" ")
         self.interests= interests
-        self.admin = admin
+        @admins = Array.new()
+        @admins.push(admin)
         self.image = image
         @members = Array.new()
         @members.push(admin)
@@ -24,7 +25,7 @@
       end
 
       def email
-        self.admin.email
+        self.admins.last.email
       end
 
       def add_member(member)
@@ -32,8 +33,10 @@
       end
 
       def remove_member(member)
-        unless member == @admin
-           @members.delete(member)
+        if @admins.include? member
+          raise TradeException "Admin can't be removed"
+        else
+          @members.delete(member)
         end
       end
 
@@ -65,6 +68,28 @@
 
       def track_id
         "org$#{self.name}"
+      end
+
+      def add_admin(member)
+        unless @admins.include? member
+             if @members.include? member
+               @admins.push member
+             else
+               raise TradeException, "Admin has to be a member"
+             end
+        end
+      end
+
+      def remove_admin(member)
+        if @admins.include? member
+          if @admins.length > 1
+            @admins.delete member
+          else
+            raise TradeException, "Last admin can not be removed!"
+          end
+        else
+          raise TradeException, "The member #{member} is no admin."
+        end
       end
 
       def image_path

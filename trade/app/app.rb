@@ -69,6 +69,16 @@ class App < Sinatra::Base
     overlay =  Models::DataOverlay.instance
     Models::Organization.new("Test", "Bla", overlay.user_by_name("ese"), nil).add_member(overlay.user_by_name("Steve"))
 
+
+    scheduler = Rufus::Scheduler.start_new
+
+    scheduler.every '1m' do
+      for item in overlay.all_items
+        if item.over?
+          item.end_offer
+        end
+      end
+    end
   end
 end
 

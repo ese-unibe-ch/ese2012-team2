@@ -9,3 +9,4 @@ gem 'sanitize'
 gem "json_pure"
 gem "rcov"
 gem "thin"
+gem 'rufus-scheduler'

@@ -16,8 +16,10 @@ class ItemController < BaseSecureController
   #SH Tries to add an item. Redirect to the add item message page.
   post "/add_item" do
     @title = "Add item"
+    as_request= params[:action]=="Add as a request"
+
     begin
-    ItemValidator.add_item(params, @active_user)
+    ItemValidator.add_item(params, @active_user, as_request)
     add_message("Item successfully created!", :success)
     rescue TradeException => e
       add_message(e.message, :error)
@@ -154,6 +156,7 @@ class ItemController < BaseSecureController
       name = params[:name]
       price = params[:price]
       description = params[:description]
+      endtime = params[:endtime]
 
       p = Models::Item.validate_price(price)
       if name.empty?
@@ -163,6 +166,7 @@ class ItemController < BaseSecureController
         item.price = p
         item.description = description
         #PS it's nil safe ;)
+        item.end_time = endtime
         item.image = ImageHelper.save params[:image], settings.public_folder + "/images/items"
         Event::ItemUpdateEvent.item_changed item
         add_message("Item edited!", :success)

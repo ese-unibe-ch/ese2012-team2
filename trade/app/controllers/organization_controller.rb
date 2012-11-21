@@ -57,6 +57,34 @@ class OrganizationController  < BaseSecureController
      redirect back
    end
 
+   post "/organization/:organization/add_admin" do
+     organization = @data.organization_by_name(params[:organization])
+     member = @data.user_by_name params[:user]
+
+     if organization.admins.include? @active_user
+       begin
+         organization.add_admin(member)
+       rescue TradeException => e
+         add_message(e.message, :error)
+       end
+     end
+     redirect back
+   end
+
+   post "/organization/:organization/remove_admin/:member" do
+     organization = @data.organization_by_name(params[:organization])
+     member = @data.user_by_name params[:member]
+
+     if organization.admins.include? @active_user
+       begin
+         organization.remove_admin(member)
+       rescue TradeException => e
+         add_message(e.message, :error)
+       end
+     end
+     redirect back
+   end
+
   post "/organization/:organization/accept_request" do
     organization = @data.organization_by_name(params[:organization])
     organization.accept_request @active_user

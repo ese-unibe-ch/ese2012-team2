@@ -5,7 +5,7 @@ require_relative 'activity'
 module Models
   class Item < Trackable
 
-    attr_accessor :name, :price, :owner, :state, :description, :image, :prev_owners
+    attr_accessor :name, :price, :owner, :state, :description, :image, :prev_owners, :end_time
 
     def name=(name)
       add_activity "name was changed from #{self.name} to #{name}" unless @name == name
@@ -45,8 +45,9 @@ module Models
 
     #SH Sets the name, the price, and the owner of the item
     #SH If the user is not nil, adds the item to the item list of the owner
-    def initialize(name, price, owner, description, state=:inactive, image=nil)
-      @price = Models::Item.validate_price price
+    #AS The parameter request means, the item is added as an item request. Defaultly it's false.
+    def initialize(name, price, owner, description, state=:inactive, image=nil, request=false)
+      self.price = Models::Item.validate_price price
 
       if owner.nil?
         raise TradeException, "Owner may not be empty!"
@@ -66,6 +67,11 @@ module Models
       @state = state
       @id = @@item_count
       @@item_count += 1
+      if(request)
+        self.overlay.add_item_request(self)
+      else
+        self.overlay.add_item(self)
+      end
 
       self.overlay.add_item(self)
       owner.add_activity "has created item #{name}"
@@ -100,6 +106,16 @@ module Models
       self.owner.add_activity "Sold item #{self.name} to #{new_owner.name} for #{self.price}."
       new_owner.add_activity "Bought item #{self.name} from #{self.owner.name} for #{self.price}."
       @owner = new_owner
+    end
+
+    def over?
+      unless self.end_time == nil
+        #TODO
+      end
+    end
+
+    def end_offer
+      #TODO
     end
 
     def to_s

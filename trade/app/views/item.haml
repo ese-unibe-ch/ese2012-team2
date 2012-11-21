@@ -23,6 +23,8 @@
   %a{:href => "/user/#{item.owner.name}"} #{item.owner.display_name}
 %h2 Price
 %span #{item.price}
+%h2 Valid till
+%span #{item.end_time}
 %h2 Description
 %span
   #{item.description.gsub("\n", "<br>")}
