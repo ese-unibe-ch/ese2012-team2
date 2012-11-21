@@ -46,7 +46,7 @@ module Models
     #SH Sets the name, the price, and the owner of the item
     #SH If the user is not nil, adds the item to the item list of the owner
     #AS The parameter request means, the item is added as an item request. Defaultly it's false.
-    def initialize(name, price, owner, description, state=:inactive, image=nil, request=false)
+    def initialize(name, price, owner, description, state=:inactive, image=nil, request=false, end_time=nil)
       self.price = Models::Item.validate_price price
 
       if owner.nil?
@@ -65,6 +65,10 @@ module Models
       @comments = Array.new
 
       @state = state
+
+      puts "end time: #{end_time}"
+      @end_time = end_time
+
       @id = @@item_count
       @@item_count += 1
       if(request)
@@ -110,16 +114,24 @@ module Models
 
     def over?
       unless self.end_time == nil
-        #TODO
+        self.end_time < DateTime.now
       end
     end
 
     def end_offer
-      #TODO
+      @end_time = nil
+      @state = :inactive
+      self.add_activity "offer expired"
     end
 
     def to_s
       self.name
+    end
+
+    def formatted_end_time
+      unless self.end_time.nil?
+        self.end_time.strftime("%d-%m-%Y")
+      end
     end
 
     def track_id
