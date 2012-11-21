@@ -32,6 +32,11 @@ module Models
       @image = image
     end
 
+    def end_time=(end_time)
+      self.add_activity "end_time was changed" unless @end_time == end_time
+      @end_time = end_time
+    end
+
     attr_reader :id, :comments
 
     @@item_count = 0
@@ -66,7 +71,6 @@ module Models
 
       @state = state
 
-      puts "end time: #{end_time}"
       @end_time = end_time
 
       @id = @@item_count
