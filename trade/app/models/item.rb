@@ -18,7 +18,10 @@ module Models
     end
 
     def state=(state)
-      add_activity "state changed from #{self.state} to #{state}"  unless @state == state
+      unless @state == state
+        add_activity "state changed from #{self.state} to #{state}"
+        owner.add_activity "has changed state of #{self.name} from #{self.state} to #{state}"
+      end
       @state = state
     end
 

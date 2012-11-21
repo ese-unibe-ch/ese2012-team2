@@ -63,6 +63,7 @@ module Models
     end
 
     def delete_item(item)
+      item.owner.add_activity "has deleted item #{item.name}"
       @items.delete item.id
     end
 

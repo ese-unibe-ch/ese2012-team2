@@ -29,6 +29,8 @@
       end
 
       def add_member(member)
+        member.add_activity "has joined organization #{self.name}"
+        add_activity "#{member.name} has become a new member"
         @members.push(member)
       end
 
@@ -73,6 +75,8 @@
       def add_admin(member)
         unless @admins.include? member
              if @members.include? member
+               member.add_activity "has become an admin in organization #{self.name}"
+               add_activity "has a new admin: #{member.name}"
                @admins.push member
              else
                raise TradeException, "Admin has to be a member"
