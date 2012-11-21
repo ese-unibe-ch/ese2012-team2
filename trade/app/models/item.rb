@@ -78,12 +78,15 @@ module Models
 
     def over?
       unless self.end_time == nil
-        #TODO
+        puts "checked over"
+        DateTime.now - self.end_time > 0     #TODO SH It doesn't work somehow, no idea why :()
       end
     end
 
     def end_offer
-      #TODO
+      self.status = :inactive
+      self.end_time = nil
+      puts "ended offer"
     end
 
     def to_s

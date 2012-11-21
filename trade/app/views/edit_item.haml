@@ -1,7 +1,8 @@
 -#FW&MW Shows the edit item form
 :javascript
   $(document).ready(function() {
-     $(".datepicker").datepick({dateFormat: 'dd-mm-yyyy'});
+    AnyTime.picker( "datepicker",
+        { format: "%d/%M/%Y, %H:%i", firstDOW: 1 } );
     })
 %h1 Edit Item
 %form{:action => "/item/#{item.id}/edit", :method => "POST", :enctype=>"multipart/form-data"}
@@ -18,7 +19,7 @@
   %label
     Valid till:
   %br
-  %input.datepicker{:type => "text", :name => "endtime", :value => "#{item.end_time}"}
+  %input#datepicker{:type => "text", :name => "endtime", :value => "#{item.end_time.to_s}"}
   %span.hint If field is empty, the offer will not expire
   %br
   %label

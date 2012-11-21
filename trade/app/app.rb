@@ -68,12 +68,13 @@ class App < Sinatra::Base
 
     scheduler = Rufus::Scheduler.start_new
 
-    scheduler.every '1m' do
+    scheduler.every '15s' do
       for item in overlay.all_items
         if item.over?
           item.end_offer
         end
       end
+      puts "checked time"
     end
   end
 end

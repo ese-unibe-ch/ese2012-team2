@@ -24,7 +24,7 @@ class ItemValidator
       user = active_user.working_for
     end
     item = Models::Item.new(name, price, user, description, :inactive, nil, as_request)
-    item.end_time = endtime
+    item.end_time = DateTime.parse(endtime)
     image_name = ImageHelper.save params[:image], "#{settings.public_folder}/images/items"
     item.image = image_name
   end
