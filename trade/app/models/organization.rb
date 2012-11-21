@@ -78,7 +78,6 @@
                member.add_activity "has become an admin in organization #{self.name}"
                add_activity "has a new admin: #{member.name}"
                @admins.push member
-               self.add_activity "Granted admin privileges to #{member.display_name}."
              else
                raise TradeException, "Admin has to be a member"
              end
@@ -98,6 +97,7 @@
           if @admins.length > 1
             @admins.delete member
             self.add_activity "Revoked admin privileges of #{member.display_name}."
+            member.add_activity "No longer admin of #{self.display_name}"
           else
             raise TradeException, "Last admin can not be removed!"
           end
