@@ -10,10 +10,10 @@ module Models
       if item.state == :active
         if item.price<=self.credits
           self.credits -= item.price
-          puts "i am #{self}"
           item.take_ownership(self)
           item.state = :pending
         else
+          self.add_activity_failed_purchase item
           raise TradeException, "You don't have enough credits to buy this item!"
         end
       else
@@ -22,6 +22,12 @@ module Models
       else
         raise TradeException, "You cannot buy your own item!"
       end
+    end
+
+    def add_activity_failed_purchase item
+      self.add_activity "failed to buy item #{item.name}"
+      item.owner.add_activity "selling item #{item.name} to #{self.display_name} failed"
+      item.add_activity "buying failed for #{self.display_name}"
     end
 
     # checks whether the bid passes the conditions and if the same user gives the next bid

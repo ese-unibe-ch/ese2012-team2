@@ -125,6 +125,7 @@ module Models
       end
       self.owner.add_activity "Sold item #{self.name} to #{new_owner.name} for #{self.price}."
       new_owner.add_activity "Bought item #{self.name} from #{self.owner.name} for #{self.price}."
+      self.add_activity "sold to #{new_owner.display_name}"
       @owner = new_owner
     end
 
