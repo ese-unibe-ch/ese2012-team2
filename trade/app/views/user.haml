@@ -72,11 +72,15 @@
             #{wish.name}
           %form{:action => "/item/#{wish.id}/remove_wish", :method => "POST"}
             %input{:type => "submit",:name => "action", :value => "Remove", :class => "button_as_link"}
-  %h2 My Activities
+  - if @active_user == user
+    %h2 My Activities
+  - else
+    %h2 Activities
   =haml :'partials/activities_list', :locals => {:activities => user.activities, :show_owner => false, :list_suffix => "self"}
-  =haml :'partials/tracking', :locals => {:user => user}
+  - if @active_user == user
+    =haml :'partials/tracking', :locals => {:user => user}
 
-  - if user.organizations.length > 0
-    %h2 Activities from my Organizations
-    =haml :'partials/activities_list', :locals => {:activities => user.organization_activities, :show_owner => true, :list_suffix => "org"}
+    - if user.organizations.length > 0
+      %h2 Activities from my Organizations
+      =haml :'partials/activities_list', :locals => {:activities => user.organization_activities, :show_owner => true, :list_suffix => "org"}
 
