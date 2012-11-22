@@ -117,6 +117,7 @@ class Main  < BaseSecureController
   end
 
   get "/item_requests" do
+    @title = "All item requests"
     item_requests= @data.get_item_requests()
     haml :item_requests, :locals => {:requests => item_requests}
   end
