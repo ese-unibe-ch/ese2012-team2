@@ -1,27 +1,27 @@
-%h1 Item Auction
+%h1 Auction #{auction.name}
 %img.image_float_right{:src => url("#{auction.image_path}"), :width => "150px"}
-%h2 #{auction.name}
 %br
-%h3.blue Owner:
-%h3.no-margin #{auction.user}
+%h2 Owner:
+%span
+  %a{:href => "/user/#{auction.user.name}"} #{auction.user.display_name}
 %br
-%h3.blue Description:
-%h3.no-margin #{auction.description}
+%h2 Description:
+%span #{auction.description}
 %br
-%h3.blue Minimal Price:
-%h3.no-margin #{auction.minimal}$
+%h2 Minimal Price:
+%span #{auction.minimal}
 %br
-%h3.blue Minimal Increment Step:
-%h3.no-margin #{auction.increment}$
+%h2 Minimal Increment Step:
+%span #{auction.increment}
 %br
-%h3.blue Current Winner:
-%h3.no-margin #{auction.get_current_winner == nil ? "---" : auction.get_current_winner.display_name}
+%h2 Current Winner:
+%span #{auction.get_current_winner == nil ? "no bidder yet" : auction.get_current_winner.display_name}
 %br
-%h3.blue Current Price:
-%h3.no-margin #{auction.current_price == 0 ? "---" : auction.current_price}$
+%h2 Current Price:
+%span #{auction.current_price == 0 ? "no bid yet" : auction.current_price}
 %br
-%h3.blue Due Date:
-%h3.no-margin #{auction.due_date.asctime}
+%h2 Due Date:
+%span #{auction.due_date.asctime}
 -if auction.user != @active_user
   %form{:action => "/auction/#{auction.id}/set_bid", :method => "POST", :enctype => "multipart/form-data"}
     %input.normal_input_right{:type => "text", :name => "bid", :placeholder => "Set Bid"}

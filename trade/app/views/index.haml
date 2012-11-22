@@ -14,9 +14,20 @@
               container: $("#pager"),
               positionFixed: false
       });
+
+      $("#auctionTable")
+            .tablesorter({
+                    headers: {3: {sorter: false}},
+                    sortList: [[0,0], [1,0]],
+                    widgets: ['zebra']
+            })
+            .tablesorterPager({
+                    container: $("#pager2"),
+                    positionFixed: false
+            });
   })
 
-%h1 Hello #{@active_user.display_name}
+%h1 All items
 -#SH Shows a table of all active items
 %table{:id=>"itemTable", :class=>"tablesorter pager"}
   %thead
@@ -46,3 +57,4 @@
             - if item.owner != @active_user and item.owner != @active_user.working_for and item.state == :auction
               %a.button_as_link{:href => "/auction/#{item.id}"} Bid
 =haml :'partials/pager'
+=haml :list_auctions
