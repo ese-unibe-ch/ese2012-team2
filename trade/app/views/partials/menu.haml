@@ -6,9 +6,7 @@
       %li
         %a{:href => url("/user"), :class => [@title == "All users" && [:active_tab]]} All users
       %li
-        %a{:href => url("/add_item"), :class => [@title == "Add item/request" && [:active_tab]]} Add Item/Request
-      %li
-        %a{:href => url("/item/auction"), :class => [@title == "Item Auction" && [:active_tab]]} Item Auction
+        %a{:href => url("/add_item"), :class => [@title == "Add item" && [:active_tab]]} Add Item/Request
       %li
         %a{:href => url("/organization/add"), :class => [@title == "Add organization" && [:active_tab]]} Add organization
       %li
@@ -23,5 +21,3 @@
         %a{:href => url("/login"), :class => [@title == "Login" && [:active_tab]]} Login
       %li
         %a{:href => url("/register"), :class => [@title == "Register" && [:active_tab]]} Register
-      //%li
-      //  %a{:href => url("/reset_password"), :class => [@title == "Reset Password" && [:active_tab]]} Reset Password

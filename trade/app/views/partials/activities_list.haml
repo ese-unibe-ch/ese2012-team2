@@ -6,15 +6,16 @@
         - if show_owner
           %th Owner
         %th Activity
-    - for activity in activities
-      %tr
-        %td.list
-          #{activity.formatted_date}
-        - if show_owner
+    %tbody
+      - for activity in activities
+        %tr
           %td.list
-            #{activity.owner}
-        %td.list
-          #{activity.description}
+            #{activity.formatted_date}
+          - if show_owner
+            %td.list
+              #{activity.owner}
+          %td.list
+            #{activity.description}
   =haml :'partials/pager', :locals => {:pager_id => "activities_pager_#{list_suffix}"}
 - else
   no Activities found

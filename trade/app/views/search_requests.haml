@@ -1,13 +1,31 @@
+:javascript
+  $(document).ready(function() {
+    $("#itemTable")
+           .tablesorter({
+                   headers: {4: {sorter: false}},
+                   sortList: [[2,0], [0,0]],
+                   widgets: ['zebra']
+           })
+           .tablesorterPager({
+                   container: $("#pager"),
+                   positionFixed: false
+           });
+  })
 %h1 Subscribed search requests
-%table
-  %tr
-    %th Keywords
-  - for search_request in search_requests
+%table{:id=>"table", :class=>"tablesorter pager"}
+  %thead
     %tr
-      %td.list
-        #{search_request.keywords}
-      %td.right.list.padding_left
-        %form{:action => "/research/#{search_request.id}", :method => "POST"}
-          %input{:type => "submit",:name => "action", :value => "Research", :class => "button_as_link"}
-      %td.list.padding_left
-        %a{:href => "/delete/#{search_request.id}"} Delete
+      %th Keywords
+      %th
+      %th
+  %tbody
+    - for search_request in search_requests
+      %tr
+        %td.list
+          #{search_request.keywords}
+        %td.right.list.padding_left
+          %form{:action => "/research/#{search_request.id}", :method => "POST"}
+            %input{:type => "submit",:name => "action", :value => "Search again", :class => "button_as_link", :style => "width:90px"}
+        %td.list.padding_left
+          %a{:href => "/delete/#{search_request.id}"} Delete
+=haml :'partials/pager', :locals => {:pager_id => "pager"}

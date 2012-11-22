@@ -1,19 +1,34 @@
+:javascript
+  $(document).ready(function() {
+      $("#itemTable2")
+                .tablesorter({
+                        headers: {3: {sorter: false}},
+                        sortList: [[2,0], [0,0]],
+                        widgets: ['zebra']
+                })
+                .tablesorterPager({
+                        container: $("#pager2"),
+                        positionFixed: false
+                });
+  })
 %h1 All auction
 %table{:id=>"itemTable2", :class=>"tablesorter pager"}
-  %tr
-    %th Item
-    %th Owner
-    %th Current Price
-    %th Due Date
-  - for auction in @data.all_auctions
+  %thead
     %tr
-      %td
-        %a{:href => url("/auction/#{auction.id}")} #{auction.name}
-      %td
-        -user = auction.user
-        %a{:href => url("/user/#{user.name}")} #{user.display_name}
-      %td
-        #{auction.current_price == 0 ? "---" : auction.current_price}
-      %td
-        #{auction.due_date.asctime}
+      %th Item
+      %th Owner
+      %th Current Price
+      %th Due Date
+  %tbody
+    - for auction in @data.all_auctions
+      %tr
+        %td
+          %a{:href => url("/auction/#{auction.id}")} #{auction.name}
+        %td
+          -user = auction.user
+          %a{:href => url("/user/#{user.name}")} #{user.display_name}
+        %td
+          #{auction.current_price == 0 ? "---" : auction.current_price}
+        %td
+          #{auction.due_date.asctime}
 =haml :'partials/pager', :locals => {:pager_id => "pager2"}

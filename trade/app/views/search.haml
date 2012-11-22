@@ -43,4 +43,4 @@
           %td.list
             - if item.owner != @active_user #SH Don't show the buy button for your own items
               =haml :'partials/buy_button', :locals => {:itemid => item.id}
-=haml :'partials/pager'
+=haml :'partials/pager', :locals => {:pager_id => "pager"}
