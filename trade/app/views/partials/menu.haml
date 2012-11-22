@@ -5,10 +5,13 @@
         %a{:href => url("/"), :class => [@title == "Home" && [:active_tab]]} Home
       %li
         %a{:href => url("/user"), :class => [@title == "All users" && [:active_tab]]} All users
-      %li
-        %a{:href => url("/add_item"), :class => [@title == "Add item" && [:active_tab]]} Add Item/Request
-      %li
-        %a{:href => url("/organization/add"), :class => [@title == "Add organization" && [:active_tab]]} Add organization
+      %li{:class => "#{[(@title == "Add item" or @title == "Add organization") && [:active_tab]]} headlink"}
+        %p Add
+        %ul
+          %li.sublink
+            %a{:href => url("/add_item")} Add Item/Request
+          %li.sublink
+            %a{:href => url("/organization/add")} Add organization
       %li
         %a{:href => url("/search_requests"), :class => [@title == "Subscriptions" && [:active_tab]]} My Subscriptions
       %li

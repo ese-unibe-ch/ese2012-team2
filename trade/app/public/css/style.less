@@ -134,8 +134,10 @@ textarea, input {
   margin: 0 auto 0 auto;
   padding: 0 10px 0 10px;
   position: absolute;
-  bottom: -1px;
+  top: 68px;
   right: 0;
+  z-index: 2;
+  text-align: center;
 
   li:hover, li a.active_tab, .active_tab {
     background-color: @header-bar-color;
@@ -143,10 +145,11 @@ textarea, input {
   }
 
   li {
+    width: 140px;
     display: inline;
     list-style: none;
     position: relative;
-    margin: 1px;
+
     float: left;
     background-color: @nav-background;
     border-top: 1px solid @tab-border-color;
@@ -164,6 +167,50 @@ textarea, input {
   }
   li:hover a {
     color: @nav-hover-font;
+  }
+  li.sublink {
+    width: 100%;
+    display: block;
+    border-right: none;
+    border-left: none;
+    padding-top: 3px;
+    padding-bottom: 3px;
+
+    a{
+      padding: 0;
+      color: @nav-color;
+    }
+
+    a:hover{
+      color: @nav-hover-font;
+    }
+  }
+
+  li.sublink a.active_tab, li.headlink:hover {
+    background-color: @header-bar-color;
+
+  }
+
+  li.headlink {
+    display: block;
+    color: @nav-color;
+    margin: 0;
+    background-image: url(../images/dropdown.png);
+    background-repeat: no-repeat;
+    background-position: right top;
+
+    p{
+      margin: 0;
+      padding: 0.5em 0.7em;
+    }
+
+    ul {
+      display: none;
+    }
+
+    &:hover ul {
+      display: block;
+    }
   }
 }
 
@@ -195,7 +242,7 @@ h2 {
   margin-top: 15px;
 }
 
-.no-margin{
+.no-margin {
   margin: 0px;
 }
 
@@ -230,7 +277,7 @@ input {
   min-width: 50px;
 }
 
-.default_textarea_size{
+.default_textarea_size {
   height: 100px;
   width: 500px;
 }
@@ -238,7 +285,6 @@ input {
 /********************************/
 /*********Table styles**********/
 /********************************/
-
 
 table.tablesorter {
   width: 100%;
@@ -272,10 +318,9 @@ table.tablesorter {
   }
 }
 
-.pager{
+.pager {
   padding-top: 5px;
   text-align: center;
-
 
   span {
     padding: 0 5px 0 5px;
@@ -370,7 +415,7 @@ table.tablesorter {
   padding-right: @value;
 }
 
-.no-list-style{
+.no-list-style {
   list-style: none;
 }
 
