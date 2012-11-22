@@ -1,20 +1,5 @@
-:javascript
-  $(document).ready(function() {
-
-      $("#auctionTable")
-            .tablesorter({
-                    headers: {3: {sorter: false}},
-                    sortList: [[0,0], [1,0]],
-                    widgets: ['zebra']
-            })
-            .tablesorterPager({
-                    container: $("#pager2"),
-                    positionFixed: false
-            });
-  })
-
 %h1 All auction
-%table{:id=>"auctionTable", :class=>"tablesorter pager2"}
+%table{:id=>"itemTable2", :class=>"tablesorter pager"}
   %tr
     %th Item
     %th Owner
@@ -31,15 +16,4 @@
         #{auction.current_price == 0 ? "---" : auction.current_price}
       %td
         #{auction.due_date.asctime}
-%div{:id => "pager2", :class => "pager"}
-  %form
-    %img{:src => "../images/pager/first.png", :class => "first", :alt =>"first"}
-    %img{:src => "../images/pager/prev.png", :class => "prev", :alt =>"prev"}
-    %input{:class => "pagedisplay", :type => "text"}
-    %img{:src => "../images/pager/next.png", :class => "next", :alt =>"next"}
-    %img{:src => "../images/pager/last.png", :class => "last", :alt =>"last"}
-    %select{:class => "pagesize"}
-      %option{:selected => "selected", :value => "10"}  10
-      %option{:value => "20"} 20
-      %option{:value => "30"} 30
-      %option{:value => "50"} 50
+=haml :'partials/pager', :locals => {:pager_id => "pager2"}

@@ -1,30 +1,30 @@
 :javascript
   $(document).ready(function() {
      $('.powertip').powerTip({
-          placement: 's' // north-east tooltip positio
+          placement: 's'
      });
 
     $("#itemTable")
-      .tablesorter({
-              headers: {3: {sorter: false}},
-              sortList: [[0,0], [1,0]],
-              widgets: ['zebra']
-      })
-      .tablesorterPager({
-              container: $("#pager"),
-              positionFixed: false
-      });
+           .tablesorter({
+                   headers: {4: {sorter: false}},
+                   sortList: [[2,0], [0,0]],
+                   widgets: ['zebra']
+           })
+           .tablesorterPager({
+                   container: $("#pager"),
+                   positionFixed: false
+           });
 
-      $("#auctionTable")
-            .tablesorter({
-                    headers: {3: {sorter: false}},
-                    sortList: [[0,0], [1,0]],
-                    widgets: ['zebra']
-            })
-            .tablesorterPager({
-                    container: $("#pager2"),
-                    positionFixed: false
-            });
+     $("#itemTable2")
+                .tablesorter({
+                        headers: {3: {sorter: false}},
+                        sortList: [[2,0], [0,0]],
+                        widgets: ['zebra']
+                })
+                .tablesorterPager({
+                        container: $("#pager2"),
+                        positionFixed: false
+                });
   })
 
 %h1 All items
@@ -56,5 +56,5 @@
               =haml :'partials/buy_button', :locals => {:itemid => item.id}
             - if item.owner != @active_user and item.owner != @active_user.working_for and item.state == :auction
               %a.button_as_link{:href => "/auction/#{item.id}"} Bid
-=haml :'partials/pager'
+=haml :'partials/pager', :locals => {:pager_id => "pager"}
 =haml :list_auctions

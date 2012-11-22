@@ -66,10 +66,10 @@
             - if item.state == :active
               %td.list
                 =haml :'partials/buy_button', :locals => {:itemid => item.id}
-  =haml :'partials/pager'
+  =haml :'partials/pager', :locals => {:pager_id => "pager"}
   - if user == @active_user or user == @active_user.working_for
     %h2 Pending items
-    %table{:id=>"itemTable2", :class=>"tablesorter pager2"}
+    %table{:id=>"itemTable2", :class=>"tablesorter pager"}
       %thead
         %tr
           %th Name
@@ -85,18 +85,7 @@
               %td.list.padding_left #{item.price}
               %td.list
                 %a{:href => "/user/#{item.owner}"} #{item.owner}
-    %div{:id => "pager2", :class => "pager2"}
-      %form
-        %img{:src => "../images/pager/first.png", :class => "first", :alt =>"first"}
-        %img{:src => "../images/pager/prev.png", :class => "prev", :alt =>"prev"}
-        %input{:class => "pagedisplay", :type => "text"}
-        %img{:src => "../images/pager/next.png", :class => "next", :alt =>"next"}
-        %img{:src => "../images/pager/last.png", :class => "last", :alt =>"last"}
-        %select{:class => "pagesize"}
-          %option{:selected => "selected", :value => "10"}  10
-          %option{:value => "20"} 20
-          %option{:value => "30"} 30
-          %option{:value => "50"} 50
+    =haml :'partials/pager', :locals => {:pager_id => "pager2"}
 - else
   %p
     -if user.class == Models::User
