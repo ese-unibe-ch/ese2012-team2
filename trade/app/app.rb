@@ -64,6 +64,7 @@ class App < Sinatra::Base
   end
 
   configure :development do
+
     self.load_test_data
 
     overlay =  Models::DataOverlay.instance

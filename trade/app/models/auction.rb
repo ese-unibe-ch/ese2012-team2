@@ -33,11 +33,15 @@ module Models
       self.current_price = 0
       self.rank_one=nil
       self.rank_two=nil
-      year = params[:year].to_i
-      month = params[:month].to_i
-      day = params[:day].to_i
-      hour = params[:hour].to_i
-      self.due_date = Time.local(year, month, day, hour, 0, 0)
+      date = params[:date]
+      year = date[6..9].to_i
+      month = date[3..4].to_i
+      day = date[0..1].to_i
+      time = params[:time]
+      hour = time.split(":").first.to_i
+      min = time.split(":").last.to_i
+
+      self.due_date = Time.local(year, month, day, hour, min, 0)
 
       self.overlay.add_auction(self)
     end
