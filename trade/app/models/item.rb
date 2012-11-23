@@ -26,8 +26,16 @@ module Models
     end
 
     def description=(description)
-      add_activity "description was edited" unless @description == description
-      @description = description
+      add_activity "description was edited" unless @description.last == description
+      @description.push = description
+    end
+
+    def description
+      @description.last
+    end
+
+    def revert_description
+      @description.pop
     end
 
     def image=(image)
@@ -74,7 +82,8 @@ module Models
         raise TradeException, "Name must not be empty!"
       end
       @name = name
-      @description= description
+      @description= Array.new
+      @description.push description
       @image = image
       self.prev_owners = Array.new
 
