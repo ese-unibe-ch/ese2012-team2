@@ -71,10 +71,10 @@
     Description:
   %br
   %div{ :id => "description_info", :current_index => "#{item.descriptions.length - 1}", :max_index => "#{item.descriptions.length - 1}", :itemid => "#{item.id}" }
-  %span{ :id => "prev_desc"}
-    prev description
-  %span{ :id => "next_desc"}
-    next description
+    %span{ :id => "prev_desc"}
+      << previous description
+    %span{ :id => "next_desc"}
+      next description >>
 
   %textarea.normal_input.default_textarea_size{:id => "description", :name => "description"}
     #{item.description}
