@@ -2,6 +2,46 @@
 :javascript
   $(document).ready(function() {
      $(".datepicker").datepick({dateFormat: 'dd-mm-yyyy'});
+
+     $("#next_desc").hide();
+     if ($("#description_info").attr("current_index") <= 0) {
+       $("#prev_desc").hide();
+     }
+
+     $("#prev_desc").click(function(){
+       var descriptionIndex = $("#description_info").attr("current_index") - 1;
+       var itemId =  $("#description_info").attr("itemid");
+       if (descriptionIndex >= 0) {
+        updateDescription(descriptionIndex, itemId);
+       }
+     });
+
+     $("#next_desc").click(function(){
+            var descriptionIndex = 1 + parseInt($("#description_info").attr("current_index"));
+            var itemId =  $("#description_info").attr("itemid");
+            if (descriptionIndex <= $("#description_info").attr("max_index")) {
+             updateDescription(descriptionIndex, itemId);
+            }
+          });
+
+
+     function updateDescription(newIndex,itemId) {
+         $.get("/item/" + itemId + "/description/" + newIndex, function(data) {
+           $("#description").html(data);
+           $("#description_info").attr("current_index", newIndex)
+           if ($("#description_info").attr("max_index") <= newIndex) {
+              $("#next_desc").hide();
+           } else {
+              $("#next_desc").show();
+           }
+           if (newIndex <= 0) {
+             $("#prev_desc").hide();
+           } else {
+             $("#prev_desc").show();
+           }
+         });
+       }
+
     })
 %h1 Edit Item
 %form{:action => "/item/#{item.id}/edit", :method => "POST", :enctype=>"multipart/form-data"}
@@ -30,7 +70,13 @@
   %label
     Description:
   %br
-  %textarea.normal_input.default_textarea_size{:name => "description"}
+  %div{ :id => "description_info", :current_index => "#{item.descriptions.length - 1}", :max_index => "#{item.descriptions.length - 1}", :itemid => "#{item.id}" }
+  %span{ :id => "prev_desc"}
+    prev description
+  %span{ :id => "next_desc"}
+    next description
+
+  %textarea.normal_input.default_textarea_size{:id => "description", :name => "description"}
     #{item.description}
   %br
   %label
