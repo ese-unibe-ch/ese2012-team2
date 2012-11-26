@@ -74,6 +74,16 @@ class Main  < BaseSecureController
     haml :edit_user
   end
 
+  post "/user/:user/suspend" do
+     unless params[:suspend]
+       puts "bla"
+       add_message("you have to accept the checkbox before suspension")
+       redirect back
+     end
+     add_message("account successfully suspended")
+     redirect "/logout"
+  end
+
   get "/search" do
     @title = "Search"
     keyword = Models::SearchRequest.splitUp(params[:keywords])
