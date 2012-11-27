@@ -76,10 +76,15 @@ class Main  < BaseSecureController
 
   post "/user/:user/suspend" do
      unless params[:suspend]
-       puts "bla"
        add_message("you have to accept the checkbox before suspension")
        redirect back
      end
+     unless UserDataHelper.can_suspend?(@active_user)
+        add_message("cant suspend account: check if you have active items, open auctions or membership in any organization")
+       redirect back
+     end
+     @active_user.suspension_time = Time.now
+     @active_user.state = :suspended
      add_message("account successfully suspended")
      redirect "/logout"
   end
