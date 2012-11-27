@@ -92,6 +92,11 @@ module Models
       @items.values
     end
 
+
+    def active_items_by_name_and_user(name,user)
+     @items.values.select{|item| item.name==name and item.state==:active and item.owner==user}
+    end
+
     #KR returns the user with the given name
     #returns nil if there is no such user
     def user_by_name(name)
@@ -251,8 +256,10 @@ module Models
       @item_requests[id]
     end
 
+
     def delete_item_request(request_id)
       @item_requests.delete(request_id)
     end
+
   end
 end

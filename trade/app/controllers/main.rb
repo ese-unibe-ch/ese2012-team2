@@ -101,6 +101,20 @@ class Main  < BaseSecureController
     redirect back
   end
 
+  post "/fulfill_item_request/:item_request_id/:seller_name/:type" do
+    request= @data.get_item_request_by_id(params[:item_request_id].to_i)
+
+    if params[:type]=="org"
+      seller= @data.organization_by_name(params[:seller_name].downcase)
+    else
+      seller= @data.user_by_name(params[:seller_name].downcase)
+    end
+    puts request.owner
+    puts seller
+    seller.sell_requested_item(request, request.owner)
+    redirect back
+  end
+
   post "/research/:search_request" do
     @title = "Search"
     search_request = @data.search_request_by_id params[:search_request].to_i
