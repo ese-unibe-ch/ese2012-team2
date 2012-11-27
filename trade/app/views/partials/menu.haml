@@ -1,21 +1,37 @@
 #menu
   %ul
     - if session[:name]
-      %li
-        %a{:href => url("/"), :class => [@title == "Home" && [:active_tab]]} Home
-      %li
-        %a{:href => url("/user"), :class => [@title == "All users" && [:active_tab]]} All users
-      %li{:class => "#{[(@title == "Add item" or @title == "Add organization") && [:active_tab]]} headlink"}
-        %p Add
+      %li{:class => "#{[(@title == "Home" or @title == "All auctions" or @title == "All item requests") && [:active_tab]]} headlink"}
+        %p Marketplace
         %ul
+          %li.sublink
+            %a{:href => url("/"), :class => [@title == "Home" && [:active_tab]]} Items
+          %li.sublink
+            %a{:href => url("/auctions")} Auctions
+          %li.sublink
+            %a{:href => url("/item_requests")} Item Requests
+      %li
+        %a{:href => url("/user"), :class => [@title == "All users" && [:active_tab]]} User list
+      %li{:class => "#{[(@title == "All organizations" or @title == "Add organization" or @title == "Organization requests") && [:active_tab]]} headlink"}
+        %p Organization
+        %ul
+          %li.sublink
+            %a{:href => url("/organizations")} Organization list
+          %li.sublink
+            %a{:href => url("/organization/add")} Add organization
+          %li.sublink
+            %a{:href => url("/user/#{@active_user.name}/requests")} Organization requests
+      %li{:class => "#{[(@title.include?"User" or @title.include?"Items of" or @title == "Add item" or @title == "Subscriptions") && [:active_tab]]} headlink"}
+        %p My account
+        %ul
+          %li.sublink
+            %a{:href => url("/user/#{@active_user.name}")} My profile
+          %li.sublink
+            %a{:href => url("/all_items/#{@active_user.name}")} My items
           %li.sublink
             %a{:href => url("/add_item")} Add Item/Request
           %li.sublink
-            %a{:href => url("/organization/add")} Add organization
-      %li
-        %a{:href => url("/search_requests"), :class => [@title == "Subscriptions" && [:active_tab]]} My Subscriptions
-      %li
-        %a{:href => url("/item_requests"), :class => [@title == "All item requests" && [:active_tab]]} Item Requests
+            %a{:href => url("/search_requests")} Search requests
       %li
         %a{:href => url("/logout")} Logout
 

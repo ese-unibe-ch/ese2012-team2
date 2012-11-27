@@ -102,4 +102,9 @@ class OrganizationController  < BaseSecureController
      haml :organization_request
    end
 
+  get "/organizations" do
+    @title = "All organizations"
+    haml :organizations
+  end
+
 end

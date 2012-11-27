@@ -1,14 +1,5 @@
 :javascript
   $(document).ready(function() {
-
-    $("#userTable")
-           .tablesorter({
-                   widgets: ['zebra']
-           })
-           .tablesorterPager({
-                   container: $("#userPager"),
-                   positionFixed: false
-           });
     $("#orgTable")
                .tablesorter({
                        widgets: ['zebra']
@@ -31,18 +22,3 @@
           %a{:href => url("/user/#{user.name}")} #{user.display_name}
         %td.list #{user.credits}
 =haml :'partials/pager', :locals => {:pager_id => "userPager"}
-%h1 All Organizations
-%table{:id=>"orgTable", :class=>"tablesorter pager"}
-  %thead
-    %tr
-      %th Name
-      %th Credits
-      %th Member
-  %tbody
-    - for org in organizations
-      %tr.list
-        %td.list
-          %a{:href => url("/organization/#{org.name}")} #{org.display_name}
-        %td.list #{org.credits}
-        %td.list #{org.members.length}
-=haml :'partials/pager', :locals => {:pager_id => "orgPager"}

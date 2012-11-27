@@ -38,6 +38,12 @@ class Main  < BaseSecureController
     haml :user, :locals =>{:user => user, :items => items}
   end
 
+  get "/all_items/:user" do
+    user = @data.user_by_name params[:user]
+    @title = "Items of #{user.display_name}"
+    haml :my_items, :locals => {:user => user}
+  end
+
   #SH Buys an item. If an error occurs, redirect to the buy error page
   post "/buy/:item" do
     @title = "Home"

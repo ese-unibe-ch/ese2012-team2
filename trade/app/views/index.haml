@@ -28,6 +28,8 @@
   })
 
 %h1 All items
+%a{:href => url("/add_item")} Add item
+%a{:href => url("/all_items/#{@active_user.name}")}  My items
 -#SH Shows a table of all active items
 %table{:id=>"itemTable", :class=>"tablesorter pager"}
   %thead
@@ -57,4 +59,3 @@
             - if item.owner != @active_user and item.owner != @active_user.working_for and item.state == :auction
               %a.button_as_link{:href => "/auction/#{item.id}"} Bid
 =haml :'partials/pager', :locals => {:pager_id => "pager"}
-=haml :list_auctions
