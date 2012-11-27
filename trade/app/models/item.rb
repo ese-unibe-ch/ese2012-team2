@@ -5,7 +5,7 @@ require_relative 'activity'
 module Models
   class Item < Trackable
 
-    attr_accessor :name, :price, :owner, :state, :description, :image, :prev_owners, :end_time
+    attr_accessor :name, :price, :owner, :state, :descriptions, :image, :prev_owners, :end_time
 
     def name=(name)
       add_activity "name was changed from #{self.name} to #{name}" unless @name == name
@@ -26,8 +26,14 @@ module Models
     end
 
     def description=(description)
-      add_activity "description was edited" unless @description == description
-      @description = description
+      unless @descriptions.last == description
+        add_activity "description was edited"
+        @descriptions.push description
+      end
+    end
+
+    def description
+      @descriptions.last
     end
 
     def image=(image)
@@ -74,7 +80,8 @@ module Models
         raise TradeException, "Name must not be empty!"
       end
       @name = name
-      @description= description
+      @descriptions= Array.new
+      @descriptions.push description
       @image = image
       self.prev_owners = Array.new
 

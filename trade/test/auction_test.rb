@@ -17,7 +17,7 @@ class AuctionTest < Test::Unit::TestCase
     @params = {}
     @params[:increment] = "2"
     @params[:minimal] = "5"
-    @params[:description] = "test it"
+    @params[:descriptions] = "test it"
     @params[:image] = nil
     @params[:year] = "2012"
     @params[:month] = "12"
