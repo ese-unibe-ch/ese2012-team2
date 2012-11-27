@@ -5,7 +5,7 @@
 /***********Variables************/
 /********************************/
 
-@header-bar-height: 10px;
+@header-bar-height: 23px;
 
 /********************************/
 /********General layout**********/
@@ -34,11 +34,11 @@ textarea, input {
 
 #logo {
   positin: absolute;
-  margin: 0 auto;
+  margin: 0 100px;
   font-size: 5em;
   color: @logo-color;
   width: 900px;
-  bottom: 10px;
+  top: 10px;
   a, a:hover {
     color: @logo-color;
   }
@@ -77,20 +77,14 @@ textarea, input {
   background-color: @content-background-color;
   padding: 15px;
   position: relative;
-  float: right;
-  width: 75%;
+
   min-height: inherit;
   overflow: visible;
 }
 
-#side_box {
-  background-color: @content-background-color;
-  float: left;
-  width: 17%;
-  padding: 15px;
-  ul {
-    padding: inherit;
-  }
+#box {
+  float: right;
+  padding-right: 8px;
 }
 
 #header {
@@ -135,7 +129,7 @@ textarea, input {
   margin: 0 auto 0 auto;
   padding: 0 10px 0 10px;
   position: absolute;
-  top: 78px;
+  top: 79px;
   right: 0;
   z-index: 2;
   text-align: center;
@@ -283,6 +277,10 @@ input {
   width: 500px;
 }
 
+.inline{
+  display: inline;
+}
+
 /********************************/
 /*********Table styles**********/
 /********************************/
@@ -337,10 +335,11 @@ table.tablesorter {
       margin-left: 10px;
     }
   }
-  input {
-    width: 50px;
-    text-align: center;
+
   }
+.pagerinput {
+  width: 50px;
+  text-align: center;
 }
 
 /********************************/

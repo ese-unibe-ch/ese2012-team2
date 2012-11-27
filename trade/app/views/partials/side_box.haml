@@ -1,36 +1,15 @@
--if @active_user.nil?
-  %h2 Not logged in
-  %ul
-    %li
-      %a{:href => url("/login")} Login
-    %li
-      %a{:href => url("/register")} Register
-- else
-  %h2 Logged in as: #{@active_user.display_name}
-  %img{:src => url("#{@active_user.image_path}"), :alt=>"User Image", :width => "150"}
-  %br
-  Credits on account: #{@active_user.credits}
-  %br
-  Credits in auctions: #{@active_user.credits_in_auction}
-  %ul
-    %li
-      %a{:href=> url("/user/#{@active_user.name}")} View profile
-    %li
-      %a{:href=> url("/user/#{@active_user.name}/edit")} Edit profile
-
-  %form{:action=>"/work_for", :method=>"POST"}
-    %label Work for:
-    %select{:onchange => "this.form.submit();", :name=>"work_for"}
-      %option{:value=>"myself", :selected => @active_user.working_for.nil?} Myself
-      - for organization in @active_user.organizations
-        %option{:value=>organization.name, :selected => (organization == @active_user.working_for && !@active_user.working_for.nil?) } #{organization.display_name}
-  - if !@active_user.working_for.nil?
-    Working for:
-    %a{:href => "/organization/#{@active_user.working_for.name}"}#{@active_user.working_for.display_name}
+#box
+  -if @active_user.nil?
+    Not logged in
   - else
-    Working for: Myself
-  -unless @active_user.organization_request.last.nil?
-    %br
-    You have organization requests
-    %br
-    %a{:href => "/user/#{@active_user}/requests"} Show requests
+    Credits: #{@active_user.credits}
+    \|
+
+
+    %form.inline{:action=>"/work_for", :method=>"POST"}
+      %label.inline Working for:
+      %select.inline{:onchange => "this.form.submit();", :name=>"work_for"}
+        %option{:value=>"myself", :selected => @active_user.working_for.nil?} Myself
+        - for organization in @active_user.organizations
+          %option{:value=>organization.name, :selected => (organization == @active_user.working_for && !@active_user.working_for.nil?) } #{organization.display_name}
+

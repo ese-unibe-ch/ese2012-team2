@@ -28,6 +28,8 @@
   })
 
 %h1 All items
+%a{:href => url("/add_item")} Add item
+%a{:href => url("/all_items/#{@active_user.name}")}  My items
 -#SH Shows a table of all active items
 %table{:id=>"itemTable", :class=>"tablesorter pager"}
   %thead
