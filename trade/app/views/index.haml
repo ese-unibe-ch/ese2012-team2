@@ -57,4 +57,3 @@
             - if item.owner != @active_user and item.owner != @active_user.working_for and item.state == :auction
               %a.button_as_link{:href => "/auction/#{item.id}"} Bid
 =haml :'partials/pager', :locals => {:pager_id => "pager"}
-=haml :list_auctions

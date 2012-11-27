@@ -1,12 +1,12 @@
 -if @active_user.nil?
-  %h1 Not logged in
+  %h2 Not logged in
   %ul
     %li
       %a{:href => url("/login")} Login
     %li
       %a{:href => url("/register")} Register
 - else
-  %h1 Logged in as: #{@active_user.display_name}
+  %h2 Logged in as: #{@active_user.display_name}
   %img{:src => url("#{@active_user.image_path}"), :alt=>"User Image", :width => "150"}
   %br
   Credits on account: #{@active_user.credits}

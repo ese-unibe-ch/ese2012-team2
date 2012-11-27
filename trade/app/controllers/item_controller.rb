@@ -20,7 +20,7 @@ class ItemController < BaseSecureController
 
     begin
     ItemValidator.add_item(params, @active_user, as_request)
-    add_message("Item successfully created!", :success)
+    add_message("Item successfully created! You can activate the item in your <a href = '/all_items/#{@active_user.name}'>item list</a>.", :success)
     rescue TradeException => e
       add_message(e.message, :error)
     end
@@ -93,7 +93,7 @@ class ItemController < BaseSecureController
   end
 
   # show all active auctions
-  get "/item/auction" do
+  get "/auctions" do
     @title = "All auctions"
     haml :list_auctions, :locals => {:auctions => @data.all_auctions}
   end
