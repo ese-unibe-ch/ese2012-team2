@@ -198,4 +198,10 @@ class ItemController < BaseSecureController
     redirect "/user/#{@active_user.name}"
   end
 
+  get "/item/:id/description/:desc_id" do
+    item = @data.item_by_id params[:id].to_i
+    description = item.descriptions[params[:desc_id].to_i]
+    haml :'partials/description', :layout => :'ajax_layout', :locals => {:description => description}
+  end
+
 end
