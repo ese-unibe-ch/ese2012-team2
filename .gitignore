@@ -26,3 +26,5 @@ doc/
 /trade/app/public/images/users/*
 .DS_STORE
 
+
+Gemfile.lock
