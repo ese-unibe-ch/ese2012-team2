@@ -1,0 +1,26 @@
+:javascript
+  $(document).ready(function() {
+    $("#orgTable")
+               .tablesorter({
+                       widgets: ['zebra']
+               })
+               .tablesorterPager({
+                       container: $("#orgPager"),
+                       positionFixed: false
+               });
+  })
+%h1 All Organizations
+%table{:id=>"orgTable", :class=>"tablesorter pager"}
+  %thead
+    %tr
+      %th Name
+      %th Credits
+      %th Member
+  %tbody
+    - for org in @data.all_organizations
+      %tr.list
+        %td.list
+          %a{:href => url("/organization/#{org.name}")} #{org.display_name}
+        %td.list #{org.credits}
+        %td.list #{org.members.length}
+=haml :'partials/pager', :locals => {:pager_id => "orgPager"}

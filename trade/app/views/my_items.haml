@@ -1,0 +1,40 @@
+:javascript
+  $(document).ready(function() {
+     $('.powertip').powerTip({
+          placement: 's'
+     });
+     $("#itemTable")
+           .tablesorter({
+                   headers: {4: {sorter: false}},
+                   sortList: [[2,0], [0,0]],
+                   widgets: ['zebra']
+           })
+           .tablesorterPager({
+                   container: $("#pager"),
+                   positionFixed: false
+           });
+     $("#itemTable2")
+                .tablesorter({
+                        headers: {3: {sorter: false}},
+                        sortList: [[2,0], [0,0]],
+                        widgets: ['zebra']
+                })
+                .tablesorterPager({
+                        container: $("#pager2"),
+                        positionFixed: false
+                });
+  })
+%h2 Items
+%a{:href => url("/add_item")} Add item
+=haml :'partials/item_listing', :locals => {:user => user}
+- if user == @active_user
+  - unless  @active_user.working_for.nil?
+    =haml :'partials/item_listing', :locals => {:user => @active_user.working_for}
+  - if user.wish_list.length > 0
+    %h2 Wish List
+    - for wish in user.wish_list
+      %div
+        %a{:href => "/item/#{wish.id}",  "data-powertip" => "#{wish.description.gsub("\n", "<br>")}</br><img src=#{wish.image_path} width=150 />", :class => "powertip"}
+          #{wish.name}
+        %form{:action => "/item/#{wish.id}/remove_wish", :method => "POST"}
+          %input{:type => "submit",:name => "action", :value => "Remove", :class => "button_as_link"}
