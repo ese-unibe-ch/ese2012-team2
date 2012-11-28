@@ -7,7 +7,7 @@ gem 'pony'
 gem "mini_magick", "~> 3.4"
 gem 'sanitize'
 gem "json_pure"
-gem "rcov"
+gem "rcon"
 gem "thin"
 gem 'rufus-scheduler'
 gem 'time_diff'

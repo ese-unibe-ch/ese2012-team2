@@ -17,6 +17,7 @@
   })
 
 %h1 All Item Requests
+%a{:href => url("/add_item")} Add request
 -#SH Shows a table of all active items
 %table{:id=>"itemTable", :class=>"tablesorter pager"}
   %thead
@@ -25,7 +26,7 @@
       %th.padding_left.price_column Price
       %th.padding_left Owner
       %th.padding_left Valid till
-      %th.padding_center Delete
+      %th.padding_center Action
 
   %tbody
     - for item in requests
@@ -44,4 +45,14 @@
           %td.padding_center
             %form{:action => "/delete_item_request/#{item.id}", :method => "POST"}
               %input{:type => "submit",:name => "action", :value => "Delete", :class => "button_as_link"}
+        -else
+          -if ((@active_user.can_fulfill_request?(item) && @active_user.working_for.nil?) || (!@active_user.working_for.nil? && @active_user.working_for.can_fulfill_request?(item)))
+            %td.padding_center
+              -if(@active_user.working_for.nil?)
+                %form{:action => "/fulfill_item_request/#{item.id}/#{@active_user.name}/user", :method => "POST"}
+                  %input{:type => "submit",:name => "action", :value => "Sell", :class => "button_as_link"}
+              -else
+                %form{:action => "/fulfill_item_request/#{item.id}/#{@active_user.working_for}/org", :method => "POST"}
+                  %input{:type => "submit",:name => "action", :value => "Sell", :class => "button_as_link"}
+
 =haml :'partials/pager', :locals => {:pager_id => "pager"}

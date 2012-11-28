@@ -6,8 +6,6 @@
     = title
   -#SH Load css and favicon
   %link{:rel => "shortcut icon", :type=>"image/png", :href => url("images/favicon.png")}
-  %link{:rel =>"stylesheet", :type =>"text/css", :href => url("css/jquery.powertip.css")}
-  %link{:rel =>"stylesheet", :type =>"text/css", :href => url("css/jquery.datepick.css")}
   %link{:rel=> "stylesheet/less", :type => "text/css", :href => url("css/style.less")}
 
   %script{:type => "text/javascript", :src => url("js/less-1.3.0.min.js")}
@@ -26,11 +24,11 @@
         %span Emporium
     =haml :'partials/menu'
     #header_bar
+      =haml :'partials/side_box', locals => {:user => @active_user}
   =haml :'partials/search_bar'
   #body
     #page
-      #side_box
-        =haml :'partials/side_box', locals => {:user => @active_user}
+
       #content
         - unless message.nil?
           #message{:class => message[:type]}

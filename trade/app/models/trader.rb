@@ -24,6 +24,31 @@ module Models
       end
     end
 
+    #AS Buys a priorly (in the item request list) requested item.
+    def buy_requested_item(request, item)
+      self.overlay.delete_item_request(request.id)
+      item.price = request.price #The prize given in the request is relevant.
+      buy(item, true)
+    end
+
+    #AS Sells a requested item - contract: Trader has a matching item.
+    def sell_requested_item(request, buyer)
+      item = get_matching_item(request)
+      buyer.buy_requested_item(request, item)
+    end
+    #AS Checks if a trader is able to fulfill a particular item request
+    def can_fulfill_request?(request)
+      matching_items= self.overlay.active_items_by_name_and_user(request.name, self)
+      matching_items.size > 0
+    end
+
+    #AS Selects a item witch matches to the item request of another user. At the moment the matching criterion is the name.
+    #But because the name isn't a unique property, just the first found item is selected. (Aaron didn't specify a more specific matching criterion)
+    def get_matching_item(request)
+      matching_items= self.overlay.active_items_by_name_and_user(request.name, self)
+      matching_items[0]
+    end
+
     def add_activity_failed_purchase item
       self.add_activity "failed to buy item #{item.name}"
       item.owner.add_activity "selling item #{item.name} to #{self.display_name} failed"

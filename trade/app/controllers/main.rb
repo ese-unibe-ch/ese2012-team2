@@ -38,6 +38,12 @@ class Main  < BaseSecureController
     haml :user, :locals =>{:user => user, :items => items}
   end
 
+  get "/all_items/:user" do
+    user = @data.user_by_name params[:user]
+    @title = "Items of #{user.display_name}"
+    haml :my_items, :locals => {:user => user}
+  end
+
   #SH Buys an item. If an error occurs, redirect to the buy error page
   post "/buy/:item" do
     @title = "Home"
@@ -113,6 +119,20 @@ class Main  < BaseSecureController
 
   post "/delete_item_request/:item_request_id" do
     @data.delete_item_request(params[:item_request_id].to_i)
+    redirect back
+  end
+
+  post "/fulfill_item_request/:item_request_id/:seller_name/:type" do
+    request= @data.get_item_request_by_id(params[:item_request_id].to_i)
+
+    if params[:type]=="org"
+      seller= @data.organization_by_name(params[:seller_name].downcase)
+    else
+      seller= @data.user_by_name(params[:seller_name].downcase)
+    end
+    puts request.owner
+    puts seller
+    seller.sell_requested_item(request, request.owner)
     redirect back
   end
 
