@@ -17,5 +17,13 @@
     #{@active_user.interests}
   %br
   %input.normal_input{:type=>"submit", :class=>"button_margin", :value => "Save"}
-
   =haml :change_password
+%h1 Remove user
+%form{:action=>"/user/#{@active_user.name}/suspend", :method=>"POST"}
+  A account suspension is only possible if all items are deactivated and there are no open auction you are leading in or owning.
+  You have to cancel membership in every organization. If you login in when your account, suspension wil be aborted.
+  If your account is suspended for 4 days it will be removed without a possibility to recover.
+  %br
+  %input{:type=>"checkbox", :name=>"suspend", :value=>"Suspend"} I have read the above text and still want to suspend my account
+  %br
+  %input.normal_input{:type=>"submit", :value =>"Suspend me plz"}
