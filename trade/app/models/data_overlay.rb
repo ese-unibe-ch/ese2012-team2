@@ -92,15 +92,24 @@ module Models
       @items.values
     end
 
+
+    def active_items_by_name_and_user(name,user)
+     @items.values.select{|item| item.name==name and item.state==:active and item.owner==user}
+    end
+
     #KR returns the user with the given name
     #returns nil if there is no such user
     def user_by_name(name)
       @users[name]
     end
+    def delete_user(user)
+      @users.delete user.name
+    end
 
     def all_users
       @users.values
     end
+
     def pending_items_by_user user
       @items.values.select { |item| item.state == :pending and item.prev_owners.last == user }
     end
@@ -234,6 +243,10 @@ module Models
       @trackees[user]
     end
 
+    def remove_trackers_by_trackee(trackee)
+      @trackees.each{|key, value| value.delete trackee}
+    end
+
     #AS Add a request for an item - eg. add an item to item_requests
     def add_item_request(item)
       if(@item_requests.has_key?(item.id))
@@ -251,8 +264,10 @@ module Models
       @item_requests[id]
     end
 
+
     def delete_item_request(request_id)
       @item_requests.delete(request_id)
     end
+
   end
 end

@@ -80,6 +80,11 @@ class App < Sinatra::Base
           item.end_offer
         end
       end
+      for user in overlay.all_users
+        if user.expired?
+          UserDataHelper.delete_user user
+        end
+      end
     end
   end
 end

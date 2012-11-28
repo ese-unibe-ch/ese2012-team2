@@ -80,6 +80,21 @@ class Main  < BaseSecureController
     haml :edit_user
   end
 
+  post "/user/:user/suspend" do
+     unless params[:suspend]
+       add_message("you have to accept the checkbox before suspension")
+       redirect back
+     end
+     unless UserDataHelper.can_suspend?(@active_user)
+        add_message("cant suspend account: check if you have active items, open auctions or membership in any organization")
+       redirect back
+     end
+     @active_user.suspension_time = Time.now
+     @active_user.state = :suspended
+     add_message("account successfully suspended")
+     redirect "/logout"
+  end
+
   get "/search" do
     @title = "Search"
     keyword = Models::SearchRequest.splitUp(params[:keywords])
@@ -104,6 +119,20 @@ class Main  < BaseSecureController
 
   post "/delete_item_request/:item_request_id" do
     @data.delete_item_request(params[:item_request_id].to_i)
+    redirect back
+  end
+
+  post "/fulfill_item_request/:item_request_id/:seller_name/:type" do
+    request= @data.get_item_request_by_id(params[:item_request_id].to_i)
+
+    if params[:type]=="org"
+      seller= @data.organization_by_name(params[:seller_name].downcase)
+    else
+      seller= @data.user_by_name(params[:seller_name].downcase)
+    end
+    puts request.owner
+    puts seller
+    seller.sell_requested_item(request, request.owner)
     redirect back
   end
 

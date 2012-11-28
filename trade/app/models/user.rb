@@ -5,17 +5,19 @@ require_relative "trade_exception"
 module Models
   class User < Models::Trader
 
-    attr_accessor :password, :email, :working_for, :trackees
+    attr_accessor :password, :email, :working_for, :trackees, :state, :suspension_time
     attr_reader :organization_request, :wish_list
 
-    #AS Implements buying for an organization (Override)
-    def buy(item)
-      if working_for.nil?
-        super
+    #AS Implements buying for an organization (Override) (ignore_working_for is for special cases, e.g. buying on request)
+    def buy(item, ignore_working_for=false)
+      if working_for.nil? || ignore_working_for
+        super(item)
       else
         working_for.buy(item)
       end
     end
+
+
 
     # set a bid for an auction
     def give_bid(auction, bid)
@@ -45,6 +47,7 @@ module Models
     #SH Setup standard values
     def initialize (name, display_name, passwd, email, interests, image=nil)
       self.credits=100
+      self.state=:active
       self.credits_in_auction = 0
       if name.empty?
         raise TradeException, "Username must not be empty!"
@@ -145,6 +148,11 @@ module Models
       end
     end
 
-
+    def expired?
+      return false unless self.state == :suspended
+      res = Time.diff(self.suspension_time, Time.now)
+      return true if res[:minute] > 0 or res[:second] > 10
+      false
+    end
   end
 end
