@@ -15,9 +15,9 @@ class OrganizationController  < BaseSecureController
      @title = "Add organization"
      begin
        new_organization = OrganizationDataHelper.new_organization(params, @active_user)
-       add_message("Successfully added organization #{new_organization.name}.", :success)
+       flash.now[:success] = "Successfully added organization #{new_organization.name}."
      rescue TradeException => e
-       add_message(e.message, :error)
+       flash.now[:error] = e.message
      end
      haml :add_organization
    end
@@ -34,6 +34,7 @@ class OrganizationController  < BaseSecureController
      unless work_for.nil?
        session[:working_for] = work_for
      end
+     flash[:success] = "You are now working for #{work_for}"
      redirect back
    end
 
@@ -44,6 +45,7 @@ class OrganizationController  < BaseSecureController
      if organization.admins.include? @active_user
         organization.remove_member(member)
      end
+     flash[:success] = "Removed user #{member}"
      redirect back
    end
 
@@ -54,6 +56,7 @@ class OrganizationController  < BaseSecureController
      if organization.admins.include? @active_user
        organization.send_request(member)
      end
+     flash[:success] = "Added user #{member}"
      redirect back
    end
 
@@ -65,9 +68,10 @@ class OrganizationController  < BaseSecureController
        begin
          organization.add_admin(member)
        rescue TradeException => e
-         add_message(e.message, :error)
+         flash[:error] = e.message
        end
      end
+     flash[:success] = "Added user #{member} as admin"
      redirect back
    end
 
@@ -79,21 +83,24 @@ class OrganizationController  < BaseSecureController
        begin
          organization.remove_admin(member)
        rescue TradeException => e
-         add_message(e.message, :error)
+         flash[:error] = e.message
        end
      end
+     flash[:success] = "Removed admin #{member}"
      redirect back
    end
 
   post "/organization/:organization/accept_request" do
     organization = @data.organization_by_name(params[:organization])
     organization.accept_request @active_user
+    flash[:success] = "Accepted request from #{organization.name}"
     redirect back
   end
 
    post "/organization/:organization/decline_request" do
      organization = @data.organization_by_name(params[:organization])
      organization.decline_request @active_user
+     flash[:success] = "Declined request from #{organization.name}"
      redirect back
    end
 

@@ -23,16 +23,19 @@ class Main  < BaseSecureController
 
   #SH Shows all items of a user
   get "/user/:name" do
+
     @title = "User " + params[:name]
     user = @data.user_by_name(params[:name])
+
+    if user.nil?
+      flash[:error] = "User not found"
+      redirect back
+    end
+
     if self.is_active_user? user
      items = user.items
     else
      items = user.active_items
-    end
-
-    if user.nil?
-      add_message("User not found", :error)
     end
 
     haml :user, :locals =>{:user => user, :items => items}
@@ -51,8 +54,9 @@ class Main  < BaseSecureController
     item = @data.item_by_id params[:item].to_i
     @active_user.buy(item)
     EmailSender.send_item_bought(item)
+    flash.now[:success] =  "Item successfully bought! You can activate the item in your <a href = '/all_items/#{@active_user.name}'>item list</a>."
     rescue TradeException => e
-      add_message(e.message, :error)
+      flash.now[:error] = e.message
     end
     haml :index, :locals => {:items => @data.all_items}
   end
@@ -73,25 +77,25 @@ class Main  < BaseSecureController
     @title = "Edit profile"
     begin
     UserDataHelper.edit_user(params, @active_user)
-    add_message("successfully saved user", :success)
+    flash.now[:success] = "Successfully saved user"
     rescue TradeException => e
-      add_message(e.message, :error)
+      flash.now[:error] = e.message
     end
     haml :edit_user
   end
 
   post "/user/:user/suspend" do
      unless params[:suspend]
-       add_message("you have to accept the checkbox before suspension")
+       flash[:error] = "You have to accept the checkbox before suspension"
        redirect back
      end
      unless UserDataHelper.can_suspend?(@active_user)
-        add_message("cant suspend account: check if you have active items, open auctions or membership in any organization")
+       flash[:error] = "Cant suspend account: check if you have active items, open auctions or membership in any organization"
        redirect back
      end
      @active_user.suspension_time = Time.now
      @active_user.state = :suspended
-     add_message("account successfully suspended")
+     flash[:success] = "Account successfully suspended"
      redirect "/logout"
   end
 
@@ -119,6 +123,7 @@ class Main  < BaseSecureController
 
   post "/delete_item_request/:item_request_id" do
     @data.delete_item_request(params[:item_request_id].to_i)
+    flash[:success] = "Deleted item request"
     redirect back
   end
 
@@ -147,7 +152,7 @@ class Main  < BaseSecureController
 
   get "/subscribe" do
     @data.new_search_request(params[:keywords], @active_user)
-    add_message("Successfully subscribed.", :success)
+    flash[:success] = "Successfully subscribed."
     redirect "/search_requests"
   end
 

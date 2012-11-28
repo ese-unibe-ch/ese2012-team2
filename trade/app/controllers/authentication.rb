@@ -22,9 +22,10 @@ class Authentication < BaseController
     begin
     UserDataHelper.login(params[:username],params[:password])
     session[:name] = params[:username]
+    flash[:success] = "Logged in as #{session[:name]}"
     redirect '/index'
     rescue TradeException => e
-      add_message(e.message, :error)
+      flash.now[:error] = e.message
       haml :login
     end
   end
@@ -32,6 +33,7 @@ class Authentication < BaseController
   #SH Logs the user out
   get "/logout" do
     session.clear
+    flash[:success] = "Logged out."
     redirect '/login'
   end
 
@@ -46,9 +48,10 @@ class Authentication < BaseController
   post "/register" do
     begin
     new_user = UserDataHelper.register(params)
-    add_message("Successfully registered user #{new_user.name}.", :success)
+    flash[:success] = "Successfully registered user #{new_user.name}."
+    redirect '/login'
     rescue TradeException => e
-     add_message(e.message, :error)
+      flash.now[:error] = e.message
     end
     haml :register
   end

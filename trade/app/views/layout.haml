@@ -28,11 +28,13 @@
   =haml :'partials/search_bar'
   #body
     #page
-
       #content
-        - unless message.nil?
-          #message{:class => message[:type]}
-            = message[:text]
+        -if flash[:error]
+          %div.error
+            = flash[:error]
+        -if flash[:success]
+          %div.success
+            = flash[:success]
         = yield
     #footer_border
       #footer

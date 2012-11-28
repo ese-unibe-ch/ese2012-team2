@@ -10,6 +10,7 @@ class ItemController < BaseSecureController
   post "/item/:item/change_state" do
     item = @data.item_by_id(params[:item].to_i)
     item.state = params[:state].to_sym
+    flash[:success] = "Set item #{item.name} to #{item.state.to_s}"
     redirect back
   end
 
@@ -20,9 +21,9 @@ class ItemController < BaseSecureController
 
     begin
     ItemValidator.add_item(params, @active_user, as_request)
-    add_message("Item successfully created! You can activate the item in your <a href = '/all_items/#{@active_user.name}'>item list</a>.", :success)
+    flash.now[:success] =  "Item successfully created! You can activate the item in your <a href = '/all_items/#{@active_user.name}'>item list</a>."
     rescue TradeException => e
-      add_message(e.message, :error)
+      flash.now[:error] = e.message
     end
     haml :add_new_item
   end
@@ -45,7 +46,7 @@ class ItemController < BaseSecureController
     if item != nil && item.owner == @active_user
       @data.delete_item item
     end
-
+    flash[:success] = "Deleted item #{item.name}"
     redirect back
   end
 
@@ -64,17 +65,17 @@ class ItemController < BaseSecureController
     @title = "Edit item " + item.name
     success = false
     begin
-      if (item.owner == @data.user_by_name(session[:name]) or item.owner == @active_user.working_for)
+      if item.owner == @data.user_by_name(session[:name]) or item.owner == @active_user.working_for
         minimal = params[:minimal]
         increment = params[:increment]
         p = Models::Auction.validate_minimal(minimal)
         i = Models::Auction.validate_increment(increment)
         Models::Auction.new(@active_user, item, params)
-        add_message("Successfully added an auction", :success)
+        flash.now[:success] = "Successfully added an auction"
         success = true
       end
     rescue TradeException => e
-      add_message(e.message, :error)
+      flash.now[:error] = e.message
     end
     if success or item.state == :active or item.state == :auction
       haml :list_auctions, :locals => {:auctions => @data.all_auctions}
@@ -118,9 +119,9 @@ class ItemController < BaseSecureController
       end
       bid = Models::Item.validate_price(params[:bid])
       @active_user.give_bid(auction, bid)
-      add_message("Bid successful!", :success)
+      flash.now[:success] = "Bid successful!"
     rescue TradeException => e
-      add_message(e.message, :error)
+      flash.now[:error] = e.message
     end
 
     haml :show_auction, :locals => { :auction => auction}
@@ -161,7 +162,7 @@ class ItemController < BaseSecureController
 
       p = Models::Item.validate_price(price)
       if name.empty?
-         add_message("Item name must not be empty!", :error)
+        flash.now[:error] = "Item name must not be empty!"
       else
         item.name = name
         item.price = p
@@ -170,10 +171,10 @@ class ItemController < BaseSecureController
         item.end_time = end_time
         item.image = ImageHelper.save params[:image], settings.public_folder + "/images/items"
         Event::ItemUpdateEvent.item_changed item
-        add_message("Item edited!", :success)
-      end
+        flash.now[:success] = "Edited item #{item.name}!"
+       end
       rescue TradeException => e
-      add_message(e.message, :error)
+        flash.now[:error] = e.message
     end
     end
     haml :edit_item, :locals=>{:item =>item}
@@ -183,18 +184,21 @@ class ItemController < BaseSecureController
     item = @data.item_by_id params[:id].to_i
     organization = @data.organization_by_name params[:organization]
     item.take_ownership(organization)
+    flash[:success] =  "Transferred item #{item.name} to #{organization.name}"
     redirect back
   end
 
   post "/item/:id/wish" do
     item = @data.item_by_id params[:id].to_i
     @active_user.add_wish item
+    flash[:success] =  "Added item #{item.name} to wishlist"
     redirect "/user/#{@active_user.name}"
   end
 
   post "/item/:id/remove_wish" do
     item = @data.item_by_id params[:id].to_i
     @active_user.remove_wish item
+    flash[:success] =  "Removed item #{item.name} from wishlist"
     redirect "/user/#{@active_user.name}"
   end
 

@@ -19,15 +19,15 @@ class ChangePassword < BaseSecureController
       if new_passwd == passwd_repetition
         if Models::User.passwd_valid?(new_passwd)
           user.password = Models::Password.make(new_passwd)
-          add_message("Your password was changed.", :success)
-        else
-          add_message("Your password is not invalid. Password must be at least 8 characters and contain upper- and lowercase characters as well as at least one number.", :error)
+          flash.now[:success] = "Your password was changed."
+         else
+          flash.now[:error] = "Your password is not invalid. Password must be at least 8 characters and contain upper- and lowercase characters as well as at least one number."
         end
       else
-        add_message("The password repetition and the new password have to be identical.", :error)
+        flash.now[:error] = "The password repetition and the new password have to be identical."
       end
     else
-      add_message("You entered the wrong password.", :error)
+      flash.now[:error] = "You entered the wrong password."
     end
     haml :change_password
   end

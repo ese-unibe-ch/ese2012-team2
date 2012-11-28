@@ -11,3 +11,4 @@ gem "rcon"
 gem "thin"
 gem 'rufus-scheduler'
 gem 'time_diff'
+gem 'rack-flash3'

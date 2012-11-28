@@ -1,4 +1,7 @@
+require 'rack-flash'
 class BaseController < Sinatra::Application
+  use Rack::Flash
+
   attr_accessor :message, :title
 
   before do
@@ -7,9 +10,5 @@ class BaseController < Sinatra::Application
         params[key] = Sanitize.clean(param)
       end
     end
-  end
-
-  def add_message(text, type=:info)
-    self.message = {:type => type, :text => text}
   end
 end

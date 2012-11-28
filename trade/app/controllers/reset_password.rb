@@ -19,6 +19,7 @@ class ResetPassword  < BaseController
     pw= ResetPassword.random_password
     user.password = Models::Password.make(pw)
     EmailSender.send_new_password(user, pw)
+    flash[:success] = "Your new password has been sent to your E-Mail."
     redirect '/login'
   end
 
