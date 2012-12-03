@@ -23,6 +23,7 @@
   %br
   %input{:type=>"file", :name=>"image",  :placeholder => "Image"}
   %br
+  =haml :'partials/tags_hidden_inputs', :locals => {:tags => nil}
   %input.normal_input{:type => "submit",:class=>"button_margin", :name=>"action", :value => "Add"}
   %input.normal_input{:type => "submit",:class=>"button_margin", :name=>"action", :value => "Add as a request"}
 

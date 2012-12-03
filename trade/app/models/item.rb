@@ -178,6 +178,10 @@ module Models
       self.overlay.activities_by_owner(self)
     end
 
+    def tags
+     [:test, :hello]
+    end
+
     def image_path
       if self.image.nil? then
         return "/images/items/default.png"
