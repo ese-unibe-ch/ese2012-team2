@@ -12,8 +12,14 @@ class CoordinatesTest < Test::Unit::TestCase
   end
 
   def test_distance
-    puts @coord1.distance(@coord2)
-    assert(@coord1.distance(@coord2), 418.34)
+    assert(((@coord1.distance(@coord2)*100).round()).to_f/100 == 418.32)  #SH Only compare to ten meters => Round
+  end
+
+  def test_address_to_coords
+    coords3 = Coordinates.by_address("Sidlerstrasse", 5, 3012, "Bern","CH")
+
+    assert(coords3.lat == 46.95134680)
+    assert(coords3.lng == 7.43845670)
   end
 
 end
