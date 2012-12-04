@@ -210,7 +210,7 @@ class ItemController < BaseSecureController
 
   get "/tags" do
       content_type :json
-      {:tags => [:test, :hallo, :not!] }.to_json
+      {:tags => [:test, :hallo, :hello, :hello, :not!] }.to_json
   end
 
 end

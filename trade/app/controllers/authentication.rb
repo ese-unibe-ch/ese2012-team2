@@ -56,8 +56,8 @@ class Authentication < BaseController
     haml :register
   end
 
-  get '/user/:name/exists' do
+  post '/user/exists' do
     content_type :json
-    {:exists => @data.user_exists?(params[:name]) }.to_json
+    {:exists => @data.user_exists?(params[:existing]) }.to_json
   end
 end

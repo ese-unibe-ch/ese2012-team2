@@ -1,16 +1,23 @@
+:javascript
+  $(document).ready(function() {
+    Emporium.validate.existing($("#name"),"/user/exists", "User already exists.", "Username must not be empty.");
+    Emporium.validate.nonEmpty($("#display_name"), "Displayname should not be empty.");
+    Emporium.validate.password($("#passwd"), "The password must be at least 6 characters long and contain digits, upper and lower case letters and special character or be at least 10 characters long.");
+    Emporium.validate.passwordRepetition($("#passwd"), $("#passwd_repetition"));
+  });
+
 %h1 Add new user
 %form{:action=>"/register", :method=>"POST", :enctype=>"multipart/form-data"}
 
-  %input.normal_input{:type=>"text", :name=>"username", :placeholder => "Username"}
+  %input.normal_input{:id => "name", :type=>"text", :name=>"username", :placeholder => "Username"}
   %br
-  %input.normal_input{:type=>"text", :name=>"display_name", :placeholder => "Displayname"}
+  %input.normal_input{:id => "display_name", :type=>"text", :name=>"display_name", :placeholder => "Displayname"}
   %br
   %input.normal_input{:type=>"email", :name=>"email", :placeholder => "Email"}
   %br
-  %input.normal_input{:type=>"password", :name=>"passwd", :placeholder => "Password"}
-  %span.hint The password must be at least 6 characters long and contain digits, upper and lower case letters and special character
+  %input.normal_input{:id => "passwd", :type=>"password", :name=>"passwd", :placeholder => "Password"}
   %br
-  %input.normal_input{:type=>"password", :name=>"passwd_repetition", :placeholder => "Repeat password"}
+  %input.normal_input{:id => "passwd_repetition", :type=>"password", :name=>"passwd_repetition", :placeholder => "Repeat password"}
   %br
   %textarea.normal_input.default_textarea_size{:name => "interests", :placeholder => "List of interests (optional)"}
   %br

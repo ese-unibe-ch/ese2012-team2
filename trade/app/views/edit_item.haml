@@ -1,6 +1,11 @@
 -#FW&MW Shows the edit item form
 :javascript
   $(document).ready(function() {
+
+
+
+     Emporium.complete($('#name'), "/test/url");
+
      $(".datepicker").datepick({dateFormat: 'dd-mm-yyyy'});
 
      $("#next_desc").hide();
@@ -48,7 +53,7 @@
   %label
     Name*:
   %br
-  %input.normal_input{:type => "text", :name => "name", :value => "#{item.name}"}
+  %input.normal_input{:id => "name", :type => "text", :name => "name", :value => "#{item.name}"}
   %br
   %label
     Price*:
