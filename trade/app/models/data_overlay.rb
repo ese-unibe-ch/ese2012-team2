@@ -283,7 +283,7 @@ module Models
     end
 
     def get_tags
-      @tags.keys
+      @tags.values
     end
 
   end

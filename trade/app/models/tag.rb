@@ -56,7 +56,7 @@ module Models
     end
 
     def self.get_tags_sorted_by_popularity
-      overlay.get_tags.sort{|x,y| x.amount_of_matches <=> y.amount_of_matches}
+      overlay.get_tags.sort{|x,y| y.amount_of_matches <=> x.amount_of_matches}
     end
 
 

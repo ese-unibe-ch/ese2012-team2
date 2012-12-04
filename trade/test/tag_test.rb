@@ -9,7 +9,9 @@ class TagTest < Test::Unit::TestCase
 
   def setup
     @user = Models::User.new("user", "user", "qwertzuiop", "user@user.ch", "none")
-    @item = Models::Item.new("test", 10, @user, "none")
+    @item1 = Models::Item.new("test", 10, @user, "none")
+    @item2 = Models::Item.new("test1", 10, @user, "none")
+    @item3 = Models::Item.new("test3", 10, @user, "none")
     @overlay= Models::DataOverlay.instance
   end
 
@@ -30,7 +32,15 @@ class TagTest < Test::Unit::TestCase
      assert(@overlay.get_tags.length==1)
   end
 
-
-
-
+  def test_popularity_sorting
+    tag1=Models::Tag.get_tag("#test")
+    tag2=Models::Tag.get_tag("#bla")
+    tag3=Models::Tag.get_tag("#looser")
+    @item1.add_tag(tag1)
+    @item2.add_tag(tag2)
+    @item3.add_tag(tag3)
+    sorted=Models::Tag.get_tags_sorted_by_popularity
+    assert(sorted[0].name=="#bla")
+    assert(sorted[2].name=="#looser")
+  end
 end
