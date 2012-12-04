@@ -189,5 +189,10 @@ module Models
          return "/images/items/" + self.image
       end
     end
+
+    #AS Adds the item to a tag. (Douible Dispatch)
+    def add_tag(tag)
+      tag.add_item(self)
+    end
   end
 end
