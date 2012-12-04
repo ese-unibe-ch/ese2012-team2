@@ -7,17 +7,20 @@ module Models
       if !Tag.valid?(name)
         raise  TradeException, "The tag format is invalid. Check if you have used the format: #YourTag"
       end
-      name=name
-      matches= Array.new()
+      overlay()
+      @name=name
+      @matches= Array.new()
+
     end
 
     #AS If there's already a tag with this name, it's returned. Else a new one is created transparently.
-    def self.getTag(name)
-      if !overlay.getTag(name).nil?
-        return overlay.getTag(name)
+    def self.get_tag(name)
+
+      if !Models::DataOverlay.instance.get_tag(name).nil?
+        return Models::DataOverlay.instance.get_tag(name)
       end
       tag= Tag.new(name)
-      overlay.add_tag(tag)
+      Models::DataOverlay.instance.add_tag(tag)
       tag
     end
 

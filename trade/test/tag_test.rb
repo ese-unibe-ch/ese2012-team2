@@ -23,6 +23,10 @@ class TagTest < Test::Unit::TestCase
     assert(Models::Tag.get_tag_names_from_string("#Books #SomeMoreBooks Osterhase #AndOthers")[1]=="#SomeMoreBooks")
   end
 
+  def test_creation_of_a_tag
+     tag= Models::Tag.get_tag("#test")
+     assert(tag.name=="#test")
+  end
 
 
 end
