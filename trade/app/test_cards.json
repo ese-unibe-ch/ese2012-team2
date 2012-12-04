@@ -1,0 +1,11 @@
+[
+    {
+        "status":"active",
+        "max_amount":1000,
+        "information": {
+            "card_number": "1111 2222 3333 4444",
+            "CVC": 111,
+            "valid_thru":"07-2015"
+        }
+    }
+]

@@ -49,4 +49,4 @@ STARTUP
    PATH environment variable needs to be accessed in order to call the command
    line interface of the ImageMagick library.
 
-    user "ese" has password "qwertzuiop" (like every other user, check the test_data.json file for some more users...)
+    user "ese" has password "qwertzuiop" (like every other user, check the test_users.json file for some more users...)
