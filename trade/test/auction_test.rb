@@ -19,10 +19,9 @@ class AuctionTest < Test::Unit::TestCase
     @params[:minimal] = "5"
     @params[:descriptions] = "test it"
     @params[:image] = nil
-    @params[:year] = "2012"
-    @params[:month] = "12"
-    @params[:day] = "21"
-    @params[:hour] = "12"
+    @params[:date] = "21-12-2012"
+
+    @params[:time] = "12:00"
 
     @user1 = User.new("me", "Me", "qwertzuiop", "user1@mail.ch", "none1")
     @user2 = User.new("you", "You", "qwertzuiop", "user2@mail.ch", "none2")

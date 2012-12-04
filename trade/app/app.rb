@@ -24,6 +24,7 @@ require_relative 'controllers/base_secure_controller'
 require_relative 'controllers/comment_controller'
 require_relative 'controllers/last_resort_controller'
 require_relative 'controllers/tracking_controller'
+require_relative 'controllers/payment_controller'
 
 class App < Sinatra::Base
 
@@ -42,6 +43,7 @@ class App < Sinatra::Base
   use ResetPassword
   use CommentController
   use TrackingController
+  use PaymentController
   use LastResortController
 
   enable :sessions

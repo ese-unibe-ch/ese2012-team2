@@ -21,7 +21,7 @@ class OrganizationTest < Test::Unit::TestCase
   end
 
   def test_admin
-    assert_equal(@user, @org.admin)
+    assert(@org.admins.include? @user)
   end
 
   def test_add_member
@@ -39,7 +39,11 @@ class OrganizationTest < Test::Unit::TestCase
   end
 
   def test_remove_admin
-    @org.remove_member(@user)
+    begin
+      @org.remove_member(@user)
+    rescue TradeException => e
+
+    end
     assert(@org.members.include?(@user))
     assert(@user.organizations.include?(@org))
   end
