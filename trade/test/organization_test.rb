@@ -1,5 +1,8 @@
+require "require_relative"
 require "test/unit"
 require_relative "../app/models/organization"
+require_relative "../app/models/trader"
+
 
 class OrganizationTest < Test::Unit::TestCase
 
