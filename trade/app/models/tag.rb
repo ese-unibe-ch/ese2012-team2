@@ -22,7 +22,9 @@ module Models
     end
 
     def add_item(item)
-       matches.push(item)
+       if matches.count(item)==0
+        matches.push(item)
+       end
     end
 
     def amount_of_matches
