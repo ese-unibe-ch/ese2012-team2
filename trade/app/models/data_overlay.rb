@@ -279,17 +279,25 @@ module Models
     end
 
     def all_tags
-      #TODO Arun hier bitte alle vorhanden tags liefern als Array
-      [:hello, :test, :blabla]
+      @tags.keys.collect { |key| key.gsub("#", "")}
     end
 
     def get_tag(name)
       @tags[name]
     end
 
+    def tags_by_item(item)
+      @tags.values.select { |tag| tag.matches.include?(item) }
+    end
+
+    def remove_all_tags_from_item(item)
+      for tag in @tags.values do
+        tag.matches.delete(item)
+      end
+    end
+
     def get_tags
       @tags.values
     end
-
   end
 end

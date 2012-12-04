@@ -20,8 +20,8 @@ var Emporium = {
             this.initTags();
         },
         add : function(tag) {
-            $("#tags").append("<input type='hidden' name='tags[]' value='" + tag + "'>");
-            $("#tags").append("<span class='tag'>" + tag +"</span>");
+            $("#tags").append("<input type='hidden' name='tags[]' value='#" + tag + "'>");
+            $("#tags").append("<span class='tag'>#" + tag +"</span>");
             this.initTags();
         },
         initTags : function() {

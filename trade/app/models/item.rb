@@ -178,9 +178,12 @@ module Models
       self.overlay.activities_by_owner(self)
     end
 
-    #PS TODO Arun hier einfach die richtigen tags liefern für dieses Item ;)
     def tags
-     [:test, :hello]
+      self.overlay.tags_by_item(self).collect { |tag| tag.name }
+    end
+
+    def remove_all_tags
+      self.overlay.remove_all_tags_from_item(self)
     end
 
     def image_path
@@ -191,7 +194,7 @@ module Models
       end
     end
 
-    #AS Adds the item to a tag. (Douible Dispatch)
+    #AS Adds the item to a tag. (Double Dispatch)
     def add_tag(tag)
       tag.add_item(self)
     end

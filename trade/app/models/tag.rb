@@ -29,9 +29,14 @@ module Models
        end
     end
 
+    def remove_item(item)
+      matches.delete(item)
+    end
+
     def amount_of_matches
       matches.length
     end
+
     def self.overlay
       unless @data
         @data = Models::DataOverlay.instance
