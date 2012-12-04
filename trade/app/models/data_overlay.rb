@@ -282,5 +282,9 @@ module Models
       tags[name]
     end
 
+    def get_tags
+      @tags.keys
+    end
+
   end
 end
