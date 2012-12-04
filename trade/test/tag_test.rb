@@ -27,20 +27,20 @@ class TagTest < Test::Unit::TestCase
   end
 
   def test_creation_of_a_tag
-     tag= Models::Tag.get_tag("#test")
+     tag= Models::Tag.get_tag("#tESt")
      assert(tag.name=="#test")
      assert(@overlay.get_tags.length==1)
   end
 
   def test_popularity_sorting
     tag1=Models::Tag.get_tag("#test")
-    tag2=Models::Tag.get_tag("#bla")
+    tag2=Models::Tag.get_tag("#winner")
     tag3=Models::Tag.get_tag("#looser")
     @item1.add_tag(tag1)
     @item2.add_tag(tag2)
-    @item3.add_tag(tag3)
+    @item3.add_tag(tag2)
     sorted=Models::Tag.get_tags_sorted_by_popularity
-    assert(sorted[0].name=="#bla")
+    assert(sorted[0].name=="#winner")
     assert(sorted[2].name=="#looser")
   end
 end

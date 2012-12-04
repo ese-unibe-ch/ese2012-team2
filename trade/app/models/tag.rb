@@ -14,7 +14,7 @@ module Models
 
     #AS If there's already a tag with this name, it's returned. Else a new one is created transparently.
     def self.get_tag(name)
-
+      name= name.downcase
       if !overlay.get_tag(name).nil?
         return overlay.get_tag(name)
       end
@@ -33,6 +33,9 @@ module Models
       matches.delete(item)
     end
 
+    def item_applies?(item)
+      matches.count(item)>0
+    end
     def amount_of_matches
       matches.length
     end
@@ -53,11 +56,17 @@ module Models
     end
 
     def self.get_tags_from_string(str)
-      hashtags= Array.new()
-      get_tag_names_from_string(str).each do |name|
-        hashtags.push(Tag.new(name))
+      get_tags_from_array( get_tag_names_from_string(str))
+    end
+
+    def self.get_tags_from_array(arr)
+      tags= Array.new()
+      arr.each do |name|
+        if(valid?(name))
+          tags.push(Tag.get_tag(name))
+        end
       end
-      hashtags
+      tags
     end
 
     def self.get_tags_sorted_by_popularity
