@@ -1,12 +1,48 @@
 var Emporium = {
 
-    complete : function(object, url, params) {
-        $.get("/tags", function(data) {
-           $(object).autocomplete({
-               source : data.tags,
-               minLength : 0
-           })
-        });
+    tags : {
+        initialize : function() {
+            $.get("/tags/all", function(data) {
+               $("#add_tag").autocomplete({
+                   source : data.tags,
+                   minLength : 0
+               })
+            });
+
+            $("#add_tag_button").click(function() {
+                var tag = $("#add_tag").val();
+                if (tag) {
+                  Emporium.tags.add(tag);
+                  $("#add_tag").val("");
+                }
+            });
+
+            this.initTags();
+        },
+        add : function(tag) {
+            $("#tags").append("<input type='hidden' name='tags[]' value='" + tag + "'>");
+            $("#tags").append("<span class='tag'>" + tag +"</span>");
+            this.initTags();
+        },
+        initTags : function() {
+            $("span.tag").hover(
+                function() {
+                    $(this).attr("data", $(this).html());
+                    $(this).html("remove?");
+                    $(this).css("cursor", "pointer");
+                },
+                function() {
+                    $(this).html($(this).attr("data"));
+                    $(this).css("cursor", "pointer");
+                }
+            );
+
+            // click event removes both the visible tag and the hidden input fields
+            $("span.tag").click( function(){
+                $("input[value='" + $(this).attr("data").trim() + "']").remove();
+                $(this).remove();
+            });
+        }
     },
 
     validate : {

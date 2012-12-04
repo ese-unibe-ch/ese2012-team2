@@ -278,6 +278,11 @@ module Models
         end
     end
 
+    def all_tags
+      #TODO Arun hier bitte alle vorhanden tags liefern als Array
+      [:hello, :test, :blabla]
+    end
+
     def get_tag(name)
       tags[name]
     end

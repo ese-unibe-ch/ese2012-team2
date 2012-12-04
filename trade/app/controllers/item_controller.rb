@@ -208,9 +208,9 @@ class ItemController < BaseSecureController
     haml :'partials/description', :layout => :'ajax_layout', :locals => {:description => description}
   end
 
-  get "/tags" do
-      content_type :json
-      {:tags => [:test, :hallo, :hello, :hello, :not!] }.to_json
+  get "/tags/all" do
+    content_type :json
+    {:tags => @data.all_tags }.to_json
   end
 
 end

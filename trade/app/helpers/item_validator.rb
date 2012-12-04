@@ -16,6 +16,12 @@ class ItemValidator
     description = params[:description]
     end_time = self.parse_date_time(params[:date], params[:time])
 
+    #PS TODO tags ist ein array mit tag namen... ab hier einfach einbauen
+    tags = params[:tags]
+    for tag in tags do
+     puts "tags: #{tag}"
+    end
+
     price = ItemValidator.delete_leading_zeros(price)
 
     if (active_user.working_for.nil?)

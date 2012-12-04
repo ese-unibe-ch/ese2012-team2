@@ -40,6 +40,10 @@
   #{item.description.gsub("\n", "<br>")}
   -if item.description == ""
     No description available
+- unless item.tags.nil?
+  %h2 Tags
+  %br
+  =haml :'partials/display_tags', :locals => {:tags => item.tags}
 %h2 Activities
 - unless @active_user == item.owner
   =haml :'partials/trackbutton', :locals => {:tracked_already => @active_user.trackees.include?(item), :id => item.id, :type => :item, :track_id => item.track_id, :name => item.name }

@@ -178,6 +178,7 @@ module Models
       self.overlay.activities_by_owner(self)
     end
 
+    #PS TODO Arun hier einfach die richtigen tags liefern für dieses Item ;)
     def tags
      [:test, :hello]
     end

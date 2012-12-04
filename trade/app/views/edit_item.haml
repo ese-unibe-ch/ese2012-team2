@@ -90,7 +90,7 @@
   %br
   %input{:type=>"file", :name=>"image"}
   %br
-  =haml :'partials/tags_hidden_inputs', :locals => {:tags => item.tags}
+  =haml :'partials/tags', :locals => {:tags => item.tags}
   %input.normal_input{:type => "submit",:class=>"button_margin", :value => "Save"}
 
 
