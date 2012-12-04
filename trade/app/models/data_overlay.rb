@@ -274,7 +274,7 @@ module Models
         if(@tags.has_key?(tag.name))
           #error
         else
-          tags[tag.name]=tag
+          @tags[tag.name]=tag
         end
     end
 
@@ -284,7 +284,11 @@ module Models
     end
 
     def get_tag(name)
-      tags[name]
+      @tags[name]
+    end
+
+    def get_tags
+      @tags.values
     end
 
   end
