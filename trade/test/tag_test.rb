@@ -10,6 +10,7 @@ class TagTest < Test::Unit::TestCase
   def setup
     @user = Models::User.new("user", "user", "qwertzuiop", "user@user.ch", "none")
     @item = Models::Item.new("test", 10, @user, "none")
+    @overlay= Models::DataOverlay.instance
   end
 
   def test_validity
@@ -26,7 +27,10 @@ class TagTest < Test::Unit::TestCase
   def test_creation_of_a_tag
      tag= Models::Tag.get_tag("#test")
      assert(tag.name=="#test")
+     assert(@overlay.get_tags.length==1)
   end
+
+
 
 
 end
