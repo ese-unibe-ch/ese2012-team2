@@ -2,6 +2,10 @@
 :javascript
   $(document).ready(function() {
      $(".datepicker").datepick({dateFormat: 'dd-mm-yyyy'});
+
+     Emporium.validate.number($('#minimal'), "Must be a valid number.", false, "Please enter a minimal bid.");
+     Emporium.validate.number($('#increment'), "Must be a valid number.", false, "Please enter an increment.");
+     Emporium.validate.date($('#date'), "Date has to be in the Format 14-05-2012. ");
   })
 
 %h1 Add Item For Auction
@@ -17,15 +21,15 @@
     -#%input.normal_input{:type => "text", :name => "name", :value => "#{item.name}"}
     %label Minimal Price*:
     %br
-    %input.normal_input{:type => "text", :name => "minimal", :placeholder => "0", :value => (auction.minimal unless auction == nil)}
+    %input.normal_input{:id => "minimal", :type => "text", :name => "minimal", :placeholder => "0", :value => (auction.minimal unless auction == nil)}
     %br
     %label Increment Step*:
     %br
-    %input.normal_input{:type => "text", :name => "increment", :placeholder => "0", :value => (auction.increment unless auction == nil)}
+    %input.normal_input{:id => "increment", :type => "text", :name => "increment", :placeholder => "0", :value => (auction.increment unless auction == nil)}
     %br
     %label Auction End Time*:
     %br
-    %input.datepicker{:type => "text", :name => "date", :placeholder => "Valid till Date"}
+    %input.datepicker{:id => "date", :type => "text", :name => "date", :placeholder => "Valid till Date"}
     %br
     %input.normal_input{:type => "text", :name => "time", :value => "00:00", :placeholder => "Valid till Time"}
     %br

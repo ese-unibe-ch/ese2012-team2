@@ -1,7 +1,12 @@
+:javascript
+  $(document).ready(function() {
+    Emporium.validate.existing($("#name"), "/organization/exists", "Organization already exist!", "Please choose a name for your Organization!");
+  });
+
 %h1 Add Organization
 %form{:action => "/organization/add", :method => "POST", :enctype=>"multipart/form-data"}
   %br
-  %input.normal_input{:type => "text", :name => "name", :placeholder => "Name"}
+  %input.normal_input{:id => "name", :type => "text", :name => "name", :placeholder => "Name"}
   %br
   %br
   %textarea.normal_input.default_textarea_size{:name => "interests", :placeholder => "List of interests (optional)"}

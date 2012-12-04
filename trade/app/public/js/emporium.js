@@ -42,6 +42,7 @@ var Emporium = {
             $(input).keyup(function() {
                 validateExisting();
              });
+            validateExisting();
         },
         nonEmpty : function(input, mess) {
             var message = mess || 'Value must not be empty!';
@@ -112,8 +113,10 @@ var Emporium = {
            });
            validateRepetition();
         },
-        regex : function(input, regex, errorMessage) {
-            $(input).keyup(function(){
+        regex : function(input, regex, errorMessage, optional, missingErrorText) {
+            var opt = optional && true;
+            var missing = missingErrorText || "Must not be empty";
+            var validateRegex = function() {
                 var text = $(input).val();
                 if (text) {
                     if ($(input).val().match(regex)) {
@@ -122,15 +125,29 @@ var Emporium = {
                         Emporium.validate.helpers.addError(input, errorMessage);
                     }
                 } else {
-                    Emporium.validate.helpers.removeError(input);
+                    if (opt) {
+                        Emporium.validate.helpers.removeError(input);
+                    } else {
+                        Emporium.validate.helpers.removeError(input);
+                        Emporium.validate.helpers.addError(input, missing);
+                    }
                 }
+            };
+            $(input).keyup(function(){
+                validateRegex();
             });
+            validateRegex();
         },
         date : function(input, message) {
-            this.regex(input, /[0-9]{2}-[0-9]{2}-[0-9]{4}/, message);
+            // regex not perfect yet for months and days...
+            this.regex(input, /[0-3][0-9]-[0-1][0-9]-[0-9]{4}$/, message);
         },
         time : function(input, message) {
-            this.regex(input, /[0-2]{2}:[0-5]{1}[0-9]{1}/, message);
+            // regex not perfect for hours (should stop at 23..)
+            this.regex(input, /^[0-2][0-9]:[0-5][0-9]$/, message);
+        },
+        number : function(input, message, optional, missingText) {
+            this.regex(input, /^[0-9]+$/ , message, optional, missingText);
         }
     }
 }

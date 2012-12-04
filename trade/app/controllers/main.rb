@@ -161,4 +161,16 @@ class Main  < BaseSecureController
     item_requests= @data.get_item_requests()
     haml :item_requests, :locals => {:requests => item_requests}
   end
+
+  post '/user/edit/display_name/exists' do
+    content_type :json
+    #explicit true/false necessary for json serialization
+    exists = false
+    unless @active_user.display_name == params[:existing]
+      if  @data.user_display_name_exists?(params[:existing])
+        exists = true
+      end
+    end
+    {:exists => exists }.to_json
+  end
 end
