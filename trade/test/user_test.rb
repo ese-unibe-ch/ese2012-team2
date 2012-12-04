@@ -4,6 +4,7 @@ require 'require_relative'
 require_relative '../app/models/user'
 require_relative '../app/models/item'
 require_relative '../app/models/trade_exception'
+require_relative '../app/models/organization'
 
 class UserTest < Test::Unit::TestCase
 

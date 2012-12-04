@@ -102,6 +102,7 @@ module Models
     def user_by_name(name)
       @users[name]
     end
+
     def delete_user(user)
       @users.delete user.name
     end

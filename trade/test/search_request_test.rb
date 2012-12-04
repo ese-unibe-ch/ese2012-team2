@@ -1,6 +1,8 @@
+require 'pony'
 require 'test/unit'
 require 'rubygems'
 require 'require_relative'
+require_relative '../app/helpers/email_sender'
 require_relative '../app/models/search_request'
 require_relative '../app/models/data_overlay'
 require_relative '../app/models/user'
