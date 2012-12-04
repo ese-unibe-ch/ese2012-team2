@@ -1,0 +1,30 @@
+:javascript
+  $(document).ready(function() {
+     $(".datepicker").datepick({dateFormat: 'dd-mm-yyyy'});
+    })
+%h1 Get Coins
+%form{:action => "/insert_coins", :method => "POST", :enctype=>"multipart/form-data"}
+  %h2 Card Information
+  %label
+    Card number:
+  %br
+  %input.normal_input{:type => "text", :name => "card_number"}
+  %br
+  %label
+    CVC:
+  %br
+  %input.normal_input{:type => "text", :name => "CVC"}
+  %span.hint A three digit number
+  %br
+  %label
+    Valid-thru:
+  %br
+  %input.datepicker{:type => "text", :name => "valid_thru", :value => "01-01-2013"}
+  %br
+  %h2 Payment Information
+  %label
+    Amount
+  %br
+  %input.normal_input{:type => "text", :name => "amount"}
+  %br
+  %input.normal_input{:type => "submit",:class=>"button_margin", :value => "Submit Data"}
