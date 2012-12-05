@@ -9,6 +9,7 @@
     Card number:
   %br
   %input.normal_input{:type => "text", :name => "card_number"}
+  %span.hint something of the form 0000 0000 0000 0000
   %br
   %label
     CVC:
@@ -26,5 +27,6 @@
     Amount
   %br
   %input.normal_input{:type => "text", :name => "amount"}
+  %span.hint in Swiss Francs. 1 Franc = 10 Coins
   %br
   %input.normal_input{:type => "submit",:class=>"button_margin", :value => "Submit Data"}
