@@ -15,6 +15,7 @@ module Models
       @comments = Hash.new() #KR id:owner, value: Array of Comments
       @auctions = Hash.new()
       @item_requests= Hash.new()
+      @tags= Hash.new() #AS id: name of the tag, value: the tag
     end
 
     @@instance = nil
@@ -264,10 +265,39 @@ module Models
       @item_requests[id]
     end
 
-
     def delete_item_request(request_id)
       @item_requests.delete(request_id)
     end
 
+
+    def add_tag(tag)
+        if(@tags.has_key?(tag.name))
+          #error
+        else
+          @tags[tag.name]=tag
+        end
+    end
+
+    def all_tags
+      @tags.keys.collect { |key| key.gsub("#", "")}
+    end
+
+    def get_tag(name)
+      @tags[name]
+    end
+
+    def tags_by_item(item)
+      @tags.values.select { |tag| tag.matches.include?(item) }
+    end
+
+    def remove_all_tags_from_item(item)
+      for tag in @tags.values do
+        tag.matches.delete(item)
+      end
+    end
+
+    def get_tags
+      @tags.values
+    end
   end
 end

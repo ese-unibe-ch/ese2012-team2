@@ -114,4 +114,15 @@ class OrganizationController  < BaseSecureController
     haml :organizations
   end
 
+  post "/organization/exists" do
+    content_type :json
+    #explicit true/false necessary for json serialization
+    exists = false
+    name = OrganizationDataHelper.trim_name(params[:existing])
+    if  @data.organization_exists?(name)
+      exists = true
+    end
+    {:exists =>exists }.to_json
+  end
+
 end

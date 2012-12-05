@@ -3,6 +3,7 @@ require_relative '../helpers/image_helper'
 require_relative '../helpers/item_validator'
 require_relative 'base_secure_controller'
 require_relative '../models/auction'
+require_relative '../models/tag'
 
 class ItemController < BaseSecureController
 
@@ -171,6 +172,14 @@ class ItemController < BaseSecureController
         item.end_time = end_time
         item.image = ImageHelper.save params[:image], settings.public_folder + "/images/items"
         Event::ItemUpdateEvent.item_changed item
+        tags = params[:tags]
+        item.remove_all_tags
+        unless tags.nil?
+          for tag in tags
+            t = Models::Tag.get_tag(tag)
+            item.add_tag(t)
+          end
+        end
         flash.now[:success] = "Edited item #{item.name}!"
        end
       rescue TradeException => e
@@ -208,9 +217,9 @@ class ItemController < BaseSecureController
     haml :'partials/description', :layout => :'ajax_layout', :locals => {:description => description}
   end
 
-  get "/tags" do
-      content_type :json
-      {:tags => [:test, :hallo, :not!] }.to_json
+  get "/tags/all" do
+    content_type :json
+    {:tags => @data.all_tags }.to_json
   end
 
 end

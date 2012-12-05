@@ -62,7 +62,12 @@ class App < Sinatra::Base
     data.each do |user|
       new_user = Models::User.new(user["name"], user["displayname"], user["pw"], user["email"], user["interests"])
       user["items"].each do |item|
-        Models::Item.new(item["name"], item["price"], new_user, item["description"], item["state"].to_sym)
+        it = Models::Item.new(item["name"], item["price"], new_user, item["description"], item["state"].to_sym)
+        unless item["tags"].nil?
+          item["tags"].each do |tag|
+            it.add_tag(Models::Tag.get_tag(tag))
+          end
+        end
       end
     end
 

@@ -10,6 +10,8 @@
             %a{:href => url("/auctions")} Auctions
           %li.sublink
             %a{:href => url("/item_requests")} Item Requests
+          %li.sublink
+            %a{:href => url("/pop_tags")} Popular Tags
       %li
         %a{:href => url("/user"), :class => [@title == "All users" && [:active_tab]]} User list
       %li{:class => "#{[(@title == "All organizations" or @title == "Add organization" or @title == "Organization requests") && [:active_tab]]} headlink"}
