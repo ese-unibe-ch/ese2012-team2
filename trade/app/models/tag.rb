@@ -24,7 +24,7 @@ module Models
     end
 
     def add_item(item)
-       if matches.count(item)==0
+       unless matches.include?(item)
         matches.push(item)
        end
     end
@@ -34,7 +34,7 @@ module Models
     end
 
     def item_applies?(item)
-      matches.count(item)>0
+      matches.include?(item)
     end
     def amount_of_matches
       matches.length

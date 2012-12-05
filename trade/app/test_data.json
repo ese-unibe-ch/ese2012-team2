@@ -7,7 +7,8 @@
       "items":[ { "name":"Nyan Cat",
                   "price":80,
                   "description":"The ultimate internet cat",
-                  "state":"active"
+                  "state":"active",
+                  "tags" : ["#test", "#hello"]
                 },
                 { "name":"Overly attached girlfriend",
                   "price":0,
