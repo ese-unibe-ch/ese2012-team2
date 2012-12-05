@@ -102,7 +102,7 @@ var Emporium = {
             addError : function(input, message) {
                 $(input).addClass("err");
                 if ($("#" + this.hintId(input)).length <= 0) {
-                    $(input).after("<span id='" + this.hintId(input) + "' class='hint'>" + message + "</span>")
+                    $(input).after("<span id='" + this.hintId(input) + "' class='hint err'>" + message + "</span>")
                 }
             },
             removeError : function(input) {
@@ -158,6 +158,7 @@ var Emporium = {
                     if ($(input).val().match(regex)) {
                         Emporium.validate.helpers.removeError(input);
                     } else {
+                        Emporium.validate.helpers.removeError(input);
                         Emporium.validate.helpers.addError(input, errorMessage);
                     }
                 } else {
