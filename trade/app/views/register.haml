@@ -4,6 +4,7 @@
     Emporium.validate.existing($("#display_name"), "/user/display_name/exists", "Another user has already chosen this displayname!", "Please choose a displayname");
     Emporium.validate.password($("#passwd"), "The password must be at least 6 characters long and contain digits, upper and lower case letters and special character or be at least 10 characters long.");
     Emporium.validate.passwordRepetition($("#passwd"), $("#passwd_repetition"));
+    Emporium.validate.regex($("#email"), /^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/, "Invalid email adress.", false, "Please enter an email adress")
   });
 
 %h1 Add new user
@@ -13,7 +14,7 @@
   %br
   %input.normal_input{:id => "display_name", :type=>"text", :name=>"display_name", :placeholder => "Displayname"}
   %br
-  %input.normal_input{:type=>"email", :name=>"email", :placeholder => "Email"}
+  %input.normal_input{:id => "email", :type=>"email", :name=>"email", :placeholder => "Email"}
   %br
   %input.normal_input{:id => "passwd", :type=>"password", :name=>"passwd", :placeholder => "Password"}
   %br
