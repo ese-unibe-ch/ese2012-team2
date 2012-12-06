@@ -5,7 +5,7 @@ require_relative 'activity'
 module Models
   class Item < Trackable
 
-    attr_accessor :name, :price, :owner, :state, :descriptions, :image, :prev_owners, :end_time
+    attr_accessor :name, :price, :owner, :state, :descriptions, :image, :prev_owners, :end_time, :quantity
 
     def name=(name)
       add_activity "name was changed from #{self.name} to #{name}" unless @name == name
@@ -23,6 +23,13 @@ module Models
         owner.add_activity "has changed state of #{self.name} from #{self.state} to #{state}"
       end
       @state = state
+    end
+
+    def quantity=(quantity)
+      unless @quantity == quantity
+        add_activity "quantity was changed from #{self.quantity} to #{quantity}"
+      end
+      @quantity = quantity
     end
 
     def description=(description)
@@ -68,7 +75,7 @@ module Models
     #SH Sets the name, the price, and the owner of the item
     #SH If the user is not nil, adds the item to the item list of the owner
     #AS The parameter request means, the item is added as an item request. Defaultly it's false.
-    def initialize(name, price, owner, description, state=:inactive, image=nil, request=false, end_time=nil)
+    def initialize(name, price, owner, description, state=:inactive, image=nil, request=false, end_time=nil, quantity=1)
       @price = Models::Item.validate_price price
 
       if owner.nil?
@@ -88,6 +95,7 @@ module Models
       @comments = Array.new
 
       @state = state
+      @quantity = quantity
 
       @end_time = end_time
 
