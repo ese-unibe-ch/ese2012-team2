@@ -162,11 +162,13 @@ class ItemController < BaseSecureController
 
 
       p = Models::Item.validate_price(price)
+      quantity = Models::Item.validate_quantity(params[:quantity])
       if name.empty?
         flash.now[:error] = "Item name must not be empty!"
       else
         item.name = name
         item.price = p
+        item.quantity = quantity
         item.description = description
         #PS it's nil safe ;)
         item.end_time = end_time

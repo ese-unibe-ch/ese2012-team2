@@ -42,5 +42,5 @@
             %a{:href=> "/user/#{item.owner}"} #{item.owner.display_name}
           %td.list
             - if item.owner != @active_user #SH Don't show the buy button for your own items
-              =haml :'partials/buy_button', :locals => {:itemid => item.id}
+              =haml :'partials/buy_button', :locals => {:itemid => item.id, :quantity => item.quantity}
 =haml :'partials/pager', :locals => {:pager_id => "pager"}
