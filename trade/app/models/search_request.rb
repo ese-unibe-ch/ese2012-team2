@@ -5,8 +5,7 @@ module Models
   #AS Models a search request. Create one by giving the keywords and check with applies? if an item matches.
   class SearchRequest
     attr_accessor :keywords, :user, :tags
-    attr_reader :id
-
+    attr_reader :id, :threshold
     @@count=0 #AS Static variable which stores the amount of SearchRequests created.
 
     def self.create(keywords, user)
@@ -17,6 +16,7 @@ module Models
       self.tags= Tag.get_tags_from_array(keywords_and_tags)
       self.keywords=keywords_and_tags.delete_if{|word| Tag.valid?(word)}
       self.user= user
+      @threshold=1 #fuzzy search threshold
       @id=@@count
       @@count+=1
     end
@@ -42,18 +42,16 @@ module Models
       end
       items_and_distances.sort!{|x,y| x[1] <=> y[1]}
       items_and_distances.each{|x| x.each{|y| print y}}
-      items_and_distances.collect{|x| x[0]}
     end
 
     #AS Checks if an item is close enought (using the levenshtein distance as already described under "get_close_items"). If yes: [item, distance] is returned, else: nil is returned.
     def check_if_item_is_close_enough(item)
-      threshold= 1
-      overall_min_distance= threshold
+      overall_min_distance= @threshold
       keywords.each do |keyword|
          keyword= keyword.downcase
          minimal_distance= [get_minimal_distance(keyword, item.name.downcase), get_minimal_distance(keyword, item.description.downcase)].min
          overall_min_distance= [overall_min_distance, minimal_distance].min
-         if(minimal_distance>threshold)
+         if(minimal_distance>@threshold)
            return nil
          end
       end
@@ -69,15 +67,6 @@ module Models
       min
     end
 
-    #AS Gets the sum of the levensthein distances of a keyword and each word of a string. (This metric helps with sorting)
-    def get_overall_distance(keyword, string)
-      sum= 0
-      string.split(" ").each do |word|
-        sum+= Text::Levenshtein.distance(keyword, word)
-      end
-      sum
-    end
-
     def tags_apply?(item)
        applies_for_all = true
        tags.each do |tag|
@@ -88,12 +77,15 @@ module Models
 
     #AS Given an Array of Items return an Array of Items which match to the SearchRequest instance
     def get_matching_items(items)
-      result= get_close_items(items)
-      result.delete_if{|item| !self.tags_apply?(item)}
-      result.each{|item| print item.name}
-      result
+      get_matching_items_with_relevances(items).collect{|x| x[0]}
     end
 
+    #AS Given an Array of Items return an Array of Items which match to the SearchRequest instance and their relevance regarding to matching distance.
+    def get_matching_items_with_relevances(items)
+      result= get_close_items(items)
+      result.delete_if{|item_with_relevance| !self.tags_apply?(item_with_relevance[0])}
+      result.collect!{|item_with_relevance| [item_with_relevance[0], @threshold-item_with_relevance[1]]}
+    end
     #AS A little helper, to split the keyword-query up correctly.
     def self.splitUp(keywords)
       keywords.split(" ")

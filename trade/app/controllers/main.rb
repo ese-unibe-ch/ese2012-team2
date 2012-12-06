@@ -103,8 +103,8 @@ class Main  < BaseSecureController
     @title = "Search"
     keyword = Models::SearchRequest.splitUp(params[:keywords])
     search_request = Models::SearchRequest.create(keyword, @active_user)
-    items = search_request.get_matching_items(@data.all_items)
-    haml :search, :locals => {:search_request => search_request, :items => items}
+    items_with_relevances = search_request.get_matching_items_with_relevances(@data.all_items)
+    haml :search, :locals => {:search_request => search_request, :items_with_relevances => items_with_relevances}
   end
 
   get "/search_requests" do
