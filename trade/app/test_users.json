@@ -241,11 +241,13 @@
       "items":[ { "name":"Bj&ouml;rn",
                   "price":15,
                   "description":"A stylish table",
-                  "state":"active"
+                  "state":"active",
+                  "quantity" : 9
                 },{ "name":"Ingvar",
                   "price":10,
                   "description":"A really cool bookshelf",
-                  "state":"active"
+                  "state":"active",
+                  "quantity" : 9
                 },{ "name":"B&ouml;d&ouml;",
                   "price":8,
                   "description":"A very useful locker",
@@ -257,7 +259,8 @@
                 },{ "name":"Billy",
                   "price":19,
                   "description":"A chair",
-                  "state":"active"
+                  "state":"active",
+                  "quantity" : 9
                 }
               ]
     },

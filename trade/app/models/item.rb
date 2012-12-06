@@ -72,6 +72,15 @@ module Models
       @data
     end
 
+    def copy_for(owner, quantity)
+      item = Models::Item.new(@name, @price, owner, @descriptions.last, @state, @image, false, @end_time, quantity)
+      self.activities.each { |act|
+        copied_act = act.copy_for(owner)
+        self.overlay.add_activity(copied_act)
+      }
+      item
+    end
+
     #SH Sets the name, the price, and the owner of the item
     #SH If the user is not nil, adds the item to the item list of the owner
     #AS The parameter request means, the item is added as an item request. Defaultly it's false.
