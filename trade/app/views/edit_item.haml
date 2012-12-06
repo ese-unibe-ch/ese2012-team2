@@ -61,6 +61,11 @@
   %input.normal_input{:id => "price", :type => "text", :name => "price", :value => "#{item.price}"}
   %br
   %label
+    Quantity*:
+  %br
+  %input.normal_input{:id => "quantity", :type => "text", :name => "quantity", :value => "#{item.quantity}"}
+  %br
+  %label
     Valid till Date:
   %br
   %input.datepicker{:id => "date", :type => "text", :name => "date", :value => "#{item.formatted_end_time_date}", :placeholder =>"01-01-2000"}

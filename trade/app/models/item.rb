@@ -95,7 +95,7 @@ module Models
       @comments = Array.new
 
       @state = state
-      @quantity = quantity
+      @quantity = Models::Item.validate_quantity(quantity)
 
       @end_time = end_time
 
@@ -123,6 +123,21 @@ module Models
       end
       unless p >= 0
         raise TradeException, "Price must be positive"
+      end
+      p
+    end
+
+    def self.validate_quantity quantity
+      if quantity.is_a?(String)
+        unless quantity.match('^[0-9]+$')
+          raise TradeException, "Price must be number"
+        end
+        p = quantity.to_i
+      else
+        p = quantity
+      end
+      unless p >= 1
+        raise TradeException, "Quantity must be 1 or more"
       end
       p
     end
