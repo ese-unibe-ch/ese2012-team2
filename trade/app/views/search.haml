@@ -5,6 +5,11 @@
      });
 
      $("#itemTable")
+        .tablesorter({
+                headers: {3: {sorter: false}},
+                //sortList: [[0,0], [1,0]],
+                widgets: ['zebra']
+        })
         .tablesorterPager({
                 container: $("#pager"),
                 positionFixed: false
