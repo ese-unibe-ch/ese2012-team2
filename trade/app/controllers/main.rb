@@ -52,7 +52,8 @@ class Main  < BaseSecureController
     @title = "Home"
     begin
     item = @data.item_by_id params[:item].to_i
-    @active_user.buy(item)
+    quantity = Models::Item.validate_quantity(params[:quantity])
+    @active_user.buy(item, quantity)
     EmailSender.send_item_bought(item)
     flash.now[:success] =  "Item successfully bought! You can activate the item in your <a href = '/all_items/#{@active_user.name}'>item list</a>."
     rescue TradeException => e

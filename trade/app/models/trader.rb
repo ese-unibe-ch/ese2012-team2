@@ -5,22 +5,32 @@ module Models
   class Trader < Trackable
     attr_accessor :credits, :credits_in_auction, :name, :image, :interests, :display_name, :auction_bid
 
-    def buy(item)
-      unless item.owner == self
-      if item.state == :active
-        if item.price<=self.credits
-          self.credits -= item.price
-          item.take_ownership(self)
-          item.state = :pending
-        else
-          self.add_activity_failed_purchase item
-          raise TradeException, "You don't have enough credits to buy this item!"
-        end
-      else
-        raise TradeException, "Item is not active!"
-      end
-      else
+    def buy(item, quantity)
+      if item.owner == self
         raise TradeException, "You cannot buy your own item!"
+      else
+        if item.state == :active
+          money_needed = item.price * quantity
+          if money_needed <=self.credits
+            self.credits -= money_needed
+            if quantity < item.quantity
+              # only sell a part
+              part = item.copy_for(self, quantity)
+              part.take_ownership(self)
+              part.state = :pending
+              item.quantity = item.quantity - quantity
+            else
+              # sell the whole item
+              item.take_ownership(self)
+              item.state = :pending
+            end
+          else
+            self.add_activity_failed_purchase item
+            raise TradeException, "You don't have enough credits to buy this item!"
+          end
+        else
+          raise TradeException, "Item is not active!"
+        end
       end
     end
 
