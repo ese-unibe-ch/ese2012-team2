@@ -40,7 +40,7 @@ module Models
           end
         end
       end
-      items_and_distances.sort{|x,y| x[1] <=> y[1]}
+      items_and_distances.sort!{|x,y| x[1] <=> y[1]}
       items_and_distances.each{|x| x.each{|y| print y}}
       items_and_distances.collect{|x| x[0]}
     end
@@ -90,6 +90,7 @@ module Models
     def get_matching_items(items)
       result= get_close_items(items)
       result.delete_if{|item| !self.tags_apply?(item)}
+      result.each{|item| print item.name}
       result
     end
 
