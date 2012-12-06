@@ -1,4 +1,5 @@
 require_relative '../helpers/email_sender'
+require 'text'
 
 module Models
   #AS Models a search request. Create one by giving the keywords and check with applies? if an item matches.
@@ -23,19 +24,58 @@ module Models
     #AS Check if a given Item matches to the SearchRequest instance
     def applies?(item)
       unless item.owner == self.user
-        tags_apply?(item) && keywords_apply?(item)
+        tags_apply?(item) && !check_if_item_is_close_enough(item).nil?
       end
     end
 
-    def keywords_apply?(item)
-      applies_for_all = true
-      keywords.each do |keyword|
-        if !applies_for_all
-          break
+    #AS Checks the list of items for the ones, which are below a particular treshold regarding the levenshtein distance of the best matching
+    # word in the items name or description to every keyword. The items are sorted regarding their "overall levenshtein distance".
+    def get_close_items(items)
+      items_and_distances=Array.new
+      items.each do |item|
+        unless item.owner == self.user
+          item_and_distance= check_if_item_is_close_enough(item)
+          unless item_and_distance.nil?
+            items_and_distances.push(item_and_distance)
+          end
         end
-        applies_for_all= applies_for_all && ((item.name.downcase.include? keyword.downcase) || (item.description.downcase.include? keyword.downcase))
       end
-      applies_for_all
+      items_and_distances.sort{|x,y| x[1] <=> y[1]}
+      items_and_distances.each{|x| x.each{|y| print y}}
+      items_and_distances.collect{|x| x[0]}
+    end
+
+    #AS Checks if an item is close enought (using the levenshtein distance as already described under "get_close_items"). If yes: [item, distance] is returned, else: nil is returned.
+    def check_if_item_is_close_enough(item)
+      threshold= 1
+      overall_min_distance= threshold
+      keywords.each do |keyword|
+         keyword= keyword.downcase
+         minimal_distance= [get_minimal_distance(keyword, item.name.downcase), get_minimal_distance(keyword, item.description.downcase)].min
+         overall_min_distance= [overall_min_distance, minimal_distance].min
+         if(minimal_distance>threshold)
+           return nil
+         end
+      end
+      return [item, overall_min_distance]
+    end
+
+    #AS Gets the best (minmal) levenshtein distance from keyword and the optimal "word" (splitted by empty spaces) of the string.
+    def get_minimal_distance(keyword, string)
+      min= string.length+keyword.length #the distance can't possibly be bigger..
+      string.split(" ").each do |word|
+        min= [min, Text::Levenshtein.distance(keyword, word)].min
+      end
+      min
+    end
+
+    #AS Gets the sum of the levensthein distances of a keyword and each word of a string. (This metric helps with sorting)
+    def get_overall_distance(keyword, string)
+      sum= 0
+      string.split(" ").each do |word|
+        sum+= Text::Levenshtein.distance(keyword, word)
+      end
+      sum
     end
 
     def tags_apply?(item)
@@ -48,8 +88,8 @@ module Models
 
     #AS Given an Array of Items return an Array of Items which match to the SearchRequest instance
     def get_matching_items(items)
-      result= Array.new(items)
-      result.delete_if{|item| !self.applies?(item)}
+      result= get_close_items(items)
+      result.delete_if{|item| !self.tags_apply?(item)}
       result
     end
 
