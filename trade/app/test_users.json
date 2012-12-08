@@ -296,7 +296,8 @@
                 },{ "name":"Cake",
                   "price":5,
                   "description":"The cake is a lie!",
-                  "state":"active"
+                  "state":"active",
+                  "tags" : ["#test"]
                 }
               ]
     },
@@ -316,7 +317,8 @@
                 },{ "name":"Pikachu",
                   "price":10,
                   "description":"A pokemon. It is yellow.",
-                  "state":"active"
+                  "state":"active",
+                  "tags" : ["#test"]
                 }
               ]
     }

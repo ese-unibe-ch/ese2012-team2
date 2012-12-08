@@ -36,6 +36,7 @@ module Models
     def item_applies?(item)
       matches.include?(item)
     end
+
     def amount_of_matches
       matches.length
     end

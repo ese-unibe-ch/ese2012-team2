@@ -230,5 +230,9 @@ module Models
     def add_tag(tag)
       tag.add_item(self)
     end
+
+    def similar_items
+       self.overlay.similar_items(self)
+    end
   end
 end

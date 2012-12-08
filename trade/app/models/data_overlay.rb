@@ -1,4 +1,5 @@
 require_relative '../models/trade_exception'
+require_relative 'similar_item_request'
 
 module Models
   #KR This class is responsible for Item & User management. It contains maps holding all items and users
@@ -298,6 +299,12 @@ module Models
 
     def get_tags
       @tags.values
+    end
+
+    def similar_items(item)
+      similar_item_request = Models::SimilarItemRequest.new(item)
+      self.all_items.select{|it| similar_item_request.applies?(it)}
+      #similar_items.sort { |a,b| b.hits <=> a.hits }
     end
   end
 end
