@@ -10,15 +10,20 @@ module Models
         raise TradeException, "You cannot buy your own item!"
       else
         if item.state == :active
-          money_needed = item.price * quantity
+          if quantity > item.quantity
+            quant = item.quantity
+          else
+            quant = quantity
+          end
+          money_needed = item.price * quant
           if money_needed <=self.credits
             self.credits -= money_needed
-            if quantity < item.quantity
+            if quant < item.quantity
               # only sell a part
-              part = item.copy_for(self, quantity)
+              part = item.copy_for(self, quant)
               part.take_ownership(self)
               part.state = :pending
-              item.quantity = item.quantity - quantity
+              item.quantity = item.quantity - quant
             else
               # sell the whole item
               item.take_ownership(self)

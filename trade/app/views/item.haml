@@ -51,6 +51,16 @@
   =haml :'partials/trackbutton', :locals => {:tracked_already => @active_user.trackees.include?(item), :id => item.id, :type => :item, :track_id => item.track_id, :name => item.name }
 =haml :'partials/activities_list', :locals => {:activities => item.activities, :show_owner => false, :list_suffix => "self"}
 
+%h2 Similar Items
+- sim_items = item.similar_items
+- if sim_items.length > 0
+  - for sim in sim_items
+    %a{:href => "/item/#{sim.id}",  "data-powertip" => "#{sim.description.gsub("\n", "<br>")}</br><img src=#{sim.image_path} width=150 />", :class => "powertip"}
+      #{sim.name}
+      %br
+- else
+  No similar items found.
+
 %table
   %thead
     %tr
