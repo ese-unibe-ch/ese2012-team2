@@ -6,8 +6,8 @@
 
      $("#itemTable")
         .tablesorter({
-                headers: {3: {sorter: false}},
-                sortList: [[3,0], [0,0]],
+                headers: {4: {sorter: false}},
+                sortList: [[3,0], [0,0], [4,0]],
                 widgets: ['zebra']
         })
         .tablesorterPager({
@@ -43,7 +43,8 @@
           %td.right.list.padding_left #{item.price}
           %td.list.padding_left
             %a{:href=> "/user/#{item.owner}"} #{item.owner.display_name}
-          %td.right.list.padding_left #{relevance}
+          %td.right.list.padding_left
+            #{relevance}
           %td.list
             - if item.owner != @active_user #SH Don't show the buy button for your own items
               =haml :'partials/buy_button', :locals => {:itemid => item.id, :quantity => item.quantity}
