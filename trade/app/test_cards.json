@@ -1,0 +1,29 @@
+[
+    {
+        "status":"active",
+        "max_amount":1000,
+        "information": {
+            "card_number": "1111 2222 3333 4444",
+            "CVC": 111,
+            "valid_thru":"07-2015"
+        }
+    },
+    {
+        "status":"blocked",
+        "max_amount":200,
+        "information": {
+            "card_number": "0987 5876 2854 1652",
+            "CVC": 198,
+            "valid_thru":"09-2013"
+        }
+    },
+	{
+		"status":"active",
+		"max_amount":200,
+		"information": {
+			"card_number": "1276 8758 4967 3946",
+			"CVC": 505,
+			"valid_thru":"01-2013"
+		}
+	}
+]

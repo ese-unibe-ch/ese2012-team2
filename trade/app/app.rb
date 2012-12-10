@@ -13,6 +13,8 @@ require_relative 'models/data_overlay'
 require_relative 'models/trader'
 require_relative 'models/trackable'
 require_relative 'models/activity'
+require_relative 'models/payment_reference'
+require_relative 'models/payment_server'
 require_relative 'controllers/main'
 require_relative 'controllers/authentication'
 require_relative 'controllers/item_controller'
@@ -54,14 +56,31 @@ class App < Sinatra::Base
   def self.load_test_data
     overlay = Models::DataOverlay.instance
 
-    document = IO.read(File.dirname(__FILE__) + "/test_data.json")
+    document = IO.read(File.dirname(__FILE__) + "/test_users.json")
     data = JSON.parse(document)
 
     data.each do |user|
       new_user = Models::User.new(user["name"], user["displayname"], user["pw"], user["email"], user["interests"])
       user["items"].each do |item|
-        Models::Item.new(item["name"], item["price"], new_user, item["description"], item["state"].to_sym)
+        quantity = item["quantity"]
+        if quantity.nil?
+          quantity = 1
+        end
+        it = Models::Item.new(item["name"], item["price"], new_user, item["description"], item["state"].to_sym, nil, false, nil, quantity)
+        unless item["tags"].nil?
+          item["tags"].each do |tag|
+            it.add_tag(Models::Tag.get_tag(tag))
+          end
+        end
       end
+    end
+
+    document = IO.read(File.dirname(__FILE__) + "/test_cards.json")
+    data = JSON.parse(document, :symbolize_names => true)
+    data.each do |ref|
+      payRef = Models::PaymentReference.new(ref[:status].to_sym, ref[:max_amount], ref[:information])
+      puts payRef
+      Models::PaymentServer.instance().add payRef
     end
   end
 

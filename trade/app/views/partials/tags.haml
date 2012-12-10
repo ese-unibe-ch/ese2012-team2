@@ -1,0 +1,15 @@
+:javascript
+  $(document).ready(function() {
+
+    Emporium.tags.initialize();
+  });
+
+#tags
+  - unless tags.nil?
+    - for tag in tags
+      %input{:type => "hidden", :name => "tags[]", :value => tag}
+  =haml :'partials/display_tags', :locals => {:tags => tags}
+%br
+%input.normal_input{:id => "add_tag", :type => "text", :name => "add_tag", :placeholder => "Tag"}
+%span.tag_button{:id => "add_tag_button"} add Tag
+%br

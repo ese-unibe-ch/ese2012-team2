@@ -1,0 +1,14 @@
+%h2 Tags By Popularity
+%table{:id=>"itemTable", :class=>"tablesorter pager"}
+  %thead
+    %tr
+      %th Name
+      %th Amount Of Matches
+
+  %tbody
+    - for tag in tags
+      %tr
+        %td
+          #{tag.name}
+        %td
+          #{tag.amount_of_matches}

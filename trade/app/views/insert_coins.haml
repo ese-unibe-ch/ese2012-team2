@@ -1,5 +1,11 @@
 :javascript
   $(document).ready(function() {
+
+     Emporium.validate.regex($("#card_number"), /^([0-9]{4} ){3}[0-9]{4}$/,  "Credit card must have form: 0000 0000 0000 0000", false, "Please enter a credit card number.")
+     Emporium.validate.regex($("#cvc"), /^[0-9]{3}$/,  "A three digit number", false, "A three digit number")
+     Emporium.validate.date($("#valid_thru"), "Date format example: 23-05-2012")
+     Emporium.validate.number($("#amount"), "Please enter a valid number", false, "Please enter amount in Swiss Francs.")
+
      $(".datepicker").datepick({dateFormat: 'dd-mm-yyyy'});
     })
 %h1 Get Coins
@@ -8,23 +14,23 @@
   %label
     Card number:
   %br
-  %input.normal_input{:type => "text", :name => "card_number"}
+  %input.normal_input{:id => "card_number", :type => "text", :name => "card_number"}
   %br
   %label
     CVC:
   %br
-  %input.normal_input{:type => "text", :name => "CVC"}
-  %span.hint A three digit number
+  %input.normal_input{:id => "cvc", :type => "text", :name => "CVC"}
   %br
   %label
     Valid-thru:
   %br
-  %input.datepicker{:type => "text", :name => "valid_thru", :value => "01-01-2013"}
+  %input.datepicker{:id => "valid_thru", :type => "text", :name => "valid_thru", :value => "01-01-2013"}
   %br
   %h2 Payment Information
   %label
     Amount
   %br
-  %input.normal_input{:type => "text", :name => "amount"}
+  %input.normal_input{:id => "amount", :type => "text", :name => "amount"}
+  %span.hint 1 Swiss Franc = 10 Coins
   %br
   %input.normal_input{:type => "submit",:class=>"button_margin", :value => "Submit Data"}

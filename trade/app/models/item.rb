@@ -5,7 +5,7 @@ require_relative 'activity'
 module Models
   class Item < Trackable
 
-    attr_accessor :name, :price, :owner, :state, :descriptions, :image, :prev_owners, :end_time
+    attr_accessor :name, :price, :owner, :state, :descriptions, :image, :prev_owners, :end_time, :quantity
 
     def name=(name)
       add_activity "name was changed from #{self.name} to #{name}" unless @name == name
@@ -23,6 +23,13 @@ module Models
         owner.add_activity "has changed state of #{self.name} from #{self.state} to #{state}"
       end
       @state = state
+    end
+
+    def quantity=(quantity)
+      unless @quantity == quantity
+        add_activity "quantity was changed from #{self.quantity} to #{quantity}"
+      end
+      @quantity = quantity
     end
 
     def description=(description)
@@ -65,10 +72,19 @@ module Models
       @data
     end
 
+    def copy_for(owner, quantity)
+      item = Models::Item.new(@name, @price, owner, @descriptions.last, @state, @image, false, @end_time, quantity)
+      self.activities.each { |act|
+        copied_act = act.copy_for(owner)
+        self.overlay.add_activity(copied_act)
+      }
+      item
+    end
+
     #SH Sets the name, the price, and the owner of the item
     #SH If the user is not nil, adds the item to the item list of the owner
     #AS The parameter request means, the item is added as an item request. Defaultly it's false.
-    def initialize(name, price, owner, description, state=:inactive, image=nil, request=false, end_time=nil)
+    def initialize(name, price, owner, description, state=:inactive, image=nil, request=false, end_time=nil, quantity=1)
       @price = Models::Item.validate_price price
 
       if owner.nil?
@@ -88,6 +104,7 @@ module Models
       @comments = Array.new
 
       @state = state
+      @quantity = Models::Item.validate_quantity(quantity)
 
       @end_time = end_time
 
@@ -115,6 +132,21 @@ module Models
       end
       unless p >= 0
         raise TradeException, "Price must be positive"
+      end
+      p
+    end
+
+    def self.validate_quantity quantity
+      if quantity.is_a?(String)
+        unless quantity.match('^[0-9]+$')
+          raise TradeException, "Price must be number"
+        end
+        p = quantity.to_i
+      else
+        p = quantity
+      end
+      unless p >= 1
+        raise TradeException, "Quantity must be 1 or more"
       end
       p
     end
@@ -179,7 +211,11 @@ module Models
     end
 
     def tags
-     [:test, :hello]
+      self.overlay.tags_by_item(self).collect { |tag| tag.name }
+    end
+
+    def remove_all_tags
+      self.overlay.remove_all_tags_from_item(self)
     end
 
     def image_path
@@ -188,6 +224,15 @@ module Models
       else
          return "/images/items/" + self.image
       end
+    end
+
+    #AS Adds the item to a tag. (Double Dispatch)
+    def add_tag(tag)
+      tag.add_item(self)
+    end
+
+    def similar_items
+       self.overlay.similar_items(self)
     end
   end
 end

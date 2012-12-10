@@ -52,7 +52,8 @@ class Main  < BaseSecureController
     @title = "Home"
     begin
     item = @data.item_by_id params[:item].to_i
-    @active_user.buy(item)
+    quantity = Models::Item.validate_quantity(params[:quantity])
+    @active_user.buy(item, quantity)
     EmailSender.send_item_bought(item)
     flash.now[:success] =  "Item successfully bought! You can activate the item in your <a href = '/all_items/#{@active_user.name}'>item list</a>."
     rescue TradeException => e
@@ -103,8 +104,8 @@ class Main  < BaseSecureController
     @title = "Search"
     keyword = Models::SearchRequest.splitUp(params[:keywords])
     search_request = Models::SearchRequest.create(keyword, @active_user)
-    items = search_request.get_matching_items(@data.all_items)
-    haml :search, :locals => {:search_request => search_request, :items => items}
+    items_with_relevances = search_request.get_matching_items_with_relevances(@data.all_items)
+    haml :search, :locals => {:search_request => search_request, :items_with_relevances => items_with_relevances}
   end
 
   get "/search_requests" do
@@ -160,5 +161,21 @@ class Main  < BaseSecureController
     @title = "All item requests"
     item_requests= @data.get_item_requests()
     haml :item_requests, :locals => {:requests => item_requests}
+  end
+
+  post '/user/edit/display_name/exists' do
+    content_type :json
+    #explicit true/false necessary for json serialization
+    exists = false
+    unless @active_user.display_name == params[:existing]
+      if  @data.user_display_name_exists?(params[:existing])
+        exists = true
+      end
+    end
+    {:exists => exists }.to_json
+  end
+
+  get "/pop_tags" do
+    haml :popular_tags, :locals => {:tags => Models::Tag.get_tags_sorted_by_popularity}
   end
 end

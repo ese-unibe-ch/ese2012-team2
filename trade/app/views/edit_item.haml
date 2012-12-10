@@ -2,9 +2,10 @@
 :javascript
   $(document).ready(function() {
 
-
-
-     Emporium.complete($('#name'), "/test/url");
+     Emporium.validate.date($('#date'), "Date has to be in the Format 14-05-2012. ");
+     Emporium.validate.time($('#time'), "Please use 24h time format, examples: 09:56, 20:00");
+     Emporium.validate.number($('#price'), "Price must be a valid number.", false, "Please enter a price.");
+     Emporium.validate.nonEmpty($('#name'), "Please select a Name for this item.");
 
      $(".datepicker").datepick({dateFormat: 'dd-mm-yyyy'});
 
@@ -22,13 +23,12 @@
      });
 
      $("#next_desc").click(function(){
-            var descriptionIndex = 1 + parseInt($("#description_info").attr("current_index"));
-            var itemId =  $("#description_info").attr("itemid");
-            if (descriptionIndex <= $("#description_info").attr("max_index")) {
-             updateDescription(descriptionIndex, itemId);
-            }
-          });
-
+        var descriptionIndex = 1 + parseInt($("#description_info").attr("current_index"));
+        var itemId =  $("#description_info").attr("itemid");
+        if (descriptionIndex <= $("#description_info").attr("max_index")) {
+         updateDescription(descriptionIndex, itemId);
+        }
+      });
 
      function updateDescription(newIndex,itemId) {
          $.get("/item/" + itemId + "/description/" + newIndex, function(data) {
@@ -58,19 +58,23 @@
   %label
     Price*:
   %br
-  %input.normal_input{:type => "text", :name => "price", :value => "#{item.price}"}
+  %input.normal_input{:id => "price", :type => "text", :name => "price", :value => "#{item.price}"}
+  %br
+  %label
+    Quantity*:
+  %br
+  %input.normal_input{:id => "quantity", :type => "text", :name => "quantity", :value => "#{item.quantity}"}
   %br
   %label
     Valid till Date:
   %br
-  %input.datepicker{:type => "text", :name => "date", :value => "#{item.formatted_end_time_date}", :placeholder =>"01-01-2000"}
+  %input.datepicker{:id => "date", :type => "text", :name => "date", :value => "#{item.formatted_end_time_date}", :placeholder =>"01-01-2000"}
   %span.hint If field is empty, the offer will not expire
   %br
   %label
     Valid till Time:
   %br
-  %input.normal_input{:type => "text", :name => "time", :value => "#{item.formatted_end_time_time}", :placeholder =>"12:00"}
-  %span.hint Format examples: 09:56, 20:00
+  %input.normal_input{:id => "time", :type => "text", :name => "time", :value => "#{item.formatted_end_time_time}", :placeholder =>"12:00"}
   %br
   %label
     Description:
@@ -91,7 +95,7 @@
   %br
   %input{:type=>"file", :name=>"image"}
   %br
-  =haml :'partials/tags_hidden_inputs', :locals => {:tags => item.tags}
+  =haml :'partials/tags', :locals => {:tags => item.tags}
   %input.normal_input{:type => "submit",:class=>"button_margin", :value => "Save"}
 
 

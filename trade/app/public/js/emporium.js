@@ -1,12 +1,48 @@
 var Emporium = {
 
-    complete : function(object, url, params) {
-        $.get("/tags", function(data) {
-           $(object).autocomplete({
-               source : data.tags,
-               minLength : 0
-           })
-        });
+    tags : {
+        initialize : function() {
+            $.get("/tags/all", function(data) {
+               $("#add_tag").autocomplete({
+                   source : data.tags,
+                   minLength : 0
+               })
+            });
+
+            $("#add_tag_button").click(function() {
+                var tag = $("#add_tag").val();
+                if (tag) {
+                  Emporium.tags.add(tag);
+                  $("#add_tag").val("");
+                }
+            });
+
+            this.initTags();
+        },
+        add : function(tag) {
+            $("#tags").append("<input type='hidden' name='tags[]' value='#" + tag + "'>");
+            $("#tags").append("<span class='tag'>#" + tag +"</span>");
+            this.initTags();
+        },
+        initTags : function() {
+            $("span.tag").hover(
+                function() {
+                    $(this).attr("data", $(this).html());
+                    $(this).html("remove?");
+                    $(this).css("cursor", "pointer");
+                },
+                function() {
+                    $(this).html($(this).attr("data"));
+                    $(this).css("cursor", "pointer");
+                }
+            );
+
+            // click event removes both the visible tag and the hidden input fields
+            $("span.tag").click( function(){
+                $("input[value='" + $(this).attr("data").trim() + "']").remove();
+                $(this).remove();
+            });
+        }
     },
 
     validate : {
@@ -42,6 +78,7 @@ var Emporium = {
             $(input).keyup(function() {
                 validateExisting();
              });
+            validateExisting();
         },
         nonEmpty : function(input, mess) {
             var message = mess || 'Value must not be empty!';
@@ -65,7 +102,7 @@ var Emporium = {
             addError : function(input, message) {
                 $(input).addClass("err");
                 if ($("#" + this.hintId(input)).length <= 0) {
-                    $(input).after("<span id='" + this.hintId(input) + "' class='hint'>" + message + "</span>")
+                    $(input).after("<span id='" + this.hintId(input) + "' class='hint err'>" + message + "</span>")
                 }
             },
             removeError : function(input) {
@@ -112,25 +149,42 @@ var Emporium = {
            });
            validateRepetition();
         },
-        regex : function(input, regex, errorMessage) {
-            $(input).keyup(function(){
+        regex : function(input, regex, errorMessage, optional, missingErrorText) {
+            var opt = optional && true;
+            var missing = missingErrorText || "Must not be empty";
+            var validateRegex = function() {
                 var text = $(input).val();
                 if (text) {
                     if ($(input).val().match(regex)) {
                         Emporium.validate.helpers.removeError(input);
                     } else {
+                        Emporium.validate.helpers.removeError(input);
                         Emporium.validate.helpers.addError(input, errorMessage);
                     }
                 } else {
-                    Emporium.validate.helpers.removeError(input);
+                    if (opt) {
+                        Emporium.validate.helpers.removeError(input);
+                    } else {
+                        Emporium.validate.helpers.removeError(input);
+                        Emporium.validate.helpers.addError(input, missing);
+                    }
                 }
+            };
+            $(input).keyup(function(){
+                validateRegex();
             });
+            validateRegex();
         },
         date : function(input, message) {
-            this.regex(input, /[0-9]{2}-[0-9]{2}-[0-9]{4}/, message);
+            // regex not perfect yet for months and days...
+            this.regex(input, /[0-3][0-9]-[0-1][0-9]-[0-9]{4}$/, message);
         },
         time : function(input, message) {
-            this.regex(input, /[0-2]{2}:[0-5]{1}[0-9]{1}/, message);
+            // regex not perfect for hours (should stop at 23..)
+            this.regex(input, /^[0-2][0-9]:[0-5][0-9]$/, message);
+        },
+        number : function(input, message, optional, missingText) {
+            this.regex(input, /^[0-9]+$/ , message, optional, missingText);
         }
     }
 }

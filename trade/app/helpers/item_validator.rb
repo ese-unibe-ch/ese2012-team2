@@ -1,4 +1,5 @@
 require_relative '../models/item'
+require_relative '../models/tag'
 
 class ItemValidator
 
@@ -17,13 +18,22 @@ class ItemValidator
     end_time = self.parse_date_time(params[:date], params[:time])
 
     price = ItemValidator.delete_leading_zeros(price)
+    quantity = ItemValidator.delete_leading_zeros(params[:quantity])
 
     if (active_user.working_for.nil?)
       user = active_user
     else
       user = active_user.working_for
     end
-    item = Models::Item.new(name, price, user, description, :inactive, nil, as_request, end_time)
+    item = Models::Item.new(name, price, user, description, :inactive, nil, as_request, end_time, quantity)
+    tags = params[:tags]
+    unless tags.nil?
+      for tag in tags do
+        puts "tags: #{tag}"
+        t = Models::Tag.get_tag(tag)
+        item.add_tag(t)
+      end
+    end
     image_name = ImageHelper.save params[:image], "#{settings.public_folder}/images/items"
     item.image = image_name
   end

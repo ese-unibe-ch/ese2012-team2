@@ -1,9 +1,14 @@
+:javascript
+  $(document).ready(function() {
+    Emporium.validate.existing($("#display_name"), "/user/edit/display_name/exists", "Another user has already chosen this displayname!");
+  });
+
 %h1 Edit user
 %form{:action=>"/user/#{@active_user.name}/edit", :method=>"POST", :enctype=>"multipart/form-data"}
   %label
     Display name:
   %br
-  %input.normal_input{:type=>"text", :name=>"display_name", :value => "#{@active_user.display_name}"}
+  %input.normal_input{:id => "display_name", :type=>"text", :name=>"display_name", :value => "#{@active_user.display_name}"}
   %br
   %label
     Image:

@@ -1,20 +1,29 @@
 -#SH Shows the add item form
 :javascript
   $(document).ready(function() {
+
+     Emporium.validate.date($('#date'), "Date has to be in the Format 14-05-2012. ");
+     Emporium.validate.time($('#time'), "Please use 24h time format, examples: 09:56, 20:00");
+     Emporium.validate.number($('#price'), "Price must be a valid number.", false, "Please enter a price.");
+     Emporium.validate.number($('#quantity'), "Quantity must be a valid number", false, "Please set a quantity.");
+     Emporium.validate.nonEmpty($('#name'), "Please select a Name for this item.");
+
      $(".datepicker").datepick({dateFormat: 'dd-mm-yyyy'});
   })
 %h1 Add Item
 - unless @active_user.working_for.nil?
   %p Adding item for organization: #{@active_user.working_for}
 %form{:action => "/add_item", :method => "POST", :enctype=>"multipart/form-data"}
-  %input.normal_input{:type => "text", :name => "name", :placeholder => "Name"}
+  %input.normal_input{:id => "name", :type => "text", :name => "name", :placeholder => "Name"}
   %br
-  %input.normal_input{:type => "text", :name => "price", :placeholder => "Price"}
+  %input.normal_input{:id => "price", :type => "text", :value => "0", :name => "price", :placeholder => "Price"}
   %br
-  %input.datepicker{:type => "text", :name => "date", :placeholder => "Valid till Date"}
+  %input.normal_input{:id => "quantity", :type => "text", :value => "1", :name => "quantity", :placeholder => "Quantity"}
+  %br
+  %input.datepicker{:id => "date", :type => "text", :name => "date", :placeholder => "Valid till Date"}
   %span.hint If field is empty, the offer will not expire
   %br
-  %input.normal_input{:type => "text", :name => "time", :value => "00:00", :placeholder => "Valid till Time"}
+  %input.normal_input{:id => "time", :type => "text", :name => "time", :value => "00:00", :placeholder => "Valid till Time"}
   %br
   %textarea.normal_input.default_textarea_size{:name => "description", :placeholder => "Description (optional)"}
   %br
@@ -23,7 +32,7 @@
   %br
   %input{:type=>"file", :name=>"image",  :placeholder => "Image"}
   %br
-  =haml :'partials/tags_hidden_inputs', :locals => {:tags => nil}
+  =haml :'partials/tags', :locals => {:tags => nil}
   %input.normal_input{:type => "submit",:class=>"button_margin", :name=>"action", :value => "Add"}
   %input.normal_input{:type => "submit",:class=>"button_margin", :name=>"action", :value => "Add as a request"}
 
