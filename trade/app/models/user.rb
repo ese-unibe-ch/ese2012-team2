@@ -88,7 +88,7 @@ module Models
     end
 
     def valid_email? email
-      email.match(/^[\w*\.?]+@(\w*\.)+\w{2,3}\z/)
+      email.match(/^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)
     end
 
     def add_request(organization)
