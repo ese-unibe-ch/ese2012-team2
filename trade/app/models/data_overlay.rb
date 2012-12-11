@@ -152,10 +152,12 @@ module Models
 
     #AS Create a new search request and add it.
     def new_search_request(keywords, user)
-      search_request= SearchRequest.create(keywords, user)
+      search_request= SearchRequest.create(SearchRequest.splitUp(keywords), user)
       add_search_request search_request
       search_request
     end
+
+
 
     #AS Get the organizations which a user is part of
     def organizations_by_user(user)

@@ -21,6 +21,13 @@ module Models
       @@count+=1
     end
 
+    def all_keywords
+      all_keys = Array.new()
+      all_keys.push(@keywords)
+      all_keys.push(@tags)
+      all_keys.join(" ")
+    end
+
     #AS Check if a given Item matches to the SearchRequest instance
     def applies?(item)
       unless item.owner == self.user

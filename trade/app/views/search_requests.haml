@@ -22,7 +22,7 @@
     - for search_request in search_requests
       %tr
         %td.list
-          #{search_request.keywords}
+          #{search_request.all_keywords}
         %td.right.list.padding_left
           %form{:action => "/research/#{search_request.id}", :method => "POST"}
             %input{:type => "submit",:name => "action", :value => "Search again", :class => "button_as_link", :style => "width:90px"}

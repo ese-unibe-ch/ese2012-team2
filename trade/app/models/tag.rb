@@ -74,6 +74,8 @@ module Models
       overlay.get_tags.sort{|x,y| y.amount_of_matches <=> x.amount_of_matches}
     end
 
-
+    def to_s
+      "#{self.name}"
+    end
   end
 end
