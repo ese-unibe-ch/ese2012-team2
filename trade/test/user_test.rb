@@ -39,17 +39,17 @@ class UserTest < Test::Unit::TestCase
   end
 
   def test_buy
-    assert_nothing_raised { @user.buy(@d_star3) }
+    assert_nothing_raised { @user.buy(@d_star3, 1) }
     assert(@user.items.include?(@d_star3))
   end
 
   def test_fail_buy_own
-    assert_raise(TradeException) { @user.buy(@d_star) }
+    assert_raise(TradeException) { @user.buy(@d_star, 1) }
   end
 
   def test_buy_for_organization
     @user.working_for = @org
-    @user.buy(@d_star)
+    @user.buy(@d_star, 1)
     assert(@org.items.include?(@d_star))
     assert(!@user.items.include?(@d_star))
   end
@@ -65,7 +65,7 @@ class UserTest < Test::Unit::TestCase
   end
 
   def test_confirm_receipt
-     @user.buy(@d_star3)
+     @user.buy(@d_star3, 1)
      assert_equal(100, @org.credits)
      assert_equal(50, @user.credits)
      assert_nothing_raised { @user.confirm_receipt(@d_star3) }
@@ -74,7 +74,7 @@ class UserTest < Test::Unit::TestCase
   end
 
   def test_receipt_fail_owner
-    @org.buy(@d_star)
+    @org.buy(@d_star, 1)
     assert_raise(TradeException) { @user.confirm_receipt(@d_star)}
   end
 
@@ -84,7 +84,7 @@ class UserTest < Test::Unit::TestCase
 
   def test_confirm_receipt_org
     @user.working_for = @org
-    @user.buy(@d_star)
+    @user.buy(@d_star, 1)
     assert_nothing_raised { @user.confirm_receipt(@d_star) }
   end
 

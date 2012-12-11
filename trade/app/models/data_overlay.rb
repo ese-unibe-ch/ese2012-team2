@@ -158,8 +158,6 @@ module Models
       search_request
     end
 
-
-
     #AS Get the organizations which a user is part of
     def organizations_by_user(user)
       @organizations.values.select { |org| org.is_member?(user) }

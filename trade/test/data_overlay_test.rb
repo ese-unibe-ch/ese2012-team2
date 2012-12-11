@@ -72,4 +72,9 @@ class DataOverlayTest < Test::Unit::TestCase
     assert(@overlay.user_exists?(user2.name), "the user should exist")
   end
 
+  def test_organization_existence
+    organization = Models::Organization.new("Team2", " ", "ese", "")
+    assert(@overlay.organization_exists?(organization.name), "the organization should exist")
+  end
+
 end

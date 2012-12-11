@@ -1,3 +1,4 @@
+require 'pony'
 require 'test/unit'
 require 'rubygems'
 require 'require_relative'
