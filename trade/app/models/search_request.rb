@@ -54,12 +54,16 @@ module Models
     #AS Checks if an item is close enought (using the levenshtein distance as already described under "get_close_items"). If yes: [item, distance] is returned, else: nil is returned.
     def check_if_item_is_close_enough(item)
       overall_min_distance= @threshold
+
       keywords.each do |keyword|
+         if(item.name.downcase.include?(keyword) || item.description.downcase.include?(keyword))
+           return [item, 0]
+         end
          keyword= keyword.downcase
          minimal_distance= [get_minimal_distance(keyword, item.name.downcase), get_minimal_distance(keyword, item.description.downcase)].min
          overall_min_distance= [overall_min_distance, minimal_distance].min
          if(minimal_distance>@threshold)
-           return nil
+            return nil
          end
       end
       return [item, overall_min_distance]
@@ -73,6 +77,7 @@ module Models
       end
       min
     end
+
 
     def tags_apply?(item)
        applies_for_all = true

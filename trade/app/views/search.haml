@@ -29,7 +29,7 @@
       %th Name
       %th.padding_left.price_column Price
       %th.padding_left Owner
-      %th.padding_left Relevance
+      %th.padding_left Match
       %th.center Buy
   %tbody
     - for item_with_relevance in items_with_relevances
@@ -44,7 +44,12 @@
           %td.list.padding_left
             %a{:href=> "/user/#{item.owner}"} #{item.owner.display_name}
           %td.right.list.padding_left
-            #{relevance}
+            -if relevance == 1
+              exact
+            -else
+              fuzzy
+
+
           %td.list
             - if item.owner != @active_user #SH Don't show the buy button for your own items
               =haml :'partials/buy_button', :locals => {:itemid => item.id, :quantity => item.quantity}
