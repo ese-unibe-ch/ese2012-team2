@@ -9,6 +9,6 @@
     - for tag in tags
       %tr
         %td
-          #{tag.name}
+          %a{:href => "/search?keywords=#{URI.escape(tag.name)}"} #{tag.name}
         %td
           #{tag.amount_of_matches}
