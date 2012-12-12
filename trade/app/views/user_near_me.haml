@@ -30,6 +30,6 @@
     -for user in users_near_me
       %tr
         %td
-          %a{:href => "/user/#{user.name}"}#{user.name}
+          %a{:href => "/user/#{user.name}"}#{user.display_name}
         %td #{(user.coordinates.distance(@active_user.coordinates)*100).round().to_f/100} km
 =haml :'partials/pager', :locals => {:pager_id => "pager"}
