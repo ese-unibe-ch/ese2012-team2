@@ -16,9 +16,9 @@
 %form{:action => "/add_item", :method => "POST", :enctype=>"multipart/form-data"}
   %input.normal_input{:id => "name", :type => "text", :name => "name", :placeholder => "Name"}
   %br
-  %input.normal_input{:id => "price", :type => "text", :value => "0", :name => "price", :placeholder => "Price"}
+  %input.normal_input{:id => "price", :type => "text", :name => "price", :placeholder => "Price"}
   %br
-  %input.normal_input{:id => "quantity", :type => "text", :value => "1", :name => "quantity", :placeholder => "Quantity"}
+  %input.normal_input{:id => "quantity", :type => "text",  :name => "quantity", :placeholder => "Quantity"}
   %br
   %input.datepicker{:id => "date", :type => "text", :name => "date", :placeholder => "Valid till Date"}
   %span.hint If field is empty, the offer will not expire
