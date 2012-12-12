@@ -10,11 +10,11 @@ module Models
     attr_reader :organization_request, :wish_list
 
     #AS Implements buying for an organization (Override) (ignore_working_for is for special cases, e.g. buying on request)
-    def buy(item, ignore_working_for=false)
+    def buy(item, quantity, ignore_working_for=false)
       if working_for.nil? || ignore_working_for
-        super(item)
+        super(item, quantity)
       else
-        working_for.buy(item)
+        working_for.buy(item, quantity)
       end
     end
 
@@ -97,7 +97,7 @@ module Models
     end
 
     def valid_email? email
-      email.match(/^[\w*\.?]+@(\w*\.)+\w{2,3}\z/)
+      email.match(/^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)
     end
 
     def add_request(organization)

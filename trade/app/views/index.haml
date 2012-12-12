@@ -36,6 +36,7 @@
     %tr
       %th Name
       %th.padding_left.price_column Price
+      %th.padding-left.price_column Quantity
       %th.padding_left Owner
       %th.padding_left Valid till
       %th.center Buy
@@ -47,6 +48,7 @@
             %a{:href => "/item/#{item.id}",  "data-powertip" => "#{item.description.gsub("\n", "<br>")}</br><img src=#{item.image_path} width=150 />", :class => "powertip"}
               #{item.name}
           %td.right.list.padding_left #{item.price}
+          %td.right.list.padding_left #{item.quantity}
           %td.list.padding_left
             -if item.owner.class == Models::User
               %a{:href=> "/user/#{item.owner}"} #{item.owner.display_name}
@@ -55,7 +57,7 @@
           %td.padding_left #{item.end_time}
           %td.center
             - if item.owner != @active_user and item.owner != @active_user.working_for and item.state == :active #SH Don't show the buy button for your own items
-              =haml :'partials/buy_button', :locals => {:itemid => item.id}
+              =haml :'partials/buy_button', :locals => {:itemid => item.id, :quantity => item.quantity}
             - if item.owner != @active_user and item.owner != @active_user.working_for and item.state == :auction
               %a.button_as_link{:href => "/auction/#{item.id}"} Bid
 =haml :'partials/pager', :locals => {:pager_id => "pager"}

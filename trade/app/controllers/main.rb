@@ -52,7 +52,8 @@ class Main  < BaseSecureController
     @title = "Home"
     begin
     item = @data.item_by_id params[:item].to_i
-    @active_user.buy(item)
+    quantity = Models::Item.validate_quantity(params[:quantity])
+    @active_user.buy(item, quantity)
     EmailSender.send_item_bought(item)
     flash.now[:success] =  "Item successfully bought! You can activate the item in your <a href = '/all_items/#{@active_user.name}'>item list</a>."
     rescue TradeException => e
@@ -144,10 +145,9 @@ class Main  < BaseSecureController
   post "/research/:search_request" do
     @title = "Search"
     search_request = @data.search_request_by_id params[:search_request].to_i
-    keyword = Models::SearchRequest.splitUp(search_request.keywords)
-    search_request = Models::SearchRequest.create(keyword, @active_user)
-    items = search_request.get_matching_items(@data.all_items)
-    haml :search, :locals => {:search_request => search_request, :items => items}
+    items = search_request.get_matching_items_with_relevances(@data.all_items)
+    params[:keywords] = search_request.all_keywords
+    haml :search, :locals => {:search_request => search_request, :items_with_relevances => items}
   end
 
   get "/subscribe" do

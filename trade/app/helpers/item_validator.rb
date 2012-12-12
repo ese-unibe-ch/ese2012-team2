@@ -18,13 +18,14 @@ class ItemValidator
     end_time = self.parse_date_time(params[:date], params[:time])
 
     price = ItemValidator.delete_leading_zeros(price)
+    quantity = ItemValidator.delete_leading_zeros(params[:quantity])
 
     if (active_user.working_for.nil?)
       user = active_user
     else
       user = active_user.working_for
     end
-    item = Models::Item.new(name, price, user, description, :inactive, nil, as_request, end_time)
+    item = Models::Item.new(name, price, user, description, :inactive, nil, as_request, end_time, quantity)
     tags = params[:tags]
     unless tags.nil?
       for tag in tags do
