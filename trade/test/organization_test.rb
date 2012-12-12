@@ -1,5 +1,11 @@
-require "test/unit"
-require_relative "../app/models/organization"
+require 'pony'
+require 'test/unit'
+require 'rubygems'
+require 'require_relative'
+require_relative '../app/models/trader'
+require_relative '../app/models/organization'
+
+
 
 class OrganizationTest < Test::Unit::TestCase
 

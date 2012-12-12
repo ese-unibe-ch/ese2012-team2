@@ -104,6 +104,7 @@ module Models
     def user_by_name(name)
       @users[name]
     end
+
     def delete_user(user)
       @users.delete user.name
     end
@@ -156,8 +157,6 @@ module Models
       add_search_request search_request
       search_request
     end
-
-
 
     #AS Get the organizations which a user is part of
     def organizations_by_user(user)

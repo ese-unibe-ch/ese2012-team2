@@ -1,3 +1,5 @@
+
+
   module Models
     class Organization < Models::Trader
 
