@@ -54,6 +54,11 @@
   Credits: #{user.credits}
   #userimage
     %img{:src => user.image_path, :width => "150", :alt=>"User image"}
+  %h2 Address
+  %p
+    #{user.street}
+    %br
+    #{user.country} - #{user.postal_code} #{user.city}
   %h2 Interests
   %p
     #{user.interests}
