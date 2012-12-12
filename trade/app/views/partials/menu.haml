@@ -23,7 +23,7 @@
             %a{:href => url("/organization/add")} Add organization
           %li.sublink
             %a{:href => url("/user/#{@active_user.name}/requests")} Organization requests
-      %li{:class => "#{[(@title.include?"User" or @title.include?"Items of" or @title == "Add item" or @title == "Subscriptions") && [:active_tab]]} headlink"}
+      %li{:class => "#{[(@title.include?"User" or @title.include?"Items of" or @title == "Add item" or @title == "Subscriptions" or @title == "Users near me") && [:active_tab]]} headlink"}
         %p My account
         %ul
           %li.sublink
@@ -36,6 +36,9 @@
             %a{:href => url("/search_requests")} Search requests
           %li.sublink
             %a{:href => url("/insert_coins")} Get coins
+          %li.sublink
+            %a{:href => url("/users_near_me")} Users near me
+
       %li
         %a{:href => url("/logout")} Logout
 

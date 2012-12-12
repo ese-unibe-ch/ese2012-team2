@@ -9,6 +9,11 @@ class UserDataHelper
       raise TradeException, "Displayname already exists."
     end
 
+    active_user.street = params[:street]
+    active_user.postal_code = params[:postal_code]
+    active_user.city = params[:city]
+    active_user.country = params[:country]
+
     active_user.display_name = display_name
     image = ImageHelper.save(params[:image], "#{settings.public_folder}/images/users")
     if image
@@ -31,7 +36,7 @@ class UserDataHelper
     #PS check some stuff
     self.register_checks(params)
     image = ImageHelper.save(params[:image],"#{settings.public_folder}/images/users")
-    Models::User.new(params[:username], params[:display_name], params[:passwd], params[:email], params[:interests], image)
+    Models::User.new(params[:username], params[:display_name], params[:passwd], params[:email], params[:interests], params[:street], params[:postal_code], params[:city], params[:country] ,image)
   end
 
   #PS check for required fields and contents

@@ -16,7 +16,7 @@ class CoordinatesTest < Test::Unit::TestCase
   end
 
   def test_address_to_coords
-    coords3 = Coordinates.by_address("Sidlerstrasse", 5, 3012, "Bern","CH")
+    coords3 = Coordinates.by_address("Sidlerstrasse 5", 3012, "Bern","CH")
 
     assert(coords3.lat == 46.95134680)
     assert(coords3.lng == 7.43845670)

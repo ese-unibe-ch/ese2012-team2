@@ -60,7 +60,7 @@ class App < Sinatra::Base
     data = JSON.parse(document)
 
     data.each do |user|
-      new_user = Models::User.new(user["name"], user["displayname"], user["pw"], user["email"], user["interests"])
+      new_user = Models::User.new(user["name"], user["displayname"], user["pw"], user["email"], user["interests"], user["street"], user["postal_code"], user["city"], user["country"])
       user["items"].each do |item|
         it = Models::Item.new(item["name"], item["price"], new_user, item["description"], item["state"].to_sym)
         unless item["tags"].nil?

@@ -177,4 +177,18 @@ class Main  < BaseSecureController
   get "/pop_tags" do
     haml :popular_tags, :locals => {:tags => Models::Tag.get_tags_sorted_by_popularity}
   end
+
+  get "/users_near_me" do
+    @title = "Users near me"
+    if params[:radius].nil?
+      radius = 5
+    else
+      radius = params[:radius]
+    end
+
+    users_near_me = @active_user.users_near_me radius
+
+    haml :user_near_me, :locals => {:users_near_me => users_near_me }
+
+  end
 end

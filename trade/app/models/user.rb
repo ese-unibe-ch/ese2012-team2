@@ -2,10 +2,11 @@ require "digest/md5"
 require_relative "password"
 require_relative "trader"
 require_relative "trade_exception"
+require_relative "coordinates"
 module Models
   class User < Models::Trader
 
-    attr_accessor :password, :email, :working_for, :trackees, :state, :suspension_time
+    attr_accessor :password, :email, :working_for, :trackees, :state, :suspension_time, :street, :postal_code, :city, :country, :coordinates
     attr_reader :organization_request, :wish_list
 
     #AS Implements buying for an organization (Override) (ignore_working_for is for special cases, e.g. buying on request)
@@ -45,7 +46,7 @@ module Models
     end
 
     #SH Setup standard values
-    def initialize (name, display_name, passwd, email, interests, image=nil)
+    def initialize (name, display_name, passwd, email, interests, street=nil, postal_code=nil, city=nil, country=nil,image=nil)
       self.credits=100
       self.state=:active
       self.credits_in_auction = 0
@@ -67,6 +68,14 @@ module Models
 
       self.password= Models::Password.make(passwd)
       self.interests= interests
+
+      self.street = street
+      self.postal_code = postal_code
+      self.city = city
+      self.country = country
+
+      self.coordinates = Coordinates.by_address(street, postal_code, city, country)  unless street.nil? or postal_code.nil? or city.nil? or country.nil?
+
       self.image = image
       @organization_request = Array.new()
       @wish_list = Array.new()
@@ -153,6 +162,16 @@ module Models
       res = Time.diff(self.suspension_time, Time.now)
       return true if res[:minute] > 0 or res[:second] > 10
       false
+    end
+
+    def users_near_me(radius)
+      near_users = Array.new()
+      unless self.coordinates.nil?
+        @data.all_users.each do |user|
+          near_users.push(user) if not user == self and not user.coordinates.nil? and self.coordinates.distance(user.coordinates) < radius.to_f
+        end
+      end
+      near_users
     end
   end
 end

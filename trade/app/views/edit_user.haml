@@ -11,6 +11,22 @@
   %input.normal_input{:id => "display_name", :type=>"text", :name=>"display_name", :value => "#{@active_user.display_name}"}
   %br
   %label
+    Street and number:
+  %input.normal_input{:id => "street", :type=>"text", :name=>"street", :placeholder => "Street and number (optional)", :value=> "#{@active_user.street}"}
+  %br
+  %label
+    Postal code:
+  %input.normal_input{:id => "postal_code", :type=>"text", :name=>"postal_code", :placeholder => "Postal code (optional)", :value=> "#{@active_user.postal_code}"}
+  %br
+  %label
+    City:
+  %input.normal_input{:id => "city", :type=>"text", :name=>"city", :placeholder => "City (optional)", :value=> "#{@active_user.city}"}
+  %br
+  %label
+    Country:
+  %input.normal_input{:id => "country", :type=>"text", :name=>"country", :placeholder => "Country (optional)", :value=> "#{@active_user.country}"}
+  %br
+  %label
     Image:
   %br
   %input{:type=>"file", :name=>"image"}
