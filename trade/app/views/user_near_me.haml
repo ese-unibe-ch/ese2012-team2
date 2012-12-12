@@ -1,0 +1,35 @@
+:javascript
+  $(document).ready(function() {
+         $("#users")
+                .tablesorter({
+                        headers: {3: {sorter: false}},
+                        sortList: [[2,0], [0,0]],
+                        widgets: ['zebra']
+                })
+                .tablesorterPager({
+                        container: $("#pager"),
+                        positionFixed: false
+                });
+  })
+
+%h1 Users near me
+%form{:action =>"/users_near_me", :method => "GET"}
+  %select{:name => "radius"}
+    %option{:selected => "selected", :value => 5} 5 km
+    %option{:value => 10} 10 km
+    %option{:value => 20} 20 km
+    %option{:value => 50} 50 km
+    %option{:value => 100} 100 km
+    %option{:value => 200} 200 km
+  %input.normal_input{:type=>"submit", :class=>"button_margin", :value => "Search"}
+%table{:id=>"users", :class=>"tablesorter pager"}
+  %thead
+    %th Name
+    %th Distance
+  %tbody
+    -for user in users_near_me
+      %tr
+        %td
+          %a{:href => "/user/#{user.name}"}#{user.name}
+        %td #{(user.coordinates.distance(@active_user.coordinates)*100).round().to_f/100} km
+=haml :'partials/pager', :locals => {:pager_id => "pager"}
