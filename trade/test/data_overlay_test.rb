@@ -29,10 +29,10 @@ class DataOverlayTest < Test::Unit::TestCase
       overlay =  Models::DataOverlay.instance
       user1 = Models::User.new("vader", "Darth Vader", "pwDarthVader", "lord.vader@imperium.com", nil)
       user2 = Models::User.new("bla", "Mr Blaaa", "pwblblablar", "ablabl@asfdewaf.com", nil)
-      sr1= overlay.new_search_request(["some","keywords"], user1)
-      overlay.new_search_request(["some","other","keywords"], user1)
-      overlay.new_search_request(["again","some","keywords"], user2)
-      overlay.new_search_request(["again","some","other","keywords"], user2)
+      sr1= overlay.new_search_request("some keywords", user1)
+      overlay.new_search_request("some other keywords", user1)
+      overlay.new_search_request("again some keywords", user2)
+      overlay.new_search_request("again some other keywords", user2)
 
       assert(overlay.search_request_by_id(0)==sr1)
       assert(overlay.search_requests_by_user(user1).size == 2, "User1 should have 2 SearchRequests")
