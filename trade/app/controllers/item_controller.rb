@@ -219,9 +219,50 @@ class ItemController < BaseSecureController
     haml :'partials/description', :layout => :'ajax_layout', :locals => {:description => description}
   end
 
-  get "/tags/all" do
-    content_type :json
-    {:tags => @data.all_tags }.to_json
+  get "/all_items/:user" do
+    user = @data.user_by_name params[:user]
+    @title = "Items of #{user.display_name}"
+    haml :my_items, :locals => {:user => user}
   end
 
+  #SH Buys an item. If an error occurs, redirect to the buy error page
+  post "/buy/:item" do
+    @title = "Home"
+    begin
+      item = @data.item_by_id params[:item].to_i
+      quantity = Models::Item.validate_quantity(params[:quantity])
+      @active_user.buy(item, quantity)
+      EmailSender.send_item_bought(item)
+      flash.now[:success] =  "Item successfully bought! You can activate the item in your <a href = '/all_items/#{@active_user.name}'>item list</a>."
+    rescue TradeException => e
+      flash.now[:error] = e.message
+    end
+    haml :index, :locals => {:items => @data.all_items}
+  end
+
+  post "/delete_item_request/:item_request_id" do
+    @data.delete_item_request(params[:item_request_id].to_i)
+    flash[:success] = "Deleted item request"
+    redirect back
+  end
+
+  post "/fulfill_item_request/:item_request_id/:seller_name/:type" do
+    request= @data.get_item_request_by_id(params[:item_request_id].to_i)
+
+    if params[:type]=="org"
+      seller= @data.organization_by_name(params[:seller_name].downcase)
+    else
+      seller= @data.user_by_name(params[:seller_name].downcase)
+    end
+    puts request.owner
+    puts seller
+    seller.sell_requested_item(request, request.owner)
+    redirect back
+  end
+
+  get "/item_requests" do
+    @title = "All item requests"
+    item_requests= @data.get_item_requests()
+    haml :item_requests, :locals => {:requests => item_requests}
+  end
 end

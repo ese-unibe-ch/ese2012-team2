@@ -1,6 +1,7 @@
 require 'singleton'
 
 module Models
+  # A Payment server provides Payment references
   class PaymentServer
     include Singleton
 

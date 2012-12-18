@@ -1,4 +1,6 @@
 module Models
+  #represents a comment on something by someone. This class contains the data of a single Comment providing
+  #who commented, when, on what. And, of course, the actual content of the comment
   class Comment
     attr_accessor :text, :user, :timestamp
 

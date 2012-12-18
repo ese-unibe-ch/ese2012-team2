@@ -27,6 +27,9 @@ require_relative 'controllers/comment_controller'
 require_relative 'controllers/last_resort_controller'
 require_relative 'controllers/tracking_controller'
 require_relative 'controllers/payment_controller'
+require_relative 'controllers/search_controller'
+require_relative 'controllers/tag_controller'
+require_relative 'controllers/user_controller'
 
 class App < Sinatra::Base
 
@@ -46,6 +49,9 @@ class App < Sinatra::Base
   use CommentController
   use TrackingController
   use PaymentController
+  use SearchController
+  use TagController
+  use UserController
   use LastResortController
 
   enable :sessions
