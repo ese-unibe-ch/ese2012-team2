@@ -2,7 +2,10 @@ require "digest/md5"
 require_relative "trade_exception"
 
 module Models
-
+  #represents a hashed password with it's used salt.
+  # The original password can not be retrieved from this class.
+  # But this class checks if a plain password is the same
+  # as the one used to create the object
   class Password
 
     attr_accessor :hash, :salt

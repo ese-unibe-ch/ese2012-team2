@@ -2,6 +2,7 @@ require_relative 'trade_exception'
 require_relative 'trackable'
 
 module Models
+  # base class for every model which wants to participate in selling or buying items
   class Trader < Trackable
     attr_accessor :credits, :credits_in_auction, :name, :image, :interests, :display_name, :auction_bid
 

@@ -1,5 +1,5 @@
-# This class is responsible to create a new bid
 module Models
+  # This class is responsible to create a new bid
   class Bid
     attr_accessor :owner, :value
 

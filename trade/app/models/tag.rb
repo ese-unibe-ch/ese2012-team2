@@ -1,4 +1,5 @@
 module Models
+  # A tag is a single word description. It always starts with '#'
   class Tag
     attr_reader :name, :matches
     @@regex= /#\w+/

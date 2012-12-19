@@ -3,6 +3,9 @@ require_relative 'trackable'
 require_relative 'activity'
 
 module Models
+  # represents an item. An item has a name a non-negative price and an owner. The owner
+  # should be a user or organization. An item has a state weither it is for sale, not for sale
+  # or being transfered between two users. An item maintains a list of all it previous owners.
   class Item < Trackable
 
     attr_accessor :name, :price, :owner, :state, :descriptions, :image, :prev_owners, :end_time, :quantity

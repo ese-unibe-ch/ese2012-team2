@@ -4,6 +4,7 @@ require_relative "trader"
 require_relative "trade_exception"
 require_relative "coordinates"
 module Models
+  # a single user which extends the trader class
   class User < Models::Trader
 
     attr_accessor :password, :email, :working_for, :trackees, :state, :suspension_time, :street, :postal_code, :city, :country, :coordinates

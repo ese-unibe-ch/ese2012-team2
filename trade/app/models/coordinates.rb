@@ -1,8 +1,12 @@
 require 'net/http'
 require 'json/pure'
+# This class represents a position on planet earth given by standard coordinates.
+# This class can be created either direct from coordinates or by a specific address
 class Coordinates
   attr_accessor :lat, :lng
 
+  # creates a Coordinates object out of the given address
+  # raises an error when the address is not valid
   def self.by_address(street, postal_code, city, country)
     begin
 

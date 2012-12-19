@@ -1,6 +1,9 @@
 
 
   module Models
+    # An Organization is an association of different users. A user can be either a normal member
+    # or an admin having additional rights. This class has different methods for managing users as
+    # adding, removing or promoting members.
     class Organization < Models::Trader
 
       attr_accessor :admins

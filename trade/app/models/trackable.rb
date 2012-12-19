@@ -3,6 +3,7 @@ require_relative 'activity'
 require_relative 'trade_exception'
 
 module Models
+  # an interface for an object that can log certain activities
   class Trackable
     def add_activity(text)
       activity = Activity.new(self, text)
