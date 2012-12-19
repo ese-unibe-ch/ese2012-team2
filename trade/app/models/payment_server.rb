@@ -17,7 +17,6 @@ module Models
 
     def reference(data)
       ref = @references.detect {|ref|
-        puts "#{data} == #{ref.information} => #{data == ref.information}"
         data == ref.information
       }
       ref = PaymentReference.new(:inexistent, 0, Hash.new) if ref == nil

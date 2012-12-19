@@ -54,8 +54,6 @@ class ItemController < BaseSecureController
   # confirms the buy
   post "/item/:item/confirm_buy" do
     item = @data.item_by_id params[:item].to_i
-    puts item.prev_owners.length
-    puts item.name
     @active_user.confirm_receipt item
     redirect back
   end
@@ -254,8 +252,6 @@ class ItemController < BaseSecureController
     else
       seller= @data.user_by_name(params[:seller_name].downcase)
     end
-    puts request.owner
-    puts seller
     seller.sell_requested_item(request, request.owner)
     redirect back
   end

@@ -23,7 +23,6 @@ class ImageHelper
   end
 
   def self.image? image
-    puts image[:filename]
     mime_type =  MIME::Types.type_for(image[:filename], false)
     mime_type[0].media_type == 'image'
   end

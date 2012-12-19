@@ -205,7 +205,6 @@ module Models
     # send a mail to if another user gave a higher bid
     def send_email(tmp_bid)
       EmailSender.send_auction(tmp_bid.owner, self.item)
-      puts "Email sent" #for testing only
     end
   end
 end

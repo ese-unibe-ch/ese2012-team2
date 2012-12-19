@@ -29,7 +29,6 @@ class ItemValidator
     tags = params[:tags]
     unless tags.nil?
       for tag in tags do
-        puts "tags: #{tag}"
         t = Models::Tag.get_tag(tag)
         item.add_tag(t)
       end

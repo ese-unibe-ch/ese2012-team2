@@ -48,7 +48,6 @@ module Models
         end
       end
       items_and_distances.sort!{|x,y| x[1] <=> y[1]}
-      items_and_distances.each{|x| x.each{|y| print y}}
     end
 
     #AS Checks if an item is close enought (using the levenshtein distance as already described under "get_close_items"). If yes: [item, distance] is returned, else: nil is returned.

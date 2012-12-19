@@ -13,7 +13,6 @@ class Coordinates
     street =URI.escape(street)
     city =URI.escape(city)
     country =URI.escape(country)
-    puts(street)
     response = Net::HTTP.get(URI.parse("http://maps.googleapis.com/maps/api/geocode/json?address=#{street},#{postal_code}+#{city},#{country}&sensor=false"))
 
     data = JSON.parse(response)

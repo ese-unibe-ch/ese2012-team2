@@ -85,7 +85,6 @@ class App < Sinatra::Base
     data = JSON.parse(document, :symbolize_names => true)
     data.each do |ref|
       payRef = Models::PaymentReference.new(ref[:status].to_sym, ref[:max_amount], ref[:information])
-      puts payRef
       Models::PaymentServer.instance().add payRef
     end
   end
@@ -101,7 +100,6 @@ class App < Sinatra::Base
     scheduler = Rufus::Scheduler.start_new
 
     scheduler.every '10s' do
-      puts "running task"
       for item in overlay.all_items
         if item.over?
           item.end_offer
